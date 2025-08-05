@@ -1,22 +1,64 @@
-# PDFINDI Backend - Free Serverless Solution
+# PDFINDI Backend
 
-## 🚀 Free Deployment on Vercel
+🚀 **Production backend for PDFINDI PDF/Word conversion tools**
 
-This backend is designed to run **completely FREE** on Vercel's serverless platform.
+## 🎯 Features
 
-### ✅ What's Included:
-- **PDF Compression** - Basic compression using pdf-lib
-- **PDF to JPG** - Page extraction (demo implementation)
-- **CORS enabled** - Works with your Hostinger domain
-- **Zero cost** - Runs on Vercel's free tier
+- **PDF to Word** conversion using Cloudmersive API
+- **Word to PDF** conversion using Cloudmersive API  
+- **PDF Compression** using Cloudmersive API
+- **Secure file handling** with 50MB upload limits
+- **Production-ready** Express.js server
+- **Railway deployment** optimized
 
-### 📊 Vercel Free Tier Limits:
-- **100GB bandwidth/month** - More than enough for PDF tools
-- **100,000 function invocations/month** - Plenty for normal usage
-- **10MB file size limit** - Suitable for most PDFs
-- **10 second execution time** - Sufficient for basic operations
+## 🛠️ Tech Stack
 
-## 🛠️ Setup Instructions:
+- **Node.js 18+** - Runtime environment
+- **Express.js 4.18** - Web framework
+- **Multer 2.x** - File upload handling (secure)
+- **Cloudmersive API** - PDF/Word conversion service
+- **Railway** - Deployment platform
+
+## � Deployment
+
+### Railway (Recommended):
+1. Fork this repository
+2. Connect to Railway.app
+3. Set environment variables
+4. Deploy automatically
+
+### Environment Variables:
+```
+CLOUDMERSIVE_API_KEY=your-api-key
+NODE_ENV=production
+PORT=3001
+```
+
+## 📁 API Endpoints
+
+```
+GET  /api/health           - Health check
+POST /api/pdf-to-word      - Convert PDF to Word
+POST /api/word-to-pdf      - Convert Word to PDF  
+POST /api/compress-pdf     - Compress PDF files
+```
+
+## 🔒 Security
+
+- CORS configured for cross-origin requests
+- File type validation (PDF/Word only)
+- File size limits (50MB max)
+- Secure API key handling
+
+## 💰 Cost Efficient
+
+- Optimized for Railway's $5 free credit
+- Sleep mode compatible (saves costs)
+- Minimal resource usage
+
+---
+
+**Built for [PDFINDI.com](https://pdfindi.com)** - India's PDF conversion toolkit
 
 1. **Install Vercel CLI:**
    ```bash
