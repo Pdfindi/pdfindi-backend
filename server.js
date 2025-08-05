@@ -1,0 +1,310 @@
+// Production PDFINDI Backend for Oracle Cloud Mumbai
+const express = require('express');
+const cors = require('cors');
+const multer = require('multer');
+const axios = require('axios');
+const FormData = require('form-data');
+const path = require('path');
+require('dotenv').config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Enable CORS for all origins (configure for your domain in production)
+app.use(cors());
+app.use(express.json({ limit: '50mb' }));
+
+// Serve static files from public_html
+app.use(express.static(path.join(__dirname, '..', 'public_html')));
+
+// Configure multer for file uploads
+const storage = multer.memoryStorage();
+const upload = multer({ 
+  storage: storage,
+  limits: { fileSize: 50 * 1024 * 1024 }, // 50MB limit
+  fileFilter: (req, file, cb) => {
+    // Accept PDF and Word documents
+    const allowedMimeTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/rtf'
+    ];
+    
+    if (allowedMimeTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type. Only PDF, DOC, DOCX, and RTF files are allowed.'));
+    }
+  }
+});
+
+// Environment check
+const CLOUDMERSIVE_API_KEY = process.env.CLOUDMERSIVE_API_KEY;
+if (!CLOUDMERSIVE_API_KEY) {
+  console.error('❌ CLOUDMERSIVE_API_KEY environment variable is required');
+  process.exit(1);
+}
+
+// Health endpoint
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    service: 'PDFINDI Backend',
+    environment: process.env.NODE_ENV || 'development',
+    location: 'Oracle Cloud Mumbai',
+    version: '1.0.0'
+  });
+});
+
+// PDF to Word conversion endpoint
+app.post('/api/pdf-to-word', upload.single('file'), async (req, res) => {
+  try {
+    console.log(`[${new Date().toISOString()}] PDF to Word conversion requested`);
+    
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    if (req.file.mimetype !== 'application/pdf') {
+      return res.status(400).json({ error: 'File must be a PDF' });
+    }
+
+    console.log(`Processing: ${req.file.originalname} (${req.file.size} bytes)`);
+
+    // Create FormData for Cloudmersive API
+    const formData = new FormData();
+    formData.append('inputFile', req.file.buffer, {
+      filename: req.file.originalname,
+      contentType: 'application/pdf'
+    });
+
+    // Call Cloudmersive PDF to DOCX API
+    const response = await axios.post(
+      'https://api.cloudmersive.com/convert/pdf/to/docx',
+      formData,
+      {
+        headers: {
+          ...formData.getHeaders(),
+          'Apikey': CLOUDMERSIVE_API_KEY
+        },
+        responseType: 'arraybuffer',
+        timeout: 30000
+      }
+    );
+
+    // Convert to base64 for frontend
+    const base64Data = Buffer.from(response.data).toString('base64');
+    const outputFilename = req.file.originalname.replace(/\.pdf$/i, '.docx');
+
+    console.log(`✅ Conversion successful: ${outputFilename}`);
+
+    res.json({
+      success: true,
+      filename: outputFilename,
+      base64: base64Data,
+      originalSize: req.file.size,
+      convertedSize: response.data.length,
+      message: 'PDF successfully converted to Word document'
+    });
+
+  } catch (error) {
+    console.error('❌ PDF to Word conversion error:', error.message);
+    
+    if (error.response) {
+      console.error('API Error Status:', error.response.status);
+      console.error('API Error Data:', error.response.data?.toString?.() || 'No details');
+      
+      return res.status(error.response.status).json({ 
+        error: `Conversion API error: ${error.response.status}`,
+        details: error.response.data?.toString?.() || 'Unknown API error'
+      });
+    }
+    
+    res.status(500).json({ 
+      error: 'Internal conversion error',
+      details: error.message 
+    });
+  }
+});
+
+// Word to PDF conversion endpoint
+app.post('/api/word-to-pdf', upload.single('file'), async (req, res) => {
+  try {
+    console.log(`[${new Date().toISOString()}] Word to PDF conversion requested`);
+    
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const allowedTypes = [
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ];
+    
+    if (!allowedTypes.includes(req.file.mimetype)) {
+      return res.status(400).json({ error: 'File must be a Word document (DOC or DOCX)' });
+    }
+
+    console.log(`Processing: ${req.file.originalname} (${req.file.size} bytes)`);
+
+    // Create FormData for Cloudmersive API
+    const formData = new FormData();
+    formData.append('inputFile', req.file.buffer, {
+      filename: req.file.originalname,
+      contentType: req.file.mimetype
+    });
+
+    // Call Cloudmersive DOCX to PDF API
+    const response = await axios.post(
+      'https://api.cloudmersive.com/convert/docx/to/pdf',
+      formData,
+      {
+        headers: {
+          ...formData.getHeaders(),
+          'Apikey': CLOUDMERSIVE_API_KEY
+        },
+        responseType: 'arraybuffer',
+        timeout: 30000
+      }
+    );
+
+    // Convert to base64 for frontend
+    const base64Data = Buffer.from(response.data).toString('base64');
+    const outputFilename = req.file.originalname.replace(/\.(doc|docx)$/i, '.pdf');
+
+    console.log(`✅ Conversion successful: ${outputFilename}`);
+
+    res.json({
+      success: true,
+      filename: outputFilename,
+      base64: base64Data,
+      originalSize: req.file.size,
+      convertedSize: response.data.length,
+      message: 'Word document successfully converted to PDF'
+    });
+
+  } catch (error) {
+    console.error('❌ Word to PDF conversion error:', error.message);
+    
+    if (error.response) {
+      console.error('API Error Status:', error.response.status);
+      console.error('API Error Data:', error.response.data?.toString?.() || 'No details');
+      
+      return res.status(error.response.status).json({ 
+        error: `Conversion API error: ${error.response.status}`,
+        details: error.response.data?.toString?.() || 'Unknown API error'
+      });
+    }
+    
+    res.status(500).json({ 
+      error: 'Internal conversion error',
+      details: error.message 
+    });
+  }
+});
+
+// PDF Compression endpoint (using existing compression logic)
+app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
+  try {
+    console.log(`[${new Date().toISOString()}] PDF compression requested`);
+    
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    if (req.file.mimetype !== 'application/pdf') {
+      return res.status(400).json({ error: 'File must be a PDF' });
+    }
+
+    console.log(`Compressing: ${req.file.originalname} (${req.file.size} bytes)`);
+
+    // Create FormData for Cloudmersive API
+    const formData = new FormData();
+    formData.append('inputFile', req.file.buffer, {
+      filename: req.file.originalname,
+      contentType: 'application/pdf'
+    });
+
+    // Call Cloudmersive PDF optimization API
+    const response = await axios.post(
+      'https://api.cloudmersive.com/convert/pdf/optimize',
+      formData,
+      {
+        headers: {
+          ...formData.getHeaders(),
+          'Apikey': CLOUDMERSIVE_API_KEY
+        },
+        responseType: 'arraybuffer',
+        timeout: 30000
+      }
+    );
+
+    const base64Data = Buffer.from(response.data).toString('base64');
+    const compressionRatio = ((req.file.size - response.data.length) / req.file.size * 100).toFixed(1);
+
+    console.log(`✅ Compression successful: ${compressionRatio}% reduction`);
+
+    res.json({
+      success: true,
+      filename: req.file.originalname,
+      base64: base64Data,
+      originalSize: req.file.size,
+      compressedSize: response.data.length,
+      compressionRatio: `${compressionRatio}%`,
+      message: `PDF compressed successfully (${compressionRatio}% size reduction)`
+    });
+
+  } catch (error) {
+    console.error('❌ PDF compression error:', error.message);
+    
+    if (error.response) {
+      return res.status(error.response.status).json({ 
+        error: `Compression API error: ${error.response.status}`,
+        details: error.response.data?.toString?.() || 'Unknown API error'
+      });
+    }
+    
+    res.status(500).json({ 
+      error: 'Internal compression error',
+      details: error.message 
+    });
+  }
+});
+
+// Error handling middleware
+app.use((error, req, res, next) => {
+  if (error instanceof multer.MulterError) {
+    if (error.code === 'LIMIT_FILE_SIZE') {
+      return res.status(400).json({ error: 'File too large. Maximum size is 50MB.' });
+    }
+  }
+  
+  console.error('Unhandled error:', error);
+  res.status(500).json({ error: 'Internal server error' });
+});
+
+// 404 handler
+app.use('*', (req, res) => {
+  res.status(404).json({ error: 'Endpoint not found' });
+});
+
+// Start server
+app.listen(PORT, '0.0.0.0', () => {
+  console.log('🚀 PDFINDI Backend Server Started');
+  console.log('=====================================');
+  console.log(`📍 Location: Oracle Cloud Mumbai`);
+  console.log(`🌐 Server: http://0.0.0.0:${PORT}`);
+  console.log(`⚡ Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🔑 API Key: ${CLOUDMERSIVE_API_KEY ? '✅ Configured' : '❌ Missing'}`);
+  console.log('');
+  console.log('🔧 Available Endpoints:');
+  console.log('   GET  /api/health');
+  console.log('   POST /api/pdf-to-word');
+  console.log('   POST /api/word-to-pdf');
+  console.log('   POST /api/compress-pdf');
+  console.log('');
+  console.log('📁 Frontend: Static files served from public_html/');
+  console.log('=====================================');
+});
