@@ -381,10 +381,10 @@ app.post('/api/image-to-pdf', upload.single('file'), async (req, res) => {
   }
 });
 
-// PDF to JPG conversion endpoint
-app.post('/api/pdf-to-jpg', upload.single('file'), async (req, res) => {
+// PDF to Image conversion endpoint - Enhanced with multiple format support
+app.post('/api/pdf-to-image', upload.single('file'), async (req, res) => {
   try {
-    console.log(`[${new Date().toISOString()}] PDF to JPG conversion requested`);
+    console.log(`[${new Date().toISOString()}] PDF to Image conversion requested`);
     
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -394,7 +394,18 @@ app.post('/api/pdf-to-jpg', upload.single('file'), async (req, res) => {
       return res.status(400).json({ error: 'File must be a PDF' });
     }
 
-    console.log(`Processing: ${req.file.originalname} (${req.file.size} bytes)`);
+    // Get desired format from query parameter (default to PNG)
+    const format = (req.query.format || 'png').toLowerCase();
+    const allowedFormats = ['png', 'jpg', 'jpeg'];
+    
+    if (!allowedFormats.includes(format)) {
+      return res.status(400).json({ 
+        error: 'Invalid format. Supported formats: PNG, JPG, JPEG',
+        supportedFormats: allowedFormats
+      });
+    }
+
+    console.log(`Processing: ${req.file.originalname} (${req.file.size} bytes) to ${format.toUpperCase()}`);
 
     // Create FormData for Cloudmersive API
     const formData = new FormData();
@@ -403,9 +414,23 @@ app.post('/api/pdf-to-jpg', upload.single('file'), async (req, res) => {
       contentType: 'application/pdf'
     });
 
-    // Call Cloudmersive PDF to PNG API (which we'll convert to JPG)
+    // Choose the appropriate Cloudmersive API endpoint based on format
+    let apiEndpoint;
+    let outputExtension;
+    
+    if (format === 'png') {
+      apiEndpoint = 'https://api.cloudmersive.com/convert/pdf/to/png';
+      outputExtension = 'png';
+    } else if (format === 'jpg' || format === 'jpeg') {
+      apiEndpoint = 'https://api.cloudmersive.com/convert/pdf/to/jpg';
+      outputExtension = 'jpg';
+    }
+
+    console.log(`Using API endpoint: ${apiEndpoint}`);
+
+    // Call Cloudmersive PDF to Image API
     const response = await axios.post(
-      'https://api.cloudmersive.com/convert/pdf/to/png',
+      apiEndpoint,
       formData,
       {
         headers: {
@@ -419,9 +444,9 @@ app.post('/api/pdf-to-jpg', upload.single('file'), async (req, res) => {
 
     // Convert to base64 for frontend
     const base64Data = Buffer.from(response.data).toString('base64');
-    const outputFilename = req.file.originalname.replace(/\.pdf$/i, '.png');
+    const outputFilename = req.file.originalname.replace(/\.pdf$/i, `.${outputExtension}`);
 
-    console.log(`✅ Conversion successful: ${outputFilename}`);
+    console.log(`✅ Conversion successful: ${outputFilename} (${format.toUpperCase()})`);
 
     res.json({
       success: true,
@@ -429,8 +454,81 @@ app.post('/api/pdf-to-jpg', upload.single('file'), async (req, res) => {
       base64: base64Data,
       originalSize: req.file.size,
       convertedSize: response.data.length,
-      message: 'PDF successfully converted to image',
-      format: 'PNG'
+      format: format.toUpperCase(),
+      message: `PDF successfully converted to ${format.toUpperCase()} image`
+    });
+
+  } catch (error) {
+    console.error('❌ PDF to Image conversion error:', error.message);
+    
+    if (error.response) {
+      console.error('API Error Status:', error.response.status);
+      console.error('API Error Data:', error.response.data?.toString?.() || 'No details');
+      
+      return res.status(error.response.status).json({ 
+        error: `Conversion API error: ${error.response.status}`,
+        details: error.response.data?.toString?.() || 'Unknown API error'
+      });
+    }
+    
+    res.status(500).json({ 
+      error: 'Internal conversion error',
+      details: error.message 
+    });
+  }
+});
+
+// Backward compatibility - PDF to JPG endpoint
+app.post('/api/pdf-to-jpg', upload.single('file'), async (req, res) => {
+  try {
+    console.log(`[${new Date().toISOString()}] PDF to JPG conversion requested (legacy endpoint)`);
+    
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    if (req.file.mimetype !== 'application/pdf') {
+      return res.status(400).json({ error: 'File must be a PDF' });
+    }
+
+    console.log(`Processing: ${req.file.originalname} (${req.file.size} bytes) - Legacy JPG conversion`);
+
+    // Create FormData for Cloudmersive API
+    const formData = new FormData();
+    formData.append('inputFile', req.file.buffer, {
+      filename: req.file.originalname,
+      contentType: 'application/pdf'
+    });
+
+    // Call Cloudmersive PDF to JPG API
+    const response = await axios.post(
+      'https://api.cloudmersive.com/convert/pdf/to/jpg',
+      formData,
+      {
+        headers: {
+          ...formData.getHeaders(),
+          'Apikey': CLOUDMERSIVE_API_KEY
+        },
+        responseType: 'arraybuffer',
+        timeout: 30000
+      }
+    );
+
+    // Convert to base64 for frontend
+    const base64Data = Buffer.from(response.data).toString('base64');
+    const outputFilename = req.file.originalname.replace(/\.pdf$/i, '.jpg');
+
+    console.log(`✅ Conversion successful: ${outputFilename} (Legacy JPG)`);
+
+    res.json({
+      success: true,
+      filename: outputFilename,
+      base64: base64Data,
+      originalSize: req.file.size,
+      convertedSize: response.data.length,
+      format: 'JPG',
+      message: 'PDF successfully converted to JPG image (legacy endpoint)',
+      note: 'Consider using /api/pdf-to-image?format=jpg for enhanced features'
     });
 
   } catch (error) {
@@ -542,7 +640,8 @@ app.get('/', (req, res) => {
       wordToPdf: 'POST /api/word-to-pdf',
       compressPdf: 'POST /api/compress-pdf',
       imageToPdf: 'POST /api/image-to-pdf',
-      pdfToJpg: 'POST /api/pdf-to-jpg',
+      pdfToImage: 'POST /api/pdf-to-image?format=png|jpg|jpeg',
+      pdfToJpg: 'POST /api/pdf-to-jpg (legacy)',
       ocrText: 'POST /api/ocr-text'
     },
     documentation: 'API endpoints accept multipart/form-data with file uploads',
@@ -594,7 +693,8 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log('   POST /api/word-to-pdf');
   console.log('   POST /api/compress-pdf');
   console.log('   POST /api/image-to-pdf');
-  console.log('   POST /api/pdf-to-jpg');
+  console.log('   POST /api/pdf-to-image?format=png|jpg|jpeg');
+  console.log('   POST /api/pdf-to-jpg (legacy)');
   console.log('   POST /api/ocr-text');
   console.log('');
   console.log('📁 Frontend: Static files served from public_html/');
