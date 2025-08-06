@@ -1,0 +1,13 @@
+Test PDF content for conversion testing.
+
+This is a simple PDF document that will be used to test the PDF to Word conversion functionality.
+
+The backend API should process this file and return a Word document.
+
+Features to test:
+- Text extraction
+- Basic formatting
+- File download
+- Success messages
+
+Test completed successfully!

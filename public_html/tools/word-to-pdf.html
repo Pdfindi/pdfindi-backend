@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word to PDF - PDFINDI</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-page {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: color 0.3s;
+        }
+        .back-btn:hover {
+            color: #c0392b;
+        }
+        .backend-notice {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .backend-notice h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        .backend-notice p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        .upload-zone {
+            border: 3px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: #f8f9fa;
+            transition: all 0.3s;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+        .upload-zone:hover {
+            border-color: #e74c3c;
+            background: #fff5f5;
+        }
+        .upload-zone.dragover {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+        .upload-icon {
+            font-size: 3rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+        .supported-formats {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        .format-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .benefit-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .benefit-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .benefit-card h4 {
+            margin-bottom: 0.5rem;
+        }
+        .benefit-card p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        .conversion-settings {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        .conversion-settings h4 {
+            color: #495057;
+            margin-bottom: 1rem;
+        }
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .setting-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .setting-item input[type="checkbox"] {
+            width: auto;
+        }
+        .feature-comparison {
+            background: linear-gradient(45deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        .comparison-table {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .comparison-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+        .check {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .cross {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            margin: 1rem 0;
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .supported-formats {
+                justify-content: center;
+            }
+            .comparison-row {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-btn">
+            ← Back to Tools
+        </a>
+        
+        <div class="tool-header">
+            <div class="tool-icon">📝</div>
+            <h1>Word to PDF</h1>
+            <p>Convert Microsoft Word documents to PDF format with perfect formatting</p>
+        </div>
+
+        <div class="backend-notice">
+            <h3>🚀 Professional Word to PDF Conversion</h3>
+            <p>Server-side processing powered by Cloudmersive API to handle complex Word document structures and formatting.</p>
+            <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                <strong>✅ Backend Active:</strong> Microsoft Office document parsing running on Render Cloud with specialized libraries.
+            </div>
+        </div>
+
+        <div class="upload-zone" id="upload-zone">
+            <div class="upload-icon">📝</div>
+            <h3>Click to upload or drag & drop Word document</h3>
+            <div class="supported-formats">
+                <span class="format-badge">DOC</span>
+                <span class="format-badge">DOCX</span>
+                <span class="format-badge">RTF</span>
+                <span class="format-badge">ODT</span>
+            </div>
+            <p>Maximum file size: 50MB</p>
+            <input type="file" id="file-input" accept=".doc,.docx,.rtf,.odt" style="display: none;">
+        </div>
+
+        <div class="error-message" id="error-message"></div>
+
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="icon">🎯</div>
+                <h4>Perfect Formatting</h4>
+                <p>Preserves all formatting, fonts, images, and layout exactly as in original document</p>
+            </div>
+            <div class="benefit-card">
+                <div class="icon">🔒</div>
+                <h4>Secure & Private</h4>
+                <p>All conversions happen on secure servers with automatic file deletion after processing</p>
+            </div>
+            <div class="benefit-card">
+                <div class="icon">⚡</div>
+                <h4>Fast Processing</h4>
+                <p>Quick conversion with optimized algorithms for various document sizes</p>
+            </div>
+            <div class="benefit-card">
+                <div class="icon">📱</div>
+                <h4>Universal Access</h4>
+                <p>PDFs work on any device, ensuring your documents look the same everywhere</p>
+            </div>
+        </div>
+
+        <div class="conversion-settings">
+            <h4>⚙️ Conversion Settings (Coming Soon)</h4>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <input type="checkbox" id="preserve-hyperlinks" checked disabled>
+                    <label for="preserve-hyperlinks">Preserve Hyperlinks</label>
+                </div>
+                <div class="setting-item">
+                    <input type="checkbox" id="preserve-bookmarks" checked disabled>
+                    <label for="preserve-bookmarks">Preserve Bookmarks</label>
+                </div>
+                <div class="setting-item">
+                    <input type="checkbox" id="optimize-web" disabled>
+                    <label for="optimize-web">Optimize for Web</label>
+                </div>
+                <div class="setting-item">
+                    <input type="checkbox" id="password-protect" disabled>
+                    <label for="password-protect">Password Protection</label>
+                </div>
+                <div class="setting-item">
+                    <input type="checkbox" id="compress-images" checked disabled>
+                    <label for="compress-images">Compress Images</label>
+                </div>
+                <div class="setting-item">
+                    <input type="checkbox" id="embed-fonts" checked disabled>
+                    <label for="embed-fonts">Embed Fonts</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature-comparison">
+            <h3>📊 Browser vs Server Conversion</h3>
+            <div class="comparison-table">
+                <div class="comparison-row">
+                    <span>Feature</span>
+                    <span>Browser</span>
+                    <span>Server</span>
+                </div>
+                <div class="comparison-row">
+                    <span>Complex Formatting</span>
+                    <span class="cross">✗</span>
+                    <span class="check">✓</span>
+                </div>
+                <div class="comparison-row">
+                    <span>Font Preservation</span>
+                    <span class="cross">✗</span>
+                    <span class="check">✓</span>
+                </div>
+                <div class="comparison-row">
+                    <span>Table Layouts</span>
+                    <span class="cross">✗</span>
+                    <span class="check">✓</span>
+                </div>
+                <div class="comparison-row">
+                    <span>Image Quality</span>
+                    <span class="cross">Basic</span>
+                    <span class="check">High</span>
+                </div>
+                <div class="comparison-row">
+                    <span>File Size Limits</span>
+                    <span class="cross">5MB</span>
+                    <span class="check">50MB+</span>
+                </div>
+                <div class="comparison-row">
+                    <span>Processing Speed</span>
+                    <span class="cross">Slow</span>
+                    <span class="check">Fast</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #e8f5e8; padding: 1.5rem; border-radius: 12px; margin: 2rem 0;">
+            <h4 style="color: #2e7d32; margin-bottom: 1rem;">🌟 Why Choose Our Word to PDF Converter?</h4>
+            <ul style="color: #2e7d32; margin: 0; padding-left: 1.5rem;">
+                <li>Supports all major Word formats (DOC, DOCX, RTF, ODT)</li>
+                <li>Maintains exact formatting and layout</li>
+                <li>Preserves images, charts, and graphics</li>
+                <li>Handles complex documents with headers, footers, and footnotes</li>
+                <li>Supports multi-language documents including Hindi and regional languages</li>
+                <li>Batch processing for multiple files</li>
+                <li>Cloud-based processing for faster conversion</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin: 2rem 0;">
+            <button class="red-button" id="convert-btn" disabled>📄 Convert to PDF</button>
+            <div id="download-link-container" style="margin-top:1rem;"></div>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        const elements = {
+            uploadZone: document.getElementById('upload-zone'),
+            fileInput: document.getElementById('file-input'),
+            errorMessage: document.getElementById('error-message'),
+            convertBtn: document.getElementById('convert-btn'),
+            downloadLinkContainer: document.getElementById('download-link-container')
+        };
+
+        let selectedFile = null;
+
+        function showError(message) {
+            elements.errorMessage.textContent = message;
+            elements.errorMessage.style.display = 'block';
+            setTimeout(() => {
+                elements.errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function handleFileSelect(file) {
+            const supportedTypes = [
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/rtf',
+                'application/vnd.oasis.opendocument.text'
+            ];
+
+            if (!supportedTypes.includes(file.type) && !file.name.match(/\.(doc|docx|rtf|odt)$/i)) {
+                showError('Please select a valid Word document (DOC, DOCX, RTF, or ODT).');
+                return;
+            }
+
+            if (file.size > 50 * 1024 * 1024) { // 50MB limit
+                showError('File size too large. Please select a document under 50MB.');
+                return;
+            }
+
+            selectedFile = file;
+            elements.convertBtn.disabled = false;
+            elements.downloadLinkContainer.innerHTML = '';
+            elements.uploadZone.style.background = '#f0fff4';
+            elements.uploadZone.style.borderColor = '#28a745';
+            elements.uploadZone.innerHTML = `
+                <div style="color: #28a745;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
+                    <h3>Document Selected: ${file.name}</h3>
+                    <p>Size: ${(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                    <p>Type: ${getFileTypeDisplay(file.name)}</p>
+                    <p style="margin-top: 1rem; color: #28a745;">✅ Ready for conversion!</p>
+                </div>
+            `;
+        }
+
+        function getFileTypeDisplay(fileName) {
+            const extension = fileName.split('.').pop().toUpperCase();
+            const typeMap = {
+                'DOC': 'Microsoft Word 97-2003',
+                'DOCX': 'Microsoft Word',
+                'RTF': 'Rich Text Format',
+                'ODT': 'OpenDocument Text'
+            };
+            return typeMap[extension] || extension;
+        }
+
+        // Event listeners
+        elements.uploadZone.addEventListener('click', () => elements.fileInput.click());
+
+        elements.uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.add('dragover');
+        });
+
+        elements.uploadZone.addEventListener('dragleave', () => {
+            elements.uploadZone.classList.remove('dragover');
+        });
+
+        elements.uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+
+        elements.fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        // Clean backend conversion
+        elements.convertBtn.addEventListener('click', async () => {
+            if (!selectedFile) {
+                showError('Please select a Word document first.');
+                return;
+            }
+            
+            const originalText = elements.convertBtn.textContent;
+            showLoading(elements.convertBtn, 'Converting Word to PDF...');
+            elements.downloadLinkContainer.innerHTML = '';
+            
+            try {
+                // Use the clean convertWordToPDF function from script.js
+                const result = await convertWordToPDF(selectedFile);
+                showSuccess(result.message);
+                
+                // Reset the button
+                hideLoading(elements.convertBtn, originalText);
+                
+            } catch (error) {
+                showError('Conversion failed: ' + error.message);
+                hideLoading(elements.convertBtn, originalText);
+            }
+        });
+    </script>
+</body>
+</html>

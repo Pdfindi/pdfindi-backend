@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organize PDF - PDFINDI</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-page {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: color 0.3s;
+        }
+        .back-btn:hover {
+            color: #c0392b;
+        }
+        .upload-zone {
+            border: 3px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: #f8f9fa;
+            transition: all 0.3s;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+        .upload-zone:hover {
+            border-color: #e74c3c;
+            background: #fff5f5;
+        }
+        .upload-zone.dragover {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+        .upload-icon {
+            font-size: 3rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+        .pdf-info {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            display: none;
+        }
+        .organize-section {
+            margin: 2rem 0;
+            display: none;
+        }
+        .organize-controls {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .control-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #dee2e6;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        .control-btn:hover {
+            background: #e74c3c;
+            color: white;
+            border-color: #e74c3c;
+        }
+        .pages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .page-item {
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: move;
+            transition: all 0.3s;
+            position: relative;
+            user-select: none;
+        }
+        .page-item:hover {
+            border-color: #e74c3c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .page-item.selected {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+        .page-item.deleted {
+            opacity: 0.5;
+            border-color: #dc3545;
+            background: #fff5f5;
+        }
+        .page-item.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+        .page-thumbnail {
+            width: 100%;
+            height: 120px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        .page-number {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+        .page-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        .page-action-btn {
+            padding: 0.25rem 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+        .delete-btn:hover {
+            background: #c82333;
+        }
+        .restore-btn {
+            background: #28a745;
+            color: white;
+        }
+        .restore-btn:hover {
+            background: #218838;
+        }
+        .duplicate-btn {
+            background: #17a2b8;
+            color: white;
+        }
+        .duplicate-btn:hover {
+            background: #138496;
+        }
+        .drag-indicator {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #6c757d;
+            color: white;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.7rem;
+        }
+        .drop-zone {
+            border: 2px dashed #28a745;
+            background: #f0fff4;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            color: #28a745;
+            margin: 0.5rem;
+        }
+        .summary-section {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            display: none;
+        }
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 6px;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #e74c3c;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .processing {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #e74c3c;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .download-section {
+            text-align: center;
+            margin: 2rem 0;
+            display: none;
+        }
+        .download-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 0.5rem;
+        }
+        .download-btn:hover {
+            background: #218838;
+        }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            margin: 1rem 0;
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .organize-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .pages-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-btn">
+            ← Back to Tools
+        </a>
+        
+        <div class="tool-header">
+            <div class="tool-icon">🗂️</div>
+            <h1>Organize PDF</h1>
+            <p>Reorder, delete, or duplicate pages in your PDF document</p>
+        </div>
+
+        <div class="upload-zone" id="upload-zone">
+            <div class="upload-icon">📄</div>
+            <h3>Click to upload or drag & drop PDF</h3>
+            <p>Maximum file size: 25MB</p>
+            <input type="file" id="file-input" accept=".pdf" style="display: none;">
+        </div>
+
+        <div class="error-message" id="error-message"></div>
+
+        <div class="pdf-info" id="pdf-info">
+            <h3>📄 PDF Information</h3>
+            <div class="info-grid">
+                <p><strong>File Name:</strong> <span id="file-name">-</span></p>
+                <p><strong>File Size:</strong> <span id="file-size">-</span></p>
+                <p><strong>Total Pages:</strong> <span id="total-pages">-</span></p>
+            </div>
+        </div>
+
+        <div class="organize-section" id="organize-section">
+            <div class="organize-controls">
+                <div style="font-weight: 600;">Quick Actions:</div>
+                <button class="control-btn" id="select-all-btn">Select All</button>
+                <button class="control-btn" id="select-none-btn">Deselect All</button>
+                <button class="control-btn" id="delete-selected-btn">Delete Selected</button>
+                <button class="control-btn" id="restore-all-btn">Restore All</button>
+                <button class="control-btn" id="reverse-order-btn">Reverse Order</button>
+            </div>
+
+            <div class="summary-section" id="summary-section">
+                <h4>📊 Organization Summary</h4>
+                <div class="summary-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-pages-stat">0</div>
+                        <div class="stat-label">Total Pages</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="active-pages-stat">0</div>
+                        <div class="stat-label">Active Pages</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="deleted-pages-stat">0</div>
+                        <div class="stat-label">Deleted Pages</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="duplicated-pages-stat">0</div>
+                        <div class="stat-label">Duplicated Pages</div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>📑 Drag to reorder pages, click to select, use buttons to organize:</h4>
+            <div class="pages-grid" id="pages-grid"></div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="red-button" id="apply-changes-btn">✅ Apply Changes & Create PDF</button>
+            </div>
+        </div>
+
+        <div class="processing" id="processing">
+            <div class="spinner"></div>
+            <p id="processing-text">Organizing PDF...</p>
+        </div>
+
+        <div class="download-section" id="download-section">
+            <h3>✅ PDF Organized Successfully!</h3>
+            <p id="result-info">Your organized PDF is ready for download</p>
+            <button class="download-btn" id="download-btn">📥 Download Organized PDF</button>
+            <button class="red-button" id="organize-new-btn">🗂️ Organize Another PDF</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script>
+        let uploadedPDF = null;
+        let totalPages = 0;
+        let pages = [];
+        let organizedPDFBlob = null;
+
+        const elements = {
+            uploadZone: document.getElementById('upload-zone'),
+            fileInput: document.getElementById('file-input'),
+            errorMessage: document.getElementById('error-message'),
+            pdfInfo: document.getElementById('pdf-info'),
+            fileName: document.getElementById('file-name'),
+            fileSize: document.getElementById('file-size'),
+            totalPagesSpan: document.getElementById('total-pages'),
+            organizeSection: document.getElementById('organize-section'),
+            selectAllBtn: document.getElementById('select-all-btn'),
+            selectNoneBtn: document.getElementById('select-none-btn'),
+            deleteSelectedBtn: document.getElementById('delete-selected-btn'),
+            restoreAllBtn: document.getElementById('restore-all-btn'),
+            reverseOrderBtn: document.getElementById('reverse-order-btn'),
+            summarySection: document.getElementById('summary-section'),
+            totalPagesStat: document.getElementById('total-pages-stat'),
+            activePagesStat: document.getElementById('active-pages-stat'),
+            deletedPagesStat: document.getElementById('deleted-pages-stat'),
+            duplicatedPagesStat: document.getElementById('duplicated-pages-stat'),
+            pagesGrid: document.getElementById('pages-grid'),
+            applyChangesBtn: document.getElementById('apply-changes-btn'),
+            processing: document.getElementById('processing'),
+            processingText: document.getElementById('processing-text'),
+            downloadSection: document.getElementById('download-section'),
+            resultInfo: document.getElementById('result-info'),
+            downloadBtn: document.getElementById('download-btn'),
+            organizeNewBtn: document.getElementById('organize-new-btn')
+        };
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showError(message) {
+            elements.errorMessage.textContent = message;
+            elements.errorMessage.style.display = 'block';
+            setTimeout(() => {
+                elements.errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function handleFileSelect(file) {
+            if (file.type !== 'application/pdf') {
+                showError('Please select a valid PDF file.');
+                return;
+            }
+
+            if (file.size > 25 * 1024 * 1024) { // 25MB limit
+                showError('File size too large. Please select a PDF under 25MB.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    uploadedPDF = await PDFLib.PDFDocument.load(e.target.result);
+                    totalPages = uploadedPDF.getPageCount();
+                    
+                    elements.fileName.textContent = file.name;
+                    elements.fileSize.textContent = formatFileSize(file.size);
+                    elements.totalPagesSpan.textContent = totalPages;
+                    
+                    initializePages();
+                    
+                    elements.pdfInfo.style.display = 'block';
+                    elements.organizeSection.style.display = 'block';
+                    elements.summarySection.style.display = 'block';
+                    
+                    renderPages();
+                    updateStats();
+                } catch (error) {
+                    console.error('Error loading PDF:', error);
+                    showError('Failed to load PDF. Please ensure it\'s a valid PDF file.');
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function initializePages() {
+            pages = [];
+            for (let i = 1; i <= totalPages; i++) {
+                pages.push({
+                    id: `page-${i}`,
+                    originalNumber: i,
+                    currentNumber: i,
+                    deleted: false,
+                    selected: false,
+                    duplicated: false
+                });
+            }
+        }
+
+        function renderPages() {
+            elements.pagesGrid.innerHTML = '';
+            
+            pages.forEach((page, index) => {
+                const pageElement = document.createElement('div');
+                pageElement.className = `page-item ${page.selected ? 'selected' : ''} ${page.deleted ? 'deleted' : ''}`;
+                pageElement.dataset.pageId = page.id;
+                pageElement.draggable = !page.deleted;
+                
+                pageElement.innerHTML = `
+                    <div class="drag-indicator">⋮⋮</div>
+                    <div class="page-thumbnail">
+                        <span style="font-size: 1.5rem;">📄</span>
+                        ${page.duplicated ? '<div style="position: absolute; top: 2px; left: 2px; background: #17a2b8; color: white; padding: 1px 4px; border-radius: 2px; font-size: 0.6rem;">COPY</div>' : ''}
+                    </div>
+                    <div class="page-number">Page ${page.originalNumber}</div>
+                    <div class="page-actions">
+                        ${!page.deleted ? `
+                            <button class="page-action-btn delete-btn" onclick="deletePage('${page.id}')">🗑️</button>
+                            <button class="page-action-btn duplicate-btn" onclick="duplicatePage('${page.id}')">📋</button>
+                        ` : `
+                            <button class="page-action-btn restore-btn" onclick="restorePage('${page.id}')">↺</button>
+                        `}
+                    </div>
+                `;
+                
+                // Add event listeners
+                pageElement.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('page-action-btn') && !page.deleted) {
+                        togglePageSelection(page.id);
+                    }
+                });
+
+                // Drag and drop events
+                pageElement.addEventListener('dragstart', (e) => {
+                    if (!page.deleted) {
+                        e.dataTransfer.setData('text/plain', page.id);
+                        pageElement.classList.add('dragging');
+                    }
+                });
+
+                pageElement.addEventListener('dragend', () => {
+                    pageElement.classList.remove('dragging');
+                });
+
+                pageElement.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                });
+
+                pageElement.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const draggedId = e.dataTransfer.getData('text/plain');
+                    const droppedId = page.id;
+                    
+                    if (draggedId !== droppedId) {
+                        reorderPages(draggedId, droppedId);
+                    }
+                });
+                
+                elements.pagesGrid.appendChild(pageElement);
+            });
+        }
+
+        function togglePageSelection(pageId) {
+            const page = pages.find(p => p.id === pageId);
+            if (page && !page.deleted) {
+                page.selected = !page.selected;
+                renderPages();
+                updateStats();
+            }
+        }
+
+        function deletePage(pageId) {
+            const page = pages.find(p => p.id === pageId);
+            if (page) {
+                page.deleted = true;
+                page.selected = false;
+                renderPages();
+                updateStats();
+            }
+        }
+
+        function restorePage(pageId) {
+            const page = pages.find(p => p.id === pageId);
+            if (page) {
+                page.deleted = false;
+                renderPages();
+                updateStats();
+            }
+        }
+
+        function duplicatePage(pageId) {
+            const page = pages.find(p => p.id === pageId);
+            if (page && !page.deleted) {
+                const duplicatedPage = {
+                    id: `page-${page.originalNumber}-dup-${Date.now()}`,
+                    originalNumber: page.originalNumber,
+                    currentNumber: page.originalNumber,
+                    deleted: false,
+                    selected: false,
+                    duplicated: true
+                };
+                
+                const pageIndex = pages.findIndex(p => p.id === pageId);
+                pages.splice(pageIndex + 1, 0, duplicatedPage);
+                
+                renderPages();
+                updateStats();
+            }
+        }
+
+        function selectAll() {
+            pages.forEach(page => {
+                if (!page.deleted) {
+                    page.selected = true;
+                }
+            });
+            renderPages();
+            updateStats();
+        }
+
+        function selectNone() {
+            pages.forEach(page => {
+                page.selected = false;
+            });
+            renderPages();
+            updateStats();
+        }
+
+        function deleteSelected() {
+            pages.forEach(page => {
+                if (page.selected) {
+                    page.deleted = true;
+                    page.selected = false;
+                }
+            });
+            renderPages();
+            updateStats();
+        }
+
+        function restoreAll() {
+            pages.forEach(page => {
+                page.deleted = false;
+            });
+            renderPages();
+            updateStats();
+        }
+
+        function reverseOrder() {
+            const activePages = pages.filter(p => !p.deleted);
+            const deletedPages = pages.filter(p => p.deleted);
+            
+            pages = [...activePages.reverse(), ...deletedPages];
+            renderPages();
+            updateStats();
+        }
+
+        function reorderPages(draggedId, droppedId) {
+            const draggedIndex = pages.findIndex(p => p.id === draggedId);
+            const droppedIndex = pages.findIndex(p => p.id === droppedId);
+            
+            const draggedPage = pages.splice(draggedIndex, 1)[0];
+            pages.splice(droppedIndex, 0, draggedPage);
+            
+            renderPages();
+        }
+
+        function updateStats() {
+            const totalPagesCount = pages.length;
+            const activePages = pages.filter(p => !p.deleted).length;
+            const deletedPages = pages.filter(p => p.deleted).length;
+            const duplicatedPages = pages.filter(p => p.duplicated).length;
+            
+            elements.totalPagesStat.textContent = totalPagesCount;
+            elements.activePagesStat.textContent = activePages;
+            elements.deletedPagesStat.textContent = deletedPages;
+            elements.duplicatedPagesStat.textContent = duplicatedPages;
+        }
+
+        async function applyChanges() {
+            const activePages = pages.filter(p => !p.deleted);
+            
+            if (activePages.length === 0) {
+                showError('Cannot create PDF with no pages. Please restore at least one page.');
+                return;
+            }
+
+            elements.processing.style.display = 'block';
+            elements.processingText.textContent = 'Creating organized PDF...';
+
+            try {
+                const newPDF = await PDFLib.PDFDocument.create();
+                const originalPages = uploadedPDF.getPages();
+                
+                for (let i = 0; i < activePages.length; i++) {
+                    const page = activePages[i];
+                    elements.processingText.textContent = `Processing page ${i + 1} of ${activePages.length}...`;
+                    
+                    const originalPageIndex = page.originalNumber - 1;
+                    const [copiedPage] = await newPDF.copyPages(uploadedPDF, [originalPageIndex]);
+                    newPDF.addPage(copiedPage);
+                }
+
+                elements.processingText.textContent = 'Finalizing PDF...';
+                const pdfBytes = await newPDF.save();
+                organizedPDFBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+                elements.processing.style.display = 'none';
+                elements.resultInfo.textContent = 
+                    `Organized PDF created with ${activePages.length} pages • ${formatFileSize(organizedPDFBlob.size)}`;
+                elements.downloadSection.style.display = 'block';
+
+            } catch (error) {
+                console.error('Error organizing PDF:', error);
+                showError('Failed to organize PDF. Please try again.');
+                elements.processing.style.display = 'none';
+            }
+        }
+
+        function downloadOrganizedPDF() {
+            if (!organizedPDFBlob) return;
+
+            const url = URL.createObjectURL(organizedPDFBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `organized-pdf-${Date.now()}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function resetTool() {
+            uploadedPDF = null;
+            totalPages = 0;
+            pages = [];
+            organizedPDFBlob = null;
+            
+            elements.pdfInfo.style.display = 'none';
+            elements.organizeSection.style.display = 'none';
+            elements.summarySection.style.display = 'none';
+            elements.downloadSection.style.display = 'none';
+            elements.processing.style.display = 'none';
+        }
+
+        // Event listeners
+        elements.uploadZone.addEventListener('click', () => elements.fileInput.click());
+
+        elements.uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.add('dragover');
+        });
+
+        elements.uploadZone.addEventListener('dragleave', () => {
+            elements.uploadZone.classList.remove('dragover');
+        });
+
+        elements.uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+
+        elements.fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        elements.selectAllBtn.addEventListener('click', selectAll);
+        elements.selectNoneBtn.addEventListener('click', selectNone);
+        elements.deleteSelectedBtn.addEventListener('click', deleteSelected);
+        elements.restoreAllBtn.addEventListener('click', restoreAll);
+        elements.reverseOrderBtn.addEventListener('click', reverseOrder);
+        elements.applyChangesBtn.addEventListener('click', applyChanges);
+        elements.downloadBtn.addEventListener('click', downloadOrganizedPDF);
+        elements.organizeNewBtn.addEventListener('click', resetTool);
+
+        // Make functions global for onclick handlers
+        window.deletePage = deletePage;
+        window.restorePage = restorePage;
+        window.duplicatePage = duplicatePage;
+    </script>
+</body>
+</html>

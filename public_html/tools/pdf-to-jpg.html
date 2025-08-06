@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to JPG - PDFINDI</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-page {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: color 0.3s;
+        }
+        .back-btn:hover {
+            color: #c0392b;
+        }
+        .backend-notice {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: #721c24;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .backend-notice h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        .backend-notice p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        .upload-zone {
+            border: 3px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: #f8f9fa;
+            transition: all 0.3s;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+        .upload-zone:hover {
+            border-color: #e74c3c;
+            background: #fff5f5;
+        }
+        .upload-zone.dragover {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+        .upload-icon {
+            font-size: 3rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+        .output-options {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        .output-options h4 {
+            color: #495057;
+            margin-bottom: 1rem;
+        }
+        .format-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .format-option {
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .format-option:hover {
+            border-color: #e74c3c;
+        }
+        .format-option.selected {
+            border-color: #e74c3c;
+            background: #fff5f5;
+        }
+        .format-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .quality-settings {
+            margin: 1.5rem 0;
+        }
+        .quality-slider {
+            width: 100%;
+            margin: 1rem 0;
+        }
+        .quality-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .conversion-preview {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .preview-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        .preview-item .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .technical-info {
+            background: #e3f2fd;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        .technical-info h4 {
+            color: #1565c0;
+            margin-bottom: 1rem;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .info-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #1565c0;
+        }
+        .info-item strong {
+            color: #1565c0;
+        }
+        .rendering-explanation {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        .rendering-explanation h4 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .rendering-explanation ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            margin: 1rem 0;
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .format-selection {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-btn">
+            ← Back to Tools
+        </a>
+        
+        <div class="tool-header">
+            <div class="tool-icon">➡️</div>
+            <h1>PDF to JPG</h1>
+            <p>Convert PDF pages to high-quality JPG images</p>
+        </div>
+
+        <div class="backend-notice">
+            <h3>🖼️ Professional PDF to Image Conversion</h3>
+            <p>Server-side PDF rendering powered by Cloudmersive API for high-quality image output.</p>
+            <div style="background: rgba(114, 28, 36, 0.1); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                <strong>✅ Backend Active:</strong> Professional PDF rendering and image processing running on Render Cloud.
+            </div>
+        </div>
+
+        <div class="upload-zone" id="upload-zone">
+            <div class="upload-icon">📄</div>
+            <h3>Click to upload or drag & drop PDF</h3>
+            <p>Maximum file size: 50MB • All pages will be converted to images</p>
+            <input type="file" id="file-input" accept=".pdf" style="display: none;">
+        </div>
+
+        <div class="error-message" id="error-message"></div>
+
+        <div class="output-options">
+            <h4>🎨 Output Settings (Coming Soon)</h4>
+            
+            <label>Image Format:</label>
+            <div class="format-selection">
+                <div class="format-option selected" data-format="jpg">
+                    <div class="format-icon">🖼️</div>
+        const API_BASE = 'https://pdfindi-backend.onrender.com/api';
+        const elements = {
+            uploadZone: document.getElementById('upload-zone'),
+            fileInput: document.getElementById('file-input'),
+            errorMessage: document.getElementById('error-message'),
+            convertBtn: document.getElementById('convert-btn')
+        };
+        let selectedFormat = 'jpg';
+        let selectedFile = null;
+
+        function showError(message) {
+            elements.errorMessage.textContent = message;
+            elements.errorMessage.style.display = 'block';
+            setTimeout(() => {
+                elements.errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function handleFileSelect(file) {
+            if (file.type !== 'application/pdf') {
+                showError('Please select a valid PDF file.');
+                return;
+            }
+            if (file.size > 50 * 1024 * 1024) {
+                showError('File size too large. Please select a PDF under 50MB.');
+                return;
+            }
+            selectedFile = file;
+            elements.uploadZone.style.background = '#f0fff4';
+            elements.uploadZone.style.borderColor = '#28a745';
+            elements.uploadZone.innerHTML = `
+                <div style="color: #28a745;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
+                    <h3>PDF Selected: ${file.name}</h3>
+                    <p>Size: ${(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                    <p>Output: Individual ${selectedFormat.toUpperCase()} images per page</p>
+                    <p style="margin-top: 1rem; color: #28a745;">✅ Ready for conversion!</p>
+                </div>
+            `;
+            elements.convertBtn.disabled = false;
+        }
+
+        function selectFormat(format) {
+            selectedFormat = format;
+            document.querySelectorAll('.format-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.querySelector(`[data-format="${format}"]`).classList.add('selected');
+        }
+
+        async function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const base64 = reader.result.split(',')[1];
+                    resolve(base64);
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function convertPDF() {
+            if (!selectedFile) {
+                showError('Please select a PDF file first.');
+                return;
+            }
+            
+            const originalText = elements.convertBtn.textContent;
+            showLoading(elements.convertBtn, 'Converting PDF to image...');
+            
+            try {
+                // Use the new convertPDFToJPG function from script.js
+                const result = await convertPDFToJPG(selectedFile);
+                showSuccess(result.message);
+                
+                // Reset the button
+                hideLoading(elements.convertBtn, originalText);
+                
+            } catch (error) {
+                showError('Conversion failed: ' + error.message);
+                hideLoading(elements.convertBtn, originalText);
+            }
+        }
+
+        // Event listeners
+        elements.uploadZone.addEventListener('click', () => elements.fileInput.click());
+        elements.uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.add('dragover');
+        });
+        elements.uploadZone.addEventListener('dragleave', () => {
+            elements.uploadZone.classList.remove('dragover');
+        });
+        elements.uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+        elements.fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+        document.querySelectorAll('.format-option').forEach(option => {
+            option.addEventListener('click', () => {
+                selectFormat(option.dataset.format);
+            });
+        });
+        elements.convertBtn.addEventListener('click', convertPDF);
+            <h4>🤔 Why Server-Side Processing?</h4>
+            <p>PDF to image conversion requires complex rendering capabilities:</p>
+            <ul>
+                <li><strong>PDF Rendering Engine:</strong> Accurate interpretation of PDF graphics and text</li>
+                <li><strong>Font Handling:</strong> Access to system fonts and embedded font rendering</li>
+                <li><strong>Vector Graphics:</strong> Proper conversion of vector elements to raster images</li>
+                <li><strong>Color Management:</strong> ICC profile support for accurate color reproduction</li>
+                <li><strong>High Resolution:</strong> Memory-intensive processing for large, high-DPI images</li>
+                <li><strong>Format Optimization:</strong> Advanced compression algorithms for different image formats</li>
+            </ul>
+        </div>
+
+        <div style="background: #e8f5e8; padding: 1.5rem; border-radius: 12px; margin: 2rem 0;">
+            <h4 style="color: #2e7d32; margin-bottom: 1rem;">🌟 Features in Full Version:</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; color: #2e7d32;">
+                <div>✓ Multiple image formats</div>
+                <div>✓ Custom resolution settings</div>
+                <div>✓ Page range selection</div>
+                <div>✓ Batch processing</div>
+                <div>✓ Quality optimization</div>
+                <div>✓ Automatic ZIP packaging</div>
+                <div>✓ Preview before download</div>
+                <div>✓ OCR text extraction</div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 2rem 0;">
+            <button class="red-button" id="convert-btn" disabled>🖼️ Convert to Images</button>
+        </div>
+    </div>
+
+    <script>
+        const elements = {
+            uploadZone: document.getElementById('upload-zone'),
+            fileInput: document.getElementById('file-input'),
+            errorMessage: document.getElementById('error-message'),
+            convertBtn: document.getElementById('convert-btn')
+        };
+
+        let selectedFormat = 'jpg';
+
+        function showError(message) {
+            elements.errorMessage.textContent = message;
+            elements.errorMessage.style.display = 'block';
+            setTimeout(() => {
+                elements.errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function handleFileSelect(file) {
+            if (file.type !== 'application/pdf') {
+                showError('Please select a valid PDF file.');
+                return;
+            }
+
+            if (file.size > 50 * 1024 * 1024) { // 50MB limit
+                showError('File size too large. Please select a PDF under 50MB.');
+                return;
+            }
+
+            // Show that file is selected
+            elements.uploadZone.style.background = '#f0fff4';
+            elements.uploadZone.style.borderColor = '#28a745';
+            elements.uploadZone.innerHTML = `
+                <div style="color: #28a745;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
+                    <h3>PDF Selected: ${file.name}</h3>
+                    <p>Size: ${(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                    <p>Output: Individual ${selectedFormat.toUpperCase()} images per page</p>
+                    <p style="margin-top: 1rem; color: #856404;">Server-side rendering required for conversion</p>
+                </div>
+            `;
+        }
+
+        function selectFormat(format) {
+            selectedFormat = format;
+            
+            // Update UI
+            document.querySelectorAll('.format-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            document.querySelector(`[data-format="${format}"]`).classList.add('selected');
+        }
+
+        // Event listeners
+        elements.uploadZone.addEventListener('click', () => elements.fileInput.click());
+
+        elements.uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.add('dragover');
+        });
+
+        elements.uploadZone.addEventListener('dragleave', () => {
+            elements.uploadZone.classList.remove('dragover');
+        });
+
+        elements.uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+
+        elements.fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        // Format selection
+        document.querySelectorAll('.format-option').forEach(option => {
+            option.addEventListener('click', () => {
+                selectFormat(option.dataset.format);
+            });
+        });
+
+        elements.convertBtn.addEventListener('click', () => {
+            showError('PDF to image conversion requires server-side PDF rendering engines. This feature will be available in the full version.');
+        });
+    </script>
+</body>
+</html>

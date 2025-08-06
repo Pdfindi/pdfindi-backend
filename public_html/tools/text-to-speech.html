@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Speech - PDFINDI</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-page {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: color 0.3s;
+        }
+        .back-btn:hover {
+            color: #c0392b;
+        }
+        .speech-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .speech-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        .speech-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .speak-btn {
+            background: #28a745;
+            color: white;
+        }
+        .speak-btn:hover {
+            background: #218838;
+        }
+        .speak-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        .pause-btn {
+            background: #ffc107;
+            color: #212529;
+        }
+        .pause-btn:hover {
+            background: #e0a800;
+        }
+        .stop-btn {
+            background: #dc3545;
+            color: white;
+        }
+        .stop-btn:hover {
+            background: #c82333;
+        }
+        .speaking-indicator {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 1rem 0;
+            display: none;
+        }
+        .speaking-indicator.active {
+            display: block;
+        }
+        .voice-preview {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .unsupported {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            text-align: center;
+        }
+        .range-display {
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-align: center;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-btn">
+            ← Back to Tools
+        </a>
+        
+        <div class="tool-header">
+            <div class="tool-icon">🗣️</div>
+            <h1>Text to Speech</h1>
+            <p>Convert your text to natural speech using your browser's built-in voices</p>
+        </div>
+
+        <div class="tool-ui-container">
+            <div id="unsupported-message" class="unsupported" style="display: none;">
+                ❌ Text-to-Speech is not supported in your browser. Please try a modern browser like Chrome, Firefox, or Safari.
+            </div>
+
+            <div id="tts-interface">
+                <label for="text-input">Enter text to speak:</label>
+                <textarea id="text-input" rows="8" placeholder="Type or paste the text you want to hear spoken aloud...">Hello! Welcome to PDFINDI's Text to Speech tool. This tool can read any text aloud using your browser's built-in speech synthesis.</textarea>
+
+                <div class="speech-controls">
+                    <div class="control-group">
+                        <label for="voice-select">Voice:</label>
+                        <select id="voice-select">
+                            <option>Loading voices...</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="rate-control">Speed:</label>
+                        <input type="range" id="rate-control" min="0.5" max="2" value="1" step="0.1">
+                        <div class="range-display" id="rate-display">1.0x</div>
+                    </div>
+                    <div class="control-group">
+                        <label for="pitch-control">Pitch:</label>
+                        <input type="range" id="pitch-control" min="0.5" max="2" value="1" step="0.1">
+                        <div class="range-display" id="pitch-display">1.0</div>
+                    </div>
+                    <div class="control-group">
+                        <label for="volume-control">Volume:</label>
+                        <input type="range" id="volume-control" min="0" max="1" value="1" step="0.1">
+                        <div class="range-display" id="volume-display">100%</div>
+                    </div>
+                </div>
+
+                <div class="speech-buttons">
+                    <button id="speak-btn" class="speech-btn speak-btn">
+                        ▶️ Speak
+                    </button>
+                    <button id="pause-btn" class="speech-btn pause-btn" disabled>
+                        ⏸️ Pause
+                    </button>
+                    <button id="resume-btn" class="speech-btn pause-btn" disabled>
+                        ▶️ Resume
+                    </button>
+                    <button id="stop-btn" class="speech-btn stop-btn" disabled>
+                        ⏹️ Stop
+                    </button>
+                </div>
+
+                <div id="speaking-indicator" class="speaking-indicator">
+                    🔊 Speaking... <span id="progress-text"></span>
+                </div>
+
+                <div class="voice-preview">
+                    <strong>Voice Preview:</strong>
+                    <p id="voice-info">Select a voice to see details</p>
+                    <button id="test-voice-btn" class="red-button secondary" style="margin-top: 0.5rem;">Test Voice</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const synth = window.speechSynthesis;
+        let voices = [];
+        let currentUtterance = null;
+
+        const elements = {
+            textInput: document.getElementById('text-input'),
+            voiceSelect: document.getElementById('voice-select'),
+            rateControl: document.getElementById('rate-control'),
+            pitchControl: document.getElementById('pitch-control'),
+            volumeControl: document.getElementById('volume-control'),
+            rateDisplay: document.getElementById('rate-display'),
+            pitchDisplay: document.getElementById('pitch-display'),
+            volumeDisplay: document.getElementById('volume-display'),
+            speakBtn: document.getElementById('speak-btn'),
+            pauseBtn: document.getElementById('pause-btn'),
+            resumeBtn: document.getElementById('resume-btn'),
+            stopBtn: document.getElementById('stop-btn'),
+            speakingIndicator: document.getElementById('speaking-indicator'),
+            progressText: document.getElementById('progress-text'),
+            voiceInfo: document.getElementById('voice-info'),
+            testVoiceBtn: document.getElementById('test-voice-btn'),
+            unsupportedMessage: document.getElementById('unsupported-message'),
+            ttsInterface: document.getElementById('tts-interface')
+        };
+
+        function checkSupport() {
+            if (!synth) {
+                elements.unsupportedMessage.style.display = 'block';
+                elements.ttsInterface.style.display = 'none';
+                return false;
+            }
+            return true;
+        }
+
+        function loadVoices() {
+            voices = synth.getVoices();
+            elements.voiceSelect.innerHTML = '';
+            
+            if (voices.length === 0) {
+                elements.voiceSelect.innerHTML = '<option>No voices available</option>';
+                return;
+            }
+
+            // Group voices by language
+            const grouped = {};
+            voices.forEach((voice, index) => {
+                const lang = voice.lang.split('-')[0];
+                if (!grouped[lang]) grouped[lang] = [];
+                grouped[lang].push({ voice, index });
+            });
+
+            Object.keys(grouped).sort().forEach(lang => {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = lang.toUpperCase();
+                
+                grouped[lang].forEach(({ voice, index }) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = `${voice.name} (${voice.lang})`;
+                    if (voice.default) option.selected = true;
+                    optgroup.appendChild(option);
+                });
+                
+                elements.voiceSelect.appendChild(optgroup);
+            });
+
+            updateVoiceInfo();
+        }
+
+        function updateVoiceInfo() {
+            const selectedIndex = elements.voiceSelect.value;
+            if (selectedIndex && voices[selectedIndex]) {
+                const voice = voices[selectedIndex];
+                elements.voiceInfo.innerHTML = `
+                    <strong>${voice.name}</strong><br>
+                    Language: ${voice.lang}<br>
+                    ${voice.localService ? 'Local' : 'Remote'} • ${voice.default ? 'Default' : 'Alternative'}
+                `;
+            }
+        }
+
+        function updateDisplays() {
+            elements.rateDisplay.textContent = `${elements.rateControl.value}x`;
+            elements.pitchDisplay.textContent = elements.pitchControl.value;
+            elements.volumeDisplay.textContent = `${Math.round(elements.volumeControl.value * 100)}%`;
+        }
+
+        function speak() {
+            const text = elements.textInput.value.trim();
+            if (!text) {
+                alert('Please enter some text to speak.');
+                return;
+            }
+
+            if (synth.speaking) {
+                synth.cancel();
+            }
+
+            currentUtterance = new SpeechSynthesisUtterance(text);
+            
+            // Set voice
+            const selectedIndex = elements.voiceSelect.value;
+            if (selectedIndex && voices[selectedIndex]) {
+                currentUtterance.voice = voices[selectedIndex];
+            }
+
+            // Set properties
+            currentUtterance.rate = parseFloat(elements.rateControl.value);
+            currentUtterance.pitch = parseFloat(elements.pitchControl.value);
+            currentUtterance.volume = parseFloat(elements.volumeControl.value);
+
+            // Event handlers
+            currentUtterance.onstart = () => {
+                updateButtonStates('speaking');
+                elements.speakingIndicator.classList.add('active');
+                elements.progressText.textContent = 'Starting...';
+            };
+
+            currentUtterance.onend = () => {
+                updateButtonStates('idle');
+                elements.speakingIndicator.classList.remove('active');
+            };
+
+            currentUtterance.onerror = (event) => {
+                console.error('Speech error:', event);
+                updateButtonStates('idle');
+                elements.speakingIndicator.classList.remove('active');
+                alert('Speech synthesis error occurred.');
+            };
+
+            currentUtterance.onpause = () => {
+                updateButtonStates('paused');
+            };
+
+            currentUtterance.onresume = () => {
+                updateButtonStates('speaking');
+            };
+
+            synth.speak(currentUtterance);
+        }
+
+        function pause() {
+            if (synth.speaking && !synth.paused) {
+                synth.pause();
+            }
+        }
+
+        function resume() {
+            if (synth.paused) {
+                synth.resume();
+            }
+        }
+
+        function stop() {
+            if (synth.speaking) {
+                synth.cancel();
+            }
+        }
+
+        function testVoice() {
+            const tempText = elements.textInput.value;
+            elements.textInput.value = 'Hello! This is a test of the selected voice. How does it sound?';
+            speak();
+            setTimeout(() => {
+                elements.textInput.value = tempText;
+            }, 1000);
+        }
+
+        function updateButtonStates(state) {
+            elements.speakBtn.disabled = state === 'speaking';
+            elements.pauseBtn.disabled = state !== 'speaking';
+            elements.resumeBtn.disabled = state !== 'paused';
+            elements.stopBtn.disabled = state === 'idle';
+        }
+
+        // Event listeners
+        elements.speakBtn.addEventListener('click', speak);
+        elements.pauseBtn.addEventListener('click', pause);
+        elements.resumeBtn.addEventListener('click', resume);
+        elements.stopBtn.addEventListener('click', stop);
+        elements.testVoiceBtn.addEventListener('click', testVoice);
+        elements.voiceSelect.addEventListener('change', updateVoiceInfo);
+
+        [elements.rateControl, elements.pitchControl, elements.volumeControl].forEach(control => {
+            control.addEventListener('input', updateDisplays);
+        });
+
+        // Initialize
+        if (checkSupport()) {
+            // Load voices when they become available
+            if (voices.length === 0) {
+                synth.addEventListener('voiceschanged', loadVoices);
+            }
+            loadVoices();
+            updateDisplays();
+            updateButtonStates('idle');
+        }
+    </script>
+</body>
+</html>

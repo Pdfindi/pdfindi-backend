@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Word - PDFINDI</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-page {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: color 0.3s;
+        }
+        .back-btn:hover {
+            color: #c0392b;
+        }
+        .backend-notice {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .backend-notice h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        .backend-notice p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        .upload-zone {
+            border: 3px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: #f8f9fa;
+            transition: all 0.3s;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+        .upload-zone:hover {
+            border-color: #e74c3c;
+            background: #fff5f5;
+        }
+        .upload-zone.dragover {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+        .upload-icon {
+            font-size: 3rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #dee2e6;
+            text-align: center;
+        }
+        .feature-card .icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #e74c3c;
+        }
+        .feature-card h4 {
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card p {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        .conversion-options {
+            background: #e3f2fd;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        .conversion-options h4 {
+            color: #1565c0;
+            margin-bottom: 1rem;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .option-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #90caf9;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .option-item input[type="checkbox"] {
+            width: auto;
+        }
+        .why-server {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        .why-server h4 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .why-server ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        .why-server li {
+            margin: 0.5rem 0;
+        }
+        .demo-conversion {
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .conversion-flow {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .flow-step {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 120px;
+        }
+        .flow-arrow {
+            font-size: 1.5rem;
+        }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            margin: 1rem 0;
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .conversion-flow {
+                flex-direction: column;
+            }
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-btn">
+            ← Back to Tools
+        </a>
+        
+        <div class="tool-header">
+            <div class="tool-icon">📄</div>
+            <h1>PDF to Word</h1>
+            <p>Convert PDF documents to editable Microsoft Word format</p>
+        </div>
+
+        <div class="backend-notice">
+            <h3>🚀 Advanced PDF to Word Conversion</h3>
+            <p>Professional server-side processing powered by Cloudmersive API for accurate text extraction and formatting preservation.</p>
+            <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                <strong>✅ Backend Active:</strong> High-quality OCR and document reconstruction algorithms running on Render Cloud.
+            </div>
+        </div>
+
+        <div class="upload-zone" id="upload-zone">
+            <div class="upload-icon">📄</div>
+            <h3>Click to upload or drag & drop PDF</h3>
+            <p>Maximum file size: 50MB • Supports scanned and text-based PDFs</p>
+            <input type="file" id="file-input" accept=".pdf" style="display: none;">
+        </div>
+
+        <div class="error-message" id="error-message"></div>
+
+        <div class="demo-conversion">
+            <h3>🔄 Conversion Process</h3>
+            <div class="conversion-flow">
+                <div class="flow-step">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📄</div>
+                    <div>Upload PDF</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔍</div>
+                    <div>Text Analysis</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚙️</div>
+                    <div>Format Conversion</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📝</div>
+                    <div>Word Document</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="icon">🎯</div>
+                <h4>High Accuracy</h4>
+                <p>Advanced OCR technology for precise text extraction from both digital and scanned PDFs</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🎨</div>
+                <h4>Format Preservation</h4>
+                <p>Maintains original formatting, fonts, layouts, and styling elements</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">📊</div>
+                <h4>Table Recognition</h4>
+                <p>Intelligently converts PDF tables to editable Word tables</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🖼️</div>
+                <h4>Image Handling</h4>
+                <p>Preserves images and graphics with proper positioning</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🌐</div>
+                <h4>Multi-Language</h4>
+                <p>Supports multiple languages including Hindi, English, and regional languages</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">⚡</div>
+                <h4>Batch Processing</h4>
+                <p>Convert multiple PDF files to Word documents simultaneously</p>
+            </div>
+        </div>
+
+        <div class="conversion-options">
+            <h4>⚙️ Conversion Settings (Coming Soon)</h4>
+            <div class="options-grid">
+                <div class="option-item">
+                    <input type="checkbox" id="preserve-layout" checked disabled>
+                    <label for="preserve-layout">Preserve Layout</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="ocr-scanned" checked disabled>
+                    <label for="ocr-scanned">OCR for Scanned PDFs</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="extract-images" checked disabled>
+                    <label for="extract-images">Extract Images</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="maintain-fonts" checked disabled>
+                    <label for="maintain-fonts">Maintain Fonts</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="why-server">
+            <h4>🤔 Why Server-Side Processing?</h4>
+            <p>PDF to Word conversion requires sophisticated algorithms that browsers cannot handle:</p>
+            <ul>
+                <li><strong>OCR Technology:</strong> Optical Character Recognition for scanned documents</li>
+                <li><strong>Layout Analysis:</strong> Complex document structure understanding</li>
+                <li><strong>Font Matching:</strong> Access to extensive font libraries</li>
+                <li><strong>Table Detection:</strong> AI-powered table recognition and reconstruction</li>
+                <li><strong>Memory Intensive:</strong> Large PDF processing requires significant RAM</li>
+                <li><strong>Specialized Libraries:</strong> Professional document conversion engines</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin: 2rem 0;">
+            <button class="red-button" id="convert-btn" disabled>📝 Convert to Word (Server Required)</button>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        // Clean PDF to Word conversion using backend
+        const elements = {
+            uploadZone: document.getElementById('upload-zone'),
+            fileInput: document.getElementById('file-input'),
+            errorMessage: document.getElementById('error-message'),
+            convertBtn: document.getElementById('convert-btn'),
+            downloadLinkContainer: document.createElement('div')
+        };
+        elements.downloadLinkContainer.id = 'download-link-container';
+        elements.uploadZone.parentNode.appendChild(elements.downloadLinkContainer);
+
+        let selectedFile = null;
+
+        function handleFileSelect(file) {
+            if (file.type !== 'application/pdf') {
+                showError('Please select a valid PDF file.');
+                return;
+            }
+            if (file.size > 50 * 1024 * 1024) {
+                showError('File size too large. Please select a PDF under 50MB.');
+                return;
+            }
+            selectedFile = file;
+            elements.convertBtn.disabled = false;
+            elements.downloadLinkContainer.innerHTML = '';
+            elements.uploadZone.style.background = '#f0fff4';
+            elements.uploadZone.style.borderColor = '#28a745';
+            elements.uploadZone.innerHTML = `
+                <div style="color: #28a745;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
+                    <h3>PDF Selected: ${file.name}</h3>
+                    <p>Size: ${(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                </div>
+            `;
+        }
+
+        // Event listeners
+        elements.uploadZone.addEventListener('click', () => elements.fileInput.click());
+        elements.uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.add('dragover');
+        });
+        elements.uploadZone.addEventListener('dragleave', () => {
+            elements.uploadZone.classList.remove('dragover');
+        });
+        elements.uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+        elements.fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        // Clean backend conversion
+        elements.convertBtn.addEventListener('click', async () => {
+            if (!selectedFile) {
+                showError('Please select a PDF file first.');
+                return;
+            }
+            
+            const originalText = elements.convertBtn.textContent;
+            showLoading(elements.convertBtn, 'Converting PDF to Word...');
+            elements.downloadLinkContainer.innerHTML = '';
+            
+            try {
+                // Use the clean convertPDFToWord function from script.js
+                const result = await convertPDFToWord(selectedFile);
+                showSuccess(result.message);
+                
+                // Reset the button
+                hideLoading(elements.convertBtn, originalText);
+                
+            } catch (error) {
+                showError('Conversion failed: ' + error.message);
+                hideLoading(elements.convertBtn, originalText);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image OCR - Extract Text - PDFINDI</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-page {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: color 0.3s;
+        }
+        .back-btn:hover {
+            color: #c0392b;
+        }
+        .backend-notice {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .backend-notice h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        .backend-notice p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        .upload-zone {
+            border: 3px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: #f8f9fa;
+            transition: all 0.3s;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+        .upload-zone:hover {
+            border-color: #e74c3c;
+            background: #fff5f5;
+        }
+        .upload-zone.dragover {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+        .upload-icon {
+            font-size: 3rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+        .supported-formats {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        .format-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .text-output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            display: none;
+        }
+        .text-output h4 {
+            color: #495057;
+            margin-bottom: 1rem;
+        }
+        .extracted-text {
+            background: white;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            padding: 1rem;
+            min-height: 200px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .text-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .copy-btn, .download-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .copy-btn {
+            background: #007bff;
+            color: white;
+        }
+        .copy-btn:hover {
+            background: #0056b3;
+        }
+        .download-btn {
+            background: #28a745;
+            color: white;
+        }
+        .download-btn:hover {
+            background: #1e7e34;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+        .feature-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card h4 {
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card p {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            margin: 1rem 0;
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .supported-formats {
+                justify-content: center;
+            }
+            .text-actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-btn">
+            ← Back to Tools
+        </a>
+        
+        <div class="tool-header">
+            <div class="tool-icon">🔍</div>
+            <h1>Image OCR - Extract Text</h1>
+            <p>Extract text from images using advanced OCR technology</p>
+        </div>
+
+        <div class="backend-notice">
+            <h3>🚀 Professional OCR Text Extraction</h3>
+            <p>Advanced server-side OCR powered by Cloudmersive API for accurate text recognition from images.</p>
+            <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                <strong>✅ Backend Active:</strong> Professional OCR algorithms running on Render Cloud with multi-language support.
+            </div>
+        </div>
+
+        <div class="upload-zone" id="upload-zone">
+            <div class="upload-icon">🖼️</div>
+            <h3>Click to upload or drag & drop image</h3>
+            <div class="supported-formats">
+                <span class="format-badge">JPEG</span>
+                <span class="format-badge">PNG</span>
+                <span class="format-badge">GIF</span>
+                <span class="format-badge">BMP</span>
+                <span class="format-badge">TIFF</span>
+                <span class="format-badge">WebP</span>
+            </div>
+            <p>Maximum file size: 50MB</p>
+            <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff,.webp" style="display: none;">
+        </div>
+
+        <div class="error-message" id="error-message"></div>
+
+        <div class="text-output" id="text-output">
+            <h4>📝 Extracted Text:</h4>
+            <div class="extracted-text" id="extracted-text"></div>
+            <div class="text-actions">
+                <button class="copy-btn" id="copy-btn">📋 Copy Text</button>
+                <button class="download-btn" id="download-btn">💾 Download as TXT</button>
+            </div>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="icon">🎯</div>
+                <h4>High Accuracy</h4>
+                <p>Advanced OCR technology with high accuracy for printed text recognition</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🌐</div>
+                <h4>Multi-Language</h4>
+                <p>Supports multiple languages including English, Hindi, and regional languages</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">📄</div>
+                <h4>Document Ready</h4>
+                <p>Perfect for extracting text from scanned documents, receipts, and screenshots</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">⚡</div>
+                <h4>Fast Processing</h4>
+                <p>Quick text extraction with server-side processing for optimal performance</p>
+            </div>
+        </div>
+
+        <div style="background: #e8f5e8; padding: 1.5rem; border-radius: 12px; margin: 2rem 0;">
+            <h4 style="color: #2e7d32; margin-bottom: 1rem;">🌟 Perfect for:</h4>
+            <ul style="color: #2e7d32; margin: 0; padding-left: 1.5rem;">
+                <li>Extracting text from scanned documents</li>
+                <li>Converting screenshots to editable text</li>
+                <li>Digitizing printed materials</li>
+                <li>Processing receipts and invoices</li>
+                <li>Converting handwritten notes to text</li>
+                <li>Extracting text from photos with text content</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin: 2rem 0;">
+            <button class="red-button" id="extract-btn" disabled>🔍 Extract Text</button>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        const elements = {
+            uploadZone: document.getElementById('upload-zone'),
+            fileInput: document.getElementById('file-input'),
+            errorMessage: document.getElementById('error-message'),
+            extractBtn: document.getElementById('extract-btn'),
+            textOutput: document.getElementById('text-output'),
+            extractedText: document.getElementById('extracted-text'),
+            copyBtn: document.getElementById('copy-btn'),
+            downloadBtn: document.getElementById('download-btn')
+        };
+
+        let selectedFile = null;
+        let extractedTextContent = '';
+
+        function showError(message) {
+            elements.errorMessage.textContent = message;
+            elements.errorMessage.style.display = 'block';
+            setTimeout(() => {
+                elements.errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function handleFileSelect(file) {
+            const supportedTypes = [
+                'image/jpeg',
+                'image/jpg',
+                'image/png',
+                'image/gif',
+                'image/bmp',
+                'image/tiff',
+                'image/webp'
+            ];
+
+            if (!supportedTypes.includes(file.type) && !file.name.match(/\.(jpg|jpeg|png|gif|bmp|tiff|webp)$/i)) {
+                showError('Please select a valid image file (JPEG, PNG, GIF, BMP, TIFF, WebP).');
+                return;
+            }
+
+            if (file.size > 50 * 1024 * 1024) { // 50MB limit
+                showError('File size too large. Please select an image under 50MB.');
+                return;
+            }
+
+            selectedFile = file;
+            elements.extractBtn.disabled = false;
+            elements.textOutput.style.display = 'none';
+            elements.uploadZone.style.background = '#f0fff4';
+            elements.uploadZone.style.borderColor = '#28a745';
+            elements.uploadZone.innerHTML = `
+                <div style="color: #28a745;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
+                    <h3>Image Selected: ${file.name}</h3>
+                    <p>Size: ${(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                    <p>Type: ${getFileTypeDisplay(file.name)}</p>
+                    <p style="margin-top: 1rem; color: #28a745;">✅ Ready for text extraction!</p>
+                </div>
+            `;
+        }
+
+        function getFileTypeDisplay(fileName) {
+            const extension = fileName.split('.').pop().toUpperCase();
+            const typeMap = {
+                'JPG': 'JPEG Image',
+                'JPEG': 'JPEG Image', 
+                'PNG': 'PNG Image',
+                'GIF': 'GIF Image',
+                'BMP': 'Bitmap Image',
+                'TIFF': 'TIFF Image',
+                'WEBP': 'WebP Image'
+            };
+            return typeMap[extension] || extension + ' Image';
+        }
+
+        function copyToClipboard() {
+            navigator.clipboard.writeText(extractedTextContent).then(() => {
+                const originalText = elements.copyBtn.textContent;
+                elements.copyBtn.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    elements.copyBtn.textContent = originalText;
+                }, 2000);
+            }).catch(() => {
+                showError('Failed to copy text to clipboard');
+            });
+        }
+
+        function downloadAsText() {
+            const blob = new Blob([extractedTextContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = selectedFile ? selectedFile.name.replace(/\.(jpg|jpeg|png|gif|bmp|tiff|webp)$/i, '.txt') : 'extracted-text.txt';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        }
+
+        // Event listeners
+        elements.uploadZone.addEventListener('click', () => elements.fileInput.click());
+
+        elements.uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.add('dragover');
+        });
+
+        elements.uploadZone.addEventListener('dragleave', () => {
+            elements.uploadZone.classList.remove('dragover');
+        });
+
+        elements.uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+
+        elements.fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        elements.copyBtn.addEventListener('click', copyToClipboard);
+        elements.downloadBtn.addEventListener('click', downloadAsText);
+
+        // OCR extraction
+        elements.extractBtn.addEventListener('click', async () => {
+            if (!selectedFile) {
+                showError('Please select an image file first.');
+                return;
+            }
+            
+            const originalText = elements.extractBtn.textContent;
+            showLoading(elements.extractBtn, 'Extracting text...');
+            
+            try {
+                // Use the new extractTextFromImage function from script.js
+                const result = await extractTextFromImage(selectedFile);
+                
+                extractedTextContent = result.extractedText;
+                elements.extractedText.textContent = extractedTextContent || 'No text found in the image.';
+                elements.textOutput.style.display = 'block';
+                
+                showSuccess(result.message);
+                
+                // Reset the button
+                hideLoading(elements.extractBtn, originalText);
+                
+            } catch (error) {
+                showError('Text extraction failed: ' + error.message);
+                hideLoading(elements.extractBtn, originalText);
+            }
+        });
+    </script>
+</body>
+</html>

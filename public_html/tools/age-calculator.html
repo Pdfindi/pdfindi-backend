@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator - PDFINDI</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-page {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: color 0.3s;
+        }
+        .back-btn:hover {
+            color: #c0392b;
+        }
+        .age-result {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .age-main {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .age-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .age-detail {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .age-detail-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .age-detail-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        .date-input {
+            max-width: 200px;
+            margin: 0 auto;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-btn">
+            ← Back to Tools
+        </a>
+        
+        <div class="tool-header">
+            <div class="tool-icon">🎂</div>
+            <h1>Age Calculator</h1>
+            <p>Calculate your exact age in years, months, days, and more</p>
+        </div>
+
+        <div class="tool-ui-container">
+            <label for="birthdate">Enter your Date of Birth:</label>
+            <input type="date" id="birthdate" class="date-input">
+            
+            <button class="red-button" id="calculate-btn" style="max-width: 200px; margin: 1rem auto;">Calculate Age</button>
+            
+            <div id="age-result" class="age-result hidden">
+                <div class="age-main" id="age-main">You are 25 years old!</div>
+                
+                <div class="age-details">
+                    <div class="age-detail">
+                        <div class="age-detail-number" id="years">25</div>
+                        <div class="age-detail-label">Years</div>
+                    </div>
+                    <div class="age-detail">
+                        <div class="age-detail-number" id="months">300</div>
+                        <div class="age-detail-label">Months</div>
+                    </div>
+                    <div class="age-detail">
+                        <div class="age-detail-number" id="days">9125</div>
+                        <div class="age-detail-label">Days</div>
+                    </div>
+                    <div class="age-detail">
+                        <div class="age-detail-number" id="hours">219000</div>
+                        <div class="age-detail-label">Hours</div>
+                    </div>
+                    <div class="age-detail">
+                        <div class="age-detail-number" id="minutes">13140000</div>
+                        <div class="age-detail-label">Minutes</div>
+                    </div>
+                    <div class="age-detail">
+                        <div class="age-detail-number" id="seconds">788400000</div>
+                        <div class="age-detail-label">Seconds</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="next-birthday" class="output-area hidden">
+                <strong>Next Birthday:</strong> <span id="next-birthday-text"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const birthdateInput = document.getElementById('birthdate');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const ageResult = document.getElementById('age-result');
+        const nextBirthday = document.getElementById('next-birthday');
+        const ageMain = document.getElementById('age-main');
+        const yearsSpan = document.getElementById('years');
+        const monthsSpan = document.getElementById('months');
+        const daysSpan = document.getElementById('days');
+        const hoursSpan = document.getElementById('hours');
+        const minutesSpan = document.getElementById('minutes');
+        const secondsSpan = document.getElementById('seconds');
+        const nextBirthdayText = document.getElementById('next-birthday-text');
+
+        // Set max date to today
+        const today = new Date().toISOString().split('T')[0];
+        birthdateInput.max = today;
+
+        function calculateAge() {
+            const birthdate = new Date(birthdateInput.value);
+            const now = new Date();
+            
+            if (!birthdateInput.value) {
+                alert('Please select your birth date.');
+                return;
+            }
+            
+            if (birthdate > now) {
+                alert('Birth date cannot be in the future.');
+                return;
+            }
+            
+            // Calculate exact age
+            let years = now.getFullYear() - birthdate.getFullYear();
+            let months = now.getMonth() - birthdate.getMonth();
+            let days = now.getDate() - birthdate.getDate();
+            
+            if (days < 0) {
+                months--;
+                days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+            }
+            
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            // Calculate total values
+            const totalMonths = years * 12 + months;
+            const totalDays = Math.floor((now - birthdate) / (1000 * 60 * 60 * 24));
+            const totalHours = totalDays * 24;
+            const totalMinutes = totalHours * 60;
+            const totalSeconds = totalMinutes * 60;
+            
+            // Calculate next birthday
+            const nextBirthdayYear = now.getFullYear();
+            let nextBirthdayDate = new Date(nextBirthdayYear, birthdate.getMonth(), birthdate.getDate());
+            
+            if (nextBirthdayDate < now) {
+                nextBirthdayDate = new Date(nextBirthdayYear + 1, birthdate.getMonth(), birthdate.getDate());
+            }
+            
+            const daysToNextBirthday = Math.ceil((nextBirthdayDate - now) / (1000 * 60 * 60 * 24));
+            
+            // Update UI
+            ageMain.textContent = `You are ${years} years old!`;
+            yearsSpan.textContent = years;
+            monthsSpan.textContent = totalMonths.toLocaleString();
+            daysSpan.textContent = totalDays.toLocaleString();
+            hoursSpan.textContent = totalHours.toLocaleString();
+            minutesSpan.textContent = totalMinutes.toLocaleString();
+            secondsSpan.textContent = totalSeconds.toLocaleString();
+            
+            nextBirthdayText.textContent = `${daysToNextBirthday} days from now (${nextBirthdayDate.toLocaleDateString()})`;
+            
+            ageResult.classList.remove('hidden');
+            nextBirthday.classList.remove('hidden');
+        }
+
+        calculateBtn.addEventListener('click', calculateAge);
+        
+        // Allow Enter key to calculate
+        birthdateInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                calculateAge();
+            }
+        });
+    </script>
+</body>
+</html>

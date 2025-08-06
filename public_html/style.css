@@ -1,0 +1,84 @@
+:root {
+    --bg-main: #f8f9fa;
+    --bg-container: #ffffff;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --accent-red: #d9232d;
+    --border-color: #dee2e6;
+    --font-main: 'Roboto', sans-serif;
+    --sidebar-width: 260px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-main); background-color: var(--bg-main); color: var(--text-secondary); min-height: 100vh; }
+.wrapper { display: grid; grid-template-areas: "sidebar header" "sidebar main"; grid-template-columns: var(--sidebar-width) 1fr; grid-template-rows: auto 1fr; min-height: 100vh; }
+
+/* Accessibility Focus */
+:is(a, button, input, select, textarea):focus-visible {
+    outline: 2px solid var(--accent-red);
+    outline-offset: 2px;
+}
+
+.header { grid-area: header; background-color: var(--bg-container); height: 70px; display: flex; align-items: center; border-bottom: 1px solid var(--border-color); padding: 0 1.5rem; }
+.sidebar { grid-area: sidebar; background-color: var(--bg-container); border-right: 1px solid var(--border-color); padding: 1.5rem; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; width: var(--sidebar-width); height: 100%; z-index: 1100; transition: transform 0.3s ease; }
+.sidebar-logo { display: flex; align-items: center; gap: 0.75rem; padding: 0 0.5rem 1.5rem 0.5rem; border-bottom: 1px solid var(--border-color); margin-bottom: 1rem; }
+.logo-icon { background-color: var(--accent-red); color: white; font-weight: 700; font-size: 1.2rem; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
+.logo-text { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
+.sidebar-nav { list-style: none; flex-grow: 1; overflow-y: auto; }
+.sidebar-nav a { display: flex; align-items: center; gap: 1rem; padding: 0.7rem 1rem; border-radius: 8px; font-weight: 500; color: var(--text-primary); text-decoration: none; transition: background-color 0.2s; cursor: pointer; }
+.sidebar-nav a:hover, .sidebar-nav a.active { background-color: #eef2f5; }
+.sidebar-nav .icon { width: 20px; height: 20px; color: var(--text-secondary); }
+.sidebar-nav a:hover .icon, .sidebar-nav a.active .icon { color: var(--accent-red); }
+.main-content { grid-area: main; padding: 3rem; }
+.page { display: none; } .page.active { display: block; }
+.hero-section { background-color: var(--bg-container); padding: 4rem; border-radius: 12px; margin-bottom: 3rem; border: 1px solid var(--border-color); }
+.hero-section h1 { font-size: 3.5rem; font-weight: 900; color: var(--text-primary); }
+.hero-section p { font-size: 1.1rem; max-width: 550px; line-height: 1.6; margin-bottom: 2rem; }
+.red-button { background-color: var(--accent-red); color: white; border: none; padding: 1rem 2rem; font-size: 1rem; font-weight: 700; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; display: inline-flex; justify-content: center; align-items: center; gap: 0.5rem; }
+.red-button:hover { background-color: #b81c25; }
+.tools-section h2, .page-container h1 { font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; color: var(--text-primary); }
+.tools-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.tool-card { background-color: var(--bg-container); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; text-align: center; transition: all 0.2s ease; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+.tool-card:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.tool-card.simulated::after { content: 'Backend Required'; position: absolute; top: 10px; right: -40px; background: #666; color: white; padding: 4px 40px; font-size: 0.7rem; font-weight: bold; text-align: center; transform: rotate(45deg); }
+.tool-card .card-icon { font-size: 2.5rem; margin-bottom: 1rem; color: var(--accent-red); }
+.tool-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); }
+.tool-card p { font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1; }
+.tool-card .open-tool-btn { width: 100%; padding: 0.7rem 1.5rem; border: 1px solid var(--border-color); background-color: #f8f9fa; font-weight: 500; border-radius: 8px; cursor: pointer; transition: all 0.2s; margin-top: auto; color: var(--text-primary); }
+.tool-card .open-tool-btn:hover { background-color: var(--accent-red); color: white; border-color: var(--accent-red); }
+.page-container { background-color: #fff; padding: 2.5rem; border-radius: 12px; }
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+.blog-post-card { border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
+.blog-post-card img { width: 100%; height: 200px; object-fit: cover; }
+.blog-post-card-content { padding: 1.5rem; } .blog-post-card-content h3 { font-size: 1.25rem; color: var(--text-primary); }
+.contact-form { max-width: 600px; margin: 2rem auto 0; } .form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-primary); }
+.form-group input, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; }
+.modal-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+.modal-container.active { opacity: 1; pointer-events: auto; }
+.modal-content { background-color: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); }
+.modal-header h2 { color: var(--accent-red); font-size: 1.5rem; display: flex; align-items: center; gap: 1rem;}
+.close-modal { background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--text-secondary); padding: 0; line-height: 1; }
+.tool-ui-container { display: flex; flex-direction: column; gap: 1.5rem; }
+.tool-ui-container textarea, .tool-ui-container input, .tool-ui-container select { width: 100%; padding: 0.75rem; background-color: #f9f9f9; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; }
+.output-area { background-color: #f0f0f0; padding: 1rem; border-radius: 8px; min-height: 100px; white-space: pre-wrap; word-wrap: break-word; }
+.disclaimer { background-color: #fffbe6; border: 1px solid #ffe58f; padding: 1rem; border-radius: 8px; }
+.button-group { display: flex; gap: 1rem; } .button-group .red-button { flex: 1; }
+.red-button.secondary { background-color: #fff; color: var(--accent-red); border: 1px solid var(--border-color); }
+.red-button.secondary:hover { background-color: #f8f9fa; }
+.red-button:disabled { background-color: #ccc; cursor: not-allowed; border-color: #ccc; color: #666; }
+.spinner { width: 1em; height: 1em; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+#color-picker-wrapper { position: relative; } #color-canvas { display: block; max-width: 100%; cursor: crosshair; border: 1px solid var(--border-color); }
+#color-result { display:flex; align-items:center; gap:1rem; padding: 0.5rem; background-color:#f0f0f0; border-radius: 8px; } #color-swatch { width:40px; height:40px; border:1px solid #ccc; border-radius: 4px; } #color-code { flex-grow:1; font-weight:bold; cursor:pointer; }
+.hamburger-button { display: none; }
+@media (max-width: 992px) { 
+    .wrapper { grid-template-columns: 1fr; grid-template-areas: "header" "main"; } 
+    .header { justify-content: flex-end; } 
+    .sidebar { transform: translateX(-100%); } 
+    .sidebar.open { transform: translateX(0); } 
+    .hamburger-button { display: block; background: none; border: none; font-size: 1.5rem; cursor: pointer; z-index: 1300; } 
+}
+
+/* Updated CSS to match https://pdfindi.com/ */

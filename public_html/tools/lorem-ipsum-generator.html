@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum Generator - PDFINDI</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-page {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: color 0.3s;
+        }
+        .back-btn:hover {
+            color: #c0392b;
+        }
+        .generator-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .type-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .type-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #dee2e6;
+            background: #f8f9fa;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        .type-btn.active {
+            background: #e74c3c;
+            color: white;
+            border-color: #e74c3c;
+        }
+        .result-section {
+            margin-top: 2rem;
+        }
+        .lorem-output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1.5rem;
+            min-height: 300px;
+            max-height: 500px;
+            overflow-y: auto;
+            font-family: Georgia, serif;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-btn">
+            ← Back to Tools
+        </a>
+        
+        <div class="tool-header">
+            <div class="tool-icon">¶</div>
+            <h1>Lorem Ipsum Generator</h1>
+            <p>Generate placeholder text for your designs and layouts</p>
+        </div>
+
+        <div class="tool-ui-container">
+            <div class="type-selector">
+                <button class="type-btn active" data-type="paragraphs">Paragraphs</button>
+                <button class="type-btn" data-type="words">Words</button>
+                <button class="type-btn" data-type="sentences">Sentences</button>
+                <button class="type-btn" data-type="lists">Lists</button>
+            </div>
+
+            <div class="generator-options">
+                <div class="option-group">
+                    <label for="count">Number of <span id="count-label">paragraphs</span>:</label>
+                    <input type="number" id="count" value="3" min="1" max="100">
+                </div>
+                <div class="option-group">
+                    <label for="start-with-lorem">Start with "Lorem ipsum":</label>
+                    <select id="start-with-lorem">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+                <div class="option-group">
+                    <label for="sentence-length">Sentence length:</label>
+                    <select id="sentence-length">
+                        <option value="short">Short</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="long">Long</option>
+                        <option value="mixed">Mixed</option>
+                    </select>
+                </div>
+                <div class="option-group">
+                    <label for="format">Format:</label>
+                    <select id="format">
+                        <option value="plain">Plain Text</option>
+                        <option value="html">HTML</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button id="generate-btn" class="red-button">Generate Lorem Ipsum</button>
+                <button id="copy-btn" class="red-button secondary">Copy Text</button>
+                <button id="clear-btn" class="red-button secondary">Clear</button>
+            </div>
+
+            <div class="result-section">
+                <label>Generated Text:</label>
+                <div class="lorem-output" id="lorem-output">Click "Generate Lorem Ipsum" to create placeholder text...</div>
+                <div class="stats">
+                    <span>Words: <strong id="word-count">0</strong></span>
+                    <span>Characters: <strong id="char-count">0</strong></span>
+                    <span>Reading time: <strong id="reading-time">0 min</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const loremWords = [
+            'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit',
+            'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore',
+            'magna', 'aliqua', 'enim', 'ad', 'minim', 'veniam', 'quis', 'nostrud',
+            'exercitation', 'ullamco', 'laboris', 'nisi', 'aliquip', 'ex', 'ea', 'commodo',
+            'consequat', 'duis', 'aute', 'irure', 'in', 'reprehenderit', 'voluptate',
+            'velit', 'esse', 'cillum', 'fugiat', 'nulla', 'pariatur', 'excepteur', 'sint',
+            'occaecat', 'cupidatat', 'non', 'proident', 'sunt', 'culpa', 'qui', 'officia',
+            'deserunt', 'mollit', 'anim', 'id', 'est', 'laborum', 'at', 'vero', 'eos',
+            'accusamus', 'accusantium', 'doloremque', 'laudantium', 'totam', 'rem',
+            'aperiam', 'eaque', 'ipsa', 'quae', 'ab', 'illo', 'inventore', 'veritatis',
+            'et', 'quasi', 'architecto', 'beatae', 'vitae', 'dicta', 'explicabo', 'nemo',
+            'ipsam', 'quia', 'voluptas', 'aspernatur', 'aut', 'odit', 'fugit'
+        ];
+
+        const elements = {
+            typeButtons: document.querySelectorAll('.type-btn'),
+            count: document.getElementById('count'),
+            countLabel: document.getElementById('count-label'),
+            startWithLorem: document.getElementById('start-with-lorem'),
+            sentenceLength: document.getElementById('sentence-length'),
+            format: document.getElementById('format'),
+            generateBtn: document.getElementById('generate-btn'),
+            copyBtn: document.getElementById('copy-btn'),
+            clearBtn: document.getElementById('clear-btn'),
+            output: document.getElementById('lorem-output'),
+            wordCount: document.getElementById('word-count'),
+            charCount: document.getElementById('char-count'),
+            readingTime: document.getElementById('reading-time')
+        };
+
+        let currentType = 'paragraphs';
+
+        function randomWord() {
+            return loremWords[Math.floor(Math.random() * loremWords.length)];
+        }
+
+        function generateSentence(length = 'medium') {
+            const lengths = {
+                short: [4, 8],
+                medium: [8, 15],
+                long: [15, 25],
+                mixed: [4, 25]
+            };
+            
+            const [min, max] = lengths[length];
+            const wordCount = Math.floor(Math.random() * (max - min + 1)) + min;
+            const words = [];
+            
+            for (let i = 0; i < wordCount; i++) {
+                words.push(randomWord());
+            }
+            
+            return words.join(' ').charAt(0).toUpperCase() + words.join(' ').slice(1) + '.';
+        }
+
+        function generateParagraph(sentenceCount = null, sentenceLength = 'medium') {
+            const count = sentenceCount || Math.floor(Math.random() * 4) + 3;
+            const sentences = [];
+            
+            for (let i = 0; i < count; i++) {
+                sentences.push(generateSentence(sentenceLength));
+            }
+            
+            return sentences.join(' ');
+        }
+
+        function generateWords(count) {
+            const words = [];
+            for (let i = 0; i < count; i++) {
+                words.push(randomWord());
+            }
+            return words.join(' ');
+        }
+
+        function generateSentences(count, length) {
+            const sentences = [];
+            for (let i = 0; i < count; i++) {
+                sentences.push(generateSentence(length));
+            }
+            return sentences.join(' ');
+        }
+
+        function generateList(count) {
+            const items = [];
+            for (let i = 0; i < count; i++) {
+                items.push('• ' + generateSentence('short').slice(0, -1));
+            }
+            return items.join('\n');
+        }
+
+        function generateLorem() {
+            const count = parseInt(elements.count.value);
+            const startWithLorem = elements.startWithLorem.value === 'true';
+            const sentenceLength = elements.sentenceLength.value;
+            const format = elements.format.value;
+            
+            let text = '';
+            
+            switch (currentType) {
+                case 'paragraphs':
+                    const paragraphs = [];
+                    for (let i = 0; i < count; i++) {
+                        let paragraph = generateParagraph(null, sentenceLength);
+                        if (i === 0 && startWithLorem) {
+                            paragraph = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ' + paragraph;
+                        }
+                        paragraphs.push(paragraph);
+                    }
+                    text = format === 'html' 
+                        ? paragraphs.map(p => `<p>${p}</p>`).join('\n\n')
+                        : paragraphs.join('\n\n');
+                    break;
+                    
+                case 'words':
+                    text = generateWords(count);
+                    if (startWithLorem) {
+                        text = 'Lorem ipsum dolor sit amet ' + text;
+                    }
+                    break;
+                    
+                case 'sentences':
+                    text = generateSentences(count, sentenceLength);
+                    if (startWithLorem) {
+                        text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ' + text;
+                    }
+                    break;
+                    
+                case 'lists':
+                    text = generateList(count);
+                    if (format === 'html') {
+                        const items = text.split('\n').map(item => `<li>${item.slice(2)}</li>`);
+                        text = `<ul>\n${items.join('\n')}\n</ul>`;
+                    }
+                    break;
+            }
+            
+            elements.output.textContent = text;
+            updateStats(text);
+        }
+
+        function updateStats(text) {
+            const plainText = text.replace(/<[^>]*>/g, '');
+            const words = plainText.trim().split(/\s+/).length;
+            const chars = plainText.length;
+            const readingTime = Math.ceil(words / 200);
+            
+            elements.wordCount.textContent = words;
+            elements.charCount.textContent = chars;
+            elements.readingTime.textContent = `${readingTime} min`;
+        }
+
+        function copyToClipboard() {
+            navigator.clipboard.writeText(elements.output.textContent).then(() => {
+                const originalText = elements.copyBtn.textContent;
+                elements.copyBtn.textContent = 'Copied!';
+                setTimeout(() => {
+                    elements.copyBtn.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        function clearOutput() {
+            elements.output.textContent = 'Click "Generate Lorem Ipsum" to create placeholder text...';
+            updateStats('');
+        }
+
+        // Event listeners
+        elements.typeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                elements.typeButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentType = btn.dataset.type;
+                elements.countLabel.textContent = currentType;
+                
+                // Adjust max count based on type
+                const maxCounts = { paragraphs: 50, words: 1000, sentences: 100, lists: 50 };
+                elements.count.max = maxCounts[currentType];
+                
+                if (parseInt(elements.count.value) > maxCounts[currentType]) {
+                    elements.count.value = maxCounts[currentType];
+                }
+            });
+        });
+
+        elements.generateBtn.addEventListener('click', generateLorem);
+        elements.copyBtn.addEventListener('click', copyToClipboard);
+        elements.clearBtn.addEventListener('click', clearOutput);
+
+        // Auto-generate on changes
+        [elements.count, elements.startWithLorem, elements.sentenceLength, elements.format].forEach(element => {
+            element.addEventListener('change', () => {
+                if (elements.output.textContent !== 'Click "Generate Lorem Ipsum" to create placeholder text...') {
+                    generateLorem();
+                }
+            });
+        });
+
+        // Generate initial content
+        generateLorem();
+    </script>
+</body>
+</html>

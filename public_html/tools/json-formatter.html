@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter - PDFINDI</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-page {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: color 0.3s;
+        }
+        .back-btn:hover {
+            color: #c0392b;
+        }
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .red-button.secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .red-button.secondary:hover {
+            background: #5a6268;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .success {
+            color: #155724;
+            background: #d4edda;
+            border-color: #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-btn">
+            ← Back to Tools
+        </a>
+        
+        <div class="tool-header">
+            <div class="tool-icon">{}︎</div>
+            <h1>JSON Formatter</h1>
+            <p>Format, validate, and beautify your JSON data</p>
+        </div>
+
+        <div class="tool-ui-container">
+            <label for="json-input">Paste your JSON here:</label>
+            <textarea id="json-input" rows="10" placeholder='{"name": "John", "age": 30, "city": "New York"}'></textarea>
+            
+            <div class="button-group">
+                <button id="format-btn" class="red-button">Format JSON</button>
+                <button id="minify-btn" class="red-button secondary">Minify JSON</button>
+                <button id="validate-btn" class="red-button secondary">Validate Only</button>
+                <button id="copy-btn" class="red-button secondary">Copy Result</button>
+                <button id="clear-btn" class="red-button secondary">Clear</button>
+            </div>
+            
+            <label>Formatted Result:</label>
+            <pre id="json-output">Your formatted JSON will appear here...</pre>
+        </div>
+    </div>
+
+    <script>
+        const jsonInput = document.getElementById('json-input');
+        const jsonOutput = document.getElementById('json-output');
+        const formatBtn = document.getElementById('format-btn');
+        const minifyBtn = document.getElementById('minify-btn');
+        const validateBtn = document.getElementById('validate-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const clearBtn = document.getElementById('clear-btn');
+
+        function copyToClipboard(text, button) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 2000);
+            }).catch(() => {
+                button.textContent = 'Failed';
+                setTimeout(() => {
+                    button.textContent = 'Copy Result';
+                }, 2000);
+            });
+        }
+
+        function resetOutput() {
+            jsonOutput.className = '';
+            jsonOutput.style.color = '';
+        }
+
+        formatBtn.addEventListener('click', () => {
+            try {
+                resetOutput();
+                const parsed = JSON.parse(jsonInput.value);
+                jsonOutput.textContent = JSON.stringify(parsed, null, 2);
+                jsonOutput.className = 'success';
+            } catch (error) {
+                jsonOutput.textContent = `Error: ${error.message}`;
+                jsonOutput.className = 'error';
+            }
+        });
+
+        minifyBtn.addEventListener('click', () => {
+            try {
+                resetOutput();
+                const parsed = JSON.parse(jsonInput.value);
+                jsonOutput.textContent = JSON.stringify(parsed);
+                jsonOutput.className = 'success';
+            } catch (error) {
+                jsonOutput.textContent = `Error: ${error.message}`;
+                jsonOutput.className = 'error';
+            }
+        });
+
+        validateBtn.addEventListener('click', () => {
+            try {
+                resetOutput();
+                JSON.parse(jsonInput.value);
+                jsonOutput.textContent = '✅ Valid JSON!';
+                jsonOutput.className = 'success';
+            } catch (error) {
+                jsonOutput.textContent = `❌ Invalid JSON: ${error.message}`;
+                jsonOutput.className = 'error';
+            }
+        });
+
+        copyBtn.addEventListener('click', () => {
+            copyToClipboard(jsonOutput.textContent, copyBtn);
+        });
+
+        clearBtn.addEventListener('click', () => {
+            jsonInput.value = '';
+            jsonOutput.textContent = 'Your formatted JSON will appear here...';
+            resetOutput();
+        });
+
+        // Auto-format on input (with debounce)
+        let timeout;
+        jsonInput.addEventListener('input', () => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                if (jsonInput.value.trim()) {
+                    formatBtn.click();
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>

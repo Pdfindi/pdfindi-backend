@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unlock PDF - PDFINDI</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-page {
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: color 0.3s;
+        }
+        .back-btn:hover {
+            color: #c0392b;
+        }
+        .upload-zone {
+            border: 3px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: #f8f9fa;
+            transition: all 0.3s;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+        .upload-zone:hover {
+            border-color: #e74c3c;
+            background: #fff5f5;
+        }
+        .upload-zone.dragover {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+        .upload-icon {
+            font-size: 3rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+        .pdf-info {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            display: none;
+        }
+        .unlock-section {
+            margin: 2rem 0;
+            display: none;
+        }
+        .password-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+        .password-section h4 {
+            margin: 0 0 1rem 0;
+            color: #495057;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .input-group {
+            margin: 1rem 0;
+        }
+        .input-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+        .password-input-group {
+            position: relative;
+        }
+        .password-input-group input {
+            width: 100%;
+            padding: 0.75rem 3rem 0.75rem 0.75rem;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .password-input-group input:focus {
+            outline: none;
+            border-color: #e74c3c;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6c757d;
+            font-size: 1.2rem;
+        }
+        .security-info {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            color: #1565c0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .security-info .icon {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .warning-box .icon {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: 500;
+        }
+        .status-locked {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status-unlocked {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .processing {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #e74c3c;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .download-section {
+            text-align: center;
+            margin: 2rem 0;
+            display: none;
+        }
+        .download-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 0.5rem;
+        }
+        .download-btn:hover {
+            background: #218838;
+        }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            margin: 1rem 0;
+            display: none;
+        }
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #c3e6cb;
+            margin: 1rem 0;
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .tool-page {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-btn">
+            ← Back to Tools
+        </a>
+        
+        <div class="tool-header">
+            <div class="tool-icon">🔓</div>
+            <h1>Unlock PDF</h1>
+            <p>Remove password protection from your PDF document</p>
+        </div>
+
+        <div class="upload-zone" id="upload-zone">
+            <div class="upload-icon">📄</div>
+            <h3>Click to upload or drag & drop PDF</h3>
+            <p>Maximum file size: 25MB</p>
+            <input type="file" id="file-input" accept=".pdf" style="display: none;">
+        </div>
+
+        <div class="error-message" id="error-message"></div>
+        <div class="success-message" id="success-message"></div>
+
+        <div class="pdf-info" id="pdf-info">
+            <h3>📄 PDF Information</h3>
+            <div class="info-grid">
+                <p><strong>File Name:</strong> <span id="file-name">-</span></p>
+                <p><strong>File Size:</strong> <span id="file-size">-</span></p>
+                <p><strong>Total Pages:</strong> <span id="total-pages">-</span></p>
+            </div>
+            <div id="pdf-status"></div>
+        </div>
+
+        <div class="unlock-section" id="unlock-section">
+            <div class="password-section">
+                <h4>🔑 Enter Password to Unlock</h4>
+                <p>Enter the password that was used to protect this PDF:</p>
+                
+                <div class="input-group">
+                    <label for="unlock-password">PDF Password</label>
+                    <div class="password-input-group">
+                        <input type="password" id="unlock-password" placeholder="Enter PDF password">
+                        <button type="button" class="password-toggle" onclick="togglePassword('unlock-password')">👁️</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <button class="red-button" id="unlock-pdf-btn">🔓 Unlock PDF</button>
+                </div>
+            </div>
+
+            <div class="security-info">
+                <span class="icon">🔒</span>
+                <strong>Security:</strong> All processing happens in your browser. Your password and PDF never leave your device.
+            </div>
+
+            <div class="warning-box">
+                <span class="icon">⚠️</span>
+                <strong>Note:</strong> This tool has limited capability for removing certain types of PDF encryption due to browser security restrictions. Some PDFs may require specialized software.
+            </div>
+        </div>
+
+        <div class="processing" id="processing">
+            <div class="spinner"></div>
+            <p id="processing-text">Unlocking PDF...</p>
+        </div>
+
+        <div class="download-section" id="download-section">
+            <h3>✅ PDF Unlocked Successfully!</h3>
+            <p id="result-info">Your unlocked PDF is ready for download</p>
+            <button class="download-btn" id="download-btn">📥 Download Unlocked PDF</button>
+            <button class="red-button" id="unlock-new-btn">🔓 Unlock Another PDF</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script>
+        let uploadedPDFBytes = null;
+        let uploadedFileName = '';
+        let unlockedPDFBlob = null;
+        let isPasswordProtected = false;
+
+        const elements = {
+            uploadZone: document.getElementById('upload-zone'),
+            fileInput: document.getElementById('file-input'),
+            errorMessage: document.getElementById('error-message'),
+            successMessage: document.getElementById('success-message'),
+            pdfInfo: document.getElementById('pdf-info'),
+            fileName: document.getElementById('file-name'),
+            fileSize: document.getElementById('file-size'),
+            totalPages: document.getElementById('total-pages'),
+            pdfStatus: document.getElementById('pdf-status'),
+            unlockSection: document.getElementById('unlock-section'),
+            unlockPassword: document.getElementById('unlock-password'),
+            unlockPdfBtn: document.getElementById('unlock-pdf-btn'),
+            processing: document.getElementById('processing'),
+            processingText: document.getElementById('processing-text'),
+            downloadSection: document.getElementById('download-section'),
+            resultInfo: document.getElementById('result-info'),
+            downloadBtn: document.getElementById('download-btn'),
+            unlockNewBtn: document.getElementById('unlock-new-btn')
+        };
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showError(message) {
+            elements.errorMessage.textContent = message;
+            elements.errorMessage.style.display = 'block';
+            elements.successMessage.style.display = 'none';
+            setTimeout(() => {
+                elements.errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            elements.successMessage.textContent = message;
+            elements.successMessage.style.display = 'block';
+            elements.errorMessage.style.display = 'none';
+            setTimeout(() => {
+                elements.successMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function updatePDFStatus(isLocked) {
+            const statusDiv = elements.pdfStatus;
+            statusDiv.innerHTML = '';
+            
+            const statusIndicator = document.createElement('div');
+            statusIndicator.className = isLocked ? 'status-indicator status-locked' : 'status-indicator status-unlocked';
+            
+            if (isLocked) {
+                statusIndicator.innerHTML = '<span>🔒</span> PDF is password protected';
+            } else {
+                statusIndicator.innerHTML = '<span>🔓</span> PDF is not password protected';
+            }
+            
+            statusDiv.appendChild(statusIndicator);
+        }
+
+        function handleFileSelect(file) {
+            if (file.type !== 'application/pdf') {
+                showError('Please select a valid PDF file.');
+                return;
+            }
+
+            if (file.size > 25 * 1024 * 1024) { // 25MB limit
+                showError('File size too large. Please select a PDF under 25MB.');
+                return;
+            }
+
+            uploadedFileName = file.name;
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    uploadedPDFBytes = e.target.result;
+                    
+                    // Try to load PDF without password first
+                    let pdf;
+                    try {
+                        pdf = await PDFLib.PDFDocument.load(uploadedPDFBytes);
+                        isPasswordProtected = false;
+                        
+                        elements.fileName.textContent = file.name;
+                        elements.fileSize.textContent = formatFileSize(file.size);
+                        elements.totalPages.textContent = pdf.getPageCount();
+                        
+                        updatePDFStatus(false);
+                        elements.pdfInfo.style.display = 'block';
+                        
+                        showSuccess('This PDF is not password protected. No unlocking needed!');
+                        
+                        // Offer download of the same file
+                        unlockedPDFBlob = new Blob([uploadedPDFBytes], { type: 'application/pdf' });
+                        elements.resultInfo.textContent = 
+                            `PDF is already unlocked • ${formatFileSize(unlockedPDFBlob.size)}`;
+                        elements.downloadSection.style.display = 'block';
+                        
+                    } catch (error) {
+                        // PDF is likely password protected
+                        isPasswordProtected = true;
+                        
+                        elements.fileName.textContent = file.name;
+                        elements.fileSize.textContent = formatFileSize(file.size);
+                        elements.totalPages.textContent = 'Protected';
+                        
+                        updatePDFStatus(true);
+                        elements.pdfInfo.style.display = 'block';
+                        elements.unlockSection.style.display = 'block';
+                    }
+                    
+                } catch (error) {
+                    console.error('Error loading PDF:', error);
+                    showError('Failed to load PDF. Please ensure it\'s a valid PDF file.');
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+            
+            const button = input.nextElementSibling;
+            button.textContent = type === 'password' ? '👁️' : '🙈';
+        }
+
+        async function unlockPDF() {
+            const password = elements.unlockPassword.value.trim();
+            
+            if (!password) {
+                showError('Please enter the PDF password.');
+                return;
+            }
+
+            if (!uploadedPDFBytes) {
+                showError('Please upload a PDF file first.');
+                return;
+            }
+
+            elements.processing.style.display = 'block';
+            elements.processingText.textContent = 'Attempting to unlock PDF...';
+
+            try {
+                // Try to load PDF with password
+                const pdf = await PDFLib.PDFDocument.load(uploadedPDFBytes, { password: password });
+                
+                elements.processingText.textContent = 'Creating unlocked PDF...';
+                
+                // Create a new PDF without password protection
+                const newPDF = await PDFLib.PDFDocument.create();
+                const totalPages = pdf.getPageCount();
+                
+                // Copy all pages
+                const pages = await newPDF.copyPages(pdf, Array.from({length: totalPages}, (_, i) => i));
+                pages.forEach(page => newPDF.addPage(page));
+                
+                elements.processingText.textContent = 'Finalizing unlocked PDF...';
+                
+                // Save without password
+                const pdfBytes = await newPDF.save();
+                unlockedPDFBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+                elements.processing.style.display = 'none';
+                elements.unlockSection.style.display = 'none';
+                
+                showSuccess('PDF unlocked successfully!');
+                
+                // Update PDF info
+                elements.totalPages.textContent = totalPages;
+                updatePDFStatus(false);
+                
+                elements.resultInfo.textContent = 
+                    `PDF unlocked successfully • ${totalPages} pages • ${formatFileSize(unlockedPDFBlob.size)}`;
+                elements.downloadSection.style.display = 'block';
+
+            } catch (error) {
+                console.error('Error unlocking PDF:', error);
+                elements.processing.style.display = 'none';
+                
+                if (error.message && error.message.includes('password')) {
+                    showError('Incorrect password. Please try again with the correct password.');
+                } else {
+                    showError('Failed to unlock PDF. The file may be corrupted or use unsupported encryption.');
+                }
+            }
+        }
+
+        function downloadUnlockedPDF() {
+            if (!unlockedPDFBlob) return;
+
+            const url = URL.createObjectURL(unlockedPDFBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            
+            // Create filename for unlocked PDF
+            const nameWithoutExt = uploadedFileName.replace(/\.pdf$/i, '');
+            a.download = `${nameWithoutExt}-unlocked.pdf`;
+            
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function resetTool() {
+            uploadedPDFBytes = null;
+            uploadedFileName = '';
+            unlockedPDFBlob = null;
+            isPasswordProtected = false;
+            
+            elements.pdfInfo.style.display = 'none';
+            elements.unlockSection.style.display = 'none';
+            elements.downloadSection.style.display = 'none';
+            elements.processing.style.display = 'none';
+            elements.errorMessage.style.display = 'none';
+            elements.successMessage.style.display = 'none';
+            
+            elements.unlockPassword.value = '';
+        }
+
+        // Event listeners
+        elements.uploadZone.addEventListener('click', () => elements.fileInput.click());
+
+        elements.uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.add('dragover');
+        });
+
+        elements.uploadZone.addEventListener('dragleave', () => {
+            elements.uploadZone.classList.remove('dragover');
+        });
+
+        elements.uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+
+        elements.fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        elements.unlockPassword.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                unlockPDF();
+            }
+        });
+
+        elements.unlockPdfBtn.addEventListener('click', unlockPDF);
+        elements.downloadBtn.addEventListener('click', downloadUnlockedPDF);
+        elements.unlockNewBtn.addEventListener('click', resetTool);
+
+        // Make togglePassword function global
+        window.togglePassword = togglePassword;
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: #f0f0f0;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .success {
+            color: green;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="success">✅ Browser Test - Page Loading Successfully!</h1>
+        <p>If you can see this page, then:</p>
+        <ul>
+            <li>✅ HTML files are loading correctly</li>
+            <li>✅ CSS styles are working</li>
+            <li>✅ File paths are accessible</li>
+        </ul>
+        <hr>
+        <h2>Testing PDFINDI Main Page</h2>
+        <p><a href="index.html" style="color: #d9232d; text-decoration: none; font-weight: bold;">🔗 Click here to go to PDFINDI Main Page</a></p>
+        
+        <h2>Testing Individual Tools</h2>
+        <ul>
+            <li><a href="tools/image-ocr.html">🔍 Image OCR Tool</a></li>
+            <li><a href="tools/file-converter.html">🔄 File Converter Hub</a></li>
+            <li><a href="tools/pdf-to-word.html">📄 PDF to Word</a></li>
+        </ul>
+        
+        <h2>Debug Information</h2>
+        <p><strong>Current URL:</strong> <span id="currentUrl"></span></p>
+        <p><strong>User Agent:</strong> <span id="userAgent"></span></p>
+        
+        <script>
+            document.getElementById('currentUrl').textContent = window.location.href;
+            document.getElementById('userAgent').textContent = navigator.userAgent;
+            
+            console.log('Test page loaded successfully!');
+            console.log('Current URL:', window.location.href);
+        </script>
+    </div>
+</body>
+</html>
