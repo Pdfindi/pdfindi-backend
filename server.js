@@ -20,12 +20,19 @@ const upload = multer({
   storage: storage,
   limits: { fileSize: 50 * 1024 * 1024 }, // 50MB limit
   fileFilter: (req, file, cb) => {
-    // Accept PDF and Word documents
+    // Accept PDF, Word documents, and image files
     const allowedMimeTypes = [
       'application/pdf',
       'application/msword',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      'application/rtf'
+      'application/rtf',
+      'image/jpeg',
+      'image/jpg', 
+      'image/png',
+      'image/gif',
+      'image/bmp',
+      'image/tiff',
+      'image/webp'
     ];
     
     if (allowedMimeTypes.includes(file.mimetype)) {
@@ -270,6 +277,87 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
   }
 });
 
+// Image to PDF conversion endpoint
+app.post('/api/image-to-pdf', upload.single('file'), async (req, res) => {
+  try {
+    console.log(`[${new Date().toISOString()}] Image to PDF conversion requested`);
+    
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const allowedImageTypes = [
+      'image/jpeg',
+      'image/jpg',
+      'image/png',
+      'image/gif',
+      'image/bmp',
+      'image/tiff',
+      'image/webp'
+    ];
+    
+    if (!allowedImageTypes.includes(req.file.mimetype)) {
+      return res.status(400).json({ error: 'File must be an image (JPEG, PNG, GIF, BMP, TIFF, WebP)' });
+    }
+
+    console.log(`Processing: ${req.file.originalname} (${req.file.size} bytes)`);
+
+    // Create FormData for Cloudmersive API
+    const formData = new FormData();
+    formData.append('inputFile', req.file.buffer, {
+      filename: req.file.originalname,
+      contentType: req.file.mimetype
+    });
+
+    // Call Cloudmersive Image to PDF API
+    const response = await axios.post(
+      'https://api.cloudmersive.com/convert/image/to/pdf',
+      formData,
+      {
+        headers: {
+          ...formData.getHeaders(),
+          'Apikey': CLOUDMERSIVE_API_KEY
+        },
+        responseType: 'arraybuffer',
+        timeout: 30000
+      }
+    );
+
+    // Convert to base64 for frontend
+    const base64Data = Buffer.from(response.data).toString('base64');
+    const outputFilename = req.file.originalname.replace(/\.(jpg|jpeg|png|gif|bmp|tiff|webp)$/i, '.pdf');
+
+    console.log(`✅ Conversion successful: ${outputFilename}`);
+
+    res.json({
+      success: true,
+      filename: outputFilename,
+      base64: base64Data,
+      originalSize: req.file.size,
+      convertedSize: response.data.length,
+      message: 'Image successfully converted to PDF'
+    });
+
+  } catch (error) {
+    console.error('❌ Image to PDF conversion error:', error.message);
+    
+    if (error.response) {
+      console.error('API Error Status:', error.response.status);
+      console.error('API Error Data:', error.response.data?.toString?.() || 'No details');
+      
+      return res.status(error.response.status).json({ 
+        error: `Conversion API error: ${error.response.status}`,
+        details: error.response.data?.toString?.() || 'Unknown API error'
+      });
+    }
+    
+    res.status(500).json({ 
+      error: 'Internal conversion error',
+      details: error.message 
+    });
+  }
+});
+
 // Root endpoint - Backend info page
 app.get('/', (req, res) => {
   res.json({
@@ -281,13 +369,14 @@ app.get('/', (req, res) => {
       health: 'GET /api/health',
       pdfToWord: 'POST /api/pdf-to-word',
       wordToPdf: 'POST /api/word-to-pdf',
-      compressPdf: 'POST /api/compress-pdf'
+      compressPdf: 'POST /api/compress-pdf',
+      imageToPdf: 'POST /api/image-to-pdf'
     },
     documentation: 'API endpoints accept multipart/form-data with file uploads',
     limits: {
       maxFileSize: '50MB',
       timeout: '30 seconds',
-      allowedTypes: ['PDF', 'DOC', 'DOCX', 'RTF']
+      allowedTypes: ['PDF', 'DOC', 'DOCX', 'RTF', 'JPEG', 'PNG', 'GIF', 'BMP', 'TIFF', 'WebP']
     }
   });
 });
@@ -331,6 +420,7 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log('   POST /api/pdf-to-word');
   console.log('   POST /api/word-to-pdf');
   console.log('   POST /api/compress-pdf');
+  console.log('   POST /api/image-to-pdf');
   console.log('');
   console.log('📁 Frontend: Static files served from public_html/');
   console.log('=====================================');
