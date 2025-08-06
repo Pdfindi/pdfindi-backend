@@ -631,7 +631,7 @@ app.post('/api/ocr-text', upload.single('file'), async (req, res) => {
 app.get('/', (req, res) => {
   res.json({
     service: 'PDFINDI Backend API',
-    version: '1.0.0',
+    version: '1.0.1',
     status: 'online',
     location: 'Render Cloud',
     endpoints: {
