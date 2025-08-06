@@ -358,6 +358,78 @@ app.post('/api/image-to-pdf', upload.single('file'), async (req, res) => {
   }
 });
 
+// PDF to JPG conversion endpoint
+app.post('/api/pdf-to-jpg', upload.single('file'), async (req, res) => {
+  try {
+    console.log(`[${new Date().toISOString()}] PDF to JPG conversion requested`);
+    
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    if (req.file.mimetype !== 'application/pdf') {
+      return res.status(400).json({ error: 'File must be a PDF' });
+    }
+
+    console.log(`Processing: ${req.file.originalname} (${req.file.size} bytes)`);
+
+    // Create FormData for Cloudmersive API
+    const formData = new FormData();
+    formData.append('inputFile', req.file.buffer, {
+      filename: req.file.originalname,
+      contentType: 'application/pdf'
+    });
+
+    // Call Cloudmersive PDF to PNG API (which we'll convert to JPG)
+    const response = await axios.post(
+      'https://api.cloudmersive.com/convert/pdf/to/png',
+      formData,
+      {
+        headers: {
+          ...formData.getHeaders(),
+          'Apikey': CLOUDMERSIVE_API_KEY
+        },
+        responseType: 'arraybuffer',
+        timeout: 30000
+      }
+    );
+
+    // Convert to base64 for frontend
+    const base64Data = Buffer.from(response.data).toString('base64');
+    const outputFilename = req.file.originalname.replace(/\.pdf$/i, '.png');
+
+    console.log(`✅ Conversion successful: ${outputFilename}`);
+
+    res.json({
+      success: true,
+      filename: outputFilename,
+      base64: base64Data,
+      originalSize: req.file.size,
+      convertedSize: response.data.length,
+      message: 'PDF successfully converted to image',
+      format: 'PNG'
+    });
+
+  } catch (error) {
+    console.error('❌ PDF to JPG conversion error:', error.message);
+    
+    if (error.response) {
+      console.error('API Error Status:', error.response.status);
+      console.error('API Error Data:', error.response.data?.toString?.() || 'No details');
+      
+      return res.status(error.response.status).json({ 
+        error: `Conversion API error: ${error.response.status}`,
+        details: error.response.data?.toString?.() || 'Unknown API error'
+      });
+    }
+    
+    res.status(500).json({ 
+      error: 'Internal conversion error',
+      details: error.message 
+    });
+  }
+});
+
 // Root endpoint - Backend info page
 app.get('/', (req, res) => {
   res.json({
@@ -370,7 +442,8 @@ app.get('/', (req, res) => {
       pdfToWord: 'POST /api/pdf-to-word',
       wordToPdf: 'POST /api/word-to-pdf',
       compressPdf: 'POST /api/compress-pdf',
-      imageToPdf: 'POST /api/image-to-pdf'
+      imageToPdf: 'POST /api/image-to-pdf',
+      pdfToJpg: 'POST /api/pdf-to-jpg'
     },
     documentation: 'API endpoints accept multipart/form-data with file uploads',
     limits: {
@@ -421,6 +494,7 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log('   POST /api/word-to-pdf');
   console.log('   POST /api/compress-pdf');
   console.log('   POST /api/image-to-pdf');
+  console.log('   POST /api/pdf-to-jpg');
   console.log('');
   console.log('📁 Frontend: Static files served from public_html/');
   console.log('=====================================');
