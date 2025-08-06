@@ -321,17 +321,23 @@ async function convertImageToPDF(file) {
     formData.append('file', file); // Backend expects 'file' field name
     
     try {
+        console.log('Making request to:', `${config.backendUrl}/api/image-to-pdf`);
         const response = await fetch(`${config.backendUrl}/api/image-to-pdf`, {
             method: 'POST',
             body: formData
         });
+        
+        console.log('Response status:', response.status);
+        console.log('Response ok:', response.ok);
         
         if (!response.ok) {
             let errorMessage = `Image to PDF API error: ${response.status}`;
             try {
                 const errorData = await response.json();
                 errorMessage = errorData.error || errorMessage;
+                console.log('Error data:', errorData);
             } catch (e) {
+                console.log('Failed to parse error JSON:', e);
                 // If parsing JSON fails, use the status-based message
             }
             throw new Error(errorMessage);
