@@ -498,3 +498,47 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('PDFINDI - Clean architecture loaded');
 });
+
+// PDF to Image conversion function
+async function convertPDFToImage(file, format = 'png') {
+    console.log(` PDF to Image conversion started - Format: ${format}`);
+    
+    if (!file) {
+        throw new Error('No file provided for conversion');
+    }
+
+    if (file.type !== 'application/pdf') {
+        throw new Error('File must be a PDF document');
+    }
+
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        console.log(` Sending PDF to Image request: ${file.name} (${file.size} bytes) -> ${format.toUpperCase()}`);
+
+        const response = await fetch(`https://pdfindi-backend.onrender.com/api/pdf-to-image?format=${format}`, {
+            method: 'POST',
+            body: formData
+        });
+
+        console.log(` PDF to Image response status: ${response.status}`);
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `Server error: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log(' PDF to Image conversion successful:', result);
+
+        return result;
+
+    } catch (error) {
+        console.error(' PDF to Image conversion error:', error);
+        throw error;
+    }
+}
+
+// Make PDF to Image function globally available
+window.convertPDFToImage = convertPDFToImage;

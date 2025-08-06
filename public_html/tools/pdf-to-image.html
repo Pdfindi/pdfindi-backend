@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Image Converter - PDFINDI</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .format-selector {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e0e6ed;
+        }
+        
+        .format-option {
+            display: inline-block;
+            margin-right: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .format-option input[type="radio"] {
+            margin-right: 5px;
+        }
+        
+        .format-option label {
+            cursor: pointer;
+            padding: 8px 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 5px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        
+        .format-option input[type="radio"]:checked + label {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        
+        .format-option label:hover {
+            border-color: #007bff;
+        }
+        
+        .conversion-info {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .conversion-info h4 {
+            margin: 0 0 10px 0;
+            color: #0056b3;
+        }
+        
+        .conversion-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .preview-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 400px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🖼️ PDF to Image Converter</h1>
+            <p>Convert your PDF documents to high-quality images in multiple formats</p>
+        </header>
+
+        <div class="conversion-info">
+            <h4>📋 Conversion Options</h4>
+            <ul>
+                <li><strong>PNG:</strong> Best for images with transparency, high quality</li>
+                <li><strong>JPG/JPEG:</strong> Best for photographs, smaller file size</li>
+                <li><strong>Multi-page PDFs:</strong> Each page converted to separate image</li>
+                <li><strong>Quality:</strong> High-resolution output optimized for clarity</li>
+            </ul>
+        </div>
+
+        <div class="upload-section">
+            <div class="file-input-wrapper">
+                <input type="file" id="pdfFile" accept=".pdf" />
+                <label for="pdfFile" class="file-input-label">
+                    📄 Choose PDF File
+                    <span class="file-input-text">Drag and drop or click to select</span>
+                </label>
+            </div>
+            
+            <div class="format-selector">
+                <h4>🎨 Select Output Format:</h4>
+                <div class="format-option">
+                    <input type="radio" id="png" name="format" value="png" checked>
+                    <label for="png">PNG (High Quality)</label>
+                </div>
+                <div class="format-option">
+                    <input type="radio" id="jpg" name="format" value="jpg">
+                    <label for="jpg">JPG (Smaller Size)</label>
+                </div>
+                <div class="format-option">
+                    <input type="radio" id="jpeg" name="format" value="jpeg">
+                    <label for="jpeg">JPEG (Compatible)</label>
+                </div>
+            </div>
+
+            <button onclick="convertPdfToImage()" class="convert-btn" id="convertBtn">
+                🔄 Convert to Image
+            </button>
+        </div>
+
+        <div class="progress-section" id="progressSection" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="progress-text" id="progressText">Processing your PDF...</p>
+        </div>
+
+        <div class="result-section" id="resultSection" style="display: none;">
+            <h3 id="resultTitle">✅ Conversion Successful!</h3>
+            <div class="file-info" id="fileInfo"></div>
+            
+            <div class="preview-container" id="previewContainer" style="display: none;">
+                <h4>📷 Image Preview:</h4>
+                <img id="previewImage" class="preview-image" alt="Converted image preview" />
+            </div>
+            
+            <div class="download-section">
+                <button onclick="downloadFile()" class="download-btn" id="downloadBtn">
+                    ⬇️ Download Image
+                </button>
+                <button onclick="resetConverter()" class="reset-btn">
+                    🔄 Convert Another PDF
+                </button>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>High Precision</h3>
+                <p>Maintains original PDF quality and layout in image conversion</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Fast Processing</h3>
+                <p>Quick conversion with professional cloud-based processing</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure & Private</h3>
+                <p>Your files are processed securely and not stored on our servers</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Multiple Formats</h3>
+                <p>Convert to PNG, JPG, or JPEG based on your specific needs</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2>❓ Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <h3>What image formats are supported?</h3>
+                <p>We support conversion to PNG, JPG, and JPEG formats. PNG is best for images with transparency or text, while JPG/JPEG is ideal for photographs and smaller file sizes.</p>
+            </div>
+            <div class="faq-item">
+                <h3>How are multi-page PDFs handled?</h3>
+                <p>For multi-page PDFs, we convert the first page to an image. Each page conversion creates a separate image file.</p>
+            </div>
+            <div class="faq-item">
+                <h3>What's the maximum file size?</h3>
+                <p>You can convert PDF files up to 50MB in size. For larger files, consider compressing your PDF first.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Is the conversion quality maintained?</h3>
+                <p>Yes! We use professional-grade conversion that maintains the original resolution and clarity of your PDF content.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 PDFINDI. Professional PDF conversion tools.</p>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // PDF to Image specific functionality
+        async function convertPdfToImage() {
+            console.log('🎯 PDF to Image conversion started');
+            
+            const fileInput = document.getElementById('pdfFile');
+            const convertBtn = document.getElementById('convertBtn');
+            const progressSection = document.getElementById('progressSection');
+            const resultSection = document.getElementById('resultSection');
+            
+            if (!fileInput.files[0]) {
+                alert('Please select a PDF file first!');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const selectedFormat = document.querySelector('input[name="format"]:checked').value;
+            
+            console.log(`📄 File: ${file.name} (${file.size} bytes)`);
+            console.log(`🎨 Format: ${selectedFormat}`);
+
+            // Validate file type
+            if (file.type !== 'application/pdf') {
+                alert('Please select a valid PDF file!');
+                return;
+            }
+
+            // Update UI
+            convertBtn.disabled = true;
+            convertBtn.textContent = '🔄 Converting...';
+            progressSection.style.display = 'block';
+            resultSection.style.display = 'none';
+
+            try {
+                // Animate progress
+                animateProgress();
+                
+                const formData = new FormData();
+                formData.append('file', file);
+
+                console.log(`🚀 Sending request to: /api/pdf-to-image?format=${selectedFormat}`);
+
+                const response = await fetch(`https://pdfindi-backend.onrender.com/api/pdf-to-image?format=${selectedFormat}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                console.log(`📡 Response status: ${response.status}`);
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `Server error: ${response.status}`);
+                }
+
+                const result = await response.json();
+                console.log('✅ Conversion successful:', result);
+
+                // Store result for download
+                window.convertedFile = {
+                    filename: result.filename,
+                    base64: result.base64,
+                    format: result.format
+                };
+
+                // Show results
+                showConversionResult(result);
+
+            } catch (error) {
+                console.error('❌ PDF to Image conversion error:', error);
+                alert(`Conversion failed: ${error.message}`);
+                resetUI();
+            }
+        }
+
+        function showConversionResult(result) {
+            const resultSection = document.getElementById('resultSection');
+            const fileInfo = document.getElementById('fileInfo');
+            const previewContainer = document.getElementById('previewContainer');
+            const previewImage = document.getElementById('previewImage');
+            const progressSection = document.getElementById('progressSection');
+
+            // Hide progress and show results
+            progressSection.style.display = 'none';
+            resultSection.style.display = 'block';
+
+            // Show file information
+            const originalSize = (result.originalSize / 1024).toFixed(2);
+            const convertedSize = (result.convertedSize / 1024).toFixed(2);
+            
+            fileInfo.innerHTML = `
+                <div class="info-grid">
+                    <div class="info-item">
+                        <strong>📄 Original PDF:</strong> ${originalSize} KB
+                    </div>
+                    <div class="info-item">
+                        <strong>🖼️ Image ${result.format}:</strong> ${convertedSize} KB
+                    </div>
+                    <div class="info-item">
+                        <strong>📊 Format:</strong> ${result.format}
+                    </div>
+                    <div class="info-item">
+                        <strong>✅ Status:</strong> ${result.message}
+                    </div>
+                </div>
+            `;
+
+            // Show image preview
+            if (result.base64) {
+                const mimeType = result.format.toLowerCase() === 'png' ? 'image/png' : 'image/jpeg';
+                previewImage.src = `data:${mimeType};base64,${result.base64}`;
+                previewContainer.style.display = 'block';
+            }
+
+            console.log(`✅ Conversion completed: ${result.filename}`);
+        }
+
+        function downloadFile() {
+            if (!window.convertedFile) {
+                alert('No file to download!');
+                return;
+            }
+
+            const { filename, base64, format } = window.convertedFile;
+            const mimeType = format.toLowerCase() === 'png' ? 'image/png' : 'image/jpeg';
+            
+            // Create download link
+            const link = document.createElement('a');
+            link.href = `data:${mimeType};base64,${base64}`;
+            link.download = filename;
+            
+            // Trigger download
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            console.log(`⬇️ Downloaded: ${filename}`);
+        }
+
+        function resetConverter() {
+            // Reset form
+            document.getElementById('pdfFile').value = '';
+            document.querySelector('input[name="format"][value="png"]').checked = true;
+            
+            // Reset UI
+            resetUI();
+            
+            // Clear stored data
+            window.convertedFile = null;
+            
+            console.log('🔄 Converter reset');
+        }
+
+        function resetUI() {
+            const convertBtn = document.getElementById('convertBtn');
+            const progressSection = document.getElementById('progressSection');
+            const resultSection = document.getElementById('resultSection');
+            
+            convertBtn.disabled = false;
+            convertBtn.textContent = '🔄 Convert to Image';
+            progressSection.style.display = 'none';
+            resultSection.style.display = 'none';
+        }
+
+        function animateProgress() {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 90) progress = 90;
+                
+                progressFill.style.width = progress + '%';
+                
+                if (progress < 30) {
+                    progressText.textContent = 'Uploading PDF file...';
+                } else if (progress < 60) {
+                    progressText.textContent = 'Processing PDF content...';
+                } else if (progress < 90) {
+                    progressText.textContent = 'Converting to image...';
+                } else {
+                    progressText.textContent = 'Finalizing conversion...';
+                    clearInterval(interval);
+                }
+            }, 200);
+        }
+
+        // File input handling
+        document.getElementById('pdfFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                console.log(`📄 PDF selected: ${file.name} (${file.size} bytes)`);
+                
+                // Update file label
+                const label = document.querySelector('.file-input-label .file-input-text');
+                label.textContent = file.name;
+            }
+        });
+
+        // Format change handling
+        document.querySelectorAll('input[name="format"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                console.log(`🎨 Format selected: ${this.value}`);
+            });
+        });
+    </script>
+</body>
+</html>

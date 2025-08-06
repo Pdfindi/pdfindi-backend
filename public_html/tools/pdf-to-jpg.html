@@ -203,6 +203,12 @@
             margin: 1rem 0;
             display: none;
         }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         @media (max-width: 768px) {
             .format-selection {
                 grid-template-columns: repeat(2, 1fr);
@@ -264,6 +270,31 @@
             }, 5000);
         }
 
+        function showLoading(button, loadingText) {
+            button.disabled = true;
+            button.innerHTML = `<span style="display: inline-block; width: 16px; height: 16px; border: 2px solid #ffffff; border-radius: 50%; border-top-color: transparent; animation: spin 1s linear infinite; margin-right: 8px;"></span>${loadingText}`;
+        }
+
+        function hideLoading(button, originalText) {
+            button.disabled = false;
+            button.innerHTML = originalText;
+        }
+
+        function showSuccess(message) {
+            elements.errorMessage.style.background = '#d4edda';
+            elements.errorMessage.style.color = '#155724';
+            elements.errorMessage.style.borderColor = '#c3e6cb';
+            elements.errorMessage.textContent = message;
+            elements.errorMessage.style.display = 'block';
+            setTimeout(() => {
+                elements.errorMessage.style.display = 'none';
+                // Reset error styling
+                elements.errorMessage.style.background = '#f8d7da';
+                elements.errorMessage.style.color = '#721c24';
+                elements.errorMessage.style.borderColor = '#f5c6cb';
+            }, 3000);
+        }
+
         function handleFileSelect(file) {
             if (file.type !== 'application/pdf') {
                 showError('Please select a valid PDF file.');
@@ -315,11 +346,11 @@
             }
             
             const originalText = elements.convertBtn.textContent;
-            showLoading(elements.convertBtn, 'Converting PDF to image...');
+            showLoading(elements.convertBtn, 'Converting PDF to ' + selectedFormat.toUpperCase() + '...');
             
             try {
-                // Use the new convertPDFToJPG function from script.js
-                const result = await convertPDFToJPG(selectedFile);
+                // Use the new enhanced convertPDFToImage function from script.js
+                const result = await convertPDFToImage(selectedFile, selectedFormat);
                 showSuccess(result.message);
                 
                 // Reset the button
