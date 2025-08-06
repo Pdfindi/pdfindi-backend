@@ -430,6 +430,82 @@ app.post('/api/pdf-to-jpg', upload.single('file'), async (req, res) => {
   }
 });
 
+// OCR Text Extraction from Image endpoint
+app.post('/api/ocr-text', upload.single('file'), async (req, res) => {
+  try {
+    console.log(`[${new Date().toISOString()}] OCR text extraction requested`);
+    
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const allowedImageTypes = [
+      'image/jpeg',
+      'image/jpg',
+      'image/png',
+      'image/gif',
+      'image/bmp',
+      'image/tiff',
+      'image/webp'
+    ];
+    
+    if (!allowedImageTypes.includes(req.file.mimetype)) {
+      return res.status(400).json({ error: 'File must be an image (JPEG, PNG, GIF, BMP, TIFF, WebP)' });
+    }
+
+    console.log(`Processing: ${req.file.originalname} (${req.file.size} bytes)`);
+
+    // Create FormData for Cloudmersive API
+    const formData = new FormData();
+    formData.append('inputFile', req.file.buffer, {
+      filename: req.file.originalname,
+      contentType: req.file.mimetype
+    });
+
+    // Call Cloudmersive OCR API
+    const response = await axios.post(
+      'https://api.cloudmersive.com/ocr/image/toText',
+      formData,
+      {
+        headers: {
+          ...formData.getHeaders(),
+          'Apikey': CLOUDMERSIVE_API_KEY
+        },
+        timeout: 30000
+      }
+    );
+
+    console.log(`✅ OCR extraction successful from: ${req.file.originalname}`);
+
+    res.json({
+      success: true,
+      filename: req.file.originalname,
+      extractedText: response.data.TextResult || '',
+      confidence: response.data.Successful || false,
+      originalSize: req.file.size,
+      message: 'Text successfully extracted from image'
+    });
+
+  } catch (error) {
+    console.error('❌ OCR text extraction error:', error.message);
+    
+    if (error.response) {
+      console.error('API Error Status:', error.response.status);
+      console.error('API Error Data:', error.response.data?.toString?.() || 'No details');
+      
+      return res.status(error.response.status).json({ 
+        error: `OCR API error: ${error.response.status}`,
+        details: error.response.data?.toString?.() || 'Unknown API error'
+      });
+    }
+    
+    res.status(500).json({ 
+      error: 'Internal OCR error',
+      details: error.message 
+    });
+  }
+});
+
 // Root endpoint - Backend info page
 app.get('/', (req, res) => {
   res.json({
@@ -443,7 +519,8 @@ app.get('/', (req, res) => {
       wordToPdf: 'POST /api/word-to-pdf',
       compressPdf: 'POST /api/compress-pdf',
       imageToPdf: 'POST /api/image-to-pdf',
-      pdfToJpg: 'POST /api/pdf-to-jpg'
+      pdfToJpg: 'POST /api/pdf-to-jpg',
+      ocrText: 'POST /api/ocr-text'
     },
     documentation: 'API endpoints accept multipart/form-data with file uploads',
     limits: {
@@ -495,6 +572,7 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log('   POST /api/compress-pdf');
   console.log('   POST /api/image-to-pdf');
   console.log('   POST /api/pdf-to-jpg');
+  console.log('   POST /api/ocr-text');
   console.log('');
   console.log('📁 Frontend: Static files served from public_html/');
   console.log('=====================================');
