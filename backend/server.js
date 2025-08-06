@@ -300,85 +300,17 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
   }
 });
 
-// Image to PDF conversion endpoint - Fixed for deployment
+// Image to PDF conversion endpoint - DEBUG VERSION
 app.post('/api/image-to-pdf', upload.single('file'), async (req, res) => {
-  try {
-    console.log(`[${new Date().toISOString()}] Image to PDF conversion requested`);
-    
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
-    }
-
-    const allowedImageTypes = [
-      'image/jpeg',
-      'image/jpg',
-      'image/png',
-      'image/gif',
-      'image/bmp',
-      'image/tiff',
-      'image/webp'
-    ];
-    
-    if (!allowedImageTypes.includes(req.file.mimetype)) {
-      return res.status(400).json({ error: 'File must be an image (JPEG, PNG, GIF, BMP, TIFF, WebP)' });
-    }
-
-    console.log(`Processing: ${req.file.originalname} (${req.file.size} bytes)`);
-
-    // Create FormData for Cloudmersive API
-    const formData = new FormData();
-    formData.append('inputFile', req.file.buffer, {
-      filename: req.file.originalname,
-      contentType: req.file.mimetype
-    });
-
-    // Call Cloudmersive Image to PDF API
-    const response = await axios.post(
-      'https://api.cloudmersive.com/convert/image/to/pdf',
-      formData,
-      {
-        headers: {
-          ...formData.getHeaders(),
-          'Apikey': CLOUDMERSIVE_API_KEY
-        },
-        responseType: 'arraybuffer',
-        timeout: 30000
-      }
-    );
-
-    // Convert to base64 for frontend
-    const base64Data = Buffer.from(response.data).toString('base64');
-    const outputFilename = req.file.originalname.replace(/\.(jpg|jpeg|png|gif|bmp|tiff|webp)$/i, '.pdf');
-
-    console.log(`✅ Conversion successful: ${outputFilename}`);
-
-    res.json({
-      success: true,
-      filename: outputFilename,
-      base64: base64Data,
-      originalSize: req.file.size,
-      convertedSize: response.data.length,
-      message: 'Image successfully converted to PDF'
-    });
-
-  } catch (error) {
-    console.error('❌ Image to PDF conversion error:', error.message);
-    
-    if (error.response) {
-      console.error('API Error Status:', error.response.status);
-      console.error('API Error Data:', error.response.data?.toString?.() || 'No details');
-      
-      return res.status(error.response.status).json({ 
-        error: `Conversion API error: ${error.response.status}`,
-        details: error.response.data?.toString?.() || 'Unknown API error'
-      });
-    }
-    
-    res.status(500).json({ 
-      error: 'Internal conversion error',
-      details: error.message 
-    });
-  }
+  console.log(`[${new Date().toISOString()}] Image to PDF DEBUG: Route hit!`);
+  
+  // Quick test response
+  res.json({
+    debug: true,
+    message: 'Image to PDF endpoint is working',
+    hasFile: !!req.file,
+    timestamp: new Date().toISOString()
+  });
 });
 
 // PDF to JPG conversion endpoint
