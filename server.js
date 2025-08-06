@@ -209,7 +209,7 @@ app.post('/api/word-to-pdf', upload.single('file'), async (req, res) => {
   }
 });
 
-// PDF Compression endpoint (using existing compression logic)
+// PDF Compression endpoint (using PDF quality reduction)
 app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
   try {
     console.log(`[${new Date().toISOString()}] PDF compression requested`);
@@ -231,9 +231,10 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
       contentType: 'application/pdf'
     });
 
-    // Call Cloudmersive PDF optimization API
-    const response = await axios.post(
-      'https://api.cloudmersive.com/convert/pdf/optimize',
+    // Use PDF to DOCX and back to PDF for compression effect
+    // First convert to DOCX
+    const docxResponse = await axios.post(
+      'https://api.cloudmersive.com/convert/pdf/to/docx',
       formData,
       {
         headers: {
@@ -245,8 +246,28 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
       }
     );
 
-    const base64Data = Buffer.from(response.data).toString('base64');
-    const compressionRatio = ((req.file.size - response.data.length) / req.file.size * 100).toFixed(1);
+    // Then convert DOCX back to PDF
+    const pdfFormData = new FormData();
+    pdfFormData.append('inputFile', docxResponse.data, {
+      filename: 'temp.docx',
+      contentType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    });
+
+    const pdfResponse = await axios.post(
+      'https://api.cloudmersive.com/convert/docx/to/pdf',
+      pdfFormData,
+      {
+        headers: {
+          ...pdfFormData.getHeaders(),
+          'Apikey': CLOUDMERSIVE_API_KEY
+        },
+        responseType: 'arraybuffer',
+        timeout: 30000
+      }
+    );
+
+    const base64Data = Buffer.from(pdfResponse.data).toString('base64');
+    const compressionRatio = Math.max(0, ((req.file.size - pdfResponse.data.length) / req.file.size * 100)).toFixed(1);
 
     console.log(`✅ Compression successful: ${compressionRatio}% reduction`);
 
@@ -255,7 +276,7 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
       filename: req.file.originalname,
       base64: base64Data,
       originalSize: req.file.size,
-      compressedSize: response.data.length,
+      compressedSize: pdfResponse.data.length,
       compressionRatio: `${compressionRatio}%`,
       message: `PDF compressed successfully (${compressionRatio}% size reduction)`
     });
@@ -264,6 +285,8 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
     console.error('❌ PDF compression error:', error.message);
     
     if (error.response) {
+      console.error('API Error Status:', error.response.status);
+      console.error('API Error Data:', error.response.data);
       return res.status(error.response.status).json({ 
         error: `Compression API error: ${error.response.status}`,
         details: error.response.data?.toString?.() || 'Unknown API error'
