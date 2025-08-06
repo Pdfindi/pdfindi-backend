@@ -1,4 +1,4 @@
-// Production PDFINDI Backend for Oracle Cloud Mumbai
+// Production PDFINDI Backend for Render
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
@@ -13,9 +13,6 @@ const PORT = process.env.PORT || 3000;
 // Enable CORS for all origins (configure for your domain in production)
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
-
-// Serve static files from public_html
-app.use(express.static(path.join(__dirname, '..', 'public_html')));
 
 // Configure multer for file uploads
 const storage = multer.memoryStorage();
@@ -53,7 +50,7 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
     service: 'PDFINDI Backend',
     environment: process.env.NODE_ENV || 'development',
-    location: 'Oracle Cloud Mumbai',
+    location: 'Render Cloud',
     version: '1.0.0'
   });
 });
@@ -273,6 +270,28 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
   }
 });
 
+// Root endpoint - Backend info page
+app.get('/', (req, res) => {
+  res.json({
+    service: 'PDFINDI Backend API',
+    version: '1.0.0',
+    status: 'online',
+    location: 'Render Cloud',
+    endpoints: {
+      health: 'GET /api/health',
+      pdfToWord: 'POST /api/pdf-to-word',
+      wordToPdf: 'POST /api/word-to-pdf',
+      compressPdf: 'POST /api/compress-pdf'
+    },
+    documentation: 'API endpoints accept multipart/form-data with file uploads',
+    limits: {
+      maxFileSize: '50MB',
+      timeout: '30 seconds',
+      allowedTypes: ['PDF', 'DOC', 'DOCX', 'RTF']
+    }
+  });
+});
+
 // Error handling middleware
 app.use((error, req, res, next) => {
   if (error instanceof multer.MulterError) {
@@ -285,16 +304,24 @@ app.use((error, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 
-// 404 handler
+// 404 handler for API routes only
+app.use('/api/*', (req, res) => {
+  res.status(404).json({ error: 'API endpoint not found' });
+});
+
+// 404 handler for any other routes
 app.use('*', (req, res) => {
-  res.status(404).json({ error: 'Endpoint not found' });
+  res.status(404).json({ 
+    error: 'Route not found',
+    message: 'This is an API server. Use /api/* endpoints or visit / for API info.'
+  });
 });
 
 // Start server
 app.listen(PORT, '0.0.0.0', () => {
   console.log('🚀 PDFINDI Backend Server Started');
   console.log('=====================================');
-  console.log(`📍 Location: Oracle Cloud Mumbai`);
+  console.log(`📍 Location: Render Cloud`);
   console.log(`🌐 Server: http://0.0.0.0:${PORT}`);
   console.log(`⚡ Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🔑 API Key: ${CLOUDMERSIVE_API_KEY ? '✅ Configured' : '❌ Missing'}`);
