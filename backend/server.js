@@ -300,6 +300,17 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
   }
 });
 
+// Simple test endpoint without multer
+app.post('/api/test-image-to-pdf', (req, res) => {
+  res.json({
+    test: true,
+    message: 'Simple image-to-pdf test endpoint working',
+    method: req.method,
+    url: req.url,
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Image to PDF conversion endpoint - DEBUG VERSION
 app.post('/api/image-to-pdf', upload.single('file'), async (req, res) => {
   console.log(`[${new Date().toISOString()}] Image to PDF DEBUG: Route hit!`);
