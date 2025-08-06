@@ -403,9 +403,9 @@ app.post('/api/pdf-to-jpg', upload.single('file'), async (req, res) => {
       contentType: 'application/pdf'
     });
 
-    // Call Cloudmersive PDF to PNG API (which we'll convert to JPG)
+    // Call Cloudmersive PDF to JPG API (returns direct image data)
     const response = await axios.post(
-      'https://api.cloudmersive.com/convert/pdf/to/png',
+      'https://api.cloudmersive.com/convert/pdf/to/jpg',
       formData,
       {
         headers: {
@@ -419,7 +419,7 @@ app.post('/api/pdf-to-jpg', upload.single('file'), async (req, res) => {
 
     // Convert to base64 for frontend
     const base64Data = Buffer.from(response.data).toString('base64');
-    const outputFilename = req.file.originalname.replace(/\.pdf$/i, '.png');
+    const outputFilename = req.file.originalname.replace(/\.pdf$/i, '.jpg');
 
     console.log(`✅ Conversion successful: ${outputFilename}`);
 
@@ -429,8 +429,8 @@ app.post('/api/pdf-to-jpg', upload.single('file'), async (req, res) => {
       base64: base64Data,
       originalSize: req.file.size,
       convertedSize: response.data.length,
-      message: 'PDF successfully converted to image',
-      format: 'PNG'
+      format: 'JPG',
+      message: 'PDF successfully converted to JPG image'
     });
 
   } catch (error) {
