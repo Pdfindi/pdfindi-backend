@@ -1,3 +1,4 @@
+require('dotenv').config();
 // Production PDFINDI Backend for Render
 const express = require('express');
 const cors = require('cors');
@@ -43,27 +44,101 @@ const upload = multer({
   }
 });
 
+// Free Tier Configuration
+const FREE_TIER_LIMITS = {
+  conversionsPerHour: 3,
+  conversionsPerDay: 10,
+  maxFileSizeMB: 10,
+  supportedFormats: ['pdf', 'jpg', 'png', 'docx', 'txt']
+};
+
+// Usage tracking Map
+const usageTracker = new Map();
+
 // Environment check
 const CLOUDMERSIVE_API_KEY = process.env.CLOUDMERSIVE_API_KEY;
 if (!CLOUDMERSIVE_API_KEY) {
   console.error('❌ CLOUDMERSIVE_API_KEY environment variable is required');
   process.exit(1);
 }
+// Usage tracking functions
+function getClientIP(req) {
+  return req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || '127.0.0.1';
+}
+
+function checkUsageLimits(req, res, next) {
+  const clientIP = getClientIP(req);
+  const now = new Date();
+  const hourKey = clientIP + '-' + now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + '-' + now.getHours();
+  const dayKey = clientIP + '-' + now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
+  
+  const hourlyUsage = usageTracker.get(hourKey) || 0;
+  const dailyUsage = usageTracker.get(dayKey) || 0;
+  
+  if (hourlyUsage >= FREE_TIER_LIMITS.conversionsPerHour) {
+    return res.status(429).json({
+      error: 'Hourly limit exceeded',
+      limit: FREE_TIER_LIMITS.conversionsPerHour,
+      resetTime: new Date(now.getTime() + (60 - now.getMinutes()) * 60000).toISOString(),
+      message: 'You have reached the free tier hourly limit. Please try again next hour.'
+    });
+  }
+  
+  if (dailyUsage >= FREE_TIER_LIMITS.conversionsPerDay) {
+    return res.status(429).json({
+      error: 'Daily limit exceeded', 
+      limit: FREE_TIER_LIMITS.conversionsPerDay,
+      resetTime: new Date(now.getTime() + (24 - now.getHours()) * 3600000).toISOString(),
+      message: 'You have reached the free tier daily limit. Please try again tomorrow.'
+    });
+  }
+  
+  if (req.file && req.file.size > FREE_TIER_LIMITS.maxFileSizeMB * 1024 * 1024) {
+    return res.status(413).json({
+      error: 'File too large',
+      maxSize: FREE_TIER_LIMITS.maxFileSizeMB + 'MB',
+      message: 'File size exceeds free tier limit of ' + FREE_TIER_LIMITS.maxFileSizeMB + 'MB'
+    });
+  }
+  
+  usageTracker.set(hourKey, hourlyUsage + 1);
+  usageTracker.set(dayKey, dailyUsage + 1);
+  
+  // Clean up old entries (keep only last 25 hours)
+  const cutoffTime = new Date(now.getTime() - 25 * 3600000);
+  for (const [key] of usageTracker.entries()) {
+    if (key.includes('-')) {
+      const parts = key.split('-');
+      if (parts.length >= 4) {
+        const entryDate = new Date(parts[1], parts[2], parts[3]);
+        if (entryDate < cutoffTime) {
+          usageTracker.delete(key);
+        }
+      }
+    }
+  }
+  
+  next();
+}
+
 
 // Health endpoint
 app.get('/api/health', (req, res) => {
   res.json({
-    status: 'ok',
+    status: 'OK',
+    message: 'PDFINDI API is running',
     timestamp: new Date().toISOString(),
-    service: 'PDFINDI Backend',
-    environment: process.env.NODE_ENV || 'development',
     location: 'Render Cloud',
-    version: '1.0.0'
+    version: '1.0.0',
+    freeTier: {
+      limits: FREE_TIER_LIMITS,
+      description: 'Free service with usage limits!'
+    }
   });
 });
 
 // PDF to Word conversion endpoint
-app.post('/api/pdf-to-word', upload.single('file'), async (req, res) => {
+app.post('/api/pdf-to-word', checkUsageLimits, upload.single('file'), async (req, res) => {
   try {
     console.log(`[${new Date().toISOString()}] PDF to Word conversion requested`);
     
@@ -301,7 +376,7 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
 });
 
 // Image to PDF conversion endpoint
-app.post('/api/image-to-pdf', upload.single('file'), async (req, res) => {
+app.post('/api/image-to-pdf', checkUsageLimits, upload.single('file'), async (req, res) => {
   try {
     console.log(`[${new Date().toISOString()}] Image to PDF conversion requested`);
     
@@ -382,7 +457,7 @@ app.post('/api/image-to-pdf', upload.single('file'), async (req, res) => {
 });
 
 // PDF to JPG conversion endpoint
-app.post('/api/pdf-to-jpg', upload.single('file'), async (req, res) => {
+app.post('/api/pdf-to-jpg', checkUsageLimits, upload.single('file'), async (req, res) => {
   try {
     console.log(`[${new Date().toISOString()}] PDF to JPG conversion requested`);
     
@@ -600,3 +675,11 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log('📁 Frontend: Static files served from public_html/');
   console.log('=====================================');
 });
+
+
+
+
+
+
+
+
