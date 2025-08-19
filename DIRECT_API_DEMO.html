@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Why Direct Cloudmersive API Fails</title>
+</head>
+<body>
+    <h1>❌ This Will NOT Work</h1>
+    <input type="file" id="pdfFile" accept=".pdf">
+    <button onclick="directCloudmersive()">Try Direct API Call</button>
+    
+    <script>
+    async function directCloudmersive() {
+        const file = document.getElementById('pdfFile').files[0];
+        
+        try {
+            // ❌ THIS WILL FAIL - CORS ERROR
+            const response = await fetch('https://api.cloudmersive.com/convert/pdf/to/docx', {
+                method: 'POST',
+                headers: {
+                    'Apikey': 'e46637bc-d958-473f-a8cf-6fc6f4e1ef2f'
+                },
+                body: file
+            });
+            
+            console.log('Success!', response);
+        } catch (error) {
+            // ❌ ERROR: CORS policy blocks this request
+            console.error('CORS Error:', error);
+            alert('❌ CORS Error: Cannot access Cloudmersive directly from browser!');
+        }
+    }
+    </script>
+</body>
+</html>

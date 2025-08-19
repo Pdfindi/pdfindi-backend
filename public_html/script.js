@@ -517,7 +517,7 @@ async function convertPDFToImage(file, format = 'png') {
 
         console.log(` Sending PDF to Image request: ${file.name} (${file.size} bytes) -> ${format.toUpperCase()}`);
 
-        const response = await fetch(`https://pdfindi-backend.onrender.com/api/pdf-to-image?format=${format}`, {
+        const response = await fetch(`https://pdfindi-backend.onrender.com/api/pdf-to-jpg`, {
             method: 'POST',
             body: formData
         });
@@ -531,6 +531,85 @@ async function convertPDFToImage(file, format = 'png') {
 
         const result = await response.json();
         console.log(' PDF to Image conversion successful:', result);
+
+        // Check if the response contains Cloudmersive URLs (new format)
+        if (result.base64) {
+            try {
+                // Decode the base64 to see if it contains URLs
+                const decodedData = atob(result.base64);
+                const parsedData = JSON.parse(decodedData);
+                
+                if (parsedData.PngResultPages && Array.isArray(parsedData.PngResultPages)) {
+                    console.log(`📄 Found ${parsedData.PngResultPages.length} pages with URLs`);
+                    console.log('🔗 URLs:', parsedData.PngResultPages.map(p => p.URL));
+                    
+                    // Download each page
+                    for (let i = 0; i < parsedData.PngResultPages.length; i++) {
+                        const page = parsedData.PngResultPages[i];
+                        console.log(`📥 Downloading page ${page.PageNumber}:`, page.URL);
+                        
+                        try {
+                            // Try to fetch the image through CORS
+                            const proxyResponse = await fetch(page.URL, {
+                                mode: 'cors',
+                                credentials: 'omit'
+                            });
+                            
+                            console.log(`📡 Response status for page ${page.PageNumber}:`, proxyResponse.status);
+                            
+                            if (proxyResponse.ok) {
+                                const imageBlob = await proxyResponse.blob();
+                                console.log(`📄 Blob size for page ${page.PageNumber}:`, imageBlob.size, 'bytes');
+                                
+                                // Create download link for this page
+                                const url = window.URL.createObjectURL(imageBlob);
+                                const a = document.createElement('a');
+                                a.href = url;
+                                a.download = `${file.name.replace(/\.pdf$/i, '')}_page_${page.PageNumber}.png`;
+                                a.style.display = 'none';
+                                document.body.appendChild(a);
+                                
+                                console.log(`📥 Initiating download: ${a.download}`);
+                                
+                                // Force the download
+                                a.click();
+                                
+                                // Clean up
+                                setTimeout(() => {
+                                    window.URL.revokeObjectURL(url);
+                                    document.body.removeChild(a);
+                                }, 1000);
+                                
+                                console.log(`✅ Download completed for page ${page.PageNumber}`);
+                                
+                                // Small delay between downloads
+                                await new Promise(resolve => setTimeout(resolve, 1000));
+                            } else {
+                                console.error(`❌ Failed to download page ${page.PageNumber}:`, proxyResponse.status, proxyResponse.statusText);
+                                
+                                // Try direct link as fallback
+                                console.log(`🔗 Opening direct link for page ${page.PageNumber}`);
+                                window.open(page.URL, '_blank');
+                            }
+                        } catch (pageError) {
+                            console.error(`❌ Error downloading page ${page.PageNumber}:`, pageError);
+                            
+                            // Fallback: open the URL in a new tab
+                            console.log(`🔗 Opening fallback link for page ${page.PageNumber}`);
+                            window.open(page.URL, '_blank');
+                        }
+                    }
+                    
+                    return {
+                        success: true,
+                        message: `Successfully processed ${parsedData.PngResultPages.length} pages. Check your Downloads folder or allow pop-ups if needed.`,
+                        pages: parsedData.PngResultPages.length
+                    };
+                }
+            } catch (e) {
+                console.log('📄 Not URL format, trying direct base64...');
+            }
+        }
 
         return result;
 
