@@ -7,8 +7,11 @@ const FormData = require('form-data');
 const path = require('path');
 require('dotenv').config();
 
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+
 
 // Enable CORS for all origins (configure for your domain in production)
 app.use(cors());
@@ -627,11 +630,156 @@ app.post('/api/ocr-text', upload.single('file'), async (req, res) => {
   }
 });
 
+// Add Watermark to PDF endpoint with pdf-lib
+app.post('/api/add-watermark', upload.fields([
+  { name: 'pdf', maxCount: 1 },
+  { name: 'image', maxCount: 1 }
+]), async (req, res) => {
+  try {
+    console.log(`[${new Date().toISOString()}] Add watermark requested`);
+    
+    if (!req.files || !req.files.pdf) {
+      return res.status(400).json({ error: 'No PDF file uploaded' });
+    }
+
+    const pdfFile = req.files.pdf[0];
+    
+    if (pdfFile.mimetype !== 'application/pdf') {
+      return res.status(400).json({ error: 'File must be a PDF' });
+    }
+
+    const watermarkType = req.body.type || 'text';
+    const watermarkText = req.body.text || 'CONFIDENTIAL';
+    const fontSize = parseInt(req.body.fontSize) || 36;
+    const fontColor = req.body.fontColor || '#ff0000';
+    const opacity = parseFloat(req.body.opacity) || 0.5;
+    const rotation = parseInt(req.body.rotation) || 0;
+    const position = req.body.position || 'center';
+    const pageRange = req.body.pageRange || '';
+
+    if (watermarkType === 'text' && !watermarkText.trim()) {
+      return res.status(400).json({ error: 'Watermark text is required' });
+    }
+    
+    if (watermarkType === 'image' && (!req.files || !req.files.image)) {
+      return res.status(400).json({ error: 'Watermark image is required' });
+    }
+
+    console.log(`Processing: ${pdfFile.originalname} (${pdfFile.size} bytes) with ${watermarkType} watermark`);
+
+    // Load pdf-lib dynamically
+    const { PDFDocument, rgb, degrees, StandardFonts } = require('pdf-lib');
+    
+    // Load the PDF
+    const pdfDoc = await PDFDocument.load(pdfFile.buffer);
+    const pages = pdfDoc.getPages();
+    const totalPages = pages.length;
+
+    // Parse page range
+    let pagesToWatermark = [];
+    if (!pageRange || pageRange.trim() === '') {
+      // All pages
+      pagesToWatermark = Array.from({ length: totalPages }, (_, i) => i);
+    } else {
+      // Parse range like "1-3,5,7-9"
+      const parts = pageRange.split(',');
+      for (let part of parts) {
+        part = part.trim();
+        if (part.includes('-')) {
+          const [start, end] = part.split('-').map(n => parseInt(n.trim()));
+          for (let i = Math.max(1, start); i <= Math.min(totalPages, end); i++) {
+            pagesToWatermark.push(i - 1); // 0-based index
+          }
+        } else {
+          const pageNum = parseInt(part);
+          if (pageNum >= 1 && pageNum <= totalPages) {
+            pagesToWatermark.push(pageNum - 1); // 0-based index
+          }
+        }
+      }
+      pagesToWatermark = [...new Set(pagesToWatermark)].sort((a, b) => a - b);
+    }
+
+    // Convert hex color to RGB
+    const hexToRgb = (hex) => {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16) / 255,
+        g: parseInt(result[2], 16) / 255,
+        b: parseInt(result[3], 16) / 255
+      } : { r: 1, g: 0, b: 0 }; // Default red
+    };
+
+    const color = hexToRgb(fontColor);
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+    // Calculate position offsets
+    const getPosition = (page, textWidth, textHeight) => {
+      const { width, height } = page.getSize();
+      const positions = {
+        'center': { x: (width - textWidth) / 2, y: (height - textHeight) / 2 },
+        'top-left': { x: 50, y: height - 50 - textHeight },
+        'top-center': { x: (width - textWidth) / 2, y: height - 50 - textHeight },
+        'top-right': { x: width - 50 - textWidth, y: height - 50 - textHeight },
+        'center-left': { x: 50, y: (height - textHeight) / 2 },
+        'center-right': { x: width - 50 - textWidth, y: (height - textHeight) / 2 },
+        'bottom-left': { x: 50, y: 50 },
+        'bottom-center': { x: (width - textWidth) / 2, y: 50 },
+        'bottom-right': { x: width - 50 - textWidth, y: 50 }
+      };
+      return positions[position] || positions['center'];
+    };
+
+    // Add watermark to selected pages
+    for (const pageIndex of pagesToWatermark) {
+      const page = pages[pageIndex];
+      
+      if (watermarkType === 'text') {
+        const textWidth = font.widthOfTextAtSize(watermarkText, fontSize);
+        const textHeight = font.heightAtSize(fontSize);
+        const pos = getPosition(page, textWidth, textHeight);
+
+        page.drawText(watermarkText, {
+          x: pos.x,
+          y: pos.y,
+          size: fontSize,
+          font: font,
+          color: rgb(color.r, color.g, color.b),
+          opacity: opacity,
+          rotate: degrees(rotation)
+        });
+      }
+    }
+
+    // Save the modified PDF
+    const pdfBytes = await pdfDoc.save();
+
+    console.log(`✅ Watermark added successfully to ${pagesToWatermark.length} pages`);
+
+    // Send as blob
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': `attachment; filename="watermarked-${pdfFile.originalname}"`,
+      'Content-Length': pdfBytes.length
+    });
+    
+    res.send(Buffer.from(pdfBytes));
+
+  } catch (error) {
+    console.error('❌ Add watermark error:', error.message);
+    console.error(error.stack);
+    res.status(500).json({ 
+      error: 'Failed to add watermark',
+      message: error.message 
+    });
+  }
+});
+
 // Root endpoint - Backend info page
 app.get('/', (req, res) => {
   res.json({
     service: 'PDFINDI Backend API',
-    version: '1.0.1',
+    version: '1.0.2',
     status: 'online',
     location: 'Render Cloud',
     endpoints: {
@@ -642,7 +790,8 @@ app.get('/', (req, res) => {
       imageToPdf: 'POST /api/image-to-pdf',
       pdfToImage: 'POST /api/pdf-to-image?format=png|jpg|jpeg',
       pdfToJpg: 'POST /api/pdf-to-jpg (legacy)',
-      ocrText: 'POST /api/ocr-text'
+      ocrText: 'POST /api/ocr-text',
+      addWatermark: 'POST /api/add-watermark'
     },
     documentation: 'API endpoints accept multipart/form-data with file uploads',
     limits: {
@@ -670,7 +819,10 @@ app.use('/api/*', (req, res) => {
   res.status(404).json({ error: 'API endpoint not found' });
 });
 
-// 404 handler for any other routes
+// Serve static frontend files for any non-API route (should be after all API and error handlers)
+app.use(express.static(path.join(__dirname, '../public_html')));
+
+// 404 handler for any other routes (after static)
 app.use('*', (req, res) => {
   res.status(404).json({ 
     error: 'Route not found',
