@@ -61,7 +61,8 @@ app.get('/api/health', (req, res) => {
     service: 'PDFINDI Backend',
     environment: process.env.NODE_ENV || 'development',
     location: 'Render Cloud',
-    version: '1.0.2'
+    version: '1.0.3',
+    protectPdfEndpoint: 'available'
   });
 });
 
