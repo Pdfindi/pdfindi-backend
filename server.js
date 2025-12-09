@@ -749,11 +749,127 @@ app.post('/api/add-watermark', upload.fields([
   }
 });
 
+// PDF Protection endpoint - uses Cloudmersive API
+app.post('/api/protect-pdf', upload.single('file'), async (req, res) => {
+  try {
+    console.log(`[${new Date().toISOString()}] PDF protection requested`);
+    
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    if (req.file.mimetype !== 'application/pdf') {
+      return res.status(400).json({ error: 'File must be a PDF' });
+    }
+
+    const {
+      userPassword,
+      ownerPassword,
+      permissions,
+      encryptionKeyLength
+    } = req.body;
+
+    // Parse permissions if it's a JSON string
+    let perms = {};
+    if (typeof permissions === 'string') {
+      try {
+        perms = JSON.parse(permissions);
+      } catch (e) {
+        perms = {};
+      }
+    } else {
+      perms = permissions || {};
+    }
+
+    console.log(`Processing: ${req.file.originalname} (${req.file.size} bytes)`);
+    console.log(`Protection: User Password: ${userPassword ? 'Yes' : 'No'}, Owner Password: ${ownerPassword ? 'Yes' : 'No'}`);
+
+    // Create FormData for Cloudmersive API
+    const formData = new FormData();
+    formData.append('inputFile', req.file.buffer, {
+      filename: req.file.originalname,
+      contentType: 'application/pdf'
+    });
+    
+    if (userPassword) formData.append('userPassword', userPassword);
+    if (ownerPassword) formData.append('ownerPassword', ownerPassword);
+    formData.append('allowPrinting', perms.allowPrinting ? 'true' : 'false');
+    formData.append('allowFormFill', perms.allowFormFill ? 'true' : 'false');
+    formData.append('allowEditingAnnotations', perms.allowEditingAnnotations ? 'true' : 'false');
+    formData.append('allowContentExtraction', perms.allowContentExtraction ? 'true' : 'false');
+    formData.append('allowEditing', perms.allowEditing ? 'true' : 'false');
+    formData.append('encryptionKeyLength', encryptionKeyLength === '256' ? '256' : '128');
+
+    console.log('Calling Cloudmersive API...');
+    console.log('API URL: https://api.cloudmersive.com/convert/edit/pdf/encrypt/user-password');
+    console.log('API Key (first 10 chars):', CLOUDMERSIVE_API_KEY.substring(0, 10) + '...');
+    
+    // Call Cloudmersive PDF encryption API
+    const response = await axios.post(
+      'https://api.cloudmersive.com/convert/edit/pdf/encrypt/user-password',
+      formData,
+      {
+        headers: {
+          ...formData.getHeaders(),
+          'Apikey': CLOUDMERSIVE_API_KEY
+        },
+        responseType: 'arraybuffer',
+        timeout: 30000,
+        validateStatus: function (status) {
+          return status < 500; // Accept any status less than 500
+        }
+      }
+    );
+
+    console.log('API Response Status:', response.status);
+    console.log('API Response Content-Type:', response.headers['content-type']);
+    console.log('API Response Size:', response.data.byteLength, 'bytes');
+
+    // Check if response is actually a PDF
+    if (response.status !== 200) {
+      const errorText = Buffer.from(response.data).toString('utf8');
+      console.error('API Error Response:', errorText.substring(0, 1000));
+      throw new Error(`Cloudmersive API error (${response.status}): ${errorText.substring(0, 200)}`);
+    }
+    
+    if (response.headers['content-type'] && !response.headers['content-type'].includes('pdf')) {
+      const errorHtml = Buffer.from(response.data).toString('utf8');
+      console.error('API returned HTML instead of PDF:', errorHtml.substring(0, 500));
+      throw new Error('API returned non-PDF response. Check API key and endpoint.');
+    }
+
+    console.log('✅ PDF protection successful');
+    
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': `attachment; filename="${req.file.originalname.replace('.pdf', '_protected.pdf')}"`
+    });
+    
+    res.send(Buffer.from(response.data));
+
+  } catch (error) {
+    console.error('❌ PDF protection failed:', error.response?.data || error.message);
+    
+    if (error.response) {
+      return res.status(error.response.status).json({
+        error: 'PDF protection failed',
+        details: error.response.data?.Message || error.message,
+        statusCode: error.response.status
+      });
+    }
+    
+    res.status(500).json({
+      error: 'PDF protection failed',
+      details: error.message
+    });
+  }
+});
+
 // Root endpoint - Backend info page
 app.get('/', (req, res) => {
   res.json({
     service: 'PDFINDI Backend API',
-    version: '1.0.2',
+    version: '1.0.3',
     status: 'online',
     location: 'Render Cloud',
     endpoints: {
@@ -764,7 +880,8 @@ app.get('/', (req, res) => {
       imageToPdf: 'POST /api/image-to-pdf',
       pdfToJpg: 'POST /api/pdf-to-jpg',
       ocrText: 'POST /api/ocr-text',
-      addWatermark: 'POST /api/add-watermark'
+      addWatermark: 'POST /api/add-watermark',
+      protectPdf: 'POST /api/protect-pdf'
     },
     documentation: 'API endpoints accept multipart/form-data with file uploads',
     limits: {
