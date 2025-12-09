@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - PDFINDI | Get in Touch</title>
+    <meta name="description" content="Contact PDFINDI for support, feedback, or business inquiries. We're here to help with all your PDF tool needs.">
+    <meta name="keywords" content="contact pdfindi, support, customer service, feedback, pdf tool help, business inquiries">
+    <link rel="canonical" href="https://pdfindi.com/contact">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pdfindi.com/contact">
+    <meta property="og:title" content="Contact PDFINDI - We're Here to Help">
+    <meta property="og:description" content="Get in touch with PDFINDI for support, feedback, or business inquiries">
+    
+    <meta name="robots" content="index, follow">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="modern-header.css">
+    <link rel="stylesheet" href="orange-theme.css">
+    <style>
+        body {
+            padding-top: 80px;
+        }
+        
+        .contact-hero {
+            background: linear-gradient(135deg, #FFF5F0 0%, #FFE5DC 100%);
+            color: #1F2937;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid #E5E7EB;
+        }
+        
+        .contact-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .contact-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .contact-form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .contact-method .icon {
+            font-size: 2rem;
+            color: #27ae60;
+        }
+        
+        .contact-method .details h3 {
+            margin: 0 0 0.5rem 0;
+            color: #2c3e50;
+        }
+        
+        .contact-method .details p {
+            margin: 0;
+            color: #6c757d;
+        }
+        
+        .contact-form {
+            max-width: none;
+            margin: 0;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #FF6B35;
+            outline: none;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        }
+        
+        .submit-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #6B7280;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #4B5563;
+            transform: translateY(-1px);
+        }
+        
+        .faq-preview {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #dee2e6;
+            margin-top: 2rem;
+        }
+        
+        .faq-preview h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #27ae60;
+            padding-bottom: 0.5rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .faq-item h3 {
+            margin: 0 0 0.5rem 0;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        
+        .faq-item p {
+            margin: 0;
+            color: #6c757d;
+        }
+        
+        .view-all-faq {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 1rem;
+            transition: background-color 0.2s;
+        }
+        
+        .view-all-faq:hover {
+            background: #229954;
+        }
+        
+        @media (max-width: 768px) {
+            .contact-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .contact-info,
+            .contact-form-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-main">
+                    <div class="logo-icon">PI</div>
+                    <div class="logo-text">
+                        <span class="brand-name">PDFINDI</span>
+                    </div>
+                </div>
+                <div class="made-in-india-badge">
+                    🇮🇳 Made in India
+                </div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="index.html" class="nav-link"><span class="icon">🏠</span>Home</a></li>
+                <li><a href="index.html#pdf-tools-section" class="nav-link"><span class="icon">📄</span>PDF Tools</a></li>
+                <li><a href="index.html#utility-tools-section" class="nav-link"><span class="icon">🔧</span>Utility Tools</a></li>
+                <li><a href="index.html#blog-page" class="nav-link"><span class="icon">📝</span>Blog</a></li>
+                <li><a href="index.html#contact-page" class="nav-link"><span class="icon">📧</span>Contact</a></li>
+            </ul>
+        </aside>
+
+        <header class="header">
+            <button class="hamburger-button" id="hamburger-button" aria-label="Open menu" aria-expanded="false">☰</button>
+        </header>
+
+        <main class="main-content">
+            <a href="index.html" class="back-button">← Back to Home</a>
+            
+            <div class="contact-hero">
+                <h1>Contact Us</h1>
+                <p>We'd love to hear from you! Get in touch for support, feedback, or business inquiries.</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Get in Touch</h2>
+                    <p>Have a question, suggestion, or need help with our tools? We're here to help! Choose the best way to reach us below.</p>
+                    
+                    <div class="contact-method">
+                        <div class="icon">📧</div>
+                        <div class="details">
+                            <h3>Email Support</h3>
+                            <p>support@pdfindi-com-877674.hostingersite.com</p>
+                            <p>We typically respond within 24 hours</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="icon">💬</div>
+                        <div class="details">
+                            <h3>Live Chat</h3>
+                            <p>Available during business hours</p>
+                            <p>Click the chat widget below</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="icon">📱</div>
+                        <div class="details">
+                            <h3>WhatsApp</h3>
+                            <p>+91 [Your WhatsApp Number]</p>
+                            <p>Quick responses for urgent issues</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="icon">🏢</div>
+                        <div class="details">
+                            <h3>Business Inquiries</h3>
+                            <p>business@pdfindi-com-877674.hostingersite.com</p>
+                            <p>For partnerships and enterprise solutions</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="icon">🕒</div>
+                        <div class="details">
+                            <h3>Business Hours</h3>
+                            <p>Monday - Friday: 9:00 AM - 6:00 PM IST</p>
+                            <p>Saturday: 10:00 AM - 2:00 PM IST</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form-container">
+                    <h2>Send us a Message</h2>
+                    <form class="contact-form" action="https://formspree.io/f/YOUR_UNIQUE_ID" method="POST" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="support">Technical Support</option>
+                                <option value="feedback">Feedback & Suggestions</option>
+                                <option value="bug-report">Bug Report</option>
+                                <option value="feature-request">Feature Request</option>
+                                <option value="business">Business Partnership</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="6" required placeholder="Please describe your inquiry in detail..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="faq-preview">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <h3>How do I use PDFINDI tools?</h3>
+                    <p>Simply select the tool you need from our homepage, upload your file (if required), and follow the on-screen instructions. Most tools work instantly in your browser!</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Are my files safe and private?</h3>
+                    <p>Absolutely! For client-side tools, your files never leave your device. For backend tools, files are temporarily processed and automatically deleted within 24 hours.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Do I need to create an account?</h3>
+                    <p>No account required! All our tools are completely free and accessible without any registration or login.</p>
+                </div>
+                
+                <a href="faq.html" class="view-all-faq">View All FAQ →</a>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="about.html">About Us</a> |
+            <a href="privacy.html">Privacy Policy</a> |
+            <a href="contact.html">Contact</a> |
+            <a href="faq.html">FAQ</a>
+        </div>
+        <p class="footer-copyright">🇮🇳 Made in India • © 2025 PDFIndi</p>
+    </footer>
+    
+    <script src="modern-header.js"></script>
+    <script src="script.js" defer></script>
+    <script>
+        // Contact form handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            
+            // Show loading state
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission (replace with actual form handling)
+            setTimeout(() => {
+                alert('Thank you for your message! We\'ll get back to you within 24 hours.');
+                
+                // Reset form
+                document.getElementById('contactForm').reset();
+                
+                // Reset button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

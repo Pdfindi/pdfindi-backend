@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern PDFINDI Design Preview</title>
+    <link rel="stylesheet" href="modern-header.css">
+    <link rel="stylesheet" href="tools/modern-theme.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        }
+        
+        .preview-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        
+        .preview-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #111827;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .preview-subtitle {
+            font-size: 1.25rem;
+            color: #6B7280;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .tool-card {
+            background: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .tool-card:hover {
+            border-color: #FF6B35;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+        
+        .tool-card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tool-card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tool-card-desc {
+            font-size: 0.875rem;
+            color: #6B7280;
+            line-height: 1.5;
+        }
+        
+        .tool-card-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #FFE5DC;
+            color: #FF6B35;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            margin-top: 0.75rem;
+        }
+        
+        .demo-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+        }
+        
+        .feature-section {
+            background: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-section h3 {
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Modern Header will be injected here by JavaScript -->
+    
+    <div class="preview-section">
+        <h1 class="preview-title">Modern PDFINDI Design</h1>
+        <p class="preview-subtitle">Clean, professional look inspired by iLovePDF with orange theme</p>
+        
+        <div class="demo-buttons">
+            <button class="btn-primary">Primary Button</button>
+            <button class="btn-secondary">Secondary Button</button>
+            <button class="download-btn">Download PDF</button>
+            <a href="#" class="back-btn">← Back to Tools</a>
+        </div>
+        
+        <div class="feature-section">
+            <h3>🎨 Design Features</h3>
+            <ul style="color: #6B7280; line-height: 2;">
+                <li>✅ Orange (#FF6B35) as primary color instead of tricolor</li>
+                <li>✅ Clean white backgrounds with subtle shadows</li>
+                <li>✅ Modern header with dropdown for all tools (like iLovePDF)</li>
+                <li>✅ Removed sidebar - tools accessible from header</li>
+                <li>✅ Professional typography and spacing</li>
+                <li>✅ Smooth hover effects and transitions</li>
+                <li>✅ Mobile responsive design</li>
+            </ul>
+        </div>
+        
+        <h2 style="font-size: 2rem; color: #111827; margin: 3rem 0 2rem 0; text-align: center;">Featured Tools</h2>
+        
+        <div class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-card-icon">🔗</div>
+                <div class="tool-card-title">Merge PDF</div>
+                <div class="tool-card-desc">Combine multiple PDFs into one document</div>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-card-icon">✂️</div>
+                <div class="tool-card-title">Split PDF</div>
+                <div class="tool-card-desc">Extract pages into separate PDF files</div>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-card-icon">🗜️</div>
+                <div class="tool-card-title">Compress PDF</div>
+                <div class="tool-card-desc">Reduce file size while keeping quality</div>
+                <div class="tool-card-badge">API</div>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-card-icon">📄</div>
+                <div class="tool-card-title">PDF to Word</div>
+                <div class="tool-card-desc">Convert PDF documents to editable Word files</div>
+                <div class="tool-card-badge">API</div>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-card-icon">💧</div>
+                <div class="tool-card-title">Add Watermark</div>
+                <div class="tool-card-desc">Add text or image watermarks to your PDFs</div>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-card-icon">🔒</div>
+                <div class="tool-card-title">Protect PDF</div>
+                <div class="tool-card-desc">Secure PDFs with password protection</div>
+            </div>
+        </div>
+        
+        <div class="feature-section" style="margin-top: 3rem;">
+            <h3>📝 Upload Area Example</h3>
+            <div class="upload-area">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">📁</div>
+                <h3 style="margin-bottom: 0.5rem; color: #111827;">Choose PDF file</h3>
+                <p style="color: #6B7280; margin-bottom: 1.5rem;">or drag and drop it here</p>
+                <button class="upload-btn">Select File</button>
+            </div>
+        </div>
+        
+        <div class="feature-section">
+            <h3>✅ Success Message Example</h3>
+            <div class="success-message">
+                <strong>Success!</strong> Your PDF has been processed successfully. File size: 1.2 MB
+            </div>
+        </div>
+        
+        <div class="feature-section">
+            <h3>⚠️ Error Message Example</h3>
+            <div class="error-message">
+                <strong>Error!</strong> File size exceeds the maximum limit of 50MB.
+            </div>
+        </div>
+        
+        <div class="feature-section">
+            <h3>📊 Progress Bar Example</h3>
+            <div class="progress-container">
+                <div class="progress-fill" style="width: 65%;"></div>
+            </div>
+            <p style="color: #6B7280; margin-top: 0.5rem; text-align: center;">Processing... 65%</p>
+        </div>
+    </div>
+    
+    <script src="modern-header.js"></script>
+</body>
+</html>

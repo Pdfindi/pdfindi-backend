@@ -7,141 +7,851 @@
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../modern-header.css">
+<link rel="stylesheet" href="modern-theme.css">
+    <link rel="stylesheet" href="../orange-theme.css">
     <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+            --success-gradient: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            --error-gradient: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --shadow-light: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-medium: 0 8px 32px rgba(0,0,0,0.12);
+            --shadow-strong: 0 16px 64px rgba(0,0,0,0.16);
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
         .tool-page {
-            max-width: 800px;
+            max-width: 900px;
             margin: 2rem auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 0;
+            background: transparent;
+            border-radius: var(--border-radius);
+            overflow: hidden;
         }
-        .tool-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #f0f0f0;
-        }
-        .tool-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
+
+        /* Enhanced Back Button */
         .back-btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            color: #e74c3c;
+            gap: 0.75rem;
+            color: #6366f1;
             text-decoration: none;
-            font-weight: 500;
-            margin-bottom: 2rem;
-            transition: color 0.3s;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--glass-bg);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
+
+        .back-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 153, 51, 0.1), transparent);
+            transition: var(--transition);
+        }
+
+        .back-btn:hover::before {
+            left: 100%;
+        }
+
         .back-btn:hover {
-            color: #c0392b;
+            color: #4f46e5;
+            background: rgba(255, 255, 255, 0.98);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
         }
-        .spinner {
+
+        /* Modern Tool Header */
+        .tool-header {
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+            background: var(--primary-gradient);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) rotate(180deg); }
+        }
+
+        .tool-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
             display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid #ffffff;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 1s ease-in-out infinite;
+            animation: bounce-in 0.8s ease-out;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
         }
+
+        @keyframes bounce-in {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(-90deg); opacity: 0.5; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .tool-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0 0 1rem 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: -0.02em;
+        }
+
+        .tool-header p {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin: 0;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Enhanced Upload Zone */
+        .upload-zone {
+            margin: 2rem;
+            border: 3px dashed rgba(255, 153, 51, 0.3);
+            border-radius: var(--border-radius);
+            padding: 3rem 2rem;
+            text-align: center;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-zone::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .upload-zone:hover {
+            border-color: #6366f1;
+            background: rgba(255, 255, 255, 0.98);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .upload-zone:hover::before {
+            opacity: 0.05;
+        }
+
+        .upload-zone.dragover {
+            border-color: #138808;
+            background: rgba(16, 185, 129, 0.05);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .upload-zone.dragover::before {
+            opacity: 0.1;
+            background: linear-gradient(135deg, #138808 0%, #34d399 100%);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: #6366f1;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+            filter: drop-shadow(0 2px 4px rgba(255, 153, 51, 0.2));
+        }
+
+        .upload-zone:hover .upload-icon {
+            transform: scale(1.1) rotate(5deg);
+            color: #4f46e5;
+        }
+
+        .upload-zone h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+            color: #1f2937;
+        }
+
+        .upload-zone p {
+            font-size: 1rem;
+            color: #6b7280;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* Enhanced File Info */
+        .pdf-files-info {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-light);
+            animation: slide-in 0.5s ease-out;
+            display: none;
+        }
+
+        @keyframes slide-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pdf-files-info h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0 0 1.5rem 0;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .files-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 153, 51, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid #6366f1;
+        }
+
+        .file-icon {
+            font-size: 1.5rem;
+            color: #6366f1;
+        }
+
+        .file-details {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+        }
+
+        .file-size {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .file-number {
+            background: #6366f1;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Enhanced Status Area */
+        .status-area {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-light);
+            animation: slide-in 0.5s ease-out;
+            display: none;
+        }
+
+        .status-success {
+            border-left: 4px solid #138808;
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .status-error {
+            border-left: 4px solid #ef4444;
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .status-processing {
+            border-left: 4px solid #6366f1;
+            background: rgba(255, 153, 51, 0.05);
+        }
+
+        /* Enhanced Buttons */
+        .red-button {
+            background: var(--primary-gradient);
+            color: white;
+            border: 3px solid var(--color-navy, #000080);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+            margin: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .red-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .red-button:hover::before {
+            left: 100%;
+        }
+
+        .red-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .red-button:active {
+            transform: translateY(0);
+        }
+
+        .red-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Enhanced Processing */
+        .processing {
+            text-align: center;
+            padding: 3rem 2rem;
+            margin: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-light);
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 107, 53, 0.1);
+            border-left: 4px solid #FF6B35;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        .processing p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #374151;
+            margin: 0;
+        }
+
+        /* Progress Bar Styles */
+        .progress-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 1.5rem auto 1rem;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            height: 8px;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B35 0%, #FF8C42 100%);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            font-size: 0.95rem;
+            color: #6B7280;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* Enhanced Download Section */
+        .download-section {
+            text-align: center;
+            padding: 3rem 2rem;
+            margin: 2rem;
+            background: var(--success-gradient);
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium);
+            animation: slide-in 0.5s ease-out;
+            display: none;
+        }
+
+        .download-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 1rem 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .download-section p {
+            font-size: 1.1rem;
+            margin: 0 0 2rem 0;
+            opacity: 0.9;
+        }
+
+        .download-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 0.5rem;
+        }
+
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tool-page {
+                margin: 1rem;
+            }
+
+            .back-btn {
+                margin: 1rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .tool-header {
+                padding: 2rem 1rem;
+            }
+
+            .tool-header h1 {
+                font-size: 2rem;
+            }
+
+            .tool-header p {
+                font-size: 1rem;
+            }
+
+            .upload-zone {
+                margin: 1rem;
+                padding: 2rem 1rem;
+            }
+
+            .upload-zone h3 {
+                font-size: 1.3rem;
+            }
+
+            .files-list {
+                gap: 0.75rem;
+            }
+
+            .file-item {
+                padding: 0.75rem;
+            }
+
+            .red-button {
+                width: 100%;
+                margin: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .upload-zone h3 {
+                font-size: 1.1rem;
+            }
+
+            .file-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
         }
     </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Merge PDF",
+  "description": "Merge multiple PDF files into one document online. Free, fast, and secure PDF merger tool.",
+  "url": "https://pdfindi.com/tools/merge-pdf.html",
+  "applicationCategory": "PDF Tool",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "PDFINDI",
+    "url": "https://pdfindi.com"
+  }
+}
+</script>
+
 </head>
 <body>
     <div class="tool-page">
-        <a href="../index.html" class="back-btn">
-            ← Back to Tools
+        <a href="../index.html#pdf-tools-section" class="back-btn" id="back-to-tools-btn">
+            ← Back to PDF Tools
         </a>
         
         <div class="tool-header">
             <div class="tool-icon">📄</div>
             <h1>Merge PDF</h1>
-            <p>Combine multiple PDF files into one document</p>
+            <p>Combine multiple PDF files into one seamless document</p>
         </div>
 
-        <div class="tool-ui-container">
-            <label>Select PDF files to merge (in order):</label>
-            <input type="file" id="file-input" accept=".pdf" multiple>
-            <div id="status-area" class="output-area" style="min-height: 50px; display: none;"></div>
+        <div class="upload-zone" id="upload-zone">
+            <div class="upload-icon">📎</div>
+            <h3>Drop your PDF files here or click to browse</h3>
+            <p>Maximum 50MB per file • Multiple files supported</p>
+            <input type="file" id="file-input" accept=".pdf" multiple style="display: none;">
+        </div>
+
+        <div class="pdf-files-info" id="pdf-files-info">
+            <h3>📋 Files to Merge</h3>
+            <div class="files-list" id="files-list"></div>
+        </div>
+
+        <div class="status-area" id="status-area"></div>
+
+        <div style="text-align: center;">
             <button class="red-button" id="process-btn" disabled>
-                <span class="btn-text">Merge PDFs</span>
+                <span class="btn-text">📄 Merge PDFs</span>
                 <span class="spinner" hidden></span>
             </button>
+        </div>
+
+        <div class="processing" id="processing" style="display: none;">
+            <div class="spinner"></div>
+            <p id="processing-text">Merging PDF files...</p>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <p class="progress-text" id="progress-text">0%</p>
+        </div>
+
+        <div class="download-section" id="download-section" style="display: none;">
+            <h3>✅ PDFs Merged Successfully!</h3>
+            <p id="result-info">Your merged PDF is ready for download</p>
+            <button class="download-btn" id="download-btn">📥 Download Merged PDF</button>
+            <button class="red-button" id="merge-new-btn">📄 Merge More PDFs</button>
         </div>
     </div>
 
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script>
-        // Merge PDF functionality
-        const fileInput = document.getElementById('file-input');
-        const processBtn = document.getElementById('process-btn');
-        const statusArea = document.getElementById('status-area');
+        let selectedFiles = [];
 
-        function createDownload(blob, filename) {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+        const elements = {
+            uploadZone: document.getElementById('upload-zone'),
+            fileInput: document.getElementById('file-input'),
+            pdfFilesInfo: document.getElementById('pdf-files-info'),
+            filesList: document.getElementById('files-list'),
+            statusArea: document.getElementById('status-area'),
+            processBtn: document.getElementById('process-btn'),
+            processing: document.getElementById('processing'),
+            processingText: document.getElementById('processing-text'),
+            downloadSection: document.getElementById('download-section'),
+            resultInfo: document.getElementById('result-info'),
+            downloadBtn: document.getElementById('download-btn'),
+            mergeNewBtn: document.getElementById('merge-new-btn')
+        };
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
-        fileInput.addEventListener('change', () => {
-            processBtn.disabled = fileInput.files.length < 2;
-        });
+        function showStatus(message, type = 'info') {
+            elements.statusArea.textContent = message;
+            elements.statusArea.className = `status-area status-${type}`;
+            elements.statusArea.style.display = 'block';
+            
+            setTimeout(() => {
+                elements.statusArea.style.display = 'none';
+            }, 5000);
+        }
 
-        processBtn.addEventListener('click', async () => {
-            const files = fileInput.files;
-            if (files.length < 2) {
-                statusArea.textContent = 'Please select at least two PDF files.';
-                statusArea.style.display = 'block';
+        function updateFilesList() {
+            if (selectedFiles.length === 0) {
+                elements.pdfFilesInfo.style.display = 'none';
                 return;
             }
 
-            const btnText = processBtn.querySelector('.btn-text');
-            const spinner = processBtn.querySelector('.spinner');
-            processBtn.disabled = true;
+            elements.pdfFilesInfo.style.display = 'block';
+            elements.filesList.innerHTML = '';
+
+            selectedFiles.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <div class="file-icon">📄</div>
+                    <div class="file-details">
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-size">${formatFileSize(file.size)}</div>
+                    </div>
+                    <div class="file-number">${index + 1}</div>
+                `;
+                elements.filesList.appendChild(fileItem);
+            });
+        }
+
+        function handleFileSelect(files) {
+            selectedFiles = Array.from(files);
+            
+            // Validate files
+            const invalidFiles = selectedFiles.filter(file => file.type !== 'application/pdf');
+            if (invalidFiles.length > 0) {
+                showStatus('Please select only PDF files.', 'error');
+                return;
+            }
+
+            const oversizedFiles = selectedFiles.filter(file => file.size > 50 * 1024 * 1024);
+            if (oversizedFiles.length > 0) {
+                showStatus('Some files are too large. Maximum size is 50MB per file.', 'error');
+                return;
+            }
+
+            if (selectedFiles.length < 2) {
+                showStatus('Please select at least 2 PDF files to merge.', 'error');
+                elements.processBtn.disabled = true;
+                return;
+            }
+
+            elements.processBtn.disabled = false;
+            updateFilesList();
+            showStatus(`Ready to merge ${selectedFiles.length} PDF files.`, 'success');
+        }
+
+        async function mergePDFs() {
+            if (selectedFiles.length < 2) {
+                showStatus('Please select at least 2 PDF files.', 'error');
+                return;
+            }
+
+            const btnText = elements.processBtn.querySelector('.btn-text');
+            const spinner = elements.processBtn.querySelector('.spinner');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            
+            elements.processBtn.disabled = true;
             spinner.hidden = false;
-            btnText.textContent = 'Processing...';
-            statusArea.style.display = 'block';
-            statusArea.textContent = 'Loading files...';
+            btnText.textContent = 'Merging...';
+            elements.processing.style.display = 'block';
+            elements.pdfFilesInfo.style.display = 'none';
 
             try {
                 const { PDFDocument } = PDFLib;
                 const mergedPdf = await PDFDocument.create();
 
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    statusArea.textContent = `Processing file ${i + 1} of ${files.length}: ${file.name}`;
+                for (let i = 0; i < selectedFiles.length; i++) {
+                    const file = selectedFiles[i];
+                    const progress = Math.round(((i + 1) / selectedFiles.length) * 100);
+                    
+                    elements.processingText.textContent = `Processing file ${i + 1} of ${selectedFiles.length}: ${file.name}`;
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = progress + '%';
+                    
                     const arrayBuffer = await file.arrayBuffer();
                     const pdf = await PDFDocument.load(arrayBuffer);
                     const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
                     copiedPages.forEach((page) => mergedPdf.addPage(page));
                 }
 
-                statusArea.textContent = 'Finalizing merged PDF...';
+                elements.processingText.textContent = 'Finalizing merged PDF...';
+                progressBar.style.width = '100%';
+                progressText.textContent = '100%';
+                
                 const mergedPdfFile = await mergedPdf.save();
-                createDownload(new Blob([mergedPdfFile], { type: 'application/pdf' }), 'pdfindi-merged.pdf');
-                statusArea.textContent = 'Merge successful!';
+                const mergedBlob = new Blob([mergedPdfFile], { type: 'application/pdf' });
+
+                elements.processing.style.display = 'none';
+                
+                const totalSize = mergedBlob.size;
+                elements.resultInfo.textContent = `Successfully merged ${selectedFiles.length} PDFs • ${formatFileSize(totalSize)}`;
+                elements.downloadSection.style.display = 'block';
+
+                // Create download function
+                elements.downloadBtn.onclick = () => {
+                    const url = URL.createObjectURL(mergedBlob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'pdfindi-merged.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                };
+
+                showStatus('PDFs merged successfully!', 'success');
+
             } catch (error) {
-                console.error(error);
-                statusArea.textContent = 'An error occurred. A PDF might be corrupted or password-protected.';
+                console.error('Merge error:', error);
+                showStatus('Failed to merge PDFs. Please try again.', 'error');
+                elements.processing.style.display = 'none';
+                elements.pdfFilesInfo.style.display = 'block';
             } finally {
-                processBtn.disabled = false;
+                elements.processBtn.disabled = false;
                 spinner.hidden = true;
-                btnText.textContent = 'Merge PDFs';
+                btnText.textContent = '📄 Merge PDFs';
+            }
+        }
+
+        function resetTool() {
+            selectedFiles = [];
+            elements.pdfFilesInfo.style.display = 'none';
+            elements.downloadSection.style.display = 'none';
+            elements.processing.style.display = 'none';
+            elements.statusArea.style.display = 'none';
+            elements.processBtn.disabled = true;
+            elements.fileInput.value = '';
+        }
+
+        // Event listeners
+        elements.uploadZone.addEventListener('click', () => elements.fileInput.click());
+
+        elements.uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.add('dragover');
+        });
+
+        elements.uploadZone.addEventListener('dragleave', () => {
+            elements.uploadZone.classList.remove('dragover');
+        });
+
+        elements.uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            elements.uploadZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files);
             }
         });
+
+        elements.fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files);
+            }
+        });
+
+        elements.processBtn.addEventListener('click', mergePDFs);
+        elements.mergeNewBtn.addEventListener('click', resetTool);
+        
+        // Back to Tools button functionality
+        document.getElementById('back-to-tools-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = '../index.html#pdf-tools-section';
+        });
     </script>
+    <script src="../modern-header.js"></script>
 </body>
 </html>

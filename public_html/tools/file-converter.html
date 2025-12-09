@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Converter Hub - PDFINDI</title>
-    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../modern-header.css">
+<link rel="stylesheet" href="modern-theme.css">
+    <link rel="stylesheet" href="../orange-theme.css">
     <style>
         .tool-page {
             max-width: 1000px;
@@ -32,7 +35,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: #e74c3c;
+            color: #138808;
             text-decoration: none;
             font-weight: 500;
             margin-bottom: 2rem;
@@ -42,7 +45,7 @@
             color: #c0392b;
         }
         .backend-notice {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #FF9933 0%, #138808 100%);
             color: white;
             padding: 2rem;
             border-radius: 12px;
@@ -101,7 +104,7 @@
             margin: 2rem 0;
         }
         .upload-zone:hover {
-            border-color: #e74c3c;
+            border-color: #138808;
             background: #fff5f5;
         }
         .upload-zone.dragover {
@@ -121,7 +124,7 @@
             flex-wrap: wrap;
         }
         .format-badge {
-            background: #e74c3c;
+            background: #138808;
             color: white;
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
@@ -208,6 +211,28 @@
             }
         }
     </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "File Converter",
+  "description": "Convert various file formats online with universal converter.",
+  "url": "https://pdfindi.com/tools/file-converter.html",
+  "applicationCategory": "Converter Tool",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "PDFINDI",
+    "url": "https://pdfindi.com"
+  }
+}
+</script>
+
 </head>
 <body>
     <div class="tool-page">
@@ -222,10 +247,10 @@
         </div>
 
         <div class="backend-notice">
-            <h3>🚀 Professional File Conversion Engine</h3>
-            <p>Advanced server-side processing powered by Cloudmersive API for high-quality conversions between multiple file formats.</p>
+            <h3>🔄 Universal File Converter</h3>
+            <p>Convert between multiple file formats with professional-grade quality and lightning-fast processing.</p>
             <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-                <strong>✅ Backend Active:</strong> Enterprise-grade conversion algorithms running on Render Cloud infrastructure.
+                <strong>📋 Supports:</strong> PDF, Word, Images, and more - convert anything to anything.
             </div>
         </div>
 
@@ -311,7 +336,7 @@
             <div class="feature-card">
                 <div class="icon">⚡</div>
                 <h4>Lightning Fast</h4>
-                <p>Optimized server-side processing for quick file conversions</p>
+                <p>Blazing-fast conversions with premium quality results</p>
             </div>
             <div class="feature-card">
                 <div class="icon">🔒</div>
@@ -321,7 +346,7 @@
             <div class="feature-card">
                 <div class="icon">🎯</div>
                 <h4>High Quality</h4>
-                <p>Enterprise-grade conversion algorithms maintain file quality</p>
+                <p>Professional-grade algorithms ensure perfect file quality</p>
             </div>
             <div class="feature-card">
                 <div class="icon">📱</div>
@@ -358,6 +383,77 @@
         };
 
         let selectedFile = null;
+
+        // Placeholder conversion functions - these will be implemented with backend API
+        async function convertPDFToWord(file) {
+            return await convertViaAPI(file, 'pdf-to-word');
+        }
+
+        async function convertWordToPDF(file) {
+            return await convertViaAPI(file, 'word-to-pdf');
+        }
+
+        async function convertImageToPDF(file) {
+            return await convertViaAPI(file, 'image-to-pdf');
+        }
+
+        async function convertPDFToJPG(file) {
+            return await convertViaAPI(file, 'pdf-to-jpg');
+        }
+
+        async function extractTextFromImage(file) {
+            return await convertViaAPI(file, 'image-ocr');
+        }
+
+        // Backend API integration
+        async function convertViaAPI(file, conversionType) {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('conversionType', conversionType);
+
+            // TODO: Replace with your actual backend API endpoint
+            const API_ENDPOINT = 'https://your-backend-api.com/convert';
+            
+            try {
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Conversion failed on server');
+                }
+
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                
+                // Trigger download
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = getConvertedFileName(file.name, conversionType);
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                return true;
+            } catch (error) {
+                console.error('Conversion error:', error);
+                throw new Error('This feature requires a backend server. Please check back soon!');
+            }
+        }
+
+        function getConvertedFileName(originalName, conversionType) {
+            const baseName = originalName.substring(0, originalName.lastIndexOf('.')) || originalName;
+            const extensionMap = {
+                'pdf-to-word': '.docx',
+                'word-to-pdf': '.pdf',
+                'image-to-pdf': '.pdf',
+                'pdf-to-jpg': '.jpg',
+                'image-ocr': '.txt'
+            };
+            return baseName + '_converted' + (extensionMap[conversionType] || '.pdf');
+        }
 
         // Conversion mapping to available functions
         const conversionMap = {
@@ -567,5 +663,6 @@
             }
         });
     </script>
+    <script src="../modern-header.js"></script>
 </body>
 </html>

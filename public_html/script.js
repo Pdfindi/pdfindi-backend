@@ -7,41 +7,32 @@ const config = {
     
     // Simple tool list for rendering the homepage
     tools: [
-        // Client-side PDF Tools (working in browser)
+        // 🔵 CLIENT-SIDE PDF TOOLS (Browser-based processing - No server needed)
+        // These tools work entirely in the browser using libraries like PDF-lib
         { title: "Merge PDF", category: "PDF Tools", description: "Combine multiple PDF files into one.", icon: "🔗" },
         { title: "Split PDF", category: "PDF Tools", description: "Extract a range of pages from a PDF.", icon: "✂️" },
         { title: "JPEG to PDF", category: "PDF Tools", description: "Combine JPG/PNG images into a PDF.", icon: "🖼️" },
-        { title: "Organize PDF", category: "PDF Tools", description: "Reorder or delete pages from a PDF.", icon: "🗂️" },
+        { title: "Reorder PDF Pages", category: "PDF Tools", description: "Rearrange, delete, or duplicate PDF pages.", icon: "🗂️" },
         { title: "Rotate PDF", category: "PDF Tools", description: "Rotate all pages in 90° increments.", icon: "🔄" },
         { title: "Add Watermark", category: "PDF Tools", description: "Stamp text or an image on a PDF.", icon: "💧" },
         { title: "Protect PDF", category: "PDF Tools", description: "Add a password to secure a PDF.", icon: "🔒" },
         { title: "Unlock PDF", category: "PDF Tools", description: "Remove a password from a PDF.", icon: "🔓" },
 
-        // Backend PDF Tools (using Cloudmersive API)
+        // 🟡 BACKEND PDF TOOLS (Render Server + Cloudmersive API)
+        // These require server-side processing for complex operations
         { title: "Compress PDF", category: "PDF Tools", description: "Reduce the file size of your PDF.", icon: "🗜️", backend: true },
         { title: "PDF to Word", category: "PDF Tools", description: "Convert PDF to editable Word docs.", icon: "📄", backend: true },
         { title: "Word to PDF", category: "PDF Tools", description: "Convert Word docs to PDF.", icon: "📝", backend: true },
-        { title: "Image to PDF", category: "PDF Tools", description: "Convert images to PDF documents.", icon: "🖼️", backend: true },
         { title: "PDF to JPG", category: "PDF Tools", description: "Convert each PDF page to a JPG.", icon: "📷", backend: true },
         
-        // Future tools (not implemented yet)
-        { title: "PDF to PowerPoint", category: "PDF Tools", description: "Convert PDFs to PowerPoint.", icon: "📊", disabled: true },
-        { title: "PowerPoint to PDF", category: "PDF Tools", description: "Convert PowerPoint to PDF.", icon: "📈", disabled: true },
-        { title: "PDF to Excel", category: "PDF Tools", description: "Extract data from PDFs to Excel.", icon: "📉", disabled: true },
-        { title: "Excel to PDF", category: "PDF Tools", description: "Convert Excel sheets to PDF.", icon: "🧾", disabled: true },
-        { title: "Edit PDF", category: "PDF Tools", description: "Add text or images to a PDF.", icon: "✏️", disabled: true },
-
-        // Client-side Utility Tools (working in browser)
+        // 🔵 CLIENT-SIDE UTILITY TOOLS (Browser-based processing)
+        // Pure JavaScript functionality - no server required
         { title: "Image Compressor", category: "Utility Tools", description: "Compress JPG/PNG images.", icon: "💨" },
         { title: "Image Converter", category: "Utility Tools", description: "Convert images to JPG, PNG, WEBP.", icon: "🔄" },
         { title: "QR Code Generator", category: "Utility Tools", description: "Generate & download a QR code.", icon: "📱" },
         { title: "Password Generator", category: "Utility Tools", description: "Create strong, secure passwords.", icon: "🔑" },
         { title: "Word Counter", category: "Utility Tools", description: "Count words, chars, sentences.", icon: "🧮" },
         { title: "Text to Speech", category: "Utility Tools", description: "Convert text to natural speech.", icon: "🗣️" },
-        
-        // Backend Utility Tools (using Cloudmersive API)
-        { title: "Image OCR", category: "Utility Tools", description: "Extract text from images using OCR.", icon: "🔍", backend: true },
-        { title: "File Converter Hub", category: "Utility Tools", description: "Convert between multiple file formats.", icon: "🔄", backend: true },
         { title: "JSON Formatter", category: "Utility Tools", description: "Format, validate, & copy JSON.", icon: "{}︎" },
         { title: "Case Converter", category: "Utility Tools", description: "Convert text to various cases.", icon: "Aa" },
         { title: "Lorem Ipsum Generator", category: "Utility Tools", description: "Generate placeholder text.", icon: "¶" },
@@ -51,8 +42,61 @@ const config = {
         { title: "Speech to Text", category: "Utility Tools", description: "Dictate text using your mic.", icon: "🎤" },
         { title: "Color Picker", category: "Utility Tools", description: "Pick colors from screen or image.", icon: "🎨" },
         { title: "Unit Converter", category: "Utility Tools", description: "Convert length, weight, etc.", icon: "📏" },
+        
+        // 🟡 BACKEND UTILITY TOOLS (Render Server + Cloudmersive API)
+        // These require server-side processing for complex operations
+        { title: "Image OCR", category: "Utility Tools", description: "Extract text from images using OCR.", icon: "🔍", backend: true },
+        
+        // Future tools (not implemented yet)
+        { title: "PDF to PowerPoint", category: "PDF Tools", description: "Convert PDFs to PowerPoint.", icon: "📊", disabled: true },
+        { title: "PowerPoint to PDF", category: "PDF Tools", description: "Convert PowerPoint to PDF.", icon: "📈", disabled: true },
+        { title: "PDF to Excel", category: "PDF Tools", description: "Extract data from PDFs to Excel.", icon: "📉", disabled: true },
+        { title: "Excel to PDF", category: "PDF Tools", description: "Convert Excel sheets to PDF.", icon: "🧾", disabled: true },
+        { title: "Edit PDF", category: "PDF Tools", description: "Add text or images to a PDF.", icon: "✏️", disabled: false },
     ]
 };
+
+// --- SEARCH FUNCTIONALITY ---
+function filterTools() {
+    const input = document.getElementById('searchInput');
+    if (!input) return;
+    
+    const searchTerm = input.value.toLowerCase();
+    const toolCards = document.querySelectorAll('.tool-card');
+    const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
+    
+    toolCards.forEach(card => {
+        const title = card.querySelector('h3').textContent.toLowerCase();
+        const description = card.querySelector('p').textContent.toLowerCase();
+        const category = card.closest('.tools-section')?.id || '';
+        
+        const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+        const matchesFilter = activeFilter === 'all' || 
+                             (activeFilter === 'pdf' && category === 'pdf-tools-section') ||
+                             (activeFilter === 'utility' && category === 'utility-tools-section');
+        
+        if (matchesSearch && matchesFilter) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+    
+    // Show/hide section headers
+    updateSectionVisibility();
+}
+
+function updateSectionVisibility() {
+    const sections = document.querySelectorAll('.tools-section');
+    sections.forEach(section => {
+        const visibleCards = section.querySelectorAll('.tool-card[style*="display: block"], .tool-card:not([style*="display: none"])');
+        if (visibleCards.length === 0) {
+            section.style.display = 'none';
+        } else {
+            section.style.display = 'block';
+        }
+    });
+}
 
 // --- SIMPLE HOMEPAGE RENDERING ---
 function createToolCards() {
@@ -97,8 +141,69 @@ function createToolCards() {
             const toolTitle = card.dataset.title;
             const slug = toolTitle.toLowerCase().replace(/\s+/g, '-');
             
-            // Simple redirect to individual tool page
-            window.location.href = `tools/${slug}.html`;
+            // Check if tool page exists
+            const toolPage = `tools/${slug}.html`;
+            
+            // For now, let's check if the file exists or redirect to a working tool
+            if (toolTitle === "Merge PDF" || toolTitle === "Split PDF" || toolTitle === "JPEG to PDF") {
+                window.location.href = toolPage;
+            } else if (toolTitle === "Compress PDF") {
+                window.location.href = 'tools/compress-pdf.html';
+            } else if (toolTitle === "PDF to Word") {
+                window.location.href = 'tools/pdf-to-word.html';
+            } else if (toolTitle === "Word to PDF") {
+                window.location.href = 'tools/word-to-pdf.html';
+            } else if (toolTitle === "PDF to JPG") {
+                window.location.href = 'tools/pdf-to-jpg.html';
+            } else if (toolTitle === "Image Compressor") {
+                window.location.href = 'tools/image-compressor.html';
+            } else if (toolTitle === "Image Converter") {
+                window.location.href = 'tools/image-converter.html';
+            } else if (toolTitle === "QR Code Generator") {
+                window.location.href = 'tools/qr-code-generator.html';
+            } else if (toolTitle === "Password Generator") {
+                window.location.href = 'tools/password-generator.html';
+            } else if (toolTitle === "Word Counter") {
+                window.location.href = 'tools/word-counter.html';
+            } else if (toolTitle === "Text to Speech") {
+                window.location.href = 'tools/text-to-speech.html';
+            } else if (toolTitle === "Image OCR") {
+                window.location.href = 'tools/image-ocr.html';
+            } else if (toolTitle === "JSON Formatter") {
+                window.location.href = 'tools/json-formatter.html';
+            } else if (toolTitle === "Case Converter") {
+                window.location.href = 'tools/case-converter.html';
+            } else if (toolTitle === "Lorem Ipsum Generator") {
+                window.location.href = 'tools/lorem-ipsum-generator.html';
+            } else if (toolTitle === "Base64 Encoder/Decoder") {
+                window.location.href = 'tools/base64-encoderdecoder.html';
+            } else if (toolTitle === "Age Calculator") {
+                window.location.href = 'tools/age-calculator.html';
+            } else if (toolTitle === "BMI Calculator") {
+                window.location.href = 'tools/bmi-calculator.html';
+            } else if (toolTitle === "Speech to Text") {
+                window.location.href = 'tools/speech-to-text.html';
+            } else if (toolTitle === "Color Picker") {
+                window.location.href = 'tools/color-picker.html';
+            } else if (toolTitle === "Unit Converter") {
+                window.location.href = 'tools/unit-converter.html';
+            } else if (toolTitle === "Add Watermark") {
+                window.location.href = 'tools/add-watermark.html';
+            } else if (toolTitle === "Protect PDF") {
+                window.location.href = 'tools/protect-pdf.html';
+            } else if (toolTitle === "Unlock PDF") {
+                window.location.href = 'tools/unlock-pdf.html';
+            } else if (toolTitle === "Reorder PDF Pages") {
+                window.location.href = 'tools/organize-pdf.html';
+            } else if (toolTitle === "Rotate PDF") {
+                window.location.href = 'tools/rotate-pdf.html';
+            } else if (toolTitle === "Edit PDF") {
+                window.location.href = 'tools/edit-pdf.html';
+            } else {
+                // Fallback for any missing tools
+                console.log(`Tool page not found for: ${toolTitle}`);
+                showNotification(`Tool "${toolTitle}" is coming soon!`, 'info');
+            }
         });
     });
 }
@@ -315,68 +420,6 @@ async function compressPDF(file) {
     }
 }
 
-// Real Image to PDF Conversion using Cloudmersive API
-async function convertImageToPDF(file) {
-    const formData = new FormData();
-    formData.append('file', file); // Backend expects 'file' field name
-    
-    try {
-        console.log('Making request to:', `${config.backendUrl}/api/image-to-pdf`);
-        const response = await fetch(`${config.backendUrl}/api/image-to-pdf`, {
-            method: 'POST',
-            body: formData
-        });
-        
-        console.log('Response status:', response.status);
-        console.log('Response ok:', response.ok);
-        
-        if (!response.ok) {
-            let errorMessage = `Image to PDF API error: ${response.status}`;
-            try {
-                const errorData = await response.json();
-                errorMessage = errorData.error || errorMessage;
-                console.log('Error data:', errorData);
-            } catch (e) {
-                console.log('Failed to parse error JSON:', e);
-                // If parsing JSON fails, use the status-based message
-            }
-            throw new Error(errorMessage);
-        }
-        
-        // Get the JSON response with base64 data
-        const result = await response.json();
-        
-        if (!result.success) {
-            throw new Error(result.error || 'Conversion failed');
-        }
-        
-        // Convert base64 to blob and download
-        const byteCharacters = atob(result.base64);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        const blob = new Blob([byteArray], { type: 'application/pdf' });
-        
-        // Create download link
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = result.filename || file.name.replace(/\.(jpg|jpeg|png|gif|bmp|tiff|webp)$/i, '.pdf');
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-        
-        return { success: true, message: result.message || 'Image successfully converted to PDF!' };
-        
-    } catch (error) {
-        console.error('Image to PDF conversion error:', error);
-        throw error;
-    }
-}
-
 // Real PDF to JPG Conversion using Cloudmersive API
 async function convertPDFToJPG(file) {
     const formData = new FormData();
@@ -478,23 +521,275 @@ document.addEventListener('DOMContentLoaded', function() {
     if (navLinks.length > 0) {
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
+                const pageId = link.getAttribute('data-page');
                 e.preventDefault();
-                // Handle navigation here if needed
+                
+                // Update active class for nav links
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                if (pageId === 'pdf-tools-section') {
+                    // Scroll to PDF tools section with smooth animation
+                    const targetSection = document.getElementById('pdf-tools-section');
+                    if (targetSection) {
+                        // Add highlight effect
+                        targetSection.classList.add('section-highlight');
+                        setTimeout(() => targetSection.classList.remove('section-highlight'), 2000);
+                        
+                        // Smooth scroll to section with offset for better positioning
+                        const headerOffset = 80; // Account for header height
+                        const elementPosition = targetSection.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Ensure home page is active
+                        document.getElementById('home-page').classList.add('active');
+                        document.querySelectorAll('.page').forEach(page => {
+                            if (page.id !== 'home-page') page.classList.remove('active');
+                        });
+                    }
+                } else if (pageId === 'utility-tools-section') {
+                    // Scroll to Utility tools section with smooth animation
+                    const targetSection = document.getElementById('utility-tools-section');
+                    if (targetSection) {
+                        // Add highlight effect
+                        targetSection.classList.add('section-highlight');
+                        setTimeout(() => targetSection.classList.remove('section-highlight'), 2000);
+                        
+                        // Smooth scroll to section with offset for better positioning
+                        const headerOffset = 80; // Account for header height
+                        const elementPosition = targetSection.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Ensure home page is active
+                        document.getElementById('home-page').classList.add('active');
+                        document.querySelectorAll('.page').forEach(page => {
+                            if (page.id !== 'home-page') page.classList.remove('active');
+                        });
+                    }
+                } else if (pageId === 'home-page') {
+                    // Scroll to top of home page
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    document.getElementById('home-page').classList.add('active');
+                    document.querySelectorAll('.page').forEach(page => {
+                        if (page.id !== 'home-page') page.classList.remove('active');
+                    });
+                } else if (pageId === 'blog-page') {
+                    // Show blog page and scroll to top
+                    document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+                    const blogPage = document.getElementById('blog-page');
+                    blogPage.classList.add('active');
+                    
+                    // Add highlight effect to the blog page
+                    blogPage.classList.add('section-highlight');
+                    setTimeout(() => blogPage.classList.remove('section-highlight'), 2000);
+                    
+                    // Immediately reset scroll position and then smooth scroll to top
+                    window.scrollTo(0, 0);
+                    setTimeout(() => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }, 100);
+                } else if (pageId === 'contact-page') {
+                    // Show contact page and scroll to top
+                    document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+                    const contactPage = document.getElementById('contact-page');
+                    contactPage.classList.add('active');
+                    
+                    // Add highlight effect to the contact page
+                    contactPage.classList.add('section-highlight');
+                    setTimeout(() => contactPage.classList.remove('section-highlight'), 2000);
+                    
+                    // Immediately reset scroll position and then smooth scroll to top
+                    window.scrollTo(0, 0);
+                    setTimeout(() => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }, 100);
+                }
             });
         });
     }
     
     if (hamburgerBtn) {
         hamburgerBtn.addEventListener('click', () => {
-            // Handle mobile menu toggle
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('open');
+                hamburgerBtn.setAttribute('aria-expanded', 
+                    sidebar.classList.contains('open') ? 'true' : 'false'
+                );
+            }
+        });
+        
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar && sidebar.classList.contains('open')) {
+                if (!sidebar.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                }
+            }
         });
     }
     
     if (exploreToolsBtn) {
         exploreToolsBtn.addEventListener('click', () => {
-            document.getElementById('pdf-tools-section').scrollIntoView({ behavior: 'smooth' });
+            const targetSection = document.getElementById('pdf-tools-section');
+            if (targetSection) {
+                // Add highlight effect
+                targetSection.classList.add('section-highlight');
+                setTimeout(() => targetSection.classList.remove('section-highlight'), 2000);
+                
+                // Smooth scroll to section with offset for better positioning
+                const headerOffset = 80;
+                const elementPosition = targetSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
         });
     }
+    
+    // Add scroll spy functionality to highlight active section
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            updateActiveNavigation();
+        }, 100);
+    });
+    
+    // Function to update active navigation based on scroll position
+    function updateActiveNavigation() {
+        const scrollPosition = window.scrollY + 100; // Offset for better detection
+        
+        // Check if we're on a different page first
+        const blogPage = document.getElementById('blog-page');
+        const contactPage = document.getElementById('contact-page');
+        
+        if (blogPage && blogPage.classList.contains('active')) {
+            // We're on the blog page, keep blog navigation active
+            navLinks.forEach(link => {
+                const pageId = link.getAttribute('data-page');
+                if (pageId === 'blog-page') {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            return;
+        }
+        
+        if (contactPage && contactPage.classList.contains('active')) {
+            // We're on the contact page, keep contact navigation active
+            navLinks.forEach(link => {
+                const pageId = link.getAttribute('data-page');
+                if (pageId === 'contact-page') {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            return;
+        }
+        
+        // We're on the home page, check sections
+        const homePage = document.getElementById('home-page');
+        const pdfToolsSection = document.getElementById('pdf-tools-section');
+        const utilityToolsSection = document.getElementById('utility-tools-section');
+        
+        // Find which section is currently in view
+        let activeSection = 'home-page';
+        
+        if (pdfToolsSection && scrollPosition >= pdfToolsSection.offsetTop) {
+            activeSection = 'pdf-tools-section';
+        }
+        if (utilityToolsSection && scrollPosition >= utilityToolsSection.offsetTop) {
+            activeSection = 'utility-tools-section';
+        }
+        
+        // Update navigation active state
+        navLinks.forEach(link => {
+            const pageId = link.getAttribute('data-page');
+            if (pageId === activeSection) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+    
+    // Back to top button functionality
+    const backToTopBtn = document.getElementById('back-to-top');
+    if (backToTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+    
+    // Category filter functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active state
+            filterButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Apply filter
+            const filter = btn.dataset.filter;
+            const pdfSection = document.getElementById('pdf-tools-section');
+            const utilitySection = document.getElementById('utility-tools-section');
+            
+            if (filter === 'all') {
+                if (pdfSection) pdfSection.style.display = 'block';
+                if (utilitySection) utilitySection.style.display = 'block';
+            } else if (filter === 'pdf') {
+                if (pdfSection) pdfSection.style.display = 'block';
+                if (utilitySection) utilitySection.style.display = 'none';
+            } else if (filter === 'utility') {
+                if (pdfSection) pdfSection.style.display = 'none';
+                if (utilitySection) utilitySection.style.display = 'block';
+            }
+            
+            // Clear search and reapply filters
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput && searchInput.value) {
+                filterTools();
+            }
+            
+            // Smooth scroll to tools
+            const firstVisibleSection = filter === 'pdf' ? pdfSection : 
+                                       filter === 'utility' ? utilitySection : pdfSection;
+            if (firstVisibleSection) {
+                setTimeout(() => {
+                    firstVisibleSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        });
+    });
     
     console.log('PDFINDI - Clean architecture loaded');
 });
@@ -621,3 +916,33 @@ async function convertPDFToImage(file, format = 'png') {
 
 // Make PDF to Image function globally available
 window.convertPDFToImage = convertPDFToImage;
+
+// --- HASH NAVIGATION HANDLING ---
+// Handle hash navigation when coming from tool pages
+function handleHashNavigation() {
+    if (window.location.hash) {
+        const targetSection = document.querySelector(window.location.hash);
+        if (targetSection) {
+            // Small delay to ensure page is fully loaded
+            setTimeout(() => {
+                targetSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start', 
+                    inline: 'nearest' 
+                });
+                
+                // Add highlight effect
+                targetSection.classList.add('section-highlight');
+                setTimeout(() => {
+                    targetSection.classList.remove('section-highlight');
+                }, 2000);
+            }, 100);
+        }
+    }
+}
+
+// Listen for hash changes
+window.addEventListener('hashchange', handleHashNavigation);
+
+// Handle initial hash on page load
+document.addEventListener('DOMContentLoaded', handleHashNavigation);

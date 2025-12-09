@@ -3,358 +3,881 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Organize PDF - PDFINDI</title>
+    <title>Reorder & Manage PDF Pages - PDFINDI</title>
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../modern-header.css">
+<link rel="stylesheet" href="modern-theme.css">
+    <link rel="stylesheet" href="../orange-theme.css">
     <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #FF9933 0%, #138808 100%);
+            --success-gradient: linear-gradient(135deg, #138808 0%, #34d399 100%);
+            --warning-gradient: linear-gradient(135deg, #FFB84D 0%, #FF9933 100%);
+            --error-gradient: linear-gradient(135deg, #000080 0%, #FF9933 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --shadow-light: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-medium: 0 8px 32px rgba(0,0,0,0.12);
+            --shadow-strong: 0 16px 64px rgba(0,0,0,0.16);
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
         .tool-page {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 2rem auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 0;
+            background: transparent;
+            border-radius: var(--border-radius);
+            overflow: hidden;
         }
-        .tool-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #f0f0f0;
-        }
-        .tool-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
+
+        /* Enhanced Back Button */
         .back-btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            color: #e74c3c;
+            gap: 0.75rem;
+            color: #6366f1;
             text-decoration: none;
-            font-weight: 500;
-            margin-bottom: 2rem;
-            transition: color 0.3s;
-        }
-        .back-btn:hover {
-            color: #c0392b;
-        }
-        .upload-zone {
-            border: 3px dashed #dee2e6;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--glass-bg);
             border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 153, 51, 0.1), transparent);
+            transition: var(--transition);
+        }
+
+        .back-btn:hover::before {
+            left: 100%;
+        }
+
+        .back-btn:hover {
+            color: #4f46e5;
+            background: rgba(255, 255, 255, 0.98);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Modern Tool Header */
+        .tool-header {
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+            background: var(--primary-gradient);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) rotate(180deg); }
+        }
+
+        .tool-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            animation: bounce-in 0.8s ease-out;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        @keyframes bounce-in {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(-90deg); opacity: 0.5; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .tool-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0 0 1rem 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: -0.02em;
+        }
+
+        .tool-header p {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin: 0;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Enhanced Upload Zone */
+        .upload-zone {
+            margin: 2rem;
+            border: 3px dashed rgba(255, 153, 51, 0.3);
+            border-radius: var(--border-radius);
             padding: 3rem 2rem;
             text-align: center;
-            background: #f8f9fa;
-            transition: all 0.3s;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
             cursor: pointer;
-            margin-bottom: 2rem;
-        }
-        .upload-zone:hover {
-            border-color: #e74c3c;
-            background: #fff5f5;
-        }
-        .upload-zone.dragover {
-            border-color: #28a745;
-            background: #f0fff4;
-        }
-        .upload-icon {
-            font-size: 3rem;
-            color: #6c757d;
-            margin-bottom: 1rem;
-        }
-        .pdf-info {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            display: none;
-        }
-        .organize-section {
-            margin: 2rem 0;
-            display: none;
-        }
-        .organize-controls {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .control-btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid #dee2e6;
-            background: white;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.9rem;
-        }
-        .control-btn:hover {
-            background: #e74c3c;
-            color: white;
-            border-color: #e74c3c;
-        }
-        .pages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-        .page-item {
-            background: white;
-            border: 2px solid #dee2e6;
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-            cursor: move;
-            transition: all 0.3s;
             position: relative;
-            user-select: none;
+            overflow: hidden;
         }
-        .page-item:hover {
-            border-color: #e74c3c;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .page-item.selected {
-            border-color: #28a745;
-            background: #f0fff4;
-        }
-        .page-item.deleted {
-            opacity: 0.5;
-            border-color: #dc3545;
-            background: #fff5f5;
-        }
-        .page-item.dragging {
-            opacity: 0.5;
-            transform: rotate(5deg);
-        }
-        .page-thumbnail {
-            width: 100%;
-            height: 120px;
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: #6c757d;
-            margin-bottom: 0.5rem;
-            position: relative;
-        }
-        .page-number {
-            font-weight: 600;
-            color: #495057;
-            margin-bottom: 0.5rem;
-        }
-        .page-actions {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-        }
-        .page-action-btn {
-            padding: 0.25rem 0.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.2s;
-        }
-        .delete-btn {
-            background: #dc3545;
-            color: white;
-        }
-        .delete-btn:hover {
-            background: #c82333;
-        }
-        .restore-btn {
-            background: #28a745;
-            color: white;
-        }
-        .restore-btn:hover {
-            background: #218838;
-        }
-        .duplicate-btn {
-            background: #17a2b8;
-            color: white;
-        }
-        .duplicate-btn:hover {
-            background: #138496;
-        }
-        .drag-indicator {
+
+        .upload-zone::before {
+            content: '';
             position: absolute;
-            top: 5px;
-            right: 5px;
-            background: #6c757d;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .upload-zone:hover {
+            border-color: #6366f1;
+            background: rgba(255, 255, 255, 0.98);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .upload-zone:hover::before {
+            opacity: 0.05;
+        }
+
+        .upload-zone.dragover {
+            border-color: #138808;
+            background: rgba(16, 185, 129, 0.05);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .upload-zone.dragover::before {
+            opacity: 0.1;
+            background: linear-gradient(135deg, #138808 0%, #34d399 100%);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: #6366f1;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+            filter: drop-shadow(0 2px 4px rgba(255, 153, 51, 0.2));
+        }
+
+        .upload-zone:hover .upload-icon {
+            transform: scale(1.1) rotate(5deg);
+            color: #4f46e5;
+        }
+
+        .upload-zone h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+            color: #1f2937;
+        }
+
+        .upload-zone p {
+            font-size: 1rem;
+            color: #6b7280;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* Enhanced Error/Success Messages */
+        .error-message, .success-message {
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 2rem;
+            font-weight: 500;
+            animation: slide-in 0.3s ease-out;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .error-message {
+            background: var(--error-gradient);
             color: white;
-            padding: 2px 4px;
-            border-radius: 3px;
-            font-size: 0.7rem;
+            border-left: 4px solid #ef4444;
         }
-        .drop-zone {
-            border: 2px dashed #28a745;
-            background: #f0fff4;
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-            color: #28a745;
-            margin: 0.5rem;
+
+        .success-message {
+            background: var(--success-gradient);
+            color: white;
+            border-left: 4px solid #138808;
         }
-        .summary-section {
-            background: #e3f2fd;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 2rem 0;
+
+        @keyframes slide-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Enhanced PDF Info */
+        .pdf-info {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-light);
+            animation: slide-in 0.5s ease-out;
             display: none;
         }
+
+        .pdf-info h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0 0 1.5rem 0;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .info-grid p {
+            margin: 0;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 153, 51, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid #6366f1;
+            font-weight: 500;
+        }
+
+        .info-grid strong {
+            color: #374151;
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Enhanced Organize Section */
+        .organize-section {
+            margin: 2rem;
+            animation: slide-in 0.5s ease-out 0.2s both;
+        }
+
+        /* Enhanced Control Buttons */
+        .organize-controls {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-light);
+            animation: slide-in 0.5s ease-out 0.4s both;
+        }
+
+        .organize-controls div:first-child {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .control-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #374151;
+            box-shadow: var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .control-btn:hover::before {
+            left: 0;
+            opacity: 0.1;
+        }
+
+        .control-btn:hover {
+            border-color: #6366f1;
+            color: #6366f1;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .control-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Enhanced Summary Section */
+        .summary-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-light);
+            animation: slide-in 0.5s ease-out 0.6s both;
+        }
+
+        .summary-section h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0 0 1.5rem 0;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         .summary-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 1rem;
-            margin: 1rem 0;
         }
+
         .stat-item {
+            background: rgba(255, 153, 51, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
             text-align: center;
-            padding: 0.5rem;
-            background: white;
-            border-radius: 6px;
+            border: 1px solid rgba(255, 153, 51, 0.1);
+            transition: var(--transition);
         }
+
+        .stat-item:hover {
+            background: rgba(255, 153, 51, 0.1);
+            transform: translateY(-2px);
+        }
+
         .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #e74c3c;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #6366f1;
+            margin-bottom: 0.5rem;
+            display: block;
         }
+
         .stat-label {
             font-size: 0.9rem;
-            color: #6c757d;
+            color: #6b7280;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
+
+        /* Enhanced Page Instructions */
+        .organize-section h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem 0;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-light);
+            animation: slide-in 0.5s ease-out 0.8s both;
+        }
+
+        /* Enhanced Pages Grid */
+        .pages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+            animation: slide-in 0.5s ease-out 1s both;
+        }
+
+        .page-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .page-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-medium);
+            border-color: #6366f1;
+        }
+
+        .page-item.selected {
+            border-color: #6366f1;
+            background: rgba(255, 153, 51, 0.05);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .page-item.deleted {
+            opacity: 0.5;
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .page-preview {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-preview::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 4px;
+        }
+
+        .page-icon {
+            font-size: 2.5rem;
+            color: #9ca3af;
+            z-index: 1;
+            position: relative;
+        }
+
+        .page-info {
+            padding: 1rem;
+            background: rgba(255, 153, 51, 0.05);
+            border-top: 1px solid rgba(255, 153, 51, 0.1);
+            position: relative;
+        }
+
+        .page-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-order {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #6366f1;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-status {
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-weight: 500;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.6);
+            display: inline-block;
+        }
+
+        .page-status.active {
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
+        }
+
+        .page-status.deleted {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+        }
+
+        .page-status.duplicated {
+            background: rgba(245, 158, 11, 0.1);
+            color: #d97706;
+        }
+
+        /* Enhanced Buttons */
+        .red-button {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+            margin: 2rem;
+        }
+
+        .red-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .red-button:hover::before {
+            left: 100%;
+        }
+
+        .red-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .red-button:active {
+            transform: translateY(0);
+        }
+
+        .red-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Enhanced Processing */
         .processing {
             text-align: center;
-            padding: 2rem;
-            display: none;
+            padding: 3rem 2rem;
+            margin: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-light);
         }
+
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #e74c3c;
+            border: 4px solid rgba(255, 153, 51, 0.1);
+            border-left: 4px solid #6366f1;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
+            margin: 0 auto 1.5rem;
         }
+
+        .processing p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #374151;
+            margin: 0;
+        }
+
+        /* Enhanced Download Section */
+        .download-section {
+            text-align: center;
+            padding: 3rem 2rem;
+            margin: 2rem;
+            background: var(--success-gradient);
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium);
+            animation: slide-in 0.5s ease-out;
+        }
+
+        .download-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 1rem 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .download-section p {
+            font-size: 1.1rem;
+            margin: 0 0 2rem 0;
+            opacity: 0.9;
+        }
+
+        .download-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 0.5rem;
+        }
+
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        .download-section {
-            text-align: center;
-            margin: 2rem 0;
-            display: none;
-        }
-        .download-btn {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin: 0.5rem;
-        }
-        .download-btn:hover {
-            background: #218838;
-        }
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid #f5c6cb;
-            margin: 1rem 0;
-            display: none;
-        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
+            .tool-page {
+                margin: 1rem;
+            }
+
+            .back-btn {
+                margin: 1rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .tool-header {
+                padding: 2rem 1rem;
+            }
+
+            .tool-header h1 {
+                font-size: 2rem;
+            }
+
+            .tool-header p {
+                font-size: 1rem;
+            }
+
+            .upload-zone {
+                margin: 1rem;
+                padding: 2rem 1rem;
+            }
+
+            .upload-zone h3 {
+                font-size: 1.3rem;
+            }
+
+            .pages-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                margin: 1rem;
+                gap: 1rem;
+            }
+
+            .page-item {
+                margin: 0;
+            }
+
+            .summary-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .organize-controls {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+
             .organize-controls {
                 flex-direction: column;
-                align-items: stretch;
+                gap: 0.75rem;
             }
+
+            .control-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .red-button {
+                width: 100%;
+                margin: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .upload-zone h3 {
+                font-size: 1.1rem;
+            }
+
             .pages-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                grid-template-columns: 1fr;
+            }
+
+            .summary-stats {
+                grid-template-columns: 1fr;
             }
         }
     </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Reorder & Manage PDF Pages",
+  "description": "Reorder, delete, duplicate PDF pages. Drag and drop to rearrange page order in your PDF.",
+  "url": "https://pdfindi.com/tools/organize-pdf.html",
+  "applicationCategory": "PDF Tool",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "PDFINDI",
+    "url": "https://pdfindi.com"
+  }
+}
+</script>
+
 </head>
 <body>
     <div class="tool-page">
-        <a href="../index.html" class="back-btn">
-            ← Back to Tools
+        <a href="../index.html#pdf-tools-section" class="back-btn" id="back-to-tools-btn">
+            ← Back to PDF Tools
         </a>
         
         <div class="tool-header">
             <div class="tool-icon">🗂️</div>
-            <h1>Organize PDF</h1>
-            <p>Reorder, delete, or duplicate pages in your PDF document</p>
+            <h1>Reorder & Manage PDF Pages</h1>
+            <p>Rearrange page order • Delete unwanted pages • Duplicate pages • Reverse PDF</p>
         </div>
 
         <div class="upload-zone" id="upload-zone">
             <div class="upload-icon">📄</div>
-            <h3>Click to upload or drag & drop PDF</h3>
-            <p>Maximum file size: 25MB</p>
+            <h3>Drop your PDF here or click to browse</h3>
+            <p>Maximum file size: 25MB • PDF format only</p>
             <input type="file" id="file-input" accept=".pdf" style="display: none;">
         </div>
 
-        <div class="error-message" id="error-message"></div>
+        <div class="error-message" id="error-message" style="display: none;"></div>
+        <div class="success-message" id="success-message" style="display: none;"></div>
 
-        <div class="pdf-info" id="pdf-info">
+        <div class="pdf-info" id="pdf-info" style="display: none;">
             <h3>📄 PDF Information</h3>
             <div class="info-grid">
                 <p><strong>File Name:</strong> <span id="file-name">-</span></p>
                 <p><strong>File Size:</strong> <span id="file-size">-</span></p>
                 <p><strong>Total Pages:</strong> <span id="total-pages">-</span></p>
+                <p><strong>Status:</strong> <span id="current-status">Ready for organization</span></p>
             </div>
         </div>
 
-        <div class="organize-section" id="organize-section">
+        <div class="organize-section" id="organize-section" style="display: none;">
             <div class="organize-controls">
-                <div style="font-weight: 600;">Quick Actions:</div>
+                <div>⚡ Quick Actions:</div>
                 <button class="control-btn" id="select-all-btn">Select All</button>
                 <button class="control-btn" id="select-none-btn">Deselect All</button>
-                <button class="control-btn" id="delete-selected-btn">Delete Selected</button>
-                <button class="control-btn" id="restore-all-btn">Restore All</button>
-                <button class="control-btn" id="reverse-order-btn">Reverse Order</button>
+                <button class="control-btn" id="duplicate-selected-btn">📋 Duplicate Selected</button>
+                <button class="control-btn" id="delete-selected-btn">🗑️ Delete Selected</button>
+                <button class="control-btn" id="restore-all-btn">🔄 Restore All</button>
+                <button class="control-btn" id="reverse-order-btn">🔀 Reverse Order</button>
             </div>
 
             <div class="summary-section" id="summary-section">
                 <h4>📊 Organization Summary</h4>
                 <div class="summary-stats">
                     <div class="stat-item">
-                        <div class="stat-value" id="total-pages-stat">0</div>
-                        <div class="stat-label">Total Pages</div>
+                        <span class="stat-value" id="total-pages-stat">0</span>
+                        <span class="stat-label">Total Pages</span>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-value" id="active-pages-stat">0</div>
-                        <div class="stat-label">Active Pages</div>
+                        <span class="stat-value" id="active-pages-stat">0</span>
+                        <span class="stat-label">Active Pages</span>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-value" id="deleted-pages-stat">0</div>
-                        <div class="stat-label">Deleted Pages</div>
+                        <span class="stat-value" id="deleted-pages-stat">0</span>
+                        <span class="stat-label">Deleted Pages</span>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-value" id="duplicated-pages-stat">0</div>
-                        <div class="stat-label">Duplicated Pages</div>
+                        <span class="stat-value" id="duplicated-pages-stat">0</span>
+                        <span class="stat-label">Duplicated Pages</span>
                     </div>
                 </div>
             </div>
 
-            <h4>📑 Drag to reorder pages, click to select, use buttons to organize:</h4>
+            <h4>📝 How to Use:</h4>
+            <div style="background: rgba(255, 153, 51, 0.1); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid #FF9933;">
+                <p style="margin: 0 0 0.75rem 0; font-weight: 600; color: #1f2937;">✅ Click on pages to select them</p>
+                <p style="margin: 0 0 0.75rem 0; font-weight: 600; color: #1f2937;">🔀 Drag & drop pages to change order</p>
+                <p style="margin: 0 0 0.75rem 0; font-weight: 600; color: #1f2937;">📋 Use "Duplicate" to copy selected pages</p>
+                <p style="margin: 0 0 0.75rem 0; font-weight: 600; color: #1f2937;">🗑️ Use "Delete" to remove selected pages</p>
+                <p style="margin: 0; font-weight: 600; color: #1f2937;">🔄 Use "Restore All" to undo all changes</p>
+            </div>
             <div class="pages-grid" id="pages-grid"></div>
 
             <div style="text-align: center; margin-top: 2rem;">
@@ -362,12 +885,12 @@
             </div>
         </div>
 
-        <div class="processing" id="processing">
+        <div class="processing" id="processing" style="display: none;">
             <div class="spinner"></div>
             <p id="processing-text">Organizing PDF...</p>
         </div>
 
-        <div class="download-section" id="download-section">
+        <div class="download-section" id="download-section" style="display: none;">
             <h3>✅ PDF Organized Successfully!</h3>
             <p id="result-info">Your organized PDF is ready for download</p>
             <button class="download-btn" id="download-btn">📥 Download Organized PDF</button>
@@ -386,13 +909,16 @@
             uploadZone: document.getElementById('upload-zone'),
             fileInput: document.getElementById('file-input'),
             errorMessage: document.getElementById('error-message'),
+            successMessage: document.getElementById('success-message'),
             pdfInfo: document.getElementById('pdf-info'),
             fileName: document.getElementById('file-name'),
             fileSize: document.getElementById('file-size'),
             totalPagesSpan: document.getElementById('total-pages'),
+            currentStatus: document.getElementById('current-status'),
             organizeSection: document.getElementById('organize-section'),
             selectAllBtn: document.getElementById('select-all-btn'),
             selectNoneBtn: document.getElementById('select-none-btn'),
+            duplicateSelectedBtn: document.getElementById('duplicate-selected-btn'),
             deleteSelectedBtn: document.getElementById('delete-selected-btn'),
             restoreAllBtn: document.getElementById('restore-all-btn'),
             reverseOrderBtn: document.getElementById('reverse-order-btn'),
@@ -422,18 +948,33 @@
         function showError(message) {
             elements.errorMessage.textContent = message;
             elements.errorMessage.style.display = 'block';
+            elements.successMessage.style.display = 'none';
             setTimeout(() => {
                 elements.errorMessage.style.display = 'none';
             }, 5000);
         }
 
+        function showSuccess(message) {
+            elements.successMessage.textContent = message;
+            elements.successMessage.style.display = 'block';
+            elements.errorMessage.style.display = 'none';
+            setTimeout(() => {
+                elements.successMessage.style.display = 'none';
+            }, 5000);
+        }
+
         function handleFileSelect(file) {
-            if (file.type !== 'application/pdf') {
+            // Check if file is PDF - accept either MIME type or .pdf extension
+            const isPDF = file.type === 'application/pdf' || 
+                         file.type === '' && file.name.toLowerCase().endsWith('.pdf') ||
+                         file.name.toLowerCase().endsWith('.pdf');
+            
+            if (!isPDF) {
                 showError('Please select a valid PDF file.');
                 return;
             }
 
-            if (file.size > 25 * 1024 * 1024) { // 25MB limit
+            if (file.size > 25 * 1024 * 1024) {
                 showError('File size too large. Please select a PDF under 25MB.');
                 return;
             }
@@ -441,273 +982,212 @@
             const reader = new FileReader();
             reader.onload = async (e) => {
                 try {
-                    uploadedPDF = await PDFLib.PDFDocument.load(e.target.result);
-                    totalPages = uploadedPDF.getPageCount();
+                    elements.processing.style.display = 'block';
+                    elements.processingText.textContent = 'Loading PDF...';
+
+                    // Try to load the PDF with better error handling
+                    const arrayBuffer = e.target.result;
+                    console.log('File loaded, size:', arrayBuffer.byteLength);
                     
+                    uploadedPDF = await PDFLib.PDFDocument.load(arrayBuffer, { 
+                        ignoreEncryption: true,
+                        updateMetadata: false 
+                    });
+                    totalPages = uploadedPDF.getPageCount();
+
+                    // Initialize pages array
+                    pages = [];
+                    for (let i = 0; i < totalPages; i++) {
+                        pages.push({
+                            originalIndex: i,
+                            currentIndex: i,
+                            selected: false,
+                            deleted: false,
+                            duplicated: false
+                        });
+                    }
+
                     elements.fileName.textContent = file.name;
                     elements.fileSize.textContent = formatFileSize(file.size);
                     elements.totalPagesSpan.textContent = totalPages;
-                    
-                    initializePages();
-                    
+
                     elements.pdfInfo.style.display = 'block';
                     elements.organizeSection.style.display = 'block';
-                    elements.summarySection.style.display = 'block';
-                    
                     renderPages();
-                    updateStats();
+                    updateSummary();
+
+                    elements.processing.style.display = 'none';
+                    showSuccess(`PDF loaded successfully with ${totalPages} pages!`);
+
                 } catch (error) {
                     console.error('Error loading PDF:', error);
-                    showError('Failed to load PDF. Please ensure it\'s a valid PDF file.');
+                    console.error('Error details:', error.message);
+                    showError(`Failed to load PDF: ${error.message}. Please ensure it's a valid PDF file.`);
+                    elements.processing.style.display = 'none';
                 }
             };
+            
+            reader.onerror = () => {
+                showError('Failed to read file. Please try again.');
+                elements.processing.style.display = 'none';
+            };
+            
             reader.readAsArrayBuffer(file);
-        }
-
-        function initializePages() {
-            pages = [];
-            for (let i = 1; i <= totalPages; i++) {
-                pages.push({
-                    id: `page-${i}`,
-                    originalNumber: i,
-                    currentNumber: i,
-                    deleted: false,
-                    selected: false,
-                    duplicated: false
-                });
-            }
         }
 
         function renderPages() {
             elements.pagesGrid.innerHTML = '';
-            
+
+            let orderNumber = 1;
             pages.forEach((page, index) => {
-                const pageElement = document.createElement('div');
-                pageElement.className = `page-item ${page.selected ? 'selected' : ''} ${page.deleted ? 'deleted' : ''}`;
-                pageElement.dataset.pageId = page.id;
-                pageElement.draggable = !page.deleted;
-                
-                pageElement.innerHTML = `
-                    <div class="drag-indicator">⋮⋮</div>
-                    <div class="page-thumbnail">
-                        <span style="font-size: 1.5rem;">📄</span>
-                        ${page.duplicated ? '<div style="position: absolute; top: 2px; left: 2px; background: #17a2b8; color: white; padding: 1px 4px; border-radius: 2px; font-size: 0.6rem;">COPY</div>' : ''}
+                if (page.deleted) return;
+
+                const pageItem = document.createElement('div');
+                pageItem.className = `page-item ${page.selected ? 'selected' : ''} ${page.duplicated ? 'duplicated' : ''}`;
+                pageItem.dataset.pageIndex = index;
+                pageItem.draggable = true;
+
+                pageItem.innerHTML = `
+                    <div class="page-preview">
+                        <div class="page-icon">📄</div>
                     </div>
-                    <div class="page-number">Page ${page.originalNumber}</div>
-                    <div class="page-actions">
-                        ${!page.deleted ? `
-                            <button class="page-action-btn delete-btn" onclick="deletePage('${page.id}')">🗑️</button>
-                            <button class="page-action-btn duplicate-btn" onclick="duplicatePage('${page.id}')">📋</button>
-                        ` : `
-                            <button class="page-action-btn restore-btn" onclick="restorePage('${page.id}')">↺</button>
-                        `}
+                    <div class="page-info">
+                        <div class="page-order">#${orderNumber}</div>
+                        <div class="page-number">Page ${page.originalIndex + 1}</div>
+                        <div class="page-status ${page.duplicated ? 'duplicated' : 'active'}">
+                            ${page.duplicated ? 'Duplicated' : 'Active'}
+                        </div>
                     </div>
                 `;
-                
-                // Add event listeners
-                pageElement.addEventListener('click', (e) => {
-                    if (!e.target.classList.contains('page-action-btn') && !page.deleted) {
-                        togglePageSelection(page.id);
+
+                orderNumber++;
+
+                // Add click handler for selection
+                pageItem.addEventListener('click', (e) => {
+                    if (!e.target.closest('.page-preview')) {
+                        togglePageSelection(index);
                     }
                 });
 
-                // Drag and drop events
-                pageElement.addEventListener('dragstart', (e) => {
-                    if (!page.deleted) {
-                        e.dataTransfer.setData('text/plain', page.id);
-                        pageElement.classList.add('dragging');
-                    }
+                // Add drag handlers
+                pageItem.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', index);
+                    pageItem.style.opacity = '0.5';
                 });
 
-                pageElement.addEventListener('dragend', () => {
-                    pageElement.classList.remove('dragging');
+                pageItem.addEventListener('dragend', () => {
+                    pageItem.style.opacity = '1';
                 });
 
-                pageElement.addEventListener('dragover', (e) => {
+                pageItem.addEventListener('dragover', (e) => {
                     e.preventDefault();
                 });
 
-                pageElement.addEventListener('drop', (e) => {
+                pageItem.addEventListener('drop', (e) => {
                     e.preventDefault();
-                    const draggedId = e.dataTransfer.getData('text/plain');
-                    const droppedId = page.id;
-                    
-                    if (draggedId !== droppedId) {
-                        reorderPages(draggedId, droppedId);
+                    const draggedIndex = parseInt(e.dataTransfer.getData('text/plain'));
+                    const targetIndex = index;
+
+                    if (draggedIndex !== targetIndex) {
+                        reorderPages(draggedIndex, targetIndex);
                     }
                 });
-                
-                elements.pagesGrid.appendChild(pageElement);
+
+                elements.pagesGrid.appendChild(pageItem);
             });
         }
 
-        function togglePageSelection(pageId) {
-            const page = pages.find(p => p.id === pageId);
-            if (page && !page.deleted) {
-                page.selected = !page.selected;
-                renderPages();
-                updateStats();
-            }
+        function togglePageSelection(pageIndex) {
+            pages[pageIndex].selected = !pages[pageIndex].selected;
+            renderPages();
+            updateSummary();
         }
 
-        function deletePage(pageId) {
-            const page = pages.find(p => p.id === pageId);
-            if (page) {
-                page.deleted = true;
-                page.selected = false;
-                renderPages();
-                updateStats();
-            }
-        }
+        function reorderPages(fromIndex, toIndex) {
+            const page = pages.splice(fromIndex, 1)[0];
+            pages.splice(toIndex, 0, page);
 
-        function restorePage(pageId) {
-            const page = pages.find(p => p.id === pageId);
-            if (page) {
-                page.deleted = false;
-                renderPages();
-                updateStats();
-            }
-        }
-
-        function duplicatePage(pageId) {
-            const page = pages.find(p => p.id === pageId);
-            if (page && !page.deleted) {
-                const duplicatedPage = {
-                    id: `page-${page.originalNumber}-dup-${Date.now()}`,
-                    originalNumber: page.originalNumber,
-                    currentNumber: page.originalNumber,
-                    deleted: false,
-                    selected: false,
-                    duplicated: true
-                };
-                
-                const pageIndex = pages.findIndex(p => p.id === pageId);
-                pages.splice(pageIndex + 1, 0, duplicatedPage);
-                
-                renderPages();
-                updateStats();
-            }
-        }
-
-        function selectAll() {
-            pages.forEach(page => {
-                if (!page.deleted) {
-                    page.selected = true;
-                }
+            // Update current indices
+            pages.forEach((page, index) => {
+                page.currentIndex = index;
             });
-            renderPages();
-            updateStats();
-        }
 
-        function selectNone() {
-            pages.forEach(page => {
-                page.selected = false;
-            });
-            renderPages();
-            updateStats();
-        }
-
-        function deleteSelected() {
-            pages.forEach(page => {
-                if (page.selected) {
-                    page.deleted = true;
-                    page.selected = false;
-                }
-            });
-            renderPages();
-            updateStats();
-        }
-
-        function restoreAll() {
-            pages.forEach(page => {
-                page.deleted = false;
-            });
-            renderPages();
-            updateStats();
-        }
-
-        function reverseOrder() {
-            const activePages = pages.filter(p => !p.deleted);
-            const deletedPages = pages.filter(p => p.deleted);
-            
-            pages = [...activePages.reverse(), ...deletedPages];
-            renderPages();
-            updateStats();
-        }
-
-        function reorderPages(draggedId, droppedId) {
-            const draggedIndex = pages.findIndex(p => p.id === draggedId);
-            const droppedIndex = pages.findIndex(p => p.id === droppedId);
-            
-            const draggedPage = pages.splice(draggedIndex, 1)[0];
-            pages.splice(droppedIndex, 0, draggedPage);
-            
             renderPages();
         }
 
-        function updateStats() {
-            const totalPagesCount = pages.length;
-            const activePages = pages.filter(p => !p.deleted).length;
-            const deletedPages = pages.filter(p => p.deleted).length;
-            const duplicatedPages = pages.filter(p => p.duplicated).length;
-            
-            elements.totalPagesStat.textContent = totalPagesCount;
-            elements.activePagesStat.textContent = activePages;
-            elements.deletedPagesStat.textContent = deletedPages;
-            elements.duplicatedPagesStat.textContent = duplicatedPages;
+        function updateSummary() {
+            const total = pages.length;
+            const active = pages.filter(p => !p.deleted).length;
+            const deleted = pages.filter(p => p.deleted).length;
+            const duplicated = pages.filter(p => p.duplicated).length;
+
+            elements.totalPagesStat.textContent = total;
+            elements.activePagesStat.textContent = active;
+            elements.deletedPagesStat.textContent = deleted;
+            elements.duplicatedPagesStat.textContent = duplicated;
         }
 
         async function applyChanges() {
+            if (!uploadedPDF) {
+                showError('Please select a PDF file first.');
+                return;
+            }
+
             const activePages = pages.filter(p => !p.deleted);
-            
             if (activePages.length === 0) {
-                showError('Cannot create PDF with no pages. Please restore at least one page.');
+                showError('No pages to include in the final PDF.');
                 return;
             }
 
             elements.processing.style.display = 'block';
-            elements.processingText.textContent = 'Creating organized PDF...';
+            elements.processingText.textContent = 'Applying changes...';
+            elements.organizeSection.style.display = 'none';
 
             try {
-                const newPDF = await PDFLib.PDFDocument.create();
-                const originalPages = uploadedPDF.getPages();
-                
-                for (let i = 0; i < activePages.length; i++) {
-                    const page = activePages[i];
-                    elements.processingText.textContent = `Processing page ${i + 1} of ${activePages.length}...`;
-                    
-                    const originalPageIndex = page.originalNumber - 1;
-                    const [copiedPage] = await newPDF.copyPages(uploadedPDF, [originalPageIndex]);
-                    newPDF.addPage(copiedPage);
+                const { PDFDocument } = PDFLib;
+                const newPdf = await PDFDocument.create();
+
+                for (const page of activePages) {
+                    const [copiedPage] = await newPdf.copyPages(uploadedPDF, [page.originalIndex]);
+                    newPdf.addPage(copiedPage);
+
+                    // Add duplicates if needed
+                    if (page.duplicated) {
+                        const [duplicatedPage] = await newPdf.copyPages(uploadedPDF, [page.originalIndex]);
+                        newPdf.addPage(duplicatedPage);
+                    }
                 }
 
-                elements.processingText.textContent = 'Finalizing PDF...';
-                const pdfBytes = await newPDF.save();
+                elements.processingText.textContent = 'Finalizing organized PDF...';
+                const pdfBytes = await newPdf.save();
                 organizedPDFBlob = new Blob([pdfBytes], { type: 'application/pdf' });
 
                 elements.processing.style.display = 'none';
-                elements.resultInfo.textContent = 
-                    `Organized PDF created with ${activePages.length} pages • ${formatFileSize(organizedPDFBlob.size)}`;
+
+                const finalPages = activePages.length + activePages.filter(p => p.duplicated).length;
+                elements.resultInfo.textContent = `Successfully organized PDF with ${finalPages} pages • ${formatFileSize(organizedPDFBlob.size)}`;
                 elements.downloadSection.style.display = 'block';
 
+                // Create download function
+                elements.downloadBtn.onclick = () => {
+                    const url = URL.createObjectURL(organizedPDFBlob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'pdfindi-organized.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                };
+
+                showSuccess('PDF organized successfully!');
+
             } catch (error) {
-                console.error('Error organizing PDF:', error);
+                console.error('Organization error:', error);
                 showError('Failed to organize PDF. Please try again.');
                 elements.processing.style.display = 'none';
+                elements.organizeSection.style.display = 'block';
             }
-        }
-
-        function downloadOrganizedPDF() {
-            if (!organizedPDFBlob) return;
-
-            const url = URL.createObjectURL(organizedPDFBlob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `organized-pdf-${Date.now()}.pdf`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
         }
 
         function resetTool() {
@@ -715,13 +1195,120 @@
             totalPages = 0;
             pages = [];
             organizedPDFBlob = null;
-            
+
             elements.pdfInfo.style.display = 'none';
             elements.organizeSection.style.display = 'none';
-            elements.summarySection.style.display = 'none';
             elements.downloadSection.style.display = 'none';
             elements.processing.style.display = 'none';
+            elements.summarySection.style.display = 'none';
+
+            elements.fileInput.value = '';
+
+            // Reset all selections
+            renderPages();
+            updateSummary();
         }
+
+        // Control button handlers
+        elements.selectAllBtn.addEventListener('click', () => {
+            pages.forEach(page => {
+                if (!page.deleted) page.selected = true;
+            });
+            renderPages();
+            updateSummary();
+        });
+
+        elements.selectNoneBtn.addEventListener('click', () => {
+            pages.forEach(page => page.selected = false);
+            renderPages();
+            updateSummary();
+        });
+
+        elements.duplicateSelectedBtn.addEventListener('click', () => {
+            const selectedPages = pages.filter(p => p.selected && !p.deleted);
+            if (selectedPages.length === 0) {
+                showError('Please select pages to duplicate first.');
+                return;
+            }
+
+            // Create duplicates after each selected page
+            let insertOffset = 0;
+            selectedPages.forEach(page => {
+                const originalIndex = pages.indexOf(page);
+                const duplicatePage = {
+                    originalIndex: page.originalIndex,
+                    currentIndex: originalIndex + 1 + insertOffset,
+                    selected: false,
+                    deleted: false,
+                    duplicated: true
+                };
+                pages.splice(originalIndex + 1 + insertOffset, 0, duplicatePage);
+                insertOffset++;
+            });
+
+            // Update current indices
+            pages.forEach((page, index) => {
+                page.currentIndex = index;
+            });
+
+            // Deselect original pages
+            selectedPages.forEach(page => page.selected = false);
+
+            renderPages();
+            updateSummary();
+            showSuccess(`Duplicated ${selectedPages.length} selected pages.`);
+        });
+
+        elements.deleteSelectedBtn.addEventListener('click', () => {
+            const selectedPages = pages.filter(p => p.selected && !p.deleted);
+            if (selectedPages.length === 0) {
+                showError('Please select pages to delete first.');
+                return;
+            }
+
+            selectedPages.forEach(page => {
+                page.deleted = true;
+                page.selected = false;
+            });
+
+            renderPages();
+            updateSummary();
+            showSuccess(`Deleted ${selectedPages.length} selected pages.`);
+        });
+
+        elements.restoreAllBtn.addEventListener('click', () => {
+            pages.forEach(page => {
+                page.deleted = false;
+                page.selected = false;
+                page.duplicated = false;
+            });
+
+            renderPages();
+            updateSummary();
+            showSuccess('All pages restored.');
+        });
+
+        elements.reverseOrderBtn.addEventListener('click', () => {
+            // Only reverse the active (non-deleted) pages
+            const activePages = pages.filter(p => !p.deleted);
+            const deletedPages = pages.filter(p => p.deleted);
+
+            if (activePages.length === 0) {
+                showError('No active pages to reverse.');
+                return;
+            }
+
+            activePages.reverse();
+            pages = [...activePages, ...deletedPages];
+
+            // Update current indices
+            pages.forEach((page, index) => {
+                page.currentIndex = index;
+            });
+
+            renderPages();
+            showSuccess(`Reversed order of ${activePages.length} active pages.`);
+        });
 
         // Event listeners
         elements.uploadZone.addEventListener('click', () => elements.fileInput.click());
@@ -750,19 +1337,15 @@
             }
         });
 
-        elements.selectAllBtn.addEventListener('click', selectAll);
-        elements.selectNoneBtn.addEventListener('click', selectNone);
-        elements.deleteSelectedBtn.addEventListener('click', deleteSelected);
-        elements.restoreAllBtn.addEventListener('click', restoreAll);
-        elements.reverseOrderBtn.addEventListener('click', reverseOrder);
         elements.applyChangesBtn.addEventListener('click', applyChanges);
-        elements.downloadBtn.addEventListener('click', downloadOrganizedPDF);
         elements.organizeNewBtn.addEventListener('click', resetTool);
 
-        // Make functions global for onclick handlers
-        window.deletePage = deletePage;
-        window.restorePage = restorePage;
-        window.duplicatePage = duplicatePage;
+        // Back to Tools button functionality
+        document.getElementById('back-to-tools-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = '../index.html#pdf-tools-section';
+        });
     </script>
+    <script src="../modern-header.js"></script>
 </body>
 </html>

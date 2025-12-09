@@ -7,11 +7,14 @@
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../modern-header.css">
+<link rel="stylesheet" href="modern-theme.css">
+    <link rel="stylesheet" href="../orange-theme.css">
     <style>
         .tool-page {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 2rem auto;
             padding: 2rem;
             background: white;
@@ -20,26 +23,34 @@
         }
         .tool-header {
             text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
             border-bottom: 2px solid #f0f0f0;
         }
         .tool-icon {
-            font-size: 3rem;
+            font-size: 4rem;
             margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FF9933, #138808);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .back-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: #e74c3c;
+            color: #FF9933;
             text-decoration: none;
             font-weight: 500;
             margin-bottom: 2rem;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
         }
         .back-btn:hover {
-            color: #c0392b;
+            color: #138808;
+            background: #fff5f5;
+            transform: translateX(-5px);
         }
         .upload-zone {
             border: 3px dashed #dee2e6;
@@ -52,8 +63,9 @@
             margin-bottom: 2rem;
         }
         .upload-zone:hover {
-            border-color: #e74c3c;
+            border-color: #FF9933;
             background: #fff5f5;
+            transform: translateY(-2px);
         }
         .upload-zone.dragover {
             border-color: #28a745;
@@ -87,11 +99,14 @@
             transition: all 0.3s;
         }
         .format-option:hover {
-            border-color: #e74c3c;
+            border-color: #FF9933;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(217, 35, 45, 0.1);
         }
         .format-option.selected {
-            border-color: #e74c3c;
+            border-color: #FF9933;
             background: #fff5f5;
+            box-shadow: 0 4px 12px rgba(217, 35, 45, 0.2);
         }
         .format-icon {
             font-size: 2rem;
@@ -153,7 +168,7 @@
             display: none;
         }
         .convert-btn {
-            background: #e74c3c;
+            background: #138808;
             color: white;
             border: none;
             padding: 1rem 2rem;
@@ -207,7 +222,7 @@
         }
         .spinner {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #e74c3c;
+            border-top: 4px solid #138808;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -227,18 +242,70 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+        
+        .footer {
+            background: #222;
+            color: #fff;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 4rem;
+            border-radius: 12px;
+        }
+        
+        .footer-links {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #00c3ff;
+            text-decoration: none;
+            margin: 0 8px;
+            transition: color 0.2s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #fff;
+        }
+        
+        .footer-copyright {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
     </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Image Converter",
+  "description": "Convert images between JPG, PNG, WebP formats online.",
+  "url": "https://pdfindi.com/tools/image-converter.html",
+  "applicationCategory": "Image Converter",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "PDFINDI",
+    "url": "https://pdfindi.com"
+  }
+}
+</script>
+
 </head>
 <body>
     <div class="tool-page">
-        <a href="../index.html" class="back-btn">
+        <a href="../index.html#utility-tools-section" class="back-btn" id="back-to-tools-btn">
             ← Back to Tools
         </a>
         
         <div class="tool-header">
             <div class="tool-icon">🔄</div>
             <h1>Image Converter</h1>
-            <p>Convert images between different formats (JPG, PNG, WebP, GIF)</p>
+            <p>Convert images between different formats with high quality and customizable settings. Support for JPG, PNG, WebP, GIF, and BMP formats with drag & drop functionality.</p>
         </div>
 
         <div class="upload-zone" id="upload-zone">
@@ -419,6 +486,7 @@
                     elements.originalSize.textContent = formatFileSize(file.size);
                     elements.originalDimensions.textContent = `${originalImage.width} × ${originalImage.height}`;
                     
+                    updateUploadZone(); // Show uploaded file in upload zone
                     elements.conversionOptions.style.display = 'block';
                     elements.imagePreview.style.display = 'grid';
                     
@@ -430,6 +498,68 @@
                 originalImage.src = e.target.result;
             };
             reader.readAsDataURL(file);
+        }
+
+        function updateUploadZone() {
+            // Update upload zone to show uploaded file with thumbnail
+            const uploadZone = elements.uploadZone;
+            uploadZone.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: center; gap: 1.5rem;">
+                    <img src="${URL.createObjectURL(originalFile)}" 
+                         alt="Uploaded" 
+                         style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <div style="text-align: left;">
+                        <h3 style="margin: 0; font-size: 1.1rem; color: #28a745;">✅ ${originalFile.name}</h3>
+                        <p style="margin: 0.5rem 0 0 0; color: #6c757d; font-size: 0.9rem;">
+                            ${formatFileSize(originalFile.size)} • ${originalImage.width} × ${originalImage.height}px
+                        </p>
+                        <button onclick="resetUpload()" 
+                                style="margin-top: 0.75rem; padding: 0.4rem 1rem; background: #ff6b35; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: all 0.3s;"
+                                onmouseover="this.style.background='#ff8555'"
+                                onmouseout="this.style.background='#ff6b35'">
+                            🔄 Change Image
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function resetUpload() {
+            // Reset to initial upload state
+            const uploadZone = elements.uploadZone;
+            uploadZone.innerHTML = `
+                <div class="upload-icon">🖼️</div>
+                <h3>Click to upload or drag & drop</h3>
+                <p>Supports JPG, PNG, WebP, GIF, BMP images</p>
+                <input type="file" id="file-input" accept="image/*" style="display: none;">
+            `;
+            
+            // Re-attach event listeners
+            const newFileInput = document.getElementById('file-input');
+            newFileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileSelect(e.target.files[0]);
+                }
+            });
+            uploadZone.addEventListener('click', () => newFileInput.click());
+            uploadZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            });
+            uploadZone.addEventListener('dragleave', () => {
+                uploadZone.classList.remove('dragover');
+            });
+            uploadZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFileSelect(files[0]);
+                }
+            });
+            
+            // Reset state
+            resetTool();
         }
 
         function selectFormat(format) {
@@ -595,6 +725,25 @@
 
         // Initialize
         updateQualityDisplay();
+        
+        // Back to Tools button functionality
+        document.getElementById('back-to-tools-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = '../index.html#utility-tools-section';
+        });
     </script>
+    
+    <div class="footer">
+        <div class="footer-links">
+            <a href="../about.html">About</a>
+            <a href="../privacy.html">Privacy</a>
+            <a href="../contact.html">Contact</a>
+            <a href="../faq.html">FAQ</a>
+        </div>
+        <div class="footer-copyright">
+            © 2024 PDFINDI. All rights reserved. Made with ❤️ for India.
+        </div>
+    </div>
+    <script src="../modern-header.js"></script>
 </body>
 </html>

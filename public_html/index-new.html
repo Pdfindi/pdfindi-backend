@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDFINDI - Every tool you need to work with PDFs in one place</title>
+    <meta name="description" content="Every tool you need to work with PDFs in one place. All are 100% FREE and easy to use! Merge, split, compress, convert, rotate, unlock and watermark PDFs with just a few clicks.">
+    <meta name="keywords" content="pdf tools, merge pdf, split pdf, compress pdf, pdf converter, free pdf tools, online pdf editor">
+    <link rel="canonical" href="https://pdfindi.com/">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pdfindi.com/">
+    <meta property="og:title" content="PDFINDI - Every tool you need to work with PDFs">
+    <meta property="og:description" content="All PDF tools you need, 100% FREE and easy to use!">
+    <meta property="og:image" content="https://pdfindi.com/og-image.png">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://pdfindi.com/">
+    <meta name="twitter:title" content="PDFINDI - Free PDF Tools">
+    <meta name="twitter:description" content="Every tool you need to work with PDFs in one place">
+    
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" href="modern-header.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: #F9FAFB;
+            color: #374151;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem 3rem 2rem;
+            background: linear-gradient(135deg, #FFF5F0 0%, #FFFFFF 100%);
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: #6B7280;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            line-height: 1.6;
+        }
+        
+        /* Tools Container */
+        .tools-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .tools-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .tools-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+        }
+        
+        .category-tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: #FFFFFF;
+            padding: 0.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid #E5E7EB;
+        }
+        
+        .category-tab {
+            padding: 0.625rem 1.25rem;
+            border: none;
+            background: none;
+            color: #6B7280;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .category-tab:hover {
+            color: #FF6B35;
+        }
+        
+        .category-tab.active {
+            background: #FF6B35;
+            color: #FFFFFF;
+        }
+        
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .tool-card {
+            background: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            border-radius: 1rem;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .tool-card:hover {
+            border-color: #FF6B35;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+        
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tool-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tool-badge {
+            display: inline-block;
+            padding: 0.25rem 0.625rem;
+            background: #FFE5DC;
+            color: #FF6B35;
+            font-size: 0.625rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+        }
+        
+        /* Section Divider */
+        .section-divider {
+            height: 1px;
+            background: #E5E7EB;
+            margin: 3rem 0;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #FFFFFF;
+            border-top: 1px solid #E5E7EB;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .footer-link {
+            color: #6B7280;
+            text-decoration: none;
+            font-size: 0.9375rem;
+            transition: color 0.2s;
+        }
+        
+        .footer-link:hover {
+            color: #FF6B35;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #E5E7EB;
+            color: #9CA3AF;
+            font-size: 0.875rem;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+            
+            .tool-card {
+                padding: 1.5rem 1rem;
+            }
+            
+            .category-tabs {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modern Header will be injected by JavaScript -->
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Every tool you need to work with PDFs in one place</h1>
+        <p>Every tool you need to use PDFs, at your fingertips. All are <strong>100% FREE</strong> and easy to use! Merge, split, compress, convert, rotate, unlock and watermark PDFs with just a few clicks.</p>
+    </section>
+    
+    <!-- Tools Section -->
+    <div class="tools-container">
+        <div class="tools-header">
+            <h2 class="tools-title">All Tools</h2>
+            <div class="category-tabs">
+                <button class="category-tab active" data-category="all">All</button>
+                <button class="category-tab" data-category="pdf">PDF Tools</button>
+                <button class="category-tab" data-category="utility">Utility Tools</button>
+            </div>
+        </div>
+        
+        <div class="tools-grid" id="toolsGrid">
+            <!-- Tools will be injected by JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PDFINDI</h3>
+                <div class="footer-links">
+                    <a href="/about" class="footer-link">About Us</a>
+                    <a href="/contact" class="footer-link">Contact</a>
+                    <a href="/faq" class="footer-link">FAQ</a>
+                    <a href="/privacy" class="footer-link">Privacy Policy</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <div class="footer-links">
+                    <a href="https://github.com/Pdfindi" target="_blank" class="footer-link">GitHub</a>
+                    <a href="/sitemap.xml" class="footer-link">Sitemap</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Made in India 🇮🇳</h3>
+                <p style="color: #6B7280; font-size: 0.9375rem; line-height: 1.6;">
+                    Built with ❤️ in India<br>
+                    100% Free Forever
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2025 PDFINDI. All rights reserved.
+        </div>
+    </footer>
+    
+    <script src="modern-header.js"></script>
+    <script>
+        // Tools data
+        const allTools = {
+            pdf: [
+                { title: "Merge PDF", icon: "🔗", url: "/tools/merge-pdf", desc: "Combine PDFs in the order you want" },
+                { title: "Split PDF", icon: "✂️", url: "/tools/split-pdf", desc: "Separate one page or a whole set" },
+                { title: "Compress PDF", icon: "🗜️", url: "/tools/compress-pdf", badge: "API", desc: "Reduce file size" },
+                { title: "PDF to Word", icon: "📄", url: "/tools/pdf-to-word", badge: "API", desc: "Convert to DOCX format" },
+                { title: "Word to PDF", icon: "📝", url: "/tools/word-to-pdf", badge: "API", desc: "Make DOC files easy to read" },
+                { title: "PDF to JPG", icon: "📷", url: "/tools/pdf-to-jpg", badge: "API", desc: "Extract images from PDF" },
+                { title: "JPEG to PDF", icon: "🖼️", url: "/tools/jpeg-to-pdf", desc: "Convert images to PDF" },
+                { title: "Rotate PDF", icon: "🔄", url: "/tools/rotate-pdf", desc: "Rotate your PDFs" },
+                { title: "Organize PDF", icon: "🗂️", url: "/tools/organize-pdf", desc: "Sort pages however you like" },
+                { title: "Add Watermark", icon: "💧", url: "/tools/add-watermark", desc: "Stamp text over your PDF" },
+                { title: "Protect PDF", icon: "🔒", url: "/tools/protect-pdf", desc: "Encrypt with password" },
+                { title: "Unlock PDF", icon: "🔓", url: "/tools/unlock-pdf", desc: "Remove password security" },
+                { title: "Edit PDF", icon: "✏️", url: "/tools/edit-pdf", desc: "Add text and annotations" }
+            ],
+            utility: [
+                { title: "Image Compressor", icon: "💨", url: "/tools/image-compressor", desc: "Reduce image file size" },
+                { title: "Image Converter", icon: "🔄", url: "/tools/image-converter", desc: "Convert between formats" },
+                { title: "Image OCR", icon: "🔍", url: "/tools/image-ocr", badge: "API", desc: "Extract text from images" },
+                { title: "QR Code Generator", icon: "📱", url: "/tools/qr-code-generator", desc: "Create QR codes" },
+                { title: "Password Generator", icon: "🔑", url: "/tools/password-generator", desc: "Generate secure passwords" },
+                { title: "Word Counter", icon: "🧮", url: "/tools/word-counter", desc: "Count words and characters" },
+                { title: "Text to Speech", icon: "🗣️", url: "/tools/text-to-speech", desc: "Convert text to audio" },
+                { title: "Speech to Text", icon: "🎤", url: "/tools/speech-to-text", desc: "Transcribe audio to text" },
+                { title: "JSON Formatter", icon: "{ }", url: "/tools/json-formatter", desc: "Format and validate JSON" },
+                { title: "Case Converter", icon: "Aa", url: "/tools/case-converter", desc: "Change text case" },
+                { title: "Lorem Ipsum", icon: "¶", url: "/tools/lorem-ipsum-generator", desc: "Generate placeholder text" },
+                { title: "Base64 Encoder", icon: "🔐", url: "/tools/base64-encoderdecoder", desc: "Encode/decode Base64" },
+                { title: "Age Calculator", icon: "🎂", url: "/tools/age-calculator", desc: "Calculate your age" },
+                { title: "BMI Calculator", icon: "💪", url: "/tools/bmi-calculator", desc: "Calculate body mass index" },
+                { title: "Color Picker", icon: "🎨", url: "/tools/color-picker", desc: "Pick and convert colors" },
+                { title: "Unit Converter", icon: "📏", url: "/tools/unit-converter", desc: "Convert units" }
+            ]
+        };
+        
+        let currentCategory = 'all';
+        
+        // Render tools
+        function renderTools(category = 'all') {
+            const grid = document.getElementById('toolsGrid');
+            grid.innerHTML = '';
+            
+            let toolsToShow = [];
+            if (category === 'all') {
+                toolsToShow = [...allTools.pdf, ...allTools.utility];
+            } else if (category === 'pdf') {
+                toolsToShow = allTools.pdf;
+            } else if (category === 'utility') {
+                toolsToShow = allTools.utility;
+            }
+            
+            toolsToShow.forEach(tool => {
+                const card = document.createElement('a');
+                card.href = tool.url;
+                card.className = 'tool-card';
+                card.innerHTML = `
+                    <div class="tool-icon">${tool.icon}</div>
+                    <div class="tool-title">${tool.title}</div>
+                    ${tool.badge ? `<span class="tool-badge">${tool.badge}</span>` : ''}
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        // Category filter
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const category = tab.dataset.category;
+                renderTools(category);
+            });
+        });
+        
+        // Initial render
+        renderTools('all');
+    </script>
+</body>
+</html>

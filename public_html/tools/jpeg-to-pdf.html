@@ -7,257 +7,829 @@
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../modern-header.css">
+<link rel="stylesheet" href="modern-theme.css">
+    <link rel="stylesheet" href="../orange-theme.css">
     <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+            --success-gradient: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            --error-gradient: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --shadow-light: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-medium: 0 8px 32px rgba(0,0,0,0.12);
+            --shadow-strong: 0 16px 64px rgba(0,0,0,0.16);
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
         .tool-page {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 2rem auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 0;
+            background: transparent;
+            border-radius: var(--border-radius);
+            overflow: hidden;
         }
-        .tool-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #f0f0f0;
-        }
-        .tool-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
+
+        /* Enhanced Back Button */
         .back-btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            color: #e74c3c;
+            gap: 0.75rem;
+            color: #6366f1;
             text-decoration: none;
-            font-weight: 500;
-            margin-bottom: 2rem;
-            transition: color 0.3s;
-        }
-        .back-btn:hover {
-            color: #c0392b;
-        }
-        .upload-zone {
-            border: 3px dashed #dee2e6;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--glass-bg);
             border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 153, 51, 0.1), transparent);
+            transition: var(--transition);
+        }
+
+        .back-btn:hover::before {
+            left: 100%;
+        }
+
+        .back-btn:hover {
+            color: #4f46e5;
+            background: rgba(255, 255, 255, 0.98);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Modern Tool Header */
+        .tool-header {
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+            background: var(--primary-gradient);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) rotate(180deg); }
+        }
+
+        .tool-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            animation: bounce-in 0.8s ease-out;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        @keyframes bounce-in {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(-90deg); opacity: 0.5; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .tool-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0 0 1rem 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: -0.02em;
+        }
+
+        .tool-header p {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin: 0;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Enhanced Upload Zone */
+        .upload-zone {
+            margin: 2rem;
+            border: 3px dashed rgba(255, 153, 51, 0.3);
+            border-radius: var(--border-radius);
             padding: 3rem 2rem;
             text-align: center;
-            background: #f8f9fa;
-            transition: all 0.3s;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
             cursor: pointer;
-            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
         }
+
+        .upload-zone::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
         .upload-zone:hover {
-            border-color: #e74c3c;
-            background: #fff5f5;
+            border-color: #6366f1;
+            background: rgba(255, 255, 255, 0.98);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-medium);
         }
+
+        .upload-zone:hover::before {
+            opacity: 0.05;
+        }
+
         .upload-zone.dragover {
-            border-color: #28a745;
-            background: #f0fff4;
+            border-color: #138808;
+            background: rgba(16, 185, 129, 0.05);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
         }
+
+        .upload-zone.dragover::before {
+            opacity: 0.1;
+            background: linear-gradient(135deg, #138808 0%, #34d399 100%);
+        }
+
         .upload-icon {
-            font-size: 3rem;
-            color: #6c757d;
-            margin-bottom: 1rem;
+            font-size: 4rem;
+            color: #6366f1;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+            filter: drop-shadow(0 2px 4px rgba(255, 153, 51, 0.2));
         }
+
+        .upload-zone:hover .upload-icon {
+            transform: scale(1.1) rotate(5deg);
+            color: #4f46e5;
+        }
+
+        .upload-zone h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+            color: #1f2937;
+        }
+
+        .upload-zone p {
+            font-size: 1rem;
+            color: #6b7280;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* Enhanced Error/Success Messages */
+        .error-message, .success-message {
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 2rem;
+            font-weight: 500;
+            animation: slide-in 0.3s ease-out;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .error-message {
+            background: var(--error-gradient);
+            color: white;
+            border-left: 4px solid #ef4444;
+        }
+
+        .success-message {
+            background: var(--success-gradient);
+            color: white;
+            border-left: 4px solid #138808;
+        }
+
+        @keyframes slide-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Enhanced Images Preview */
         .images-preview {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem;
+            animation: slide-in 0.5s ease-out;
         }
+
         .image-item {
-            background: white;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
             overflow: hidden;
             position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
         }
+
+        .image-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-medium);
+        }
+
         .image-thumbnail {
             width: 100%;
-            height: 120px;
+            height: 160px;
             object-fit: cover;
+            transition: var(--transition);
         }
+
+        .image-item:hover .image-thumbnail {
+            transform: scale(1.05);
+        }
+
         .image-info {
-            padding: 0.5rem;
-            font-size: 0.8rem;
-            background: #f8f9fa;
+            padding: 1rem;
+            background: rgba(255, 153, 51, 0.05);
+            border-top: 1px solid rgba(255, 153, 51, 0.1);
         }
+
+        .image-info strong {
+            display: block;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .image-info div:last-child {
+            font-size: 0.8rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
         .remove-image {
             position: absolute;
-            top: 5px;
-            right: 5px;
-            background: #dc3545;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: var(--error-gradient);
             color: white;
             border: none;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow-light);
         }
+
+        .remove-image:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Enhanced PDF Settings */
         .pdf-settings {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            display: none;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-light);
+            animation: slide-in 0.5s ease-out 0.2s both;
         }
+
+        .pdf-settings h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0 0 1.5rem 0;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         .settings-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
         }
+
         .setting-group {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
+
         .setting-group label {
             font-weight: 600;
-            color: #495057;
+            color: #374151;
+            font-size: 0.95rem;
         }
-        .page-layout {
-            display: flex;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-        .layout-option {
-            flex: 1;
+
+        .setting-group select {
             padding: 1rem;
-            border: 2px solid #dee2e6;
+            border: 2px solid #e5e7eb;
             border-radius: 8px;
-            text-align: center;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
             cursor: pointer;
-            transition: all 0.3s;
         }
-        .layout-option:hover {
-            border-color: #e74c3c;
-        }
-        .layout-option.selected {
-            border-color: #e74c3c;
-            background: #fff5f5;
-        }
-        .processing {
-            text-align: center;
-            padding: 2rem;
-            display: none;
-        }
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #e74c3c;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .download-section {
-            text-align: center;
-            margin: 2rem 0;
-            display: none;
-        }
-        .download-btn {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin: 0.5rem;
-        }
-        .download-btn:hover {
-            background: #218838;
-        }
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid #f5c6cb;
-            margin: 1rem 0;
-            display: none;
-        }
-        .sortable-list {
+
+        .setting-group select:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(255, 153, 51, 0.1);
             background: white;
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 1rem 0;
         }
+
+        /* Enhanced Page Layout Options */
+        .page-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .layout-option {
+            padding: 1.5rem 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .layout-option:hover {
+            border-color: #6366f1;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .layout-option.selected {
+            border-color: #6366f1;
+            background: rgba(255, 153, 51, 0.1);
+            box-shadow: var(--shadow-light);
+        }
+
+        .layout-option strong {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .layout-option p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        /* Enhanced Sortable List */
+        .sortable-list {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-light);
+            animation: slide-in 0.5s ease-out 0.4s both;
+        }
+
+        .sortable-list h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0 0 1.5rem 0;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         .image-sort-item {
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 0.5rem;
-            border: 1px solid #dee2e6;
-            border-radius: 6px;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
             margin: 0.5rem 0;
             cursor: move;
-            background: white;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(5px);
+            transition: var(--transition);
         }
+
         .image-sort-item:hover {
-            background: #f8f9fa;
+            background: rgba(255, 153, 51, 0.05);
+            border-color: #6366f1;
+            transform: translateY(-1px);
         }
+
         .drag-handle {
             cursor: grab;
             font-size: 1.2rem;
-            color: #6c757d;
+            color: #6b7280;
+            transition: var(--transition);
         }
+
+        .image-sort-item:hover .drag-handle {
+            color: #6366f1;
+        }
+
         .sort-thumbnail {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             object-fit: cover;
-            border-radius: 4px;
+            border-radius: 6px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
         }
+
+        .image-sort-item span {
+            flex: 1;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .image-sort-item span:last-child {
+            color: #6b7280;
+            font-weight: 600;
+            background: rgba(255, 153, 51, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+        }
+
+        /* Enhanced Buttons */
+        .red-button {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+            margin: 2rem;
+        }
+
+        .red-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .red-button:hover::before {
+            left: 100%;
+        }
+
+        .red-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .red-button:active {
+            transform: translateY(0);
+        }
+
+        .red-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Enhanced Processing */
+        .processing {
+            text-align: center;
+            padding: 3rem 2rem;
+            margin: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-light);
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 107, 53, 0.1);
+            border-left: 4px solid #FF6B35;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        .processing p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #374151;
+            margin: 0;
+        }
+
+        /* Progress Bar Styles */
+        .progress-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 1.5rem auto 1rem;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            height: 8px;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B35 0%, #FF8C42 100%);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            font-size: 0.95rem;
+            color: #6B7280;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* Enhanced Download Section */
+        .download-section {
+            text-align: center;
+            padding: 3rem 2rem;
+            margin: 2rem;
+            background: var(--success-gradient);
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium);
+            animation: slide-in 0.5s ease-out;
+        }
+
+        .download-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 1rem 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .download-section p {
+            font-size: 1.1rem;
+            margin: 0 0 2rem 0;
+            opacity: 0.9;
+        }
+
+        .download-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 0.5rem;
+        }
+
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
+            .tool-page {
+                margin: 1rem;
+            }
+
+            .back-btn {
+                margin: 1rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .tool-header {
+                padding: 2rem 1rem;
+            }
+
+            .tool-header h1 {
+                font-size: 2rem;
+            }
+
+            .tool-header p {
+                font-size: 1rem;
+            }
+
+            .upload-zone {
+                margin: 1rem;
+                padding: 2rem 1rem;
+            }
+
+            .upload-zone h3 {
+                font-size: 1.3rem;
+            }
+
+            .images-preview {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                margin: 1rem;
+                gap: 1rem;
+            }
+
+            .image-item {
+                margin: 0;
+            }
+
             .settings-grid {
                 grid-template-columns: 1fr;
+                gap: 1rem;
             }
+
             .page-layout {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .sortable-list {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .red-button {
+                width: 100%;
+                margin: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .upload-zone h3 {
+                font-size: 1.1rem;
+            }
+
+            .images-preview {
+                grid-template-columns: 1fr;
+            }
+
+            .image-sort-item {
                 flex-direction: column;
+                text-align: center;
+                gap: 0.75rem;
+            }
+
+            .image-sort-item span:last-child {
+                align-self: center;
             }
         }
     </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "JPEG to PDF Converter",
+  "description": "Convert JPEG, PNG images to PDF format online.",
+  "url": "https://pdfindi.com/tools/jpeg-to-pdf.html",
+  "applicationCategory": "Image Converter",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "PDFINDI",
+    "url": "https://pdfindi.com"
+  }
+}
+</script>
+
 </head>
 <body>
     <div class="tool-page">
-        <a href="../index.html" class="back-btn">
-            ← Back to Tools
+        <a href="../index.html#pdf-tools-section" class="back-btn" id="back-to-tools-btn">
+            ← Back to PDF Tools
         </a>
         
         <div class="tool-header">
             <div class="tool-icon">🖼️</div>
             <h1>JPEG to PDF</h1>
-            <p>Convert multiple JPG/PNG images into a single PDF document</p>
+            <p>Convert JPG, PNG, and other images into high-quality PDF documents</p>
         </div>
 
         <div class="upload-zone" id="upload-zone">
-            <div class="upload-icon">📷</div>
-            <h3>Click to upload or drag & drop images</h3>
-            <p>Supports JPG, PNG, GIF, WebP images</p>
+            <div class="upload-icon">📸</div>
+            <h3>Drop your images here or click to browse</h3>
+            <p>Supports JPG, PNG, GIF, WebP • Maximum 10MB per image</p>
             <input type="file" id="file-input" accept="image/*" multiple style="display: none;">
         </div>
 
-        <div class="error-message" id="error-message"></div>
+        <div class="error-message" id="error-message" style="display: none;"></div>
+        <div class="success-message" id="success-message" style="display: none;"></div>
 
         <div class="images-preview" id="images-preview"></div>
 
         <div class="pdf-settings" id="pdf-settings">
-            <h3>PDF Settings</h3>
+            <h3>⚙️ PDF Settings</h3>
             <div class="settings-grid">
                 <div class="setting-group">
                     <label for="page-size">Page Size:</label>
@@ -297,7 +869,7 @@
                 </div>
             </div>
 
-            <h4 style="margin-top: 1.5rem;">Layout Options</h4>
+            <h4 style="margin-top: 1.5rem;">📄 Layout Options</h4>
             <div class="page-layout">
                 <div class="layout-option selected" data-layout="single">
                     <strong>One Image per Page</strong>
@@ -310,7 +882,7 @@
             </div>
 
             <div class="sortable-list" id="sortable-list" style="display: none;">
-                <h4>Reorder Images (drag to reorder):</h4>
+                <h4>🔀 Reorder Images (drag to reorder):</h4>
                 <div id="sort-items"></div>
             </div>
 
@@ -319,12 +891,16 @@
             </div>
         </div>
 
-        <div class="processing" id="processing">
+        <div class="processing" id="processing" style="display: none;">
             <div class="spinner"></div>
             <p id="processing-text">Creating PDF...</p>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <p class="progress-text" id="progress-text">0%</p>
         </div>
 
-        <div class="download-section" id="download-section">
+        <div class="download-section" id="download-section" style="display: none;">
             <h3>✅ PDF Created Successfully!</h3>
             <p id="pdf-info">Your PDF is ready for download</p>
             <button class="download-btn" id="download-btn">📥 Download PDF</button>
@@ -341,6 +917,7 @@
             uploadZone: document.getElementById('upload-zone'),
             fileInput: document.getElementById('file-input'),
             errorMessage: document.getElementById('error-message'),
+            successMessage: document.getElementById('success-message'),
             imagesPreview: document.getElementById('images-preview'),
             pdfSettings: document.getElementById('pdf-settings'),
             pageSizeSelect: document.getElementById('page-size'),
@@ -362,8 +939,18 @@
         function showError(message) {
             elements.errorMessage.textContent = message;
             elements.errorMessage.style.display = 'block';
+            elements.successMessage.style.display = 'none';
             setTimeout(() => {
                 elements.errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            elements.successMessage.textContent = message;
+            elements.successMessage.style.display = 'block';
+            elements.errorMessage.style.display = 'none';
+            setTimeout(() => {
+                elements.successMessage.style.display = 'none';
             }, 5000);
         }
 
@@ -420,7 +1007,7 @@
                 item.innerHTML = `
                     <img src="${image.dataUrl}" alt="${image.name}" class="image-thumbnail">
                     <div class="image-info">
-                        <div style="font-weight: 600; margin-bottom: 2px;">${image.name}</div>
+                        <strong>${image.name}</strong>
                         <div>${formatFileSize(image.size)}</div>
                     </div>
                     <button class="remove-image" onclick="removeImage('${image.id}')">×</button>
@@ -435,7 +1022,7 @@
             if (selectedImages.length > 1) {
                 elements.sortableList.style.display = 'block';
                 elements.sortItems.innerHTML = '';
-                
+
                 selectedImages.forEach((image, index) => {
                     const item = document.createElement('div');
                     item.className = 'image-sort-item';
@@ -444,7 +1031,7 @@
                     item.innerHTML = `
                         <span class="drag-handle">⋮⋮</span>
                         <img src="${image.dataUrl}" alt="${image.name}" class="sort-thumbnail">
-                        <span style="flex: 1;">${image.name}</span>
+                        <span>${image.name}</span>
                         <span>${index + 1}</span>
                     `;
                     elements.sortItems.appendChild(item);
@@ -477,7 +1064,7 @@
                     e.preventDefault();
                     const draggedId = e.dataTransfer.getData('text/plain');
                     const droppedId = item.dataset.imageId;
-                    
+
                     if (draggedId !== droppedId) {
                         reorderImages(draggedId, droppedId);
                     }
@@ -488,11 +1075,12 @@
         function reorderImages(draggedId, droppedId) {
             const draggedIndex = selectedImages.findIndex(img => img.id == draggedId);
             const droppedIndex = selectedImages.findIndex(img => img.id == droppedId);
-            
+
             const draggedImage = selectedImages.splice(draggedIndex, 1)[0];
             selectedImages.splice(droppedIndex, 0, draggedImage);
-            
+
             updateSortableList();
+            updateImagesPreview();
         }
 
         function removeImage(id) {
@@ -506,6 +1094,9 @@
                 return;
             }
 
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            
             elements.processing.style.display = 'block';
             elements.processingText.textContent = 'Creating PDF...';
 
@@ -526,8 +1117,12 @@
                 };
 
                 for (let i = 0; i < selectedImages.length; i++) {
-                    elements.processingText.textContent = `Processing image ${i + 1} of ${selectedImages.length}...`;
+                    const progress = Math.round(((i + 1) / selectedImages.length) * 100);
                     
+                    elements.processingText.textContent = `Processing image ${i + 1} of ${selectedImages.length}...`;
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = progress + '%';
+
                     const image = selectedImages[i];
                     let pdfImage;
 
@@ -547,7 +1142,7 @@
                         pageHeight = imgHeight + (margin * 2);
                     } else {
                         const size = pageSizes[pageSize];
-                        
+
                         // Determine orientation
                         if (orientation === 'auto') {
                             if (imgWidth > imgHeight) {
@@ -571,16 +1166,16 @@
                     // Calculate image dimensions to fit on page
                     const maxWidth = pageWidth - (margin * 2);
                     const maxHeight = pageHeight - (margin * 2);
-                    
+
                     let scaledWidth = imgWidth;
                     let scaledHeight = imgHeight;
-                    
+
                     if (scaledWidth > maxWidth) {
                         const scale = maxWidth / scaledWidth;
                         scaledWidth = maxWidth;
                         scaledHeight = scaledHeight * scale;
                     }
-                    
+
                     if (scaledHeight > maxHeight) {
                         const scale = maxHeight / scaledHeight;
                         scaledHeight = maxHeight;
@@ -619,17 +1214,17 @@
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
                 const img = new Image();
-                
+
                 img.onload = () => {
                     canvas.width = img.width;
                     canvas.height = img.height;
                     ctx.drawImage(img, 0, 0);
-                    
+
                     canvas.toBlob((blob) => {
                         blob.arrayBuffer().then(resolve);
                     }, 'image/png');
                 };
-                
+
                 img.src = dataUrl;
             });
         }
@@ -650,18 +1245,18 @@
         function resetTool() {
             selectedImages = [];
             pdfBlob = null;
-            
+
             elements.imagesPreview.style.display = 'none';
             elements.pdfSettings.style.display = 'none';
             elements.downloadSection.style.display = 'none';
             elements.processing.style.display = 'none';
-            
+
             // Reset to defaults
             elements.pageSizeSelect.value = 'a4';
             elements.orientationSelect.value = 'auto';
             elements.marginSelect.value = '20';
             elements.qualitySelect.value = '0.8';
-            
+
             document.querySelectorAll('.layout-option').forEach(option => {
                 option.classList.remove('selected');
                 if (option.dataset.layout === 'single') {
@@ -708,8 +1303,15 @@
         elements.downloadBtn.addEventListener('click', downloadPDF);
         elements.createNewBtn.addEventListener('click', resetTool);
 
+        // Back to Tools button functionality
+        document.getElementById('back-to-tools-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = '../index.html#pdf-tools-section';
+        });
+
         // Make removeImage function global
         window.removeImage = removeImage;
     </script>
+    <script src="../modern-header.js"></script>
 </body>
 </html>

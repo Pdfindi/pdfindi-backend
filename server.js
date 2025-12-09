@@ -801,12 +801,12 @@ app.post('/api/protect-pdf', upload.single('file'), async (req, res) => {
     formData.append('encryptionKeyLength', encryptionKeyLength === '256' ? '256' : '128');
 
     console.log('Calling Cloudmersive API...');
-    console.log('API URL: https://api.cloudmersive.com/convert/edit/pdf/encrypt/user-password');
+    console.log('API URL: https://api.cloudmersive.com/convert/edit/pdf/encrypt/password');
     console.log('API Key (first 10 chars):', CLOUDMERSIVE_API_KEY.substring(0, 10) + '...');
     
     // Call Cloudmersive PDF encryption API
     const response = await axios.post(
-      'https://api.cloudmersive.com/convert/edit/pdf/encrypt/user-password',
+      'https://api.cloudmersive.com/convert/edit/pdf/encrypt/password',
       formData,
       {
         headers: {

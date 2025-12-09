@@ -7,110 +7,533 @@
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../modern-header.css">
+<link rel="stylesheet" href="modern-theme.css">
+    <link rel="stylesheet" href="../orange-theme.css">
     <style>
         .tool-page {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 2rem auto;
             padding: 2rem;
             background: white;
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
+        
         .tool-header {
             text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
             border-bottom: 2px solid #f0f0f0;
         }
+        
         .tool-icon {
-            font-size: 3rem;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FF9933, #138808);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .tool-header h1 {
+            font-size: 2.5rem;
+            color: #212529;
             margin-bottom: 1rem;
         }
+        
+        .tool-header p {
+            font-size: 1.1rem;
+            color: #6c757d;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
         .back-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: #e74c3c;
+            color: #FF9933;
             text-decoration: none;
             font-weight: 500;
             margin-bottom: 2rem;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
         }
+        
         .back-btn:hover {
-            color: #c0392b;
+            color: #138808;
+            background: #fff5f5;
+            transform: translateX(-5px);
         }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        
+        .input-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .input-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 200px;
+            transition: border-color 0.3s;
+            line-height: 1.6;
+        }
+        
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #FF9933;
+            box-shadow: 0 0 0 3px rgba(217, 35, 45, 0.1);
+        }
+        
+        .input-group textarea::placeholder {
+            color: #adb5bd;
+        }
+        
+        .input-controls {
+            display: flex;
             gap: 1rem;
+            flex-wrap: wrap;
             margin-top: 1rem;
         }
+        
+        .input-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .input-btn:hover {
+            background: #5a6268;
+            transform: translateY(-1px);
+        }
+        
+        .input-btn.primary {
+            background: #FF9933;
+        }
+        
+        .input-btn.primary:hover {
+            background: #138808;
+        }
+        
+        .stats-section {
+            margin: 2rem 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
         .stat-card {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 8px;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
             text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-color: #FF9933;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #FF9933, #138808);
+        }
+        
         .stat-number {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            color: #e74c3c;
+            color: #FF9933;
+            margin-bottom: 0.5rem;
+            font-family: 'Courier New', monospace;
         }
+        
         .stat-label {
             font-size: 0.9rem;
             color: #6c757d;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-change {
+            font-size: 0.8rem;
+            color: #28a745;
             margin-top: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .analysis-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .analysis-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #FF9933;
+        }
+        
+        .analysis-item h3 {
+            color: #495057;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .analysis-item p {
+            color: #6c757d;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .word-frequency {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid #e9ecef;
+        }
+        
+        .word-frequency h3 {
+            color: #495057;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+        
+        .frequency-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .frequency-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .frequency-word {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .frequency-count {
+            background: #FF9933;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+        
+        .red-button {
+            background: #FF9933;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 140px;
+            justify-content: center;
+        }
+        
+        .red-button:hover {
+            background: #138808;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(217, 35, 45, 0.3);
+        }
+        
+        .red-button.secondary {
+            background: #6c757d;
+        }
+        
+        .red-button.secondary:hover {
+            background: #5a6268;
+        }
+        
+        .footer {
+            background: #222;
+            color: #fff;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 4rem;
+            border-radius: 12px;
+        }
+        
+        .footer-links {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #00c3ff;
+            text-decoration: none;
+            margin: 0 8px;
+            transition: color 0.2s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #fff;
+        }
+        
+        .footer-copyright {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .tool-page {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .tool-header h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .frequency-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .input-controls {
+                flex-direction: column;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .red-button {
+                width: 100%;
+                max-width: 300px;
+            }
         }
     </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Word Counter",
+  "description": "Count words, characters, sentences, and paragraphs online.",
+  "url": "https://pdfindi.com/tools/word-counter.html",
+  "applicationCategory": "Text Tool",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "PDFINDI",
+    "url": "https://pdfindi.com"
+  }
+}
+</script>
+
 </head>
 <body>
     <div class="tool-page">
-        <a href="../index.html" class="back-btn">
+        <a href="../index.html#utility-tools-section" class="back-btn" id="back-to-tools-btn">
             ← Back to Tools
         </a>
         
         <div class="tool-header">
             <div class="tool-icon">🧮</div>
-            <h1>Word Counter</h1>
-            <p>Count words, characters, sentences, and paragraphs in your text</p>
+            <h1>Word Counter & Text Analyzer</h1>
+            <p>Analyze your text with comprehensive statistics including word count, character count, reading time, and detailed text analysis. Perfect for writers, students, and content creators.</p>
         </div>
 
-        <div class="tool-ui-container">
-            <label for="text-input">Enter or paste your text:</label>
-            <textarea id="text-input" rows="10" placeholder="Paste your text here to get word count, character count, and more statistics..."></textarea>
+        <div class="input-section">
+            <div class="input-group">
+                <label for="text-input">
+                    <span>📝</span>
+                    Enter or paste your text:
+                </label>
+                <textarea id="text-input" placeholder="Paste your text here to get comprehensive statistics...&#10;&#10;Example:&#10;The quick brown fox jumps over the lazy dog. This is a sample text to demonstrate the word counter functionality. You can paste any amount of text here and get instant analysis.&#10;&#10;Features include:&#10;• Word count and character count&#10;• Sentence and paragraph analysis&#10;• Reading time estimation&#10;• Word frequency analysis&#10;• Text insights and recommendations"></textarea>
+            </div>
             
+            <div class="input-controls">
+                <button class="input-btn" onclick="clearText()">
+                    <span>🗑️</span>
+                    Clear Text
+                </button>
+                <button class="input-btn" onclick="loadSampleText()">
+                    <span>📖</span>
+                    Load Sample
+                </button>
+                <button class="input-btn" onclick="copyText()">
+                    <span>📋</span>
+                    Copy Text
+                </button>
+                <button class="input-btn primary" onclick="exportStats()">
+                    <span>📊</span>
+                    Export Stats
+                </button>
+            </div>
+        </div>
+
+        <div class="stats-section">
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-number" id="word-count">0</div>
                     <div class="stat-label">Words</div>
+                    <div class="stat-change" id="word-change"></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="char-count">0</div>
                     <div class="stat-label">Characters</div>
+                    <div class="stat-change" id="char-change"></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="char-no-spaces">0</div>
                     <div class="stat-label">Characters (no spaces)</div>
+                    <div class="stat-change" id="char-no-spaces-change"></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="sentence-count">0</div>
                     <div class="stat-label">Sentences</div>
+                    <div class="stat-change" id="sentence-change"></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="paragraph-count">0</div>
                     <div class="stat-label">Paragraphs</div>
+                    <div class="stat-change" id="paragraph-change"></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="reading-time">0</div>
                     <div class="stat-label">Reading Time (min)</div>
+                    <div class="stat-change" id="reading-time-change"></div>
                 </div>
+            </div>
+        </div>
+
+        <div class="analysis-section">
+            <h2 style="text-align: center; color: #495057; margin-bottom: 2rem;">📊 Text Analysis & Insights</h2>
+            <div class="analysis-grid">
+                <div class="analysis-item">
+                    <h3><span>📈</span> Text Complexity</h3>
+                    <p id="complexity-text">Enter text to analyze complexity</p>
+                </div>
+                <div class="analysis-item">
+                    <h3><span>🎯</span> Writing Style</h3>
+                    <p id="style-text">Enter text to analyze writing style</p>
+                </div>
+                <div class="analysis-item">
+                    <h3><span>📝</span> Recommendations</h3>
+                    <p id="recommendations-text">Enter text to get writing tips</p>
+                </div>
+                <div class="analysis-item">
+                    <h3><span>🔍</span> Key Insights</h3>
+                    <p id="insights-text">Enter text to discover insights</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="word-frequency" id="word-frequency-section" style="display: none;">
+            <h3>🔤 Most Common Words</h3>
+            <div class="frequency-list" id="frequency-list"></div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-links">
+                <a href="../about.html">About</a>
+                <a href="../privacy.html">Privacy</a>
+                <a href="../contact.html">Contact</a>
+                <a href="../faq.html">FAQ</a>
+            </div>
+            <div class="footer-copyright">
+                © 2024 PDFINDI. All rights reserved. Made with ❤️ for India.
             </div>
         </div>
     </div>
 
     <script>
+        // Word Counter functionality
         const textInput = document.getElementById('text-input');
         const wordCount = document.getElementById('word-count');
         const charCount = document.getElementById('char-count');
@@ -118,37 +541,218 @@
         const sentenceCount = document.getElementById('sentence-count');
         const paragraphCount = document.getElementById('paragraph-count');
         const readingTime = document.getElementById('reading-time');
+        
+        // Previous values for change indicators
+        let previousStats = {
+            words: 0,
+            chars: 0,
+            charsNoSpaces: 0,
+            sentences: 0,
+            paragraphs: 0,
+            readingTime: 0
+        };
+        
+        // Sample text for demonstration
+        const sampleText = `The quick brown fox jumps over the lazy dog. This classic pangram contains every letter of the English alphabet at least once.
 
+Writing is a skill that improves with practice. Whether you're crafting an essay, composing an email, or creating content for your website, understanding your text's structure and complexity is crucial.
+
+This word counter tool provides comprehensive analysis including word count, character count, sentence structure, and reading time estimation. It's perfect for students, writers, content creators, and anyone who wants to improve their writing.
+
+Remember: Good writing is clear, concise, and engaging. Use this tool to analyze your text and identify areas for improvement.`;
+        
         function updateStats() {
             const text = textInput.value;
             
-            // Word count
-            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-            wordCount.textContent = words;
+            // Calculate current stats
+            const currentStats = {
+                words: text.trim() ? text.trim().split(/\s+/).length : 0,
+                chars: text.length,
+                charsNoSpaces: text.replace(/\s/g, '').length,
+                sentences: text.match(/[^.!?]+[.!?\n]+/g) || [],
+                paragraphs: text.split(/\n\s*\n/).filter(p => p.trim().length > 0),
+                readingTime: 0
+            };
             
-            // Character count
-            charCount.textContent = text.length;
+            currentStats.sentences = currentStats.sentences.length;
+            currentStats.paragraphs = currentStats.paragraphs.length || (text.trim() ? 1 : 0);
+            currentStats.readingTime = Math.ceil(currentStats.words / 200); // Average 200 words per minute
             
-            // Character count (no spaces)
-            charNoSpaces.textContent = text.replace(/\s/g, '').length;
+            // Update display
+            wordCount.textContent = currentStats.words;
+            charCount.textContent = currentStats.chars;
+            charNoSpaces.textContent = currentStats.charsNoSpaces;
+            sentenceCount.textContent = currentStats.sentences;
+            paragraphCount.textContent = currentStats.paragraphs;
+            readingTime.textContent = currentStats.readingTime;
             
-            // Sentence count
-            const sentences = text.match(/[^.!?]+[.!?\n]+/g) || [];
-            sentenceCount.textContent = sentences.length;
+            // Update change indicators
+            updateChangeIndicator('word-change', currentStats.words, previousStats.words);
+            updateChangeIndicator('char-change', currentStats.chars, previousStats.chars);
+            updateChangeIndicator('char-no-spaces-change', currentStats.charsNoSpaces, previousStats.charsNoSpaces);
+            updateChangeIndicator('sentence-change', currentStats.sentences, previousStats.sentences);
+            updateChangeIndicator('paragraph-change', currentStats.paragraphs, previousStats.paragraphs);
+            updateChangeIndicator('reading-time-change', currentStats.readingTime, previousStats.readingTime);
             
-            // Paragraph count
-            const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0);
-            paragraphCount.textContent = paragraphs.length || (text.trim() ? 1 : 0);
+            // Update analysis
+            updateAnalysis(currentStats);
             
-            // Reading time (average 200 words per minute)
-            const readingTimeMinutes = Math.ceil(words / 200);
-            readingTime.textContent = readingTimeMinutes;
+            // Update word frequency
+            updateWordFrequency(text);
+            
+            // Store current stats as previous
+            previousStats = { ...currentStats };
         }
-
+        
+        function updateChangeIndicator(elementId, current, previous) {
+            const element = document.getElementById(elementId);
+            if (current > previous) {
+                element.textContent = `+${current - previous}`;
+                element.style.color = '#28a745';
+            } else if (current < previous) {
+                element.textContent = `${current - previous}`;
+                element.style.color = '#dc3545';
+            } else {
+                element.textContent = '';
+            }
+        }
+        
+        function updateAnalysis(stats) {
+            // Text Complexity
+            let complexity = 'Simple';
+            if (stats.words > 1000) complexity = 'Complex';
+            else if (stats.words > 500) complexity = 'Moderate';
+            document.getElementById('complexity-text').textContent = `${complexity} text (${stats.words} words)`;
+            
+            // Writing Style
+            let style = 'Balanced';
+            if (stats.sentences > 0 && stats.words / stats.sentences > 25) style = 'Long sentences';
+            else if (stats.sentences > 0 && stats.words / stats.sentences < 10) style = 'Short sentences';
+            document.getElementById('style-text').textContent = `${style} (avg: ${stats.sentences > 0 ? Math.round(stats.words / stats.sentences) : 0} words/sentence)`;
+            
+            // Recommendations
+            let recommendations = 'Good text structure';
+            if (stats.paragraphs === 1 && stats.words > 200) recommendations = 'Consider breaking into paragraphs';
+            if (stats.sentences > 0 && stats.words / stats.sentences > 30) recommendations = 'Try shorter sentences for clarity';
+            document.getElementById('recommendations-text').textContent = recommendations;
+            
+            // Key Insights
+            let insights = 'Text is well-balanced';
+            if (stats.words < 50) insights = 'Very short text - consider adding more content';
+            else if (stats.words > 2000) insights = 'Long text - consider breaking into sections';
+            document.getElementById('insights-text').textContent = insights;
+        }
+        
+        function updateWordFrequency(text) {
+            if (!text.trim()) {
+                document.getElementById('word-frequency-section').style.display = 'none';
+                return;
+            }
+            
+            // Count word frequency
+            const words = text.toLowerCase().match(/\b\w+\b/g) || [];
+            const frequency = {};
+            
+            words.forEach(word => {
+                if (word.length > 2) { // Only count words longer than 2 characters
+                    frequency[word] = (frequency[word] || 0) + 1;
+                }
+            });
+            
+            // Sort by frequency and get top 10
+            const sortedWords = Object.entries(frequency)
+                .sort(([,a], [,b]) => b - a)
+                .slice(0, 10);
+            
+            if (sortedWords.length > 0) {
+                const frequencyList = document.getElementById('frequency-list');
+                frequencyList.innerHTML = sortedWords.map(([word, count]) => `
+                    <div class="frequency-item">
+                        <span class="frequency-word">${word}</span>
+                        <span class="frequency-count">${count}</span>
+                    </div>
+                `).join('');
+                document.getElementById('word-frequency-section').style.display = 'block';
+            } else {
+                document.getElementById('word-frequency-section').style.display = 'none';
+            }
+        }
+        
+        function clearText() {
+            textInput.value = '';
+            updateStats();
+        }
+        
+        function loadSampleText() {
+            textInput.value = sampleText;
+            updateStats();
+        }
+        
+        function copyText() {
+            if (textInput.value) {
+                navigator.clipboard.writeText(textInput.value).then(() => {
+                    alert('Text copied to clipboard!');
+                }).catch(() => {
+                    alert('Failed to copy text. Please select and copy manually.');
+                });
+            }
+        }
+        
+        function exportStats() {
+            const text = textInput.value;
+            if (!text.trim()) {
+                alert('Please enter some text first.');
+                return;
+            }
+            
+            const stats = {
+                text: text,
+                wordCount: wordCount.textContent,
+                charCount: charCount.textContent,
+                charNoSpaces: charNoSpaces.textContent,
+                sentenceCount: sentenceCount.textContent,
+                paragraphCount: paragraphCount.textContent,
+                readingTime: readingTime.textContent,
+                timestamp: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(stats, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `word-count-analysis-${Date.now()}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // Event listeners
         textInput.addEventListener('input', updateStats);
         
-        // Initial update
+        // Initialize
         updateStats();
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    loadSampleText();
+                } else if (e.key === 'Delete') {
+                    e.preventDefault();
+                    clearText();
+                }
+            }
+        });
+        
+        // Back to Tools button functionality
+        document.getElementById('back-to-tools-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = '../index.html#utility-tools-section';
+        });
     </script>
+    <script src="../modern-header.js"></script>
 </body>
 </html>

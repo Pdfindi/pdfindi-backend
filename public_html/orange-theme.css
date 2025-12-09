@@ -1,0 +1,241 @@
+/* Orange Theme Override - Minimal changes to replace tricolor with orange */
+
+:root {
+    --accent-primary: #FF6B35 !important;
+    --accent-saffron: #FF6B35 !important;
+    --accent-green: #FF6B35 !important;
+    --accent-navy: #FF6B35 !important;
+    --primary-orange: #FF6B35 !important;
+    --primary-hover: #FF5722 !important;
+}
+
+/* Logo icon - solid orange instead of tricolor gradient */
+.logo-icon {
+    background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%) !important;
+    color: white !important;
+    border-color: #FF6B35 !important;
+}
+
+.logo-icon::after {
+    display: none !important;
+}
+
+/* Logo text - orange gradient instead of saffron-green */
+.logo-text .brand-name {
+    background: linear-gradient(135deg, #FF6B35, #FF8C42) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+}
+
+/* Made in India badge - orange theme */
+.made-in-india-badge {
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.15), rgba(255, 140, 66, 0.15)) !important;
+    border: 1px solid rgba(255, 107, 53, 0.3) !important;
+    color: #FF6B35 !important;
+}
+
+/* Nav links active state - orange instead of gradient */
+.nav-link.active,
+.nav-link:hover {
+    background: linear-gradient(135deg, #FF6B35, #FF8C42) !important;
+}
+
+/* Made in India tag color */
+.made-in-india-tag {
+    color: #FF6B35 !important;
+}
+
+/* Hero section - clean light orange background */
+.hero-section {
+    background: #FFF5F0 !important;
+    border: none !important;
+    color: #374151 !important;
+    box-shadow: none !important;
+}
+
+.hero-section::before {
+    display: none !important;
+}
+
+.hero-section h1 {
+    color: #1F2937 !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: #1F2937 !important;
+    background-clip: unset !important;
+    text-shadow: none !important;
+}
+
+.hero-section p {
+    color: #6B7280 !important;
+}
+
+/* Professional stats boxes */
+.hero-stats {
+    background: white !important;
+    padding: 2rem !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    margin: 2rem auto !important;
+    max-width: 800px !important;
+}
+
+.stat-item {
+    background: white !important;
+    border: 1px solid #E5E7EB !important;
+    box-shadow: none !important;
+}
+
+.stat-item:hover {
+    border-color: #FF6B35 !important;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.15) !important;
+}
+
+.stat-item .stat-number,
+.stat-number {
+    color: #FF6B35 !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: #FF6B35 !important;
+    background-clip: unset !important;
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+}
+
+.stat-item .stat-label,
+.stat-label {
+    color: #6B7280 !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+}
+
+/* Stats section title */
+.stat-item .stat-number {
+    color: #FF6B35 !important;
+}
+
+/* Buttons - orange gradient */
+.red-button {
+    background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%) !important;
+    box-shadow: 0 4px 16px rgba(255, 107, 53, 0.4) !important;
+}
+
+.red-button:hover {
+    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.6) !important;
+}
+
+/* Section headers */
+.section-header h2::after {
+    border: 2px solid #FF6B35 !important;
+}
+
+/* Tool cards hover - orange accent */
+.tool-card:hover {
+    border-color: #FF6B35 !important;
+}
+
+.tool-card:hover .tool-icon {
+    background: linear-gradient(135deg, #FF6B35, #FF8C42) !important;
+}
+
+/* Tool pages - light orange hero banner */
+.tool-header {
+    background: #FFF5F0 !important;
+    color: #1F2937 !important;
+}
+
+.tool-header h1 {
+    color: #1F2937 !important;
+    text-shadow: none !important;
+}
+
+.back-btn:hover {
+    color: #FF6B35 !important;
+    background: rgba(255, 107, 53, 0.1) !important;
+}
+
+/* Override body background for tool pages */
+body {
+    background: #F9FAFB !important;
+}
+
+/* Override CSS variables in tool pages */
+:root {
+    --primary-gradient: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%) !important;
+    --success-gradient: linear-gradient(135deg, #10B981 0%, #34d399 100%) !important;
+    --warning-gradient: linear-gradient(135deg, #FFB84D 0%, #FF8C42 100%) !important;
+    --error-gradient: linear-gradient(135deg, #FF6B35 0%, #FF5722 100%) !important;
+}
+
+/* Clean slate - remove problematic backgrounds but restore what we need */
+body {
+    background: #F9FAFB !important;
+}
+
+.hero-section {
+    background: #FFF5F0 !important;
+}
+
+.hero-stats {
+    background: white !important;
+}
+
+.stat-item {
+    background: transparent !important;
+}
+
+.red-button,
+.nav-link.active,
+.nav-link:hover {
+    background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%) !important;
+}
+
+.logo-icon {
+    background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%) !important;
+}
+
+.logo-text .brand-name {
+    background: linear-gradient(135deg, #FF6B35, #FF8C42) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+.made-in-india-badge {
+    background: rgba(255, 107, 53, 0.1) !important;
+}
+
+.tool-header {
+    background: #FFF5F0 !important;
+}
+
+/* Tool page containers */
+.tool-page {
+    background: white !important;
+}
+
+/* Upload areas and cards */
+.upload-zone,
+.file-card,
+.tool-card,
+.benefit-card {
+    background: white !important;
+}
+
+/* Sections */
+.tools-section,
+.section {
+    background: transparent !important;
+}
+
+/* Ensure text is readable */
+h1, h2, h3, h4, h5, h6 {
+    color: #1F2937 !important;
+    background: none !important;
+    -webkit-text-fill-color: #1F2937 !important;
+    text-shadow: none !important;
+}
+
+p, span, div {
+    color: inherit !important;
+}

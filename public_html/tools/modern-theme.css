@@ -1,0 +1,437 @@
+/* Modern Theme for PDFINDI - Inspired by iLovePDF */
+/* Clean, professional design with orange as primary color */
+
+:root {
+    /* Primary Colors - Orange theme like iLovePDF's red */
+    --primary-color: #FF6B35;
+    --primary-hover: #FF5722;
+    --primary-light: #FFE5DC;
+    --primary-dark: #E85D2C;
+    
+    /* Neutrals */
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    --color-gray-50: #F9FAFB;
+    --color-gray-100: #F3F4F6;
+    --color-gray-200: #E5E7EB;
+    --color-gray-300: #D1D5DB;
+    --color-gray-400: #9CA3AF;
+    --color-gray-500: #6B7280;
+    --color-gray-600: #4B5563;
+    --color-gray-700: #374151;
+    --color-gray-800: #1F2937;
+    --color-gray-900: #111827;
+    
+    /* Status Colors */
+    --success-color: #10B981;
+    --success-light: #D1FAE5;
+    --warning-color: #F59E0B;
+    --warning-light: #FEF3C7;
+    --error-color: #EF4444;
+    --error-light: #FEE2E2;
+    --info-color: #3B82F6;
+    --info-light: #DBEAFE;
+    
+    /* Backgrounds */
+    --bg-main: #FFFFFF;
+    --bg-secondary: #F9FAFB;
+    --bg-tertiary: #F3F4F6;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-primary: 0 10px 20px rgba(255, 107, 53, 0.25);
+    
+    /* Typography */
+    --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    --font-size-xs: 0.75rem;    /* 12px */
+    --font-size-sm: 0.875rem;   /* 14px */
+    --font-size-base: 1rem;     /* 16px */
+    --font-size-lg: 1.125rem;   /* 18px */
+    --font-size-xl: 1.25rem;    /* 20px */
+    --font-size-2xl: 1.5rem;    /* 24px */
+    --font-size-3xl: 1.875rem;  /* 30px */
+    --font-size-4xl: 2.25rem;   /* 36px */
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;   /* 4px */
+    --spacing-sm: 0.5rem;    /* 8px */
+    --spacing-md: 1rem;      /* 16px */
+    --spacing-lg: 1.5rem;    /* 24px */
+    --spacing-xl: 2rem;      /* 32px */
+    --spacing-2xl: 3rem;     /* 48px */
+    
+    /* Border Radius */
+    --radius-sm: 0.375rem;   /* 6px */
+    --radius-md: 0.5rem;     /* 8px */
+    --radius-lg: 0.75rem;    /* 12px */
+    --radius-xl: 1rem;       /* 16px */
+    --radius-full: 9999px;
+    
+    /* Transitions */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset & Base Styles */
+* {
+    font-family: var(--font-main);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background: var(--bg-secondary);
+    color: var(--color-gray-700);
+    line-height: 1.6;
+}
+
+/* Tool Page Container */
+.tool-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-md);
+}
+
+/* Tool Header */
+.tool-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.tool-header h1 {
+    color: var(--color-gray-900) !important;
+    font-size: var(--font-size-4xl) !important;
+    font-weight: 700 !important;
+    margin-bottom: var(--spacing-md) !important;
+    text-shadow: none !important;
+    -webkit-text-stroke: 0 !important;
+}
+
+.tool-header p {
+    color: var(--color-gray-600);
+    font-size: var(--font-size-lg);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.tool-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    filter: none !important;
+    background: none !important;
+    background-clip: unset !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+}
+
+/* Back Button - Clean Design */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-white) !important;
+    border: 1px solid var(--color-gray-300) !important;
+    border-radius: var(--radius-lg);
+    color: var(--color-gray-700) !important;
+    font-weight: 500 !important;
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+    text-shadow: none !important;
+}
+
+.back-btn:hover {
+    background: var(--color-gray-50) !important;
+    border-color: var(--color-gray-400) !important;
+    transform: translateX(-4px) !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+/* Primary Buttons */
+.btn-primary,
+.upload-btn,
+.process-btn,
+.red-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-xl);
+    background: var(--primary-color) !important;
+    border: none !important;
+    border-radius: var(--radius-lg);
+    color: var(--color-white) !important;
+    font-weight: 600 !important;
+    font-size: var(--font-size-base);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-md);
+    text-shadow: none !important;
+}
+
+.btn-primary:hover,
+.upload-btn:hover,
+.process-btn:hover,
+.red-button:hover {
+    background: var(--primary-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-primary) !important;
+}
+
+.btn-primary:active,
+.upload-btn:active,
+.process-btn:active {
+    transform: translateY(0);
+}
+
+.btn-primary:disabled,
+.upload-btn:disabled,
+.process-btn:disabled {
+    background: var(--color-gray-300) !important;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none !important;
+}
+
+/* Secondary Buttons */
+.btn-secondary {
+    background: var(--color-white) !important;
+    border: 1px solid var(--color-gray-300) !important;
+    color: var(--color-gray-700) !important;
+}
+
+.btn-secondary:hover {
+    background: var(--color-gray-50) !important;
+    border-color: var(--color-gray-400) !important;
+}
+
+/* Upload Area */
+.upload-area {
+    border: 2px dashed var(--color-gray-300) !important;
+    border-radius: var(--radius-xl);
+    background: var(--color-white) !important;
+    padding: var(--spacing-2xl);
+    text-align: center;
+    transition: all var(--transition-base);
+}
+
+.upload-area:hover {
+    border-color: var(--primary-color) !important;
+    background: var(--primary-light) !important;
+}
+
+.upload-area.drag-over {
+    border-color: var(--primary-color) !important;
+    background: var(--primary-light) !important;
+    border-style: solid !important;
+}
+
+/* File Cards */
+.file-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200) !important;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+}
+
+.file-card:hover {
+    border-color: var(--primary-color) !important;
+    box-shadow: var(--shadow-md) !important;
+    transform: translateY(-2px);
+}
+
+/* Progress Bars */
+.progress-container {
+    background: var(--color-gray-200);
+    border-radius: var(--radius-full);
+    height: 8px;
+    overflow: hidden;
+}
+
+.progress-fill,
+.progress-bar {
+    background: var(--primary-color) !important;
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width var(--transition-base);
+}
+
+/* Success Message */
+.success-message,
+.result-card {
+    background: var(--success-light) !important;
+    border: 1px solid var(--success-color);
+    border-left: 4px solid var(--success-color) !important;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    color: var(--color-gray-800);
+}
+
+/* Error Message */
+.error-message {
+    background: var(--error-light) !important;
+    border: 1px solid var(--error-color);
+    border-left: 4px solid var(--error-color) !important;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    color: var(--color-gray-800);
+}
+
+/* Warning Message */
+.warning-message {
+    background: var(--warning-light) !important;
+    border: 1px solid var(--warning-color);
+    border-left: 4px solid var(--warning-color) !important;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    color: var(--color-gray-800);
+}
+
+/* Info Message */
+.info-message {
+    background: var(--info-light) !important;
+    border: 1px solid var(--info-color);
+    border-left: 4px solid var(--info-color) !important;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    color: var(--color-gray-800);
+}
+
+/* Download Button */
+.download-btn {
+    background: var(--success-color) !important;
+    border: none !important;
+    color: var(--color-white) !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
+}
+
+.download-btn:hover {
+    background: #059669 !important;
+    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.25) !important;
+}
+
+/* Input Fields */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="color"],
+select,
+textarea {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    transition: all var(--transition-base);
+    background: var(--color-white);
+    color: var(--color-gray-900);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Labels */
+label {
+    display: block;
+    font-weight: 500;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Settings Panel */
+.settings-panel,
+.options-panel {
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Page Preview */
+.page-preview {
+    border: 2px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-white);
+    box-shadow: var(--shadow-sm);
+}
+
+.page-preview:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+}
+
+/* Loading Spinner */
+.spinner {
+    border: 3px solid var(--color-gray-200);
+    border-top-color: var(--primary-color);
+    border-radius: var(--radius-full);
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Checkbox & Radio */
+input[type="checkbox"],
+input[type="radio"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+}
+
+/* Tool Navigator - If exists */
+.tool-navigator {
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+}
+
+/* Remove old theme gradients and shadows */
+.tool-card::before {
+    display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tool-container {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+    
+    .tool-header h1 {
+        font-size: var(--font-size-3xl) !important;
+    }
+    
+    .btn-primary,
+    .upload-btn,
+    .process-btn {
+        width: 100%;
+    }
+}
