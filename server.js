@@ -794,6 +794,9 @@ app.post('/api/protect-pdf', upload.single('file'), async (req, res) => {
     console.log('Calling Cloudmersive API...');
     console.log('API URL: https://api.cloudmersive.com/convert/edit/pdf/encrypt/set-permissions');
     console.log('API Key (first 10 chars):', CLOUDMERSIVE_API_KEY.substring(0, 10) + '...');
+    console.log('File size:', req.file.buffer.length, 'bytes');
+    console.log('User Password:', userPassword ? '***' : 'NOT SET');
+    console.log('Owner Password:', ownerPassword ? '***' : (userPassword ? 'USING USER PASSWORD' : 'DEFAULT'));
     
     // Prepare headers - all parameters go in headers for this endpoint
     const headers = {
@@ -811,6 +814,12 @@ app.post('/api/protect-pdf', upload.single('file'), async (req, res) => {
       'allowDegradedPrinting': 'true'
     };
     
+    console.log('Headers being sent (passwords hidden):');
+    console.log('- encryptionKeyLength:', headers['encryptionKeyLength']);
+    console.log('- allowPrinting:', headers['allowPrinting']);
+    console.log('- allowFormFilling:', headers['allowFormFilling']);
+    console.log('- allowEditing:', headers['allowEditing']);
+    
     // Call Cloudmersive PDF encryption API with permissions
     const response = await axios.post(
       'https://api.cloudmersive.com/convert/edit/pdf/encrypt/set-permissions',
@@ -827,19 +836,25 @@ app.post('/api/protect-pdf', upload.single('file'), async (req, res) => {
 
     console.log('API Response Status:', response.status);
     console.log('API Response Content-Type:', response.headers['content-type']);
-    console.log('API Response Size:', response.data.byteLength, 'bytes');
-
+    
     // Check if response is actually a PDF
     if (response.status !== 200) {
       const errorText = Buffer.from(response.data).toString('utf8');
-      console.error('API Error Response:', errorText.substring(0, 1000));
-      throw new Error(`Cloudmersive API error (${response.status}): ${errorText.substring(0, 200)}`);
+      console.error('API Error Response Status:', response.status);
+      console.error('API Error Response (first 1000 chars):', errorText.substring(0, 1000));
+      throw new Error(`Cloudmersive API returned status ${response.status}: ${errorText.substring(0, 200)}`);
     }
     
-    if (response.headers['content-type'] && !response.headers['content-type'].includes('pdf')) {
+    // Check content type
+    const contentType = response.headers['content-type'] || '';
+    console.log('Response Content-Type:', contentType);
+    console.log('Response Size:', response.data.byteLength, 'bytes');
+    
+    if (!contentType.includes('pdf') && !contentType.includes('octet-stream')) {
       const errorHtml = Buffer.from(response.data).toString('utf8');
-      console.error('API returned HTML instead of PDF:', errorHtml.substring(0, 500));
-      throw new Error('API returned non-PDF response. Check API key and endpoint.');
+      console.error('Non-PDF response received. Content-Type:', contentType);
+      console.error('Response body (first 500 chars):', errorHtml.substring(0, 500));
+      throw new Error(`API returned ${contentType} instead of PDF. Response: ${errorHtml.substring(0, 100)}`);
     }
 
     console.log('✅ PDF protection successful');
