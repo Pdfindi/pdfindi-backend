@@ -755,7 +755,7 @@
                 <p>Set strong passwords to secure your PDF document</p>
                 
                 <div class="input-group">
-                    <label for="user-password">User Password (Required to open PDF)</label>
+                    <label for="user-password">Password (Required to open PDF)</label>
                     <div class="password-input-group">
                         <input type="password" id="user-password" placeholder="Enter password to open PDF">
                         <button type="button" class="password-toggle" onclick="togglePassword('user-password')">👁️</button>
@@ -765,21 +765,9 @@
                     </div>
                     <div class="strength-text" id="user-strength-text">Password strength will appear here</div>
                 </div>
-
-                <div class="input-group">
-                    <label for="owner-password">Owner Password (Required to modify permissions)</label>
-                    <div class="password-input-group">
-                        <input type="password" id="owner-password" placeholder="Enter password to modify permissions">
-                        <button type="button" class="password-toggle" onclick="togglePassword('owner-password')">👁️</button>
-                    </div>
-                    <div class="strength-indicator">
-                        <div class="strength-bar" id="owner-strength-bar"></div>
-                    </div>
-                    <div class="strength-text" id="owner-strength-text">Password strength will appear here</div>
-                </div>
             </div>
 
-            <div class="settings-section">
+            <div class="settings-section" style="display: none;">
                 <h4>⚙️ Document Permissions</h4>
                 <p>Control what users can do with your protected PDF</p>
                 
@@ -874,11 +862,8 @@
             currentStatus: document.getElementById('current-status'),
             protectionSettings: document.getElementById('protection-settings'),
             userPassword: document.getElementById('user-password'),
-            ownerPassword: document.getElementById('owner-password'),
             userStrengthBar: document.getElementById('user-strength-bar'),
-            ownerStrengthBar: document.getElementById('owner-strength-bar'),
             userStrengthText: document.getElementById('user-strength-text'),
-            ownerStrengthText: document.getElementById('owner-strength-text'),
             allowPrinting: document.getElementById('allow-printing'),
             allowCopying: document.getElementById('allow-copying'),
             allowModifying: document.getElementById('allow-modifying'),
@@ -991,10 +976,6 @@
             updatePasswordStrength(e.target.value, elements.userStrengthBar, elements.userStrengthText);
         });
 
-        elements.ownerPassword.addEventListener('input', (e) => {
-            updatePasswordStrength(e.target.value, elements.ownerStrengthBar, elements.ownerStrengthText);
-        });
-
         function handleFileSelect(file) {
             if (file.type !== 'application/pdf') {
                 showError('Please select a valid PDF file.');
@@ -1033,20 +1014,14 @@
             }
 
             const userPassword = elements.userPassword.value;
-            const ownerPassword = elements.ownerPassword.value;
 
-            if (!userPassword && !ownerPassword) {
-                showError('Please set at least one password for protection.');
+            if (!userPassword) {
+                showError('Please enter a password to protect the PDF.');
                 return;
             }
 
-            if (userPassword && userPassword.length < 6) {
-                showError('User password must be at least 6 characters long.');
-                return;
-            }
-
-            if (ownerPassword && ownerPassword.length < 6) {
-                showError('Owner password must be at least 6 characters long.');
+            if (userPassword.length < 6) {
+                showError('Password must be at least 6 characters long.');
                 return;
             }
 
@@ -1058,18 +1033,7 @@
                 // Prepare form data for backend API
                 const formData = new FormData();
                 formData.append('file', uploadedPDF);
-                formData.append('userPassword', userPassword || '');
-                formData.append('ownerPassword', ownerPassword || '');
-                
-                // Permissions
-                const permissions = {
-                    allowPrinting: elements.allowPrinting.checked,
-                    allowFormFill: elements.allowForms.checked,
-                    allowEditingAnnotations: elements.allowAnnotations.checked,
-                    allowContentExtraction: elements.allowCopying.checked,
-                    allowEditing: elements.allowModifying.checked
-                };
-                formData.append('permissions', JSON.stringify(permissions));
+                formData.append('userPassword', userPassword);
                 formData.append('encryptionKeyLength', elements.encryptionLevel.value);
                 
                 elements.processingText.textContent = 'Encrypting PDF with password...';
@@ -1132,16 +1096,8 @@
             
             elements.fileInput.value = '';
             elements.userPassword.value = '';
-            elements.ownerPassword.value = '';
             elements.userStrengthBar.style.width = '0%';
-            elements.ownerStrengthBar.style.width = '0%';
             elements.userStrengthText.textContent = 'Password strength will appear here';
-            elements.ownerStrengthText.textContent = 'Password strength will appear here';
-            
-            // Reset permissions
-            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                checkbox.checked = true;
-            });
             
             elements.encryptionLevel.value = '256';
         }
