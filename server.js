@@ -792,37 +792,32 @@ app.post('/api/protect-pdf', upload.single('file'), async (req, res) => {
     });
 
     console.log('Calling Cloudmersive API...');
-    console.log('API URL: https://api.cloudmersive.com/convert/edit/pdf/encrypt/set-permissions');
+    console.log('API URL: https://api.cloudmersive.com/convert/edit/pdf/encrypt');
     console.log('API Key (first 10 chars):', CLOUDMERSIVE_API_KEY.substring(0, 10) + '...');
     console.log('File size:', req.file.buffer.length, 'bytes');
-    console.log('User Password:', userPassword ? '***' : 'NOT SET');
-    console.log('Owner Password:', ownerPassword ? '***' : (userPassword ? 'USING USER PASSWORD' : 'DEFAULT'));
+    console.log('User Password:', userPassword ? 'SET' : 'NOT SET');
+    console.log('Encryption Level:', encryptionKeyLength);
     
-    // Prepare headers - all parameters go in headers for this endpoint
+    // Prepare headers - simple encryption with just user password
     const headers = {
       ...formData.getHeaders(),
       'Apikey': CLOUDMERSIVE_API_KEY,
-      'ownerPassword': ownerPassword || userPassword || 'owner123', // Owner password is required
-      'userPassword': userPassword || '', // User password is optional
-      'encryptionKeyLength': encryptionKeyLength === '256' ? '256' : '128',
-      'allowPrinting': perms.allowPrinting !== false ? 'true' : 'false',
-      'allowDocumentAssembly': 'true',
-      'allowContentExtraction': perms.allowContentExtraction !== false ? 'true' : 'false',
-      'allowFormFilling': perms.allowFormFill !== false ? 'true' : 'false',
-      'allowEditing': perms.allowEditing !== false ? 'true' : 'false',
-      'allowAnnotations': perms.allowEditingAnnotations !== false ? 'true' : 'false',
-      'allowDegradedPrinting': 'true'
+      'encryptionKeyLength': encryptionKeyLength === '256' ? '256' : '128'
     };
     
-    console.log('Headers being sent (passwords hidden):');
-    console.log('- encryptionKeyLength:', headers['encryptionKeyLength']);
-    console.log('- allowPrinting:', headers['allowPrinting']);
-    console.log('- allowFormFilling:', headers['allowFormFilling']);
-    console.log('- allowEditing:', headers['allowEditing']);
+    // Add passwords as headers (both are optional for basic encryption)
+    if (userPassword) {
+      headers['userPassword'] = userPassword;
+    }
+    if (ownerPassword) {
+      headers['ownerPassword'] = ownerPassword;
+    }
     
-    // Call Cloudmersive PDF encryption API with permissions
+    console.log('Calling basic PDF encryption endpoint...');
+    
+    // Call Cloudmersive PDF encryption API (basic - just password protection)
     const response = await axios.post(
-      'https://api.cloudmersive.com/convert/edit/pdf/encrypt/set-permissions',
+      'https://api.cloudmersive.com/convert/edit/pdf/encrypt',
       formData,
       {
         headers: headers,
