@@ -750,7 +750,7 @@
             try {
                 // Use the clean convertPDFToWord function from script.js
                 const result = await convertPDFToWord(selectedFile);
-                showSuccess(result.message);
+                showSuccess(result.message + ' Please review the document for any formatting issues.');
                 
                 // Reset the button
                 hideLoading(elements.convertBtn, originalText);
