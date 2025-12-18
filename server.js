@@ -879,6 +879,91 @@ app.post('/api/protect-pdf', upload.single('file'), async (req, res) => {
   }
 });
 
+// Unlock PDF endpoint
+app.post('/api/unlock-pdf', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const { password } = req.body;
+    
+    if (!password) {
+      return res.status(400).json({ error: 'Password is required' });
+    }
+
+    console.log('📂 Unlocking PDF:', {
+      filename: req.file.originalname,
+      size: req.file.size,
+      hasPassword: !!password
+    });
+
+    // Prepare form data for Cloudmersive API
+    const form = new FormData();
+    form.append('inputFile', req.file.buffer, {
+      filename: req.file.originalname,
+      contentType: 'application/pdf'
+    });
+
+    console.log('🔓 Calling Cloudmersive decrypt API...');
+
+    const response = await axios.post(
+      'https://api.cloudmersive.com/convert/edit/pdf/decrypt',
+      form,
+      {
+        headers: {
+          'Apikey': CLOUDMERSIVE_API_KEY,
+          'password': password,
+          ...form.getHeaders()
+        },
+        responseType: 'arraybuffer',
+        maxBodyLength: Infinity,
+        maxContentLength: Infinity
+      }
+    );
+
+    console.log('📤 Cloudmersive API response:', {
+      status: response.status,
+      contentType: response.headers['content-type'],
+      dataLength: response.data.length
+    });
+
+    // Check if response is actually a PDF
+    const contentType = response.headers['content-type'];
+    if (!contentType || (!contentType.includes('application/pdf') && !contentType.includes('application/octet-stream'))) {
+      const errorHtml = Buffer.from(response.data).toString('utf8');
+      console.error('Non-PDF response received. Content-Type:', contentType);
+      console.error('Response body (first 500 chars):', errorHtml.substring(0, 500));
+      throw new Error(`API returned ${contentType} instead of PDF. Response: ${errorHtml.substring(0, 100)}`);
+    }
+
+    console.log('✅ PDF unlock successful');
+    
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': `attachment; filename="${req.file.originalname.replace('.pdf', '_unlocked.pdf')}"`
+    });
+    
+    res.send(Buffer.from(response.data));
+
+  } catch (error) {
+    console.error('❌ PDF unlock failed:', error.response?.data || error.message);
+    
+    if (error.response) {
+      return res.status(error.response.status).json({
+        error: 'PDF unlock failed',
+        details: error.response.data?.Message || error.message,
+        statusCode: error.response.status
+      });
+    }
+    
+    res.status(500).json({
+      error: 'PDF unlock failed',
+      details: error.message
+    });
+  }
+});
+
 // Root endpoint - Backend info page
 app.get('/', (req, res) => {
   res.json({

@@ -666,15 +666,30 @@
             try {
                 showProcessing('Unlocking PDF...');
                 
-                // Try to load PDF with password
-                const pdfDoc = await PDFLib.PDFDocument.load(uploadedPDFBytes, { password });
-                const pageCount = pdfDoc.getPageCount();
-                
-                elements.totalPages.textContent = pageCount;
-                
-                // Save the unlocked PDF
-                const unlockedBytes = await pdfDoc.save();
+                // Create FormData to send to backend
+                const formData = new FormData();
+                formData.append('file', new Blob([uploadedPDFBytes], { type: 'application/pdf' }), uploadedFileName);
+                formData.append('password', password);
+
+                // Call backend API
+                const response = await fetch('https://pdfindi-backend.onrender.com/api/unlock-pdf', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.details || errorData.error || 'Failed to unlock PDF');
+                }
+
+                // Get the unlocked PDF
+                const unlockedBytes = await response.arrayBuffer();
                 unlockedPDFBlob = new Blob([unlockedBytes], { type: 'application/pdf' });
+                
+                // Count pages using pdf-lib
+                const pdfDoc = await PDFLib.PDFDocument.load(unlockedBytes);
+                const pageCount = pdfDoc.getPageCount();
+                elements.totalPages.textContent = pageCount;
                 
                 hideProcessing();
                 showSuccess();
