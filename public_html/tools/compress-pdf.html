@@ -662,6 +662,10 @@
             }
 
             pdfFile = file;
+            
+            // Hide upload zone when file is uploaded
+            elements.uploadZone.style.display = 'none';
+            
             showPDFInfo(file);
             calculateEstimatedSize(file.size);
         }
@@ -785,6 +789,9 @@
                     <button onclick="downloadPDF()" class="btn btn-primary" style="margin-top: 1rem;">
                         <span>📥</span> Download Compressed PDF
                     </button>
+                    <button onclick="resetTool()" class="btn" style="margin-top: 1rem; margin-left: 1rem; background: #6c757d;">
+                        <span>🔄</span> Compress Another PDF
+                    </button>
                 `;
 
                 console.log('📝 Success message HTML set');
@@ -819,6 +826,33 @@
             elements.errorMessage.style.display = 'block';
             elements.errorText.textContent = message;
             elements.successMessage.style.display = 'none';
+        }
+
+        function resetTool() {
+            // Reset variables
+            pdfFile = null;
+            selectedCompressionLevel = 'low';
+            
+            // Reset file input
+            elements.fileInput.value = '';
+            
+            // Show upload zone
+            elements.uploadZone.style.display = 'block';
+            
+            // Hide other sections
+            elements.pdfInfo.style.display = 'none';
+            elements.compressionSettings.style.display = 'none';
+            elements.successMessage.style.display = 'none';
+            elements.errorMessage.style.display = 'none';
+            elements.progressContainer.style.display = 'none';
+            
+            // Reset compression level selection
+            elements.compressionLevels.forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.querySelector('[data-level="low"]').classList.add('selected');
+            
+            console.log('🔄 Tool reset completed');
         }
 
         // Initialize when DOM is ready
