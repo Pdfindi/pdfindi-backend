@@ -470,34 +470,30 @@ app.post('/api/pdf-to-jpg', checkUsageLimits, upload.single('file'), async (req,
       contentType: 'application/pdf'
     });
 
-    // Call Cloudmersive PDF to JPG API (returns direct image data)
+    // Call Cloudmersive PDF to PNG API (returns all pages)
     const response = await axios.post(
-      'https://api.cloudmersive.com/convert/pdf/to/jpg',
+      'https://api.cloudmersive.com/convert/pdf/to/png/array',
       formData,
       {
         headers: {
           ...formData.getHeaders(),
           'Apikey': CLOUDMERSIVE_API_KEY
         },
-        responseType: 'arraybuffer',
-        timeout: 30000
+        responseType: 'json',
+        timeout: 60000
       }
     );
 
-    // Convert to base64 for frontend
-    const base64Data = Buffer.from(response.data).toString('base64');
-    const outputFilename = req.file.originalname.replace(/\.pdf$/i, '.jpg');
+    console.log(`✅ Conversion successful: ${response.data.PngResultPages?.length || 0} pages`);
 
-    console.log(`✅ Conversion successful: ${outputFilename}`);
-
+    // Return the result with page URLs
     res.json({
       success: true,
-      filename: outputFilename,
-      base64: base64Data,
-      originalSize: req.file.size,
-      convertedSize: response.data.length,
-      format: 'JPG',
-      message: 'PDF successfully converted to JPG image'
+      filename: req.file.originalname.replace(/\.pdf$/i, '.png'),
+      base64: Buffer.from(JSON.stringify(response.data)).toString('base64'),
+      pages: response.data.PngResultPages?.length || 0,
+      format: 'PNG',
+      message: `PDF successfully converted to ${response.data.PngResultPages?.length || 0} PNG image(s)`
     });
 
   } catch (error) {
@@ -505,11 +501,11 @@ app.post('/api/pdf-to-jpg', checkUsageLimits, upload.single('file'), async (req,
     
     if (error.response) {
       console.error('API Error Status:', error.response.status);
-      console.error('API Error Data:', error.response.data?.toString?.() || 'No details');
+      console.error('API Error Data:', error.response.data);
       
       return res.status(error.response.status).json({ 
         error: `Conversion API error: ${error.response.status}`,
-        details: error.response.data?.toString?.() || 'Unknown API error'
+        details: error.response.data || 'Unknown API error'
       });
     }
     
