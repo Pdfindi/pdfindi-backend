@@ -302,11 +302,11 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
     // Get compression level from request (default to medium)
     const compressionLevel = req.body.level || 'medium';
     const qualityMap = {
-      'low': '90',      // High quality, minimal compression
-      'medium': '60',   // Balanced
-      'high': '30'      // Maximum compression, lower quality
+      'low': 90,      // High quality, minimal compression
+      'medium': 60,   // Balanced
+      'high': 30      // Maximum compression, lower quality
     };
-    const quality = qualityMap[compressionLevel] || '60';
+    const quality = qualityMap[compressionLevel] || 60;
 
     console.log(`Compression settings: level=${compressionLevel}, quality=${quality}`);
 
@@ -317,15 +317,15 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
       contentType: 'application/pdf'
     });
 
-    // Use Cloudmersive PDF optimization API
+    // Use Cloudmersive PDF SetImageDPI API for compression
     const pdfResponse = await axios.post(
-      'https://api.cloudmersive.com/convert/edit/pdf/optimize',
+      'https://api.cloudmersive.com/convert/edit/pdf/optimize/set-image-dpi',
       formData,
       {
         headers: {
           ...formData.getHeaders(),
           'Apikey': CLOUDMERSIVE_API_KEY,
-          'quality': quality
+          'imageQuality': quality.toString()
         },
         responseType: 'arraybuffer',
         timeout: 60000,

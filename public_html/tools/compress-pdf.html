@@ -668,6 +668,20 @@
             
             showPDFInfo(file);
             calculateEstimatedSize(file.size);
+            loadPDFPages(file);
+        }
+
+        // Load PDF and count pages
+        async function loadPDFPages(file) {
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+                const pageCount = pdfDoc.getPageCount();
+                elements.totalPages.textContent = pageCount;
+            } catch (error) {
+                console.error('Error loading PDF pages:', error);
+                elements.totalPages.textContent = 'N/A';
+            }
         }
 
         // Show PDF information
