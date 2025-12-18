@@ -317,15 +317,15 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
       contentType: 'application/pdf'
     });
 
-    // Use Cloudmersive PDF SetImageDPI API for compression
+    // Use Cloudmersive PDF Reduce File Size API
     const pdfResponse = await axios.post(
-      'https://api.cloudmersive.com/convert/edit/pdf/optimize/set-image-dpi',
+      'https://api.cloudmersive.com/convert/edit/pdf/optimize/reduce-file-size',
       formData,
       {
         headers: {
           ...formData.getHeaders(),
           'Apikey': CLOUDMERSIVE_API_KEY,
-          'imageQuality': quality.toString()
+          'quality': quality.toString()
         },
         responseType: 'arraybuffer',
         timeout: 60000,
