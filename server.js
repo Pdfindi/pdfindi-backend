@@ -470,33 +470,60 @@ app.post('/api/pdf-to-jpg', checkUsageLimits, upload.single('file'), async (req,
       contentType: 'application/pdf'
     });
 
-    // Call Cloudmersive PDF to PNG API (first page only for now)
+    // Call Cloudmersive PDF to PNG array API to get all pages
     const response = await axios.post(
-      'https://api.cloudmersive.com/convert/pdf/to/png',
+      'https://api.cloudmersive.com/convert/pdf/to/png/array',
       formData,
       {
         headers: {
           ...formData.getHeaders(),
           'Apikey': CLOUDMERSIVE_API_KEY
         },
-        responseType: 'arraybuffer',
+        responseType: 'json',
         timeout: 60000
       }
     );
 
-    console.log(`✅ Conversion successful`);
+    console.log(`✅ Cloudmersive returned ${response.data.PngResultPages?.length || 0} pages`);
 
-    // Convert to base64 for frontend
-    const base64Data = Buffer.from(response.data).toString('base64');
-    const outputFilename = req.file.originalname.replace(/\.pdf$/i, '.png');
+    // Download all images from Cloudmersive URLs and convert to base64
+    const pages = [];
+    if (response.data.PngResultPages && Array.isArray(response.data.PngResultPages)) {
+      for (const page of response.data.PngResultPages) {
+        try {
+          console.log(`Downloading page ${page.PageNumber} from ${page.URL}`);
+          const imageResponse = await axios.get(page.URL, {
+            responseType: 'arraybuffer',
+            timeout: 30000
+          });
+          
+          pages.push({
+            pageNumber: page.PageNumber,
+            base64: Buffer.from(imageResponse.data).toString('base64'),
+            size: imageResponse.data.length
+          });
+          
+          console.log(`✅ Downloaded page ${page.PageNumber} (${imageResponse.data.length} bytes)`);
+        } catch (downloadError) {
+          console.error(`❌ Failed to download page ${page.PageNumber}:`, downloadError.message);
+        }
+      }
+    }
 
-    // Return the result
+    if (pages.length === 0) {
+      throw new Error('No pages could be converted');
+    }
+
+    console.log(`✅ Successfully processed ${pages.length} pages`);
+
+    // Return all pages as base64
     res.json({
       success: true,
-      filename: outputFilename,
-      base64: base64Data,
+      filename: req.file.originalname.replace(/\.pdf$/i, ''),
+      pages: pages,
+      totalPages: pages.length,
       format: 'PNG',
-      message: 'PDF successfully converted to PNG image'
+      message: `PDF successfully converted to ${pages.length} PNG image(s)`
     });
 
   } catch (error) {

@@ -827,7 +827,48 @@ async function convertPDFToImage(file, format = 'png') {
         const result = await response.json();
         console.log(' PDF to Image conversion successful:', result);
 
-        // Check if the response contains Cloudmersive URLs (new format)
+        // Check if backend returned pages array (new format)
+        if (result.pages && Array.isArray(result.pages)) {
+            console.log(`📄 Processing ${result.pages.length} page(s)`);
+            
+            // Download each page
+            for (const page of result.pages) {
+                const byteCharacters = atob(page.base64);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                const blob = new Blob([byteArray], { type: 'image/png' });
+                
+                // Create download link
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${result.filename}_page_${page.pageNumber}.png`;
+                document.body.appendChild(a);
+                a.click();
+                
+                // Cleanup
+                setTimeout(() => {
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                }, 100);
+                
+                console.log(`✅ Downloaded page ${page.pageNumber}`);
+                
+                // Small delay between downloads
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+            
+            return {
+                success: true,
+                message: `Successfully downloaded ${result.pages.length} page(s)`,
+                pages: result.pages.length
+            };
+        }
+
+        // Check if the response contains Cloudmersive URLs (old format - fallback)
         if (result.base64) {
             try {
                 // Decode the base64 to see if it contains URLs
