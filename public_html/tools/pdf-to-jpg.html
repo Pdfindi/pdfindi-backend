@@ -604,6 +604,8 @@
 
         <div class="error-message" id="error-message"></div>
 
+        <div class="error-message" id="result-message" style="background: linear-gradient(135deg, #138808 0%, #34d399 100%); border-left-color: #138808;"></div>
+
         <div class="output-options">
             <h4>⚙️ Output Settings</h4>
             
@@ -640,6 +642,7 @@
             uploadZone: document.getElementById('upload-zone'),
             fileInput: document.getElementById('file-input'),
             errorMessage: document.getElementById('error-message'),
+            resultMessage: document.getElementById('result-message'),
             convertBtn: document.getElementById('convert-btn')
         };
 
@@ -666,19 +669,12 @@
         }
 
         function showSuccess(message) {
-            console.log('? Success:', message);
-            elements.errorMessage.style.background = '#d4edda';
-            elements.errorMessage.style.color = '#155724';
-            elements.errorMessage.style.borderColor = '#c3e6cb';
-            elements.errorMessage.textContent = message;
-            elements.errorMessage.style.display = 'block';
+            console.log('✅ Success:', message);
+            elements.resultMessage.textContent = message;
+            elements.resultMessage.style.display = 'block';
             setTimeout(() => {
-                elements.errorMessage.style.display = 'none';
-                // Reset error styling
-                elements.errorMessage.style.background = '#f8d7da';
-                elements.errorMessage.style.color = '#721c24';
-                elements.errorMessage.style.borderColor = '#f5c6cb';
-            }, 3000);
+                elements.resultMessage.style.display = 'none';
+            }, 10000);
         }
 
         // Fallback PDF to Image conversion function
@@ -841,11 +837,11 @@
             elements.uploadZone.style.borderColor = '#28a745';
             elements.uploadZone.innerHTML = `
                 <div style="color: #28a745;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">?</div>
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
                     <h3>PDF Selected: ${file.name}</h3>
                     <p>Size: ${(file.size / (1024 * 1024)).toFixed(2)} MB</p>
                     <p>Output: Individual ${selectedFormat.toUpperCase()} images per page</p>
-                    <p style="margin-top: 1rem; color: #28a745;">? Ready for conversion!</p>
+                    <p style="margin-top: 1rem; color: #28a745;">✅ Ready for conversion!</p>
                 </div>
             `;
             
@@ -885,7 +881,12 @@
                     result = await convertPDFToImageFallback(selectedFile, selectedFormat);
                 }
                 
-                showSuccess('PDF successfully converted to ' + selectedFormat.toUpperCase() + '!');
+                // Show success message with details
+                if (result && result.pages) {
+                    showSuccess(`✅ Successfully converted ${result.pages} page(s) to ${selectedFormat.toUpperCase()}! Check your Downloads folder.`);
+                } else {
+                    showSuccess(`✅ PDF successfully converted to ${selectedFormat.toUpperCase()}! Check your Downloads folder.`);
+                }
                 hideLoading(elements.convertBtn, originalText);
                 
             } catch (error) {
