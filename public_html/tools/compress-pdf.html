@@ -473,6 +473,11 @@
                 transform: translateY(0);
             }
         }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 <script type="application/ld+json">
 {
@@ -581,10 +586,13 @@
         </div>
 
         <div class="progress-container" id="progress-container" style="display: none;">
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <div class="spinner" style="display: inline-block; width: 40px; height: 40px; border: 4px solid rgba(255, 153, 51, 0.3); border-top: 4px solid #FF9933; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            </div>
             <div class="progress-bar">
                 <div class="progress-fill" id="progress-fill"></div>
             </div>
-            <p id="progress-text" style="text-align: center; margin-top: 0.5rem; font-weight: 500;">Processing...</p>
+            <p id="progress-text" class="progress-text">Processing...</p>
         </div>
         
         <div id="success-message" class="success-message" style="display: none;">
