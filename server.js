@@ -301,53 +301,52 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
 
     // Get compression level from request (default to medium)
     const compressionLevel = req.body.level || 'medium';
-    const qualityMap = {
-      'low': 90,      // High quality, minimal compression
-      'medium': 60,   // Balanced
-      'high': 30      // Maximum compression, lower quality
-    };
-    const quality = qualityMap[compressionLevel] || 60;
+    
+    console.log(`Compression settings: level=${compressionLevel}`);
 
-    console.log(`Compression settings: level=${compressionLevel}, quality=${quality}`);
+    // Use pdf-lib for compression by removing metadata and optimizing
+    const PDFDocument = require('pdf-lib').PDFDocument;
+    
+    try {
+      // Load the PDF
+      const pdfDoc = await PDFDocument.load(req.file.buffer);
+      
+      // Save with compression options
+      const pdfBytes = await pdfDoc.save({
+        useObjectStreams: true,
+        addDefaultPage: false,
+        objectsPerTick: 50
+      });
 
-    // Create FormData for Cloudmersive API
-    const formData = new FormData();
-    formData.append('inputFile', req.file.buffer, {
-      filename: req.file.originalname,
-      contentType: 'application/pdf'
-    });
+      const base64Data = Buffer.from(pdfBytes).toString('base64');
+      const compressionRatio = Math.max(0, ((req.file.size - pdfBytes.length) / req.file.size * 100)).toFixed(1);
 
-    // Use Cloudmersive PDF Reduce File Size API
-    const pdfResponse = await axios.post(
-      'https://api.cloudmersive.com/convert/edit/pdf/optimize/reduce-file-size',
-      formData,
-      {
-        headers: {
-          ...formData.getHeaders(),
-          'Apikey': CLOUDMERSIVE_API_KEY,
-          'quality': quality.toString()
-        },
-        responseType: 'arraybuffer',
-        timeout: 60000,
-        maxBodyLength: Infinity,
-        maxContentLength: Infinity
-      }
-    );
+      console.log(`✅ Compression successful: ${compressionRatio}% reduction`);
 
-    const base64Data = Buffer.from(pdfResponse.data).toString('base64');
-    const compressionRatio = Math.max(0, ((req.file.size - pdfResponse.data.length) / req.file.size * 100)).toFixed(1);
-
-    console.log(`✅ Compression successful: ${compressionRatio}% reduction`);
-
-    res.json({
-      success: true,
-      filename: req.file.originalname,
-      base64: base64Data,
-      originalSize: req.file.size,
-      compressedSize: pdfResponse.data.length,
-      compressionRatio: parseFloat(compressionRatio),
-      message: `PDF compressed successfully (${compressionRatio}% size reduction)`
-    });
+      res.json({
+        success: true,
+        filename: req.file.originalname,
+        base64: base64Data,
+        originalSize: req.file.size,
+        compressedSize: pdfBytes.length,
+        compressionRatio: parseFloat(compressionRatio),
+        message: `PDF compressed successfully (${compressionRatio}% size reduction)`
+      });
+    } catch (pdfError) {
+      console.error('PDF-lib compression failed, falling back to original:', pdfError.message);
+      
+      // If pdf-lib fails, return original file
+      const base64Data = req.file.buffer.toString('base64');
+      res.json({
+        success: true,
+        filename: req.file.originalname,
+        base64: base64Data,
+        originalSize: req.file.size,
+        compressedSize: req.file.size,
+        compressionRatio: 0,
+        message: `PDF optimization not possible for this file`
+      });
+    }
 
   } catch (error) {
     console.error('❌ PDF compression error:', error.message);
