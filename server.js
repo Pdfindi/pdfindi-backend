@@ -299,6 +299,17 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
 
     console.log(`Compressing: ${req.file.originalname} (${req.file.size} bytes)`);
 
+    // Get compression level from request (default to medium)
+    const compressionLevel = req.body.level || 'medium';
+    const qualityMap = {
+      'low': '90',      // High quality, minimal compression
+      'medium': '60',   // Balanced
+      'high': '30'      // Maximum compression, lower quality
+    };
+    const quality = qualityMap[compressionLevel] || '60';
+
+    console.log(`Compression settings: level=${compressionLevel}, quality=${quality}`);
+
     // Create FormData for Cloudmersive API
     const formData = new FormData();
     formData.append('inputFile', req.file.buffer, {
@@ -306,38 +317,20 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
       contentType: 'application/pdf'
     });
 
-    // Use PDF to DOCX and back to PDF for compression effect
-    // First convert to DOCX
-    const docxResponse = await axios.post(
-      'https://api.cloudmersive.com/convert/pdf/to/docx',
+    // Use Cloudmersive PDF optimization API
+    const pdfResponse = await axios.post(
+      'https://api.cloudmersive.com/convert/edit/pdf/optimize',
       formData,
       {
         headers: {
           ...formData.getHeaders(),
-          'Apikey': CLOUDMERSIVE_API_KEY
+          'Apikey': CLOUDMERSIVE_API_KEY,
+          'quality': quality
         },
         responseType: 'arraybuffer',
-        timeout: 30000
-      }
-    );
-
-    // Then convert DOCX back to PDF
-    const pdfFormData = new FormData();
-    pdfFormData.append('inputFile', docxResponse.data, {
-      filename: 'temp.docx',
-      contentType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    });
-
-    const pdfResponse = await axios.post(
-      'https://api.cloudmersive.com/convert/docx/to/pdf',
-      pdfFormData,
-      {
-        headers: {
-          ...pdfFormData.getHeaders(),
-          'Apikey': CLOUDMERSIVE_API_KEY
-        },
-        responseType: 'arraybuffer',
-        timeout: 30000
+        timeout: 60000,
+        maxBodyLength: Infinity,
+        maxContentLength: Infinity
       }
     );
 
