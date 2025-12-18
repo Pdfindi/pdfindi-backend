@@ -470,30 +470,33 @@ app.post('/api/pdf-to-jpg', checkUsageLimits, upload.single('file'), async (req,
       contentType: 'application/pdf'
     });
 
-    // Call Cloudmersive PDF to PNG API (returns all pages)
+    // Call Cloudmersive PDF to PNG API (first page only for now)
     const response = await axios.post(
-      'https://api.cloudmersive.com/convert/pdf/to/png/array',
+      'https://api.cloudmersive.com/convert/pdf/to/png',
       formData,
       {
         headers: {
           ...formData.getHeaders(),
           'Apikey': CLOUDMERSIVE_API_KEY
         },
-        responseType: 'json',
+        responseType: 'arraybuffer',
         timeout: 60000
       }
     );
 
-    console.log(`✅ Conversion successful: ${response.data.PngResultPages?.length || 0} pages`);
+    console.log(`✅ Conversion successful`);
 
-    // Return the result with page URLs
+    // Convert to base64 for frontend
+    const base64Data = Buffer.from(response.data).toString('base64');
+    const outputFilename = req.file.originalname.replace(/\.pdf$/i, '.png');
+
+    // Return the result
     res.json({
       success: true,
-      filename: req.file.originalname.replace(/\.pdf$/i, '.png'),
-      base64: Buffer.from(JSON.stringify(response.data)).toString('base64'),
-      pages: response.data.PngResultPages?.length || 0,
+      filename: outputFilename,
+      base64: base64Data,
       format: 'PNG',
-      message: `PDF successfully converted to ${response.data.PngResultPages?.length || 0} PNG image(s)`
+      message: 'PDF successfully converted to PNG image'
     });
 
   } catch (error) {
