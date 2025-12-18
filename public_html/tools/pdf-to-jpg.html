@@ -458,6 +458,7 @@
 
         /* Enhanced Messages */
         .error-message {
+            display: none;
             background: var(--error-gradient);
             color: white;
             padding: 1rem 1.5rem;
@@ -581,75 +582,52 @@
         </a>
         
         <div class="tool-header">
-            <div class="tool-icon">??</div>
+            <div class="tool-icon">🖼️</div>
             <h1>PDF to JPG</h1>
             <p>Convert PDF pages to high-quality JPG images</p>
         </div>
 
         <div class="backend-notice">
-            <h3>??? Professional PDF to Image Conversion</h3>
+            <h3>📄 Professional PDF to Image Conversion</h3>
             <p>Convert PDF pages to high-quality images with professional-grade processing and optimal quality.</p>
             <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-                <strong>?? Supports:</strong> JPG, PNG formats - choose the best quality for your needs.
+                <strong>✅ Supports:</strong> JPG, PNG formats - choose the best quality for your needs.
             </div>
         </div>
 
         <div class="upload-zone" id="upload-zone">
-            <div class="upload-icon">??</div>
+            <div class="upload-icon">📁</div>
             <h3>Click to upload or drag & drop PDF</h3>
-            <p>Maximum file size: 50MB � All pages will be converted to images</p>
+            <p>Maximum file size: 50MB • All pages will be converted to images</p>
             <input type="file" id="file-input" accept=".pdf" style="display: none;">
         </div>
 
         <div class="error-message" id="error-message"></div>
 
         <div class="output-options">
-            <h4>?? Output Settings</h4>
+            <h4>⚙️ Output Settings</h4>
             
             <label>Image Format:</label>
             <div class="format-selection">
                 <div class="format-option selected" data-format="jpg">
-                    <div class="format-icon">???</div>
+                    <div class="format-icon">🖼️</div>
                     <div><strong>JPG</strong></div>
                     <div>Smaller files</div>
                 </div>
                 <div class="format-option" data-format="png">
-                    <div class="format-icon">???</div>
+                    <div class="format-icon">🎨</div>
                     <div><strong>PNG</strong></div>
                     <div>Higher quality</div>
                 </div>
             </div>
         </div>
 
-        <div class="rendering-explanation">
-            <h4>?? Why Server-Side Processing?</h4>
-            <p>PDF to image conversion requires complex rendering capabilities:</p>
-            <ul>
-                <li><strong>PDF Rendering Engine:</strong> Accurate interpretation of PDF graphics and text</li>
-                <li><strong>Font Handling:</strong> Access to system fonts and embedded font rendering</li>
-                <li><strong>Vector Graphics:</strong> Proper conversion of vector elements to raster images</li>
-                <li><strong>Color Management:</strong> ICC profile support for accurate color reproduction</li>
-                <li><strong>High Resolution:</strong> Memory-intensive processing for large, high-DPI images</li>
-                <li><strong>Format Optimization:</strong> Advanced compression algorithms for different image formats</li>
-            </ul>
-        </div>
 
-        <div style="background: #e8f5e8; padding: 1.5rem; border-radius: 12px; margin: 2rem 0;">
-            <h4 style="color: #2e7d32; margin-bottom: 1rem;">?? Features in Full Version:</h4>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; color: #2e7d32;">
-                <div>? Multiple image formats</div>
-                <div>? Custom resolution settings</div>
-                <div>? Page range selection</div>
-                <div>? Batch processing</div>
-                <div>? Quality optimization</div>
-                <div>? Automatic ZIP packaging</div>
-                <div>? Preview before download</div>
-                <div>? OCR text extraction</div>
-            </div>
-        </div>
+
+
 
         <div style="text-align: center; margin: 2rem 0;">
-            <button class="red-button" id="convert-btn" disabled>??? Convert to Images</button>
+            <button class="red-button" id="convert-btn" disabled>🔄 Convert to Images</button>
         </div>
     </div>
 
