@@ -372,6 +372,30 @@
             background: var(--success-gradient);
             border-radius: 4px;
             transition: width 0.3s ease;
+            animation: indeterminate 1.5s infinite;
+        }
+
+        @keyframes indeterminate {
+            0% {
+                width: 0%;
+                margin-left: 0%;
+            }
+            50% {
+                width: 70%;
+                margin-left: 15%;
+            }
+            100% {
+                width: 0%;
+                margin-left: 100%;
+            }
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
         }
 
         .success-message {
@@ -786,11 +810,14 @@
         function showProgress(message) {
             elements.progressContainer.style.display = 'block';
             elements.progressText.textContent = message;
+            elements.progressFill.style.animation = 'indeterminate 1.5s infinite';
             elements.compressionSettings.style.display = 'none';
+            elements.pdfInfo.style.display = 'none';
         }
 
         function hideProgress() {
             elements.progressContainer.style.display = 'none';
+            elements.progressFill.style.animation = 'none';
         }
 
         function showSuccess(base64Data, filename, compressionRatio) {
