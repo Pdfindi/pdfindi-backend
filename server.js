@@ -472,7 +472,7 @@ app.post('/api/pdf-to-jpg', checkUsageLimits, upload.single('file'), async (req,
 
     // Use simple PDF to PNG conversion (converts first page only but reliable)
     const response = await axios.post(
-      'https://api.cloudmersive.com/convert/pdf/to/png',
+      'https://api.cloudmersive.com/image/convert/pdf/to/png',
       formData,
       {
         headers: {
@@ -508,11 +508,11 @@ app.post('/api/pdf-to-jpg', checkUsageLimits, upload.single('file'), async (req,
     
     if (error.response) {
       console.error('API Error Status:', error.response.status);
-      console.error('API Error Data:', error.response.data?.toString?.());
+      console.error('API Error Data:', error.response.data);
       
       return res.status(error.response.status).json({ 
         error: `Conversion API error: ${error.response.status}`,
-        details: error.response.data?.toString?.() || 'Unknown API error'
+        details: typeof error.response.data === 'string' ? error.response.data : 'Unknown API error'
       });
     }
     
