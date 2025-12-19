@@ -470,60 +470,37 @@ app.post('/api/pdf-to-jpg', checkUsageLimits, upload.single('file'), async (req,
       contentType: 'application/pdf'
     });
 
-    // Call Cloudmersive PDF to PNG array API to get all pages
+    // Use simple PDF to PNG conversion (converts first page only but reliable)
     const response = await axios.post(
-      'https://api.cloudmersive.com/convert/pdf/to/png/array',
+      'https://api.cloudmersive.com/convert/pdf/to/png',
       formData,
       {
         headers: {
           ...formData.getHeaders(),
           'Apikey': CLOUDMERSIVE_API_KEY
         },
-        responseType: 'json',
+        responseType: 'arraybuffer',
         timeout: 60000
       }
     );
 
-    console.log(`✅ Cloudmersive returned ${response.data.PngResultPages?.length || 0} pages`);
+    console.log(`✅ Conversion successful (${response.data.length} bytes)`);
 
-    // Download all images from Cloudmersive URLs and convert to base64
-    const pages = [];
-    if (response.data.PngResultPages && Array.isArray(response.data.PngResultPages)) {
-      for (const page of response.data.PngResultPages) {
-        try {
-          console.log(`Downloading page ${page.PageNumber} from ${page.URL}`);
-          const imageResponse = await axios.get(page.URL, {
-            responseType: 'arraybuffer',
-            timeout: 30000
-          });
-          
-          pages.push({
-            pageNumber: page.PageNumber,
-            base64: Buffer.from(imageResponse.data).toString('base64'),
-            size: imageResponse.data.length
-          });
-          
-          console.log(`✅ Downloaded page ${page.PageNumber} (${imageResponse.data.length} bytes)`);
-        } catch (downloadError) {
-          console.error(`❌ Failed to download page ${page.PageNumber}:`, downloadError.message);
-        }
-      }
-    }
+    // Convert to base64
+    const base64Data = Buffer.from(response.data).toString('base64');
 
-    if (pages.length === 0) {
-      throw new Error('No pages could be converted');
-    }
-
-    console.log(`✅ Successfully processed ${pages.length} pages`);
-
-    // Return all pages as base64
+    // Return as single page in array format for consistency
     res.json({
       success: true,
       filename: req.file.originalname.replace(/\.pdf$/i, ''),
-      pages: pages,
-      totalPages: pages.length,
+      pages: [{
+        pageNumber: 1,
+        base64: base64Data,
+        size: response.data.length
+      }],
+      totalPages: 1,
       format: 'PNG',
-      message: `PDF successfully converted to ${pages.length} PNG image(s)`
+      message: 'PDF successfully converted to PNG image (first page)'
     });
 
   } catch (error) {
@@ -531,11 +508,11 @@ app.post('/api/pdf-to-jpg', checkUsageLimits, upload.single('file'), async (req,
     
     if (error.response) {
       console.error('API Error Status:', error.response.status);
-      console.error('API Error Data:', error.response.data);
+      console.error('API Error Data:', error.response.data?.toString?.());
       
       return res.status(error.response.status).json({ 
         error: `Conversion API error: ${error.response.status}`,
-        details: error.response.data || 'Unknown API error'
+        details: error.response.data?.toString?.() || 'Unknown API error'
       });
     }
     
