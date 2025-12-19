@@ -12,6 +12,8 @@
         <link rel="stylesheet" href="../modern-header.css">
 <link rel="stylesheet" href="modern-theme.css">
     <link rel="stylesheet" href="../orange-theme.css">
+    <!-- PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <style>
         :root {
             --primary-gradient: linear-gradient(135deg, #FF9933 0%, #138808 100%);
@@ -633,6 +635,13 @@
         </div>
     </div>
 
+    <!-- PDF.js library for client-side PDF rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        // Configure PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+
     <!-- Include the main script.js file -->
     <script src="../script.js"></script>
     <script>
@@ -677,147 +686,105 @@
             }, 10000);
         }
 
-        // Fallback PDF to Image conversion function
+        // Client-side PDF to Image conversion using pdf.js
         async function convertPDFToImageFallback(file, format = 'jpg') {
-            console.log('?? Using fallback PDF to Image conversion');
+            console.log('🎨 Using client-side PDF to Image conversion (pdf.js)');
             
-            const formData = new FormData();
-            formData.append('file', file);
-
-            // Use the actual endpoint that exists on the backend
-            const endpoint = 'https://pdfindi-backend.onrender.com/api/pdf-to-jpg';
-
-            console.log('?? Calling endpoint:', endpoint);
-
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                body: formData
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || `Server error: ${response.status}`);
-            }
-
-            const result = await response.json();
-
-            if (!result.success) {
-                throw new Error(result.error || 'Conversion failed');
-            }
-
-            // Check if the response contains Cloudmersive URLs (new format)
-            if (result.base64) {
+            // Configure pdf.js worker
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            
+            // Read file as ArrayBuffer
+            const arrayBuffer = await file.arrayBuffer();
+            
+            // Load PDF document
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            const numPages = pdf.numPages;
+            
+            console.log(`📄 PDF loaded: ${numPages} page(s)`);
+            
+            // Quality settings based on format
+            const quality = format === 'jpg' ? 0.92 : 1.0;
+            const mimeType = format === 'jpg' ? 'image/jpeg' : 'image/png';
+            const extension = format;
+            
+            const baseFileName = file.name.replace(/\.pdf$/i, '');
+            let convertedCount = 0;
+            
+            // Convert each page
+            for (let pageNum = 1; pageNum <= numPages; pageNum++) {
                 try {
-                    // Decode the base64 to see if it contains URLs
-                    const decodedData = atob(result.base64);
-                    const parsedData = JSON.parse(decodedData);
+                    // Get page
+                    const page = await pdf.getPage(pageNum);
                     
-                    if (parsedData.PngResultPages && Array.isArray(parsedData.PngResultPages)) {
-                        console.log(`?? Found ${parsedData.PngResultPages.length} pages with URLs`);
-                        console.log('?? URLs:', parsedData.PngResultPages.map(p => p.URL));
-                        
-                        // Show user message about downloads
-                        showSuccess(`Found ${parsedData.PngResultPages.length} pages. Starting downloads...`);
-                        
-                        // Download each page
-                        for (let i = 0; i < parsedData.PngResultPages.length; i++) {
-                            const page = parsedData.PngResultPages[i];
-                            console.log(`?? Downloading page ${page.PageNumber}:`, page.URL);
-                            
-                            try {
-                                // Try to fetch the image through our backend as a proxy
-                                const proxyResponse = await fetch(page.URL, {
-                                    mode: 'cors',
-                                    credentials: 'omit'
-                                });
-                                
-                                console.log(`?? Response status for page ${page.PageNumber}:`, proxyResponse.status);
-                                
-                                if (proxyResponse.ok) {
-                                    const imageBlob = await proxyResponse.blob();
-                                    console.log(`?? Blob size for page ${page.PageNumber}:`, imageBlob.size, 'bytes');
-                                    
-                                    // Create download link for this page
-                                    const url = window.URL.createObjectURL(imageBlob);
-                                    const a = document.createElement('a');
-                                    a.href = url;
-                                    a.download = `${file.name.replace(/\.pdf$/i, '')}_page_${page.PageNumber}.png`;
-                                    a.style.display = 'none';
-                                    document.body.appendChild(a);
-                                    
-                                    console.log(`?? Initiating download: ${a.download}`);
-                                    
-                                    // Force the download
-                                    a.click();
-                                    
-                                    // Clean up
-                                    setTimeout(() => {
-                                        window.URL.revokeObjectURL(url);
-                                        document.body.removeChild(a);
-                                    }, 1000);
-                                    
-                                    console.log(`? Download completed for page ${page.PageNumber}`);
-                                    
-                                    // Small delay between downloads
-                                    await new Promise(resolve => setTimeout(resolve, 1000));
-                                } else {
-                                    console.error(`? Failed to download page ${page.PageNumber}:`, proxyResponse.status, proxyResponse.statusText);
-                                    
-                                    // Try direct link as fallback
-                                    console.log(`?? Opening direct link for page ${page.PageNumber}`);
-                                    window.open(page.URL, '_blank');
-                                }
-                            } catch (pageError) {
-                                console.error(`? Error downloading page ${page.PageNumber}:`, pageError);
-                                
-                                // Fallback: open the URL in a new tab
-                                console.log(`?? Opening fallback link for page ${page.PageNumber}`);
-                                window.open(page.URL, '_blank');
-                            }
-                        }
-                        
-                        return {
-                            success: true,
-                            message: `Successfully processed ${parsedData.PngResultPages.length} pages. Check your Downloads folder or allow pop-ups if needed.`,
-                            pages: parsedData.PngResultPages.length
-                        };
+                    // Set scale for better quality (2x = 144 DPI)
+                    const scale = 2.0;
+                    const viewport = page.getViewport({ scale });
+                    
+                    // Create canvas
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    
+                    // Render PDF page to canvas
+                    await page.render({
+                        canvasContext: context,
+                        viewport: viewport
+                    }).promise;
+                    
+                    console.log(`✅ Page ${pageNum} rendered to canvas`);
+                    
+                    // Convert canvas to blob
+                    const blob = await new Promise(resolve => {
+                        canvas.toBlob(resolve, mimeType, quality);
+                    });
+                    
+                    // Create download link
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    
+                    // Filename format: original_name_page_1.jpg
+                    if (numPages > 1) {
+                        a.download = `${baseFileName}_page_${pageNum}.${extension}`;
+                    } else {
+                        a.download = `${baseFileName}.${extension}`;
                     }
-                } catch (e) {
-                    console.log('?? Not URL format, trying direct base64...');
+                    
+                    a.style.display = 'none';
+                    document.body.appendChild(a);
+                    
+                    console.log(`💾 Downloading: ${a.download} (${(blob.size / 1024).toFixed(1)} KB)`);
+                    
+                    // Trigger download
+                    a.click();
+                    
+                    // Clean up
+                    setTimeout(() => {
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+                    }, 100);
+                    
+                    convertedCount++;
+                    
+                    // Small delay between downloads
+                    if (pageNum < numPages) {
+                        await new Promise(resolve => setTimeout(resolve, 500));
+                    }
+                    
+                } catch (pageError) {
+                    console.error(`❌ Error converting page ${pageNum}:`, pageError);
+                    throw new Error(`Failed to convert page ${pageNum}: ${pageError.message}`);
                 }
             }
-
-            // Fallback to original base64 handling (if it's direct image data)
-            const byteCharacters = atob(result.base64);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let i = 0; i < byteCharacters.length; i++) {
-                byteNumbers[i] = byteCharacters.charCodeAt(i);
-            }
-            const byteArray = new Uint8Array(byteNumbers);
             
-            // Determine MIME type based on result format
-            const mimeType = result.format === 'PNG' ? 'image/png' : 'image/jpeg';
-            const extension = result.format === 'PNG' ? 'png' : 'jpg';
+            console.log(`✅ All ${convertedCount} page(s) converted successfully!`);
             
-            const blob = new Blob([byteArray], { type: mimeType });
-            
-            // Create download link
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = result.filename || file.name.replace(/\.pdf$/i, `.${extension}`);
-            document.body.appendChild(a);
-            
-            console.log('?? Starting download:', a.download);
-            console.log('?? File size:', blob.size, 'bytes');
-            
-            a.click();
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(a);
-            
-            console.log('? Download initiated successfully!');
-
-            return result;
+            return {
+                success: true,
+                pages: convertedCount,
+                format: format.toUpperCase()
+            };
         }
 
         function handleFileSelect(file) {
@@ -865,21 +832,14 @@
                 return;
             }
             
-            console.log('?? Starting PDF conversion...', selectedFile.name, 'to', selectedFormat);
+            console.log('🚀 Starting client-side PDF conversion...', selectedFile.name, 'to', selectedFormat);
             const originalText = elements.convertBtn.textContent;
             showLoading(elements.convertBtn, 'Converting PDF to ' + selectedFormat.toUpperCase() + '...');
             
             try {
-                let result;
-                
-                // Check if convertPDFToImage function is available from script.js
-                if (typeof convertPDFToImage !== 'undefined') {
-                    console.log('? Using main convertPDFToImage function');
-                    result = await convertPDFToImage(selectedFile, selectedFormat);
-                } else {
-                    console.log('?? Main function not available, using fallback');
-                    result = await convertPDFToImageFallback(selectedFile, selectedFormat);
-                }
+                // Always use client-side conversion (pdf.js)
+                console.log('🎨 Using pdf.js client-side conversion');
+                const result = await convertPDFToImageFallback(selectedFile, selectedFormat);
                 
                 // Show success message with details
                 if (result && result.pages) {

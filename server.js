@@ -448,79 +448,17 @@ app.post('/api/image-to-pdf', checkUsageLimits, upload.single('file'), async (re
   }
 });
 
-// PDF to JPG conversion endpoint
+// PDF to JPG conversion endpoint - DEPRECATED (Now handled client-side with pdf.js)
+// Keeping endpoint stub for backward compatibility but returns message to use client-side
 app.post('/api/pdf-to-jpg', checkUsageLimits, upload.single('file'), async (req, res) => {
-  try {
-    console.log(`[${new Date().toISOString()}] PDF to JPG conversion requested`);
-    
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
-    }
-
-    if (req.file.mimetype !== 'application/pdf') {
-      return res.status(400).json({ error: 'File must be a PDF' });
-    }
-
-    console.log(`Processing: ${req.file.originalname} (${req.file.size} bytes)`);
-
-    // Create FormData for Cloudmersive API
-    const formData = new FormData();
-    formData.append('inputFile', req.file.buffer, {
-      filename: req.file.originalname,
-      contentType: 'application/pdf'
-    });
-
-    // Use simple PDF to PNG conversion (converts first page only but reliable)
-    const response = await axios.post(
-      'https://api.cloudmersive.com/convert/pdf/to/png/single',
-      formData,
-      {
-        headers: {
-          ...formData.getHeaders(),
-          'Apikey': CLOUDMERSIVE_API_KEY
-        },
-        responseType: 'arraybuffer',
-        timeout: 60000
-      }
-    );
-
-    console.log(`✅ Conversion successful (${response.data.length} bytes)`);
-
-    // Convert to base64
-    const base64Data = Buffer.from(response.data).toString('base64');
-
-    // Return as single page in array format for consistency
-    res.json({
-      success: true,
-      filename: req.file.originalname.replace(/\.pdf$/i, ''),
-      pages: [{
-        pageNumber: 1,
-        base64: base64Data,
-        size: response.data.length
-      }],
-      totalPages: 1,
-      format: 'PNG',
-      message: 'PDF successfully converted to PNG image (first page)'
-    });
-
-  } catch (error) {
-    console.error('❌ PDF to JPG conversion error:', error.message);
-    
-    if (error.response) {
-      console.error('API Error Status:', error.response.status);
-      console.error('API Error Data:', error.response.data);
-      
-      return res.status(error.response.status).json({ 
-        error: `Conversion API error: ${error.response.status}`,
-        details: typeof error.response.data === 'string' ? error.response.data : 'Unknown API error'
-      });
-    }
-    
-    res.status(500).json({ 
-      error: 'Internal conversion error',
-      details: error.message 
-    });
-  }
+  console.log(`[${new Date().toISOString()}] PDF to JPG endpoint called - Redirecting to client-side solution`);
+  
+  res.json({
+    success: false,
+    deprecated: true,
+    message: 'PDF to JPG conversion is now handled client-side using pdf.js for better performance and privacy. Please update your client code.',
+    recommendation: 'Use pdf.js library in browser for client-side PDF to image conversion'
+  });
 });
 
 // OCR Text Extraction from Image endpoint
@@ -1026,7 +964,7 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log('   POST /api/word-to-pdf');
   console.log('   POST /api/compress-pdf');
   console.log('   POST /api/image-to-pdf');
-  console.log('   POST /api/pdf-to-jpg');
+  console.log('   POST /api/pdf-to-jpg (deprecated - use client-side pdf.js)');
   console.log('   POST /api/ocr-text');
   console.log('   POST /api/add-watermark');
   console.log('');
