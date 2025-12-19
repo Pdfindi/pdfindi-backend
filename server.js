@@ -472,7 +472,7 @@ app.post('/api/pdf-to-jpg', checkUsageLimits, upload.single('file'), async (req,
 
     // Use simple PDF to PNG conversion (converts first page only but reliable)
     const response = await axios.post(
-      'https://api.cloudmersive.com/image/convert/pdf/to/png',
+      'https://api.cloudmersive.com/convert/pdf/to/png/single',
       formData,
       {
         headers: {
