@@ -1,24 +1,22 @@
-# PDFINDI - Apache Configuration for Clean URLs
+# PDFIndi – Apache Configuration (SEO Optimized)
 # ================================================
 
 # Enable Rewrite Engine
 RewriteEngine On
 
-# Force HTTPS (optional but recommended)
-# RewriteCond %{HTTPS} off
-# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# Remove www (optional - keeps URLs consistent)
-# RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-# RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+# Force non-www (canonical URL = pdfindi.com)
+RewriteCond %{HTTP_HOST} ^www\.pdfindi\.com [NC]
+RewriteRule ^(.*)$ https://pdfindi.com/$1 [R=301,L]
 
-# 301 Redirect from .html to clean URLs
-# This ensures old URLs redirect permanently to new ones (SEO-friendly)
+# 301 Redirect from .html to clean URLs (SEO-friendly)
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.html [NC]
 RewriteRule ^ %1 [R=301,L]
 
-# Serve .html files when clean URL is requested
-# This makes /merge-pdf serve merge-pdf.html behind the scenes
+# Serve .html files for clean URL requests
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
@@ -27,24 +25,72 @@ RewriteRule ^(.+)$ $1.html [L,QSA]
 # Security: Prevent directory listing
 Options -Indexes
 
-# Custom Error Pages (optional)
-# ErrorDocument 404 /404.html
-# ErrorDocument 500 /500.html
-
-# Compression for better performance
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+# Security Headers
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 </IfModule>
 
-# Browser Caching
+# Brotli Compression (faster than gzip)
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# GZIP Compression (fallback)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json image/svg+xml application/x-font-ttf font/opentype
+    DeflateCompressionLevel 9
+</IfModule>
+
+# Browser Caching (Extended)
 <IfModule mod_expires.c>
     ExpiresActive On
+    # Images – 1 year
     ExpiresByType image/jpg "access plus 1 year"
     ExpiresByType image/jpeg "access plus 1 year"
     ExpiresByType image/gif "access plus 1 year"
     ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
     ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    # Fonts – 1 year
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    # CSS & JS – 1 month
     ExpiresByType text/css "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
-    ExpiresByType text/html "access plus 1 week"
+    ExpiresByType text/javascript "access plus 1 month"
+    # JSON (manifest) – 1 week
+    ExpiresByType application/json "access plus 1 week"
+    ExpiresByType application/manifest+json "access plus 1 week"
+    # HTML – no cache (always fresh)
+    ExpiresByType text/html "access plus 0 seconds"
 </IfModule>
+
+# Cache-Control Headers
+<IfModule mod_headers.c>
+    <FilesMatch "\.(ico|jpg|jpeg|png|gif|webp|svg|woff|woff2)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "no-cache, must-revalidate"
+    </FilesMatch>
+</IfModule>
+
+# Remove ETags (reduces redundant requests)
+<IfModule mod_headers.c>
+    Header unset ETag
+</IfModule>
+FileETag None
+
+# Custom Error Pages
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html

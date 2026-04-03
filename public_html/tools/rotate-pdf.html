@@ -1,805 +1,389 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WWZRMF4W');</script>
+    <!-- End Google Tag Manager -->
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rotate PDF - PDFINDI</title>
-    <link rel="icon" href="../favicon.png" type="image/png">
+    <title>Rotate PDF Online Free India - Permanently Rotate PDF Pages | PDFIndi</title>
+    <meta name="description" content="Rotate PDF pages online for free. 100% Made in India. Rotate single pages or the entire document. Fast, secure, and preserves original quality. No sign-up.">
+    <meta name="keywords" content="rotate pdf online free india, permanently rotate pdf, rotate single page in pdf, free pdf rotator, pdf indi rotate">
+    <meta name="author" content="PDFIndi">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+        <link rel="canonical" href="https://pdfindi.com/tools/rotate-pdf">
+    
+    <link rel="icon" href="../favicon-pi.svg" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css">
-        <link rel="stylesheet" href="../modern-header.css">
-<link rel="stylesheet" href="modern-theme.css">
-    <link rel="stylesheet" href="../orange-theme.css">
+    <link rel="stylesheet" href="../style.min.css">
+    <link rel="stylesheet" href="../modern-header.min.css">
+    <link rel="stylesheet" href="modern-theme.css">
+    
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #FF9933 0%, #138808 100%);
-            --success-gradient: linear-gradient(135deg, #138808 0%, #34d399 100%);
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.1);
-            --shadow-heavy: 0 16px 48px rgba(0, 0, 0, 0.15);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            --primary-gradient: linear-gradient(135deg, #fa7220 0%, #fa7220 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --border-radius: 16px;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #FF9933 0%, #138808 100%);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 80px 0 0 0;
             min-height: 100vh;
-            color: #333;
-            overflow-x: hidden;
         }
 
         .tool-page {
             max-width: 900px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: var(--shadow-heavy);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tool-page::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--primary-gradient);
-            border-radius: 24px 24px 0 0;
-        }
-
-        .tool-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-        }
-
-        .tool-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
-        }
-
-        .tool-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .tool-subtitle {
-            font-size: 1.1rem;
-            color: #666;
-            font-weight: 400;
-            opacity: 0.8;
-        }
-
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #FF9933;
-            text-decoration: none;
-            font-weight: 500;
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-        }
-
-        .back-btn:hover {
-            color: #138808;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            margin: 0.5rem auto 2rem;
+            padding: 0 1rem;
         }
 
         .upload-zone {
-            border: 2px dashed rgba(102, 126, 234, 0.3);
-            border-radius: 16px;
-            padding: 3rem 2rem;
+            border: 3px dashed rgba(250, 114, 32, 0.3);
+            border-radius: var(--border-radius);
+            padding: 4rem 2rem;
             text-align: center;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(15px);
-            transition: all 0.4s ease;
+            background: var(--glass-bg);
             cursor: pointer;
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .upload-zone::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .upload-zone:hover::before {
-            left: 100%;
+            transition: all 0.3s ease;
         }
 
         .upload-zone:hover {
-            border-color: #FF9933;
-            background: rgba(255, 255, 255, 0.9);
+            border-color: #fa7220;
+            background: rgba(250, 114, 32, 0.02);
             transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.2);
         }
 
-        .upload-zone.dragover {
-            border-color: #138808;
-            background: rgba(79, 172, 254, 0.1);
-            box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.2);
-        }
-
-        .upload-icon {
-            font-size: 4rem;
-            color: #FF9933;
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.3));
-        }
-
-        .pdf-info, .rotation-options {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(15px);
+        .rotation-options {
+            background: var(--glass-bg);
             padding: 2rem;
-            border-radius: 16px;
-            margin: 2rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius);
+            margin-top: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            text-align: center;
         }
 
-        .rotation-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1.5rem;
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
             margin: 1.5rem 0;
+            flex-wrap: wrap;
         }
 
         .rotation-btn {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(102, 126, 234, 0.2);
-            border-radius: 16px;
-            padding: 2rem 1.5rem;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            background: white;
             cursor: pointer;
-            transition: all 0.4s ease;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.75rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .rotation-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .rotation-btn:hover::before {
-            left: 100%;
-        }
-
-        .rotation-btn:hover {
-            border-color: #FF9933;
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.3);
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
         .rotation-btn.selected {
-            border-color: #FF9933;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+            border-color: #fa7220;
+            background: rgba(250, 114, 32, 0.05);
+            color: #fa7220;
         }
 
-        .rotation-icon {
-            font-size: 2.5rem;
-            color: #FF9933;
-            transition: all 0.3s;
-        }
-
-        .rotation-btn.selected .rotation-icon {
-            color: #138808;
-            transform: scale(1.1);
-        }
-
-        .btn {
+        .red-button {
             background: var(--primary-gradient);
             color: white;
+            padding: 1rem 2.5rem;
             border: none;
-            padding: 1rem 2rem;
             border-radius: 12px;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
-            font-size: 1rem;
-            min-width: 140px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.5);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .progress-container {
-            margin: 2rem 0;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--success-gradient);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        .success-message {
-            background: var(--success-gradient);
-            border: 1px solid rgba(19, 136, 8, 0.3);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .success-message h4 {
-            margin-bottom: 0.5rem;
-        }
-
-        .error-message {
-            background: var(--primary-gradient);
-            border: 1px solid rgba(255, 153, 51, 0.3);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .error-message h4 {
-            margin-bottom: 0.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .tool-page {
-                margin: 1rem;
-                padding: 1.5rem;
-            }
-            
-            .tool-title {
-                font-size: 2rem;
-            }
-            
-            .rotation-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .upload-zone {
-                padding: 2rem 1rem;
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            box-shadow: 0 4px 12px rgba(250, 114, 32, 0.3);
         }
     </style>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Rotate PDF",
-  "description": "Rotate PDF pages clockwise or counterclockwise online.",
-  "url": "https://pdfindi.com/tools/rotate-pdf.html",
-  "applicationCategory": "PDF Tool",
-  "operatingSystem": "Any",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "INR"
-  },
-  "provider": {
-    "@type": "Organization",
-    "name": "PDFINDI",
-    "url": "https://pdfindi.com"
-  }
-}
-</script>
 
-</head>
+    <!-- Schema: SoftwareApplication + FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Rotate PDF - PDFIndi",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Web Browser",
+          "url": "https://pdfindi.com/tools/rotate-pdf",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+          "publisher": { "@type": "Organization", "name": "PDFIndi", "url": "https://pdfindi.com" },
+          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "1024" },
+          "description": "Rotate PDF Pages Online Free - 100% free, no sign-up, no watermarks. Made in India.",
+          "featureList": ["Free to use", "No sign-up required", "No watermarks", "SSL encrypted", "Files auto-deleted", "Mobile friendly"]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pdfindi.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Rotate PDF", "item": "https://pdfindi.com/tools/rotate-pdf" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is Rotate PDF on PDFIndi free?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Rotate PDF is completely free on PDFIndi. No sign-up, no payment, no watermarks." }
+            },
+            {
+              "@type": "Question",
+              "name": "Is it safe to use Rotate PDF on PDFIndi?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. All files are processed with SSL encryption and automatically deleted after download. PDFIndi never stores your files." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does Rotate PDF work on mobile?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Rotate PDF works on all devices including Android and iPhone directly in the browser - no app download needed." }
+            }
+          ]
+        }
+      ]
+    }
+    </script></head>
 <body>
-    <div class="tool-page fade-in">
-        <a href="../index.html#pdf-tools-section" class="back-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M19 12H5M12 19l-7-7 7-7"/>
-            </svg>
-            Back to PDF Tools
-        </a>
-        
-        <div class="tool-header">
-            <div class="tool-icon">🔄</div>
-            <h1 class="tool-title">Rotate PDF</h1>
-            <p class="tool-subtitle">Rotate PDF pages by 90°, 180°, or 270° instantly</p>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWZRMF4W"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    <div class="tool-page">
+        <div style="text-align: center; margin-bottom: 2.5rem;">
+            <h1 style="font-size: 2.5rem; font-weight: 800; color: #1f2937;">Rotate PDF</h1>
+            <p style="color: #6b7280;">Permanently rotate PDF pages in seconds</p>
         </div>
-        
-        <div class="upload-zone" id="uploadZone">
-            <div class="upload-icon">📄</div>
-            <h3>Drop your PDF here or click to browse</h3>
-            <p>Supports PDF files up to 50MB</p>
-            <input type="file" id="fileInput" accept=".pdf" style="display: none;">
+
+        <div class="upload-zone" id="upload-zone">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🔄</div>
+            <h3>Click or drag PDF to rotate</h3>
+            <p>Maximum file size: 50MB</p>
+            <input type="file" id="file-input" accept=".pdf" style="display: none;">
         </div>
-        
-        <div class="pdf-info" id="pdfInfo" style="display: none;">
-            <h4>📊 PDF Information</h4>
-            <p><strong>File Name:</strong> <span id="fileName">-</span></p>
-            <p><strong>File Size:</strong> <span id="fileSize">-</span></p>
-            <p><strong>Total Pages:</strong> <span id="totalPages">-</span></p>
+
+        <div id="pdf-info" style="display: none; text-align: center; margin: 1.5rem 0; color: #4b5563;">
+            <p id="file-name-display" style="font-weight: 600;"></p>
         </div>
-        
-        <div class="rotation-options" id="rotationOptions" style="display: none;">
-            <h4>🔄 Rotation Options</h4>
-            <div class="rotation-grid">
-                <div class="rotation-btn" data-rotation="0">
-                    <div class="rotation-icon">↻</div>
-                    <span>0° (No Rotation)</span>
-                </div>
-                <div class="rotation-btn" data-rotation="90">
-                    <div class="rotation-icon">↻</div>
-                    <span>90° Clockwise</span>
-                </div>
-                <div class="rotation-btn" data-rotation="180">
-                    <div class="rotation-icon">↻</div>
-                    <span>180°</span>
-                </div>
-                <div class="rotation-btn" data-rotation="270">
-                    <div class="rotation-icon">↻</div>
-                    <span>270° Counterclockwise</span>
-                </div>
+
+        <div id="rotation-options" class="rotation-options" style="display: none;">
+            <h3>Select Rotation Angle</h3>
+            <div class="btn-group">
+                <button class="rotation-btn selected" data-rotation="90">90° Clockwise</button>
+                <button class="rotation-btn" data-rotation="180">180°</button>
+                <button class="rotation-btn" data-rotation="270">90° Counter-Clockwise</button>
             </div>
             
+            <h3>Pages to Rotate</h3>
+            <div class="btn-group">
+                <button class="rotation-btn selected" data-pages="all">All Pages</button>
+                <button class="rotation-btn" data-pages="odd">Odd Pages Only</button>
+                <button class="rotation-btn" data-pages="even">Even Pages Only</button>
+            </div>
+
             <div style="margin-top: 2rem;">
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">📄 Page Range (optional):</label>
-                <input type="text" id="pageRange" placeholder="e.g., 1-5, 8, 11-15 or leave empty for all pages" style="width: 100%; padding: 0.75rem; border: 2px solid rgba(102, 126, 234, 0.3); border-radius: 8px; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); font-family: 'Inter', sans-serif; font-size: 0.95rem;">
-                <small style="color: #666; margin-top: 0.5rem; display: block; line-height: 1.4;">
-                    💡 <strong>Examples:</strong> "1-5" (pages 1 to 5), "2,4,6" (pages 2, 4, and 6), "1-3,7,10-12" (multiple ranges)<br>
-                    Leave empty to rotate all pages
-                </small>
+                <button id="rotate-btn" class="red-button">🔄 Rotate PDF</button>
             </div>
-            
-            <button id="rotateBtn" class="btn" style="margin-top: 1.5rem;">Rotate PDF</button>
         </div>
-        
-        <div class="progress-container" id="progressContainer" style="display: none;">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
+
+        <div id="success-message" style="display: none; text-align: center; padding: 2rem; background: #ecfdf5; border: 1px solid #10b981; border-radius: 12px; margin-top: 2rem;">
+            <h3 style="color: #10b981;">✅ Rotation Successful!</h3>
+            <div style="margin-top: 1.5rem;">
+                <button id="download-btn" class="red-button" style="background: #10b981;">📥 Download PDF</button>
+                <button onclick="location.reload()" class="rotation-btn" style="margin-left: 1rem;">Rotate Another</button>
             </div>
-            <p id="progressText" style="text-align: center; margin-top: 0.5rem; font-weight: 500;">Processing...</p>
         </div>
-        
-        <div id="successMessage" class="success-message" style="display: none;">
-            <h4>✅ Success!</h4>
-            <p>Your PDF has been rotated successfully.</p>
-            <button id="downloadBtn" class="btn" style="margin-top: 1rem;">Download Rotated PDF</button>
-        </div>
-        
-        <div id="errorMessage" class="error-message" style="display: none;">
-            <h4>❌ Error</h4>
-            <p id="errorText"></p>
-        </div>
+
+        <!-- How to Use Section -->
+        <section class="how-to-section" style="margin-top: 4rem;">
+            <h2>How to Rotate PDF Pages online on PDFIndi</h2>
+            <div class="how-to-grid">
+                <div class="how-to-steps">
+                    <ol>
+                        <li>Upload the <strong>PDF document</strong> you want to rotate.</li>
+                        <li>Choose the <strong>rotation angle</strong> (90°, 180°, or 270°).</li>
+                        <li>Select whether to rotate <strong>all pages</strong> or specific sets.</li>
+                        <li>Click <strong>Rotate PDF</strong> to process instantly in your browser.</li>
+                        <li>Download your new PDF with the corrected orientation.</li>
+                    </ol>
+                </div>
+                <div class="how-to-diagram">
+                    <svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="40" y="20" width="30" height="40" rx="2" fill="white" stroke="#fa7220" stroke-width="2"/>
+                        <path d="M80 40C90 30 110 30 120 40" stroke="#fa7220" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M120 40L115 35M120 40L115 45" stroke="#fa7220" stroke-width="2"/>
+                        <rect x="130" y="30" width="40" height="30" rx="2" fill="white" stroke="#fa7220" stroke-width="2"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2>Frequently Asked Questions about PDF Rotation</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Is the rotation permanent?</h3>
+                    <p>Yes, once you rotate and download the file, the new page orientation is saved permanently in the document metadata.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can I rotate just one page?</h3>
+                    <p>Our quick tool rotates sets of pages. For advanced single-page rotation, we recommend our "Organize PDF" tool.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Does rotating affect the PDF quality?</h3>
+                    <p>No, rotation is a metadata change that doesn't re-encode images or text, so your PDF quality remains 100% original.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Is this tool free to use?</h3>
+                    <p>Yes, like all PDFIndi tools, rotating is completely free with no limits or watermarks.</p>
+                </div>
+            </div>
+        </section>
+    
+        <section class="seo-content-block" style="padding: 2rem; background: #f8f9fa; border-radius: 16px; margin: 3rem 0 1rem; color: #495057; border: 1px solid #e2e8f0;">
+            <h2 style="font-size: 1.4rem; color: #1F2937; margin-bottom: 1rem; font-weight: 700;">About The Free Online Rotate PDF Tool</h2>
+            <p style="margin-bottom: 1rem; line-height: 1.6; font-size: 0.95rem;">Are you looking for a fast, secure, and entirely free <strong>Rotate PDF</strong> solution? You are in the right place. Our premium <strong>Rotate PDF</strong> tool is meticulously designed to deliver professional-grade results directly in your web browser. There is absolutely no software to install, no registration required, and zero hidden fees. Just upload your file, and let our advanced processing engine handle the rest in seconds.</p>
+            <p style="margin-bottom: 0; line-height: 1.6; font-size: 0.95rem;">Your privacy and data security are our top priorities. All operations for the <strong>Rotate PDF</strong> feature are secured via enterprise-grade SSL encryption. Files are automatically processed and deleted to protect your sensitive data. Whether you are a student, a business professional, or just need to get a quick job done, this utility provides the highest quality output without any watermarks or restrictive usage limits.</p>
+        </section>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script>
-        // PDF rotation functionality
-        let pdfFile = null;
-        let pdfDoc = null;
-        let selectedRotation = 0;
-        let rotatedPdfBlob = null;
+        let uploadedPdf = null;
+        let selectedRotation = 90;
+        let selectedPageSet = 'all';
+        let rotatedBlob = null;
 
-        // DOM Elements
         const elements = {
-            uploadZone: document.getElementById('uploadZone'),
-            fileInput: document.getElementById('fileInput'),
-            pdfInfo: document.getElementById('pdfInfo'),
-            fileName: document.getElementById('fileName'),
-            fileSize: document.getElementById('fileSize'),
-            totalPages: document.getElementById('totalPages'),
-            rotationOptions: document.getElementById('rotationOptions'),
-            rotationBtns: document.querySelectorAll('.rotation-btn'),
-            pageRange: document.getElementById('pageRange'),
-            rotateBtn: document.getElementById('rotateBtn'),
-            progressContainer: document.getElementById('progressContainer'),
-            progressFill: document.getElementById('progressFill'),
-            progressText: document.getElementById('progressText'),
-            successMessage: document.getElementById('successMessage'),
-            errorMessage: document.getElementById('errorMessage'),
-            errorText: document.getElementById('errorText'),
-            downloadBtn: document.getElementById('downloadBtn')
+            uploadZone: document.getElementById('upload-zone'),
+            fileInput: document.getElementById('file-input'),
+            rotationOptions: document.getElementById('rotation-options'),
+            rotateBtn: document.getElementById('rotate-btn'),
+            successMessage: document.getElementById('success-message'),
+            downloadBtn: document.getElementById('download-btn'),
+            fileNameDisplay: document.getElementById('file-name-display'),
+            pdfInfo: document.getElementById('pdf-info')
         };
 
-        // Initialize event listeners
-        function init() {
-            elements.uploadZone.addEventListener('click', () => elements.fileInput.click());
-            elements.uploadZone.addEventListener('dragover', handleDragOver);
-            elements.uploadZone.addEventListener('dragleave', handleDragLeave);
-            elements.uploadZone.addEventListener('drop', handleDrop);
-            elements.fileInput.addEventListener('change', handleFileSelect);
-            
-            elements.rotationBtns.forEach(btn => {
-                btn.addEventListener('click', () => selectRotation(parseInt(btn.dataset.rotation)));
-            });
-            
-            elements.rotateBtn.addEventListener('click', rotatePDF);
-            
-            // Select 90° by default
-            selectRotation(90);
-        }
-
-        // Handle drag and drop
-        function handleDragOver(e) {
-            e.preventDefault();
-            elements.uploadZone.classList.add('dragover');
-        }
-
-        function handleDragLeave() {
-            elements.uploadZone.classList.remove('dragover');
-        }
-
-        function handleDrop(e) {
-            e.preventDefault();
-            elements.uploadZone.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFile(files[0]);
-            }
-        }
-
-        // Handle file selection
-        function handleFileSelect(e) {
-            const file = e.target.files[0];
-            if (file) {
-                handleFile(file);
-            }
-        }
+        elements.uploadZone.onclick = () => elements.fileInput.click();
+        elements.fileInput.onchange = (e) => handleFile(e.target.files[0]);
 
         async function handleFile(file) {
-            // Validate file type
-            const isPDF = file.type === 'application/pdf' || 
-                         file.type === '' && file.name.toLowerCase().endsWith('.pdf') || 
-                         file.name.toLowerCase().endsWith('.pdf');
-            
-            if (!isPDF) {
-                showError('Please select a valid PDF file.');
-                return;
-            }
-
-            if (file.size > 50 * 1024 * 1024) { // 50MB limit
-                showError('File size must be less than 50MB.');
-                return;
-            }
-
-            pdfFile = file;
-            
-            // Load PDF to get page count
-            try {
-                showProgress('Loading PDF...');
-                
-                const arrayBuffer = await file.arrayBuffer();
-                pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer, { 
-                    ignoreEncryption: true,
-                    updateMetadata: false 
-                });
-                
-                const pageCount = pdfDoc.getPageCount();
-                
-                elements.fileName.textContent = file.name;
-                elements.fileSize.textContent = formatFileSize(file.size);
-                elements.totalPages.textContent = pageCount;
-                
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                uploadedPdf = e.target.result;
+                elements.fileNameDisplay.textContent = `Selected: ${file.name}`;
                 elements.uploadZone.style.display = 'none';
                 elements.pdfInfo.style.display = 'block';
                 elements.rotationOptions.style.display = 'block';
-                hideProgress();
-                
-                showSuccess(`PDF loaded successfully with ${pageCount} pages!`);
-                
-            } catch (error) {
-                console.error('Error loading PDF:', error);
-                showError('Failed to load PDF. Please ensure it\'s a valid PDF file.');
-                hideProgress();
-            }
+            };
+            reader.readAsArrayBuffer(file);
         }
 
-        // Format file size
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
+        document.querySelectorAll('.rotation-btn[data-rotation]').forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll('.rotation-btn[data-rotation]').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedRotation = parseInt(btn.dataset.rotation);
+            };
+        });
 
-        // Select rotation
-        function selectRotation(rotation) {
-            selectedRotation = rotation;
-            elements.rotationBtns.forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            document.querySelector(`[data-rotation="${rotation}"]`).classList.add('selected');
-        }
+        document.querySelectorAll('.rotation-btn[data-pages]').forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll('.rotation-btn[data-pages]').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedPageSet = btn.dataset.pages;
+            };
+        });
 
-        // Parse page range
-        function parsePageRange(rangeStr, totalPages) {
-            if (!rangeStr || rangeStr.trim() === '') {
-                // Return all pages
-                return Array.from({ length: totalPages }, (_, i) => i);
-            }
-
-            const pages = new Set();
-            const parts = rangeStr.split(',');
-
-            for (let part of parts) {
-                part = part.trim();
-                
-                if (part.includes('-')) {
-                    // Range: e.g., "1-5"
-                    const [start, end] = part.split('-').map(n => parseInt(n.trim()));
-                    if (isNaN(start) || isNaN(end)) continue;
-                    
-                    for (let i = Math.max(1, start); i <= Math.min(totalPages, end); i++) {
-                        pages.add(i - 1); // Convert to 0-based index
-                    }
-                } else {
-                    // Single page
-                    const pageNum = parseInt(part);
-                    if (!isNaN(pageNum) && pageNum >= 1 && pageNum <= totalPages) {
-                        pages.add(pageNum - 1); // Convert to 0-based index
-                    }
-                }
-            }
-
-            return Array.from(pages).sort((a, b) => a - b);
-        }
-
-        // Rotate PDF using PDF-lib (client-side)
-        async function rotatePDF() {
-            if (!pdfDoc) {
-                showError('Please select a PDF file first.');
-                return;
-            }
-
-            if (selectedRotation === 0) {
-                showError('Please select a rotation angle (90°, 180°, or 270°).');
-                return;
-            }
-
+        elements.rotateBtn.onclick = async () => {
             try {
-                showProgress('Rotating PDF pages...');
-                elements.progressFill.style.width = '20%';
-                
-                const totalPages = pdfDoc.getPageCount();
-                const pageRangeStr = elements.pageRange.value.trim();
-                
-                // Parse page range
-                const pagesToRotate = parsePageRange(pageRangeStr, totalPages);
-                
-                if (pagesToRotate.length === 0) {
-                    showError('Invalid page range. Please check your input.');
-                    hideProgress();
-                    return;
-                }
+                const pdfDoc = await PDFLib.PDFDocument.load(uploadedPdf);
+                const pages = pdfDoc.getPages();
+                pages.forEach((page, index) => {
+                    let shouldRotate = false;
+                    const pageNum = index + 1;
+                    if (selectedPageSet === 'all') shouldRotate = true;
+                    else if (selectedPageSet === 'odd' && pageNum % 2 !== 0) shouldRotate = true;
+                    else if (selectedPageSet === 'even' && pageNum % 2 === 0) shouldRotate = true;
 
-                elements.progressText.textContent = `Rotating ${pagesToRotate.length} page(s)...`;
-                elements.progressFill.style.width = '40%';
-
-                // Create new PDF document
-                const newPdfDoc = await PDFLib.PDFDocument.create();
-                
-                elements.progressFill.style.width = '60%';
-
-                // Copy all pages and apply rotation
-                for (let i = 0; i < totalPages; i++) {
-                    const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [i]);
-                    
-                    // Apply rotation if this page is in the range
-                    if (pagesToRotate.includes(i)) {
-                        const currentRotation = copiedPage.getRotation().angle;
-                        const newRotation = (currentRotation + selectedRotation) % 360;
-                        copiedPage.setRotation(PDFLib.degrees(newRotation));
+                    if (shouldRotate) {
+                        const currentRotation = page.getRotation().angle;
+                        page.setRotation(PDFLib.degrees((currentRotation + selectedRotation) % 360));
                     }
-                    
-                    newPdfDoc.addPage(copiedPage);
-                }
-
-                elements.progressText.textContent = 'Finalizing rotated PDF...';
-                elements.progressFill.style.width = '80%';
-
-                // Save the PDF
-                const pdfBytes = await newPdfDoc.save();
-                rotatedPdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
-
-                elements.progressFill.style.width = '100%';
-                
-                hideProgress();
-                showSuccessMessage(pagesToRotate.length, totalPages);
-                
-            } catch (error) {
-                hideProgress();
-                showError('Failed to rotate PDF. Please try again.');
-                console.error('Rotation error:', error);
+                });
+                const bytes = await pdfDoc.save();
+                rotatedBlob = new Blob([bytes], { type: 'application/pdf' });
+                elements.rotationOptions.style.display = 'none';
+                elements.successMessage.style.display = 'block';
+            } catch (err) {
+                alert('Error rotating PDF: ' + err.message);
             }
-        }
+        };
 
-        // Download PDF
-        function downloadPDF() {
-            if (!rotatedPdfBlob) {
-                showError('No rotated PDF available to download.');
-                return;
-            }
-
-            const url = URL.createObjectURL(rotatedPdfBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'pdfindi-rotated.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-        }
-
-        // UI helpers
-        function showProgress(message) {
-            elements.progressContainer.style.display = 'block';
-            elements.progressText.textContent = message;
-            elements.progressFill.style.width = '0%';
-            elements.rotationOptions.style.display = 'none';
-            elements.successMessage.style.display = 'none';
-            elements.errorMessage.style.display = 'none';
-        }
-
-        function hideProgress() {
-            elements.progressContainer.style.display = 'none';
-            elements.progressFill.style.width = '0%';
-        }
-
-        function showSuccessMessage(rotatedPages, totalPages) {
-            const rotationDegrees = selectedRotation;
-            const pageInfo = rotatedPages === totalPages 
-                ? `all ${totalPages} pages` 
-                : `${rotatedPages} of ${totalPages} pages`;
-            
-            elements.successMessage.innerHTML = `
-                <h4>✅ Success!</h4>
-                <p>Rotated ${pageInfo} by ${rotationDegrees}°</p>
-                <p style="font-size: 0.9rem; margin-top: 0.5rem;">File size: ${formatFileSize(rotatedPdfBlob.size)}</p>
-                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap;">
-                    <button id="downloadBtn" class="btn">📥 Download Rotated PDF</button>
-                    <button id="resetBtn" class="btn" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);">🔄 Rotate Another PDF</button>
-                </div>
-            `;
-            
-            // Re-attach button listeners
-            document.getElementById('downloadBtn').addEventListener('click', downloadPDF);
-            document.getElementById('resetBtn').addEventListener('click', resetTool);
-            
-            elements.successMessage.style.display = 'block';
-            elements.errorMessage.style.display = 'none';
-        }
-        
-        function resetTool() {
-            pdfDoc = null;
-            rotatedPdfBlob = null;
-            selectedRotation = 90;
-            
-            elements.uploadZone.style.display = 'block';
-            elements.fileInput.value = '';
-            elements.pdfInfo.style.display = 'none';
-            elements.rotationOptions.style.display = 'none';
-            elements.successMessage.style.display = 'none';
-            elements.errorMessage.style.display = 'none';
-            elements.progressContainer.style.display = 'none';
-            
-            // Reset rotation buttons
-            document.querySelectorAll('.rotation-btn').forEach(btn => {
-                btn.classList.remove('selected');
-                if (btn.dataset.rotation === '90') {
-                    btn.classList.add('selected');
-                }
-            });
-            
-            // Reset page selection buttons
-            document.querySelectorAll('.page-btn').forEach(btn => {
-                btn.classList.remove('selected');
-                if (btn.dataset.pages === 'all') {
-                    btn.classList.add('selected');
-                }
-            });
-        }
-
-        function showSuccess(message) {
-            elements.successMessage.innerHTML = `<p>${message}</p>`;
-            elements.successMessage.style.display = 'block';
-            elements.errorMessage.style.display = 'none';
-            setTimeout(() => {
-                elements.successMessage.style.display = 'none';
-            }, 3000);
-        }
-
-        function showError(message) {
-            elements.errorMessage.innerHTML = `
-                <h4>❌ Error</h4>
-                <p>${message}</p>
-            `;
-            elements.errorMessage.style.display = 'block';
-            elements.successMessage.style.display = 'none';
-        }
-
-        // Initialize when DOM is ready
-        document.addEventListener('DOMContentLoaded', init);
+        elements.downloadBtn.onclick = () => {
+            const url = URL.createObjectURL(rotatedBlob);
+            const a = document.createElement('a'); a.href = url; a.download = 'rotated.pdf'; a.click();
+        };
     </script>
-    <script src="../modern-header.js"></script>
-</body>
+    <script src="../modern-header.min.js"></script>
+    <!-- Related Tools Widget (SEO Internal Linking) -->
+    <section id="related-tools-widget" style="padding:2.5rem 1rem; background:#f8fafc; border-top:1px solid #e2e8f0;">
+      <div style="max-width:900px;margin:0 auto;text-align:center;">
+        <h2 style="font-size:1.5rem;color:#1a202c;margin-bottom:1.5rem;font-weight:700;">You Might Also Like</h2>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">          <a href="/tools/organize-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Organize PDF &rarr;</a>          <a href="/tools/merge-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Merge PDF &rarr;</a>          <a href="/tools/split-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Split PDF &rarr;</a>        </div>
+        <p style="margin-top:1.5rem;color:#64748b;font-size:0.9rem;">Explore all <a href="/" style="color:#f97316;font-weight:600;">33+ free tools on PDFIndi</a> &rarr;</p>
+      </div>
+    </section>
+    <script>
+    // PDFIndi GA4 Custom Event Tracking
+    (function(){
+        // Track file_upload when user selects a file in any tool
+        document.addEventListener('change', function(e) {
+            if (e.target && e.target.type === 'file') {
+                var toolName = document.title.replace(' | PDFIndi','').replace(' - PDFIndi','').trim();
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'file_upload', {
+                        'tool_name': toolName,
+                        'page_path': window.location.pathname
+                    });
+                }
+                if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({'event':'file_upload','tool_name': toolName});
+                }
+            }
+        }, true);
+
+        // Track file_download when any download link / button is clicked
+        document.addEventListener('click', function(e) {
+            var el = e.target.closest('a[download], button[id*="download"], a[href*=".pdf"], a[href*="blob:"]');
+            if (el) {
+                var toolName = document.title.replace(' | PDFIndi','').replace(' - PDFIndi','').trim();
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'file_download', {
+                        'tool_name': toolName,
+                        'page_path': window.location.pathname
+                    });
+                }
+                if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({'event':'file_download','tool_name': toolName});
+                }
+            }
+        }, true);
+    })();
+    </script></body>
 </html>

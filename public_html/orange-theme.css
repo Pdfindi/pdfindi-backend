@@ -230,10 +230,16 @@ body {
 
 /* Ensure text is readable */
 h1, h2, h3, h4, h5, h6 {
-    color: #1F2937 !important;
+    color: #1F2937;
     background: none !important;
-    -webkit-text-fill-color: #1F2937 !important;
+    -webkit-text-fill-color: #1F2937;
     text-shadow: none !important;
+}
+
+/* Footer headings override */
+footer h3 {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
 }
 
 p, span, div {

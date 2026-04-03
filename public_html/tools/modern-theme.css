@@ -27,7 +27,7 @@
     --success-light: #D1FAE5;
     --warning-color: #F59E0B;
     --warning-light: #FEF3C7;
-    --error-color: #EF4444;
+    --error-color: #fa7220;
     --error-light: #FEE2E2;
     --info-color: #3B82F6;
     --info-light: #DBEAFE;
@@ -419,6 +419,39 @@ input[type="radio"] {
     display: none !important;
 }
 
+/* Compact spacing for tool pages - keep tools above fold */
+.tool-page {
+    margin-top: 0.5rem !important;
+    margin-bottom: 2rem !important;
+}
+
+.back-btn {
+    margin: 0.75rem 2rem !important;
+}
+
+.tool-header {
+    padding: 1.5rem 2rem 1rem !important;
+}
+
+.tool-icon {
+    font-size: 3rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.tool-header h1 {
+    font-size: 2rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.tool-header p {
+    font-size: 1rem !important;
+}
+
+.upload-zone {
+    margin: 1rem !important;
+    padding: 2rem 1.5rem !important;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .tool-container {
@@ -433,5 +466,188 @@ input[type="radio"] {
     .upload-btn,
     .process-btn {
         width: 100%;
+    }
+}
+
+
+/* --- How to Use Section --- */
+.how-to-section {
+    max-width: 1000px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 4rem !important;
+    padding: 3rem !important;
+    background: var(--color-white) !important;
+    border-radius: var(--radius-xl) !important;
+    box-shadow: var(--shadow-lg) !important;
+    border: 1px solid var(--color-gray-200) !important;
+    text-align: left !important;
+}
+
+.how-to-section h2 {
+    text-align: center !important;
+    margin-bottom: 3rem !important;
+    color: var(--color-gray-900) !important;
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+}
+
+.how-to-grid {
+    display: grid !important;
+    grid-template-columns: 1.2fr 0.8fr !important;
+    gap: 4rem !important;
+    align-items: center !important;
+}
+
+.how-to-steps ol {
+    counter-reset: step-counter !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.how-to-steps li {
+    counter-increment: step-counter !important;
+    position: relative !important;
+    padding-left: 4.5rem !important;
+    margin-bottom: 2.5rem !important;
+    font-size: 1.1rem !important;
+    color: var(--color-gray-700) !important;
+    line-height: 1.6 !important;
+}
+
+.how-to-steps li:last-child {
+    margin-bottom: 0 !important;
+}
+
+.how-to-steps li::before {
+    content: counter(step-counter) !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 3rem !important;
+    height: 3rem !important;
+    background: var(--primary-light) !important;
+    color: var(--primary-color) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-weight: 800 !important;
+    font-size: 1.25rem !important;
+    border: 2px solid var(--primary-color) !important;
+    box-shadow: 0 4px 10px rgba(255, 107, 53, 0.15) !important;
+}
+
+.how-to-steps li strong {
+    color: var(--color-gray-900) !important;
+    font-weight: 700 !important;
+}
+
+.how-to-diagram {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background: var(--color-gray-50) !important;
+    padding: 2.5rem !important;
+    border-radius: var(--radius-xl) !important;
+    border: 2px dashed var(--color-gray-200) !important;
+    transition: all 0.3s ease !important;
+}
+
+.how-to-diagram:hover {
+    border-color: var(--primary-color) !important;
+    background: var(--primary-light) !important;
+}
+
+.how-to-diagram svg {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* --- FAQ Section --- */
+.faq-section {
+    max-width: 1000px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 5rem !important;
+    margin-bottom: 5rem !important;
+    text-align: left !important;
+}
+
+.faq-section h2 {
+    text-align: center !important;
+    margin-bottom: 3.5rem !important;
+    color: var(--color-gray-900) !important;
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+}
+
+.faq-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+    gap: 2.5rem !important;
+}
+
+.faq-item {
+    background: var(--color-white) !important;
+    padding: 2.5rem !important;
+    border-radius: var(--radius-xl) !important;
+    border: 1px solid var(--color-gray-100) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: var(--shadow-sm) !important;
+}
+
+.faq-item:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: var(--shadow-xl) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.faq-item h3 {
+    color: var(--primary-color) !important;
+    margin-bottom: 1.25rem !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+}
+
+.faq-item p {
+    color: var(--color-gray-600) !important;
+    line-height: 1.7 !important;
+    font-size: 1rem !important;
+}
+
+/* --- Responsive Layout Fixes --- */
+@media (max-width: 992px) {
+    .how-to-grid {
+        grid-template-columns: 1fr !important;
+        gap: 3rem !important;
+    }
+    
+    .how-to-diagram {
+        order: -1 !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .how-to-section {
+        padding: 2rem 1.5rem !important;
+    }
+    
+    .how-to-steps li {
+        padding-left: 3.5rem !important;
+        font-size: 1rem !important;
+    }
+    
+    .how-to-steps li::before {
+        width: 2.5rem !important;
+        height: 2.5rem !important;
+        font-size: 1.1rem !important;
+    }
+    
+    .faq-grid {
+        grid-template-columns: 1fr !important;
     }
 }

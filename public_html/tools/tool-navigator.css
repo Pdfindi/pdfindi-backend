@@ -1,11 +1,11 @@
-/* Tool Navigator - Quick Access Menu */
+﻿/* Tool Navigator - Quick Access Menu */
 .tool-navigator-trigger {
     position: fixed;
     bottom: 2rem;
     left: 2.5rem;
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #FF9933 0%, #138808 100%);
+    background: linear-gradient(135deg, #fa7220 0%, #138808 100%);
     color: white;
     border: 3px solid #000080;
     border-radius: 50%;
@@ -13,7 +13,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 20px rgba(255, 153, 51, 0.5);
+    box-shadow: 0 4px 20px rgba(229, 62, 62, 0.5);
     transition: transform 0.3s ease;
     z-index: 2000;
     font-size: 1.5rem;
@@ -29,7 +29,7 @@
     left: 50%;
     bottom: 70px;
     transform: translateX(-50%);
-    background: linear-gradient(135deg, #FF9933 0%, #138808 100%);
+    background: linear-gradient(135deg, #fa7220 0%, #138808 100%);
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 6px;
@@ -99,7 +99,7 @@
 }
 
 .tool-nav-header {
-    background: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
+    background: linear-gradient(135deg, #fa7220 0%, #FFFFFF 50%, #138808 100%);
     padding: 1.5rem;
     border-bottom: 3px solid #000080;
     display: flex;
@@ -153,8 +153,8 @@
 
 .tool-nav-search input:focus {
     outline: none;
-    border-color: #FF9933;
-    box-shadow: 0 0 0 3px rgba(255, 153, 51, 0.1);
+    border-color: #fa7220;
+    box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
 }
 
 .tool-nav-content {
@@ -175,8 +175,8 @@
     letter-spacing: 0.5px;
     margin-bottom: 0.75rem;
     padding: 0.5rem;
-    background: linear-gradient(135deg, rgba(255, 153, 51, 0.1), rgba(19, 136, 8, 0.1));
-    border-left: 3px solid #FF9933;
+    background: linear-gradient(135deg, rgba(229, 62, 62, 0.1), rgba(19, 136, 8, 0.1));
+    border-left: 3px solid #fa7220;
 }
 
 .tool-nav-list {
@@ -207,7 +207,7 @@
     top: 0;
     width: 3px;
     height: 100%;
-    background: linear-gradient(135deg, #FF9933, #138808);
+    background: linear-gradient(135deg, #fa7220, #138808);
     transform: scaleY(0);
     transition: transform 0.3s ease;
 }
@@ -218,13 +218,13 @@
 
 .tool-nav-item:hover {
     background: #f8f9fa;
-    border-color: #FF9933;
+    border-color: #fa7220;
     transform: translateX(5px);
-    box-shadow: 0 2px 8px rgba(255, 153, 51, 0.2);
+    box-shadow: 0 2px 8px rgba(229, 62, 62, 0.2);
 }
 
 .tool-nav-item.active {
-    background: linear-gradient(135deg, rgba(255, 153, 51, 0.1), rgba(19, 136, 8, 0.1));
+    background: linear-gradient(135deg, rgba(229, 62, 62, 0.1), rgba(19, 136, 8, 0.1));
     border-color: #138808;
     font-weight: 600;
 }
@@ -247,7 +247,7 @@
 .tool-nav-badge {
     font-size: 0.7rem;
     padding: 0.25rem 0.5rem;
-    background: #FF9933;
+    background: #fa7220;
     color: white;
     border-radius: 12px;
     font-weight: 600;
@@ -306,7 +306,7 @@
 }
 
 .tool-nav-quick-btn:hover {
-    background: linear-gradient(135deg, #FF9933, #138808);
+    background: linear-gradient(135deg, #fa7220, #138808);
     color: white;
     border-color: #000080;
     transform: translateY(-2px);
@@ -349,10 +349,12 @@
 }
 
 .tool-nav-content::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #FF9933, #138808);
+    background: linear-gradient(135deg, #fa7220, #138808);
     border-radius: 3px;
 }
 
 .tool-nav-content::-webkit-scrollbar-thumb:hover {
     background: #000080;
 }
+
+

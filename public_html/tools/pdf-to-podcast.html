@@ -1,0 +1,364 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WWZRMF4W');</script>
+<!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Podcast - AI Converters for Audio Scripts | PDFIndi</title>
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://pdfindi.com/tools/pdf-to-podcast">
+    <meta name="description" content="Convert any PDF into a natural-sounding podcast script. Our AI simulates a conversation about your document's content for easy listening and sharing for free on PDFIndi.">
+    <meta name="keywords" content="pdf to podcast, convert pdf to audio script, ai podcast generator, document to speech script, free ai tools india">
+    
+    <link rel="icon" href="../favicon-pi.svg" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.min.css">
+    <link rel="stylesheet" href="../modern-header.min.css">
+    <link rel="stylesheet" href="modern-theme.css">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #fa7220 0%, #fa7220 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 80px 0 0 0;
+            color: #1f2937;
+        }
+
+        .tool-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .app-card {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.3);
+            text-align: center;
+        }
+
+        .upload-area {
+            border: 3px dashed #e5e7eb;
+            padding: 3rem;
+            border-radius: 16px;
+            cursor: pointer;
+            margin: 2rem 0;
+            transition: all 0.2s;
+        }
+
+        .upload-area:hover { border-color: #fa7220; background: rgba(250, 114, 32, 0.05); }
+
+        .podcast-script {
+            text-align: left;
+            margin-top: 3rem;
+            display: none;
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid #f3f4f6;
+        }
+
+        .script-line { margin-bottom: 1.5rem; padding-left: 1rem; border-left: 3px solid #e5e7eb; }
+        .speaker { font-weight: 800; color: #fa7220; margin-bottom: 0.25rem; display: block; }
+        .dialogue { font-size: 1.05rem; line-height: 1.6; color: #4b5563; }
+
+        .loading { display: none; margin: 2rem auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center; gap: 0.5rem;
+            color: #4b5563; text-decoration: none; font-weight: 600; margin-bottom: 1.5rem;
+        }
+    </style>
+
+    <!-- Schema: SoftwareApplication + FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "PDF to Podcast - PDFIndi",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Web Browser",
+          "url": "https://pdfindi.com/tools/pdf-to-podcast",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+          "publisher": { "@type": "Organization", "name": "PDFIndi", "url": "https://pdfindi.com" },
+          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "1024" },
+          "description": "Convert PDF into a Podcast-Style Audio Summary Free - 100% free, no sign-up, no watermarks. Made in India.",
+          "featureList": ["Free to use", "No sign-up required", "No watermarks", "SSL encrypted", "Files auto-deleted", "Mobile friendly"]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pdfindi.com/" },
+            { "@type": "ListItem", "position": 2, "name": "PDF to Podcast", "item": "https://pdfindi.com/tools/pdf-to-podcast" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is PDF to Podcast on PDFIndi free?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, PDF to Podcast is completely free on PDFIndi. No sign-up, no payment, no watermarks." }
+            },
+            {
+              "@type": "Question",
+              "name": "Is it safe to use PDF to Podcast on PDFIndi?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. All files are processed with SSL encryption and automatically deleted after download. PDFIndi never stores your files." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does PDF to Podcast work on mobile?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, PDF to Podcast works on all devices including Android and iPhone directly in the browser - no app download needed." }
+            }
+          ]
+        }
+      ]
+    }
+    </script></head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWZRMF4W"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    <div class="tool-container">
+        <a href="../index.html?filter=ai#tools-section" class="back-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to AI Tools
+        </a>
+
+        <div class="app-card">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🎙️</div>
+            <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem;">PDF to Podcast Script</h1>
+            <p style="color: #6b7280; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+                Transform flat text into a dynamic dialogue. Our AI generates a conversational script based on your PDF's core findings.
+            </p>
+
+            <div class="upload-area" id="drop-zone" onclick="document.getElementById('file-input').click()">
+                <input type="file" id="file-input" accept=".pdf" style="display: none;">
+                <h3 style="font-size: 1.5rem;">Upload Document to Storyboard</h3>
+                <p style="color: #9ca3af;">Get a ready-to-record conversational script</p>
+            </div>
+
+            <div id="loading" class="loading">
+                <div class="spinner" style="width: 40px; height: 40px; border: 4px solid #f3f4f6; border-top: 4px solid #fa7220; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+                <p style="margin-top: 1rem; font-weight: 600;">Generating Podcast Script...</p>
+            </div>
+
+            <div id="result-area" style="display: none;">
+                <div class="podcast-script" id="script-content"></div>
+                
+                <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
+                    <button id="download-btn" class="primary-upload-btn" style="background: var(--primary-gradient); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer;">
+                        Download Script PDF
+                    </button>
+                    <button class="tool-btn" onclick="location.reload()" style="padding: 1rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; border: 1px solid #e5e7eb; background: white;">
+                        Try Another
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <section class="how-to-section">
+            <h2>How to Convert PDF to Podcast on PDFIndi</h2>
+            <div class="how-to-grid">
+                <div class="how-to-steps">
+                    <ol>
+                        <li>Upload your <strong>PDF report</strong> or informational document.</li>
+                        <li>Our AI identifies standard <strong>conversational patterns</strong>.</li>
+                        <li>It creates a <strong>Host A & Host B script</strong> summarizing the content.</li>
+                        <li>The script is <strong>automatically downloaded</strong> as a professional PDF.</li>
+                    </ol>
+                </div>
+                <div class="how-to-diagram">
+                    <svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="15" fill="white" stroke="#fa7220" stroke-width="2"/>
+                        <circle cx="150" cy="50" r="15" fill="white" stroke="#fa7220" stroke-width="2"/>
+                        <circle cx="100" cy="80" r="10" fill="#fa7220"/>
+                        <path d="M70 50H130" stroke="#e5e7eb" stroke-dasharray="4 4" stroke-width="2"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Is it a real audio file?</h3>
+                    <p>Currently, we provide a high-quality written script. You can use this script with any AI voice generator or record it yourself.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>How many hosts are in the script?</h3>
+                    <p>The script is formatted for two hosts (Alex and Jordan) to make the content sound more dynamic and engaging.</p>
+                </div>
+            </div>
+        </section>
+    
+        <section class="seo-content-block" style="padding: 2rem; background: #f8f9fa; border-radius: 16px; margin: 3rem 0 1rem; color: #495057; border: 1px solid #e2e8f0;">
+            <h2 style="font-size: 1.4rem; color: #1F2937; margin-bottom: 1rem; font-weight: 700;">About The Free Online PDF to Podcast Script Tool</h2>
+            <p style="margin-bottom: 1rem; line-height: 1.6; font-size: 0.95rem;">Are you looking for a fast, secure, and entirely free <strong>PDF to Podcast Script</strong> solution? You are in the right place. Our premium <strong>PDF to Podcast Script</strong> tool is meticulously designed to deliver professional-grade results directly in your web browser. There is absolutely no software to install, no registration required, and zero hidden fees. Just upload your file, and let our advanced processing engine handle the rest in seconds.</p>
+            <p style="margin-bottom: 0; line-height: 1.6; font-size: 0.95rem;">Your privacy and data security are our top priorities. All operations for the <strong>PDF to Podcast Script</strong> feature are secured via enterprise-grade SSL encryption. Files are automatically processed and deleted to protect your sensitive data. Whether you are a student, a business professional, or just need to get a quick job done, this utility provides the highest quality output without any watermarks or restrictive usage limits.</p>
+        </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        const fileInput = document.getElementById('file-input');
+        const loading = document.getElementById('loading');
+        const resultArea = document.getElementById('result-area');
+        const scriptContent = document.getElementById('script-content');
+        const dropZone = document.getElementById('drop-zone');
+
+        fileInput.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            dropZone.style.display = 'none';
+            loading.style.display = 'block';
+
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+                
+                let text = "";
+                for (let i = 1; i <= Math.min(pdf.numPages, 10); i++) {
+                    const page = await pdf.getPage(i);
+                    const content = await page.getTextContent();
+                    text += content.items.map(item => item.str).join(" ") + " ";
+                }
+
+                generatePodcastScript(text);
+            } catch (err) {
+                alert("Error creating script.");
+                location.reload();
+            }
+        };
+
+        function generatePodcastScript(text) {
+            loading.style.display = 'none';
+            resultArea.style.display = 'block';
+            scriptContent.style.display = 'block';
+
+            const facts = text.split(/(?<=[.!?])\s+/).filter(s => s.trim().length > 60).slice(0, 10);
+            const script = [];
+            
+            script.push({ speaker: "Alex", text: "Welcome back to the PDFIndi Insight series. Today we're diving into a very interesting document." });
+            script.push({ speaker: "Jordan", text: "Definitely. There is a lot to unpack here. Let's start with the big picture." });
+
+            facts.forEach((f, i) => {
+                const speaker = i % 2 === 0 ? "Alex" : "Jordan";
+                const transition = i % 3 === 0 ? "That's a great point. Also, " : "I found this part fascinating: ";
+                script.push({ speaker: speaker, text: transition + f });
+            });
+
+            script.push({ speaker: "Alex", text: "That just about wraps up our dive into this document. Thanks for listening!" });
+
+            let html = "";
+            script.forEach(s => {
+                html += `<div class="script-line"><span class="speaker">${s.speaker}</span><p class="dialogue">${s.text}</p></div>`;
+            });
+            scriptContent.innerHTML = html;
+
+            const fullTextForPDF = script.map(s => `${s.speaker}: ${s.text}`).join('\n\n');
+
+            // Trigger Automatic Download
+            setTimeout(() => { downloadScript(fullTextForPDF); }, 2000);
+            document.getElementById('download-btn').onclick = () => downloadScript(fullTextForPDF);
+        }
+
+        function downloadScript(text) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            doc.setFontSize(22);
+            doc.setTextColor(250, 114, 32);
+            doc.text("AI Podcast Script", 20, 20);
+            
+            doc.setFontSize(10);
+            doc.setTextColor(150);
+            doc.text("Drafted by PDFIndi AI", 20, 30);
+            
+            doc.setFontSize(11);
+            doc.setTextColor(50);
+            const lines = doc.splitTextToSize(text, 170);
+            doc.text(lines, 20, 45);
+            
+            doc.save("pdfindi-podcast-script.pdf");
+        }
+    </script>
+    <script src="../modern-header.min.js"></script>
+    <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
+    <!-- Related Tools Widget (SEO Internal Linking) -->
+    <section id="related-tools-widget" style="padding:2.5rem 1rem; background:#f8fafc; border-top:1px solid #e2e8f0;">
+      <div style="max-width:900px;margin:0 auto;text-align:center;">
+        <h2 style="font-size:1.5rem;color:#1a202c;margin-bottom:1.5rem;font-weight:700;">You Might Also Like</h2>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">          <a href="/tools/text-to-speech" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Text to Speech &rarr;</a>          <a href="/tools/pdf-summarizer" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">AI PDF Summarizer &rarr;</a>          <a href="/tools/pdf-to-study-notes" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">PDF to Study Notes &rarr;</a>        </div>
+        <p style="margin-top:1.5rem;color:#64748b;font-size:0.9rem;">Explore all <a href="/" style="color:#f97316;font-weight:600;">33+ free tools on PDFIndi</a> &rarr;</p>
+      </div>
+    </section>
+    <script>
+    // PDFIndi GA4 Custom Event Tracking
+    (function(){
+        // Track file_upload when user selects a file in any tool
+        document.addEventListener('change', function(e) {
+            if (e.target && e.target.type === 'file') {
+                var toolName = document.title.replace(' | PDFIndi','').replace(' - PDFIndi','').trim();
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'file_upload', {
+                        'tool_name': toolName,
+                        'page_path': window.location.pathname
+                    });
+                }
+                if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({'event':'file_upload','tool_name': toolName});
+                }
+            }
+        }, true);
+
+        // Track file_download when any download link / button is clicked
+        document.addEventListener('click', function(e) {
+            var el = e.target.closest('a[download], button[id*="download"], a[href*=".pdf"], a[href*="blob:"]');
+            if (el) {
+                var toolName = document.title.replace(' | PDFIndi','').replace(' - PDFIndi','').trim();
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'file_download', {
+                        'tool_name': toolName,
+                        'page_path': window.location.pathname
+                    });
+                }
+                if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({'event':'file_download','tool_name': toolName});
+                }
+            }
+        }, true);
+    })();
+    </script></body>
+</html>

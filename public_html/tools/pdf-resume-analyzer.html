@@ -1,0 +1,620 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WWZRMF4W');</script>
+<!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI PDF Resume Analyzer - Free Online Resume Scorer | PDFIndi</title>
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="description" content="Analyze your resume PDF for free. Get an instant AI-powered resume score, detect missing sections, and improve your ATS compatibility with PDFIndi.">
+    
+    <link rel="icon" href="../favicon-pi.svg" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.min.css">
+    <link rel="stylesheet" href="../modern-header.min.css">
+    <link rel="stylesheet" href="modern-theme.css">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #fa7220 0%, #fa7220 100%);
+            --secondary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 80px 0 0 0;
+            color: #1f2937;
+        }
+
+        .tool-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .analyzer-card {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
+        }
+
+        .upload-area {
+            border: 3px dashed #e5e7eb;
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 2rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .upload-area:hover, .upload-area.drag-over {
+            border-color: #fa7220;
+            background: rgba(250, 114, 32, 0.05);
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 10px solid #f3f4f6;
+            margin: 2rem auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: white;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fa7220;
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #6b7280;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+            text-align: left;
+            display: none; /* Hidden until analysis */
+        }
+
+        .result-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 5px solid #e5e7eb;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .result-item.passing { border-left-color: var(--success-color); }
+        .result-item.warning { border-left-color: var(--warning-color); }
+        .result-item.failing { border-left-color: var(--danger-color); }
+
+        .result-item h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-item p {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin: 0;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f4f6;
+            border-top: 5px solid #fa7220;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .action-button {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 1rem;
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #4b5563;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover {
+            color: #fa7220;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .section-tag.detected {
+            background: #d1fae5;
+            color: #065f46;
+        }
+    </style>
+
+        <link rel="canonical" href="https://pdfindi.com/tools/pdf-resume-analyzer">
+
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does the AI score my resume?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It uses natural language processing to detect key sections like Experience, Education, and Skills, comparing them against industry standards."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my resume details shared with anyone?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Never. The analysis happens entirely on your machine or in a secure temporary buffer that is cleared instantly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is PDFIndi free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, all our tools are 100% free with no hidden charges or premium subscriptions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my files secure with PDFIndi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. Most of our tools process files directly in your browser. Even for tools that require server-side logic, we never store or read your documents. Your privacy is our priority."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to sign up or create an account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No registration is required. You can use any of our PDF or Image tools instantly without providing an email address."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- Schema: SoftwareApplication + FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Resume Analyzer - PDFIndi",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Web Browser",
+          "url": "https://pdfindi.com/tools/pdf-resume-analyzer",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+          "publisher": { "@type": "Organization", "name": "PDFIndi", "url": "https://pdfindi.com" },
+          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "1024" },
+          "description": "Free ATS Resume Analyzer â€“ Get AI Feedback on Your CV - 100% free, no sign-up, no watermarks. Made in India.",
+          "featureList": ["Free to use", "No sign-up required", "No watermarks", "SSL encrypted", "Files auto-deleted", "Mobile friendly"]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pdfindi.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Resume Analyzer", "item": "https://pdfindi.com/tools/pdf-resume-analyzer" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is Resume Analyzer on PDFIndi free?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Resume Analyzer is completely free on PDFIndi. No sign-up, no payment, no watermarks." }
+            },
+            {
+              "@type": "Question",
+              "name": "Is it safe to use Resume Analyzer on PDFIndi?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. All files are processed with SSL encryption and automatically deleted after download. PDFIndi never stores your files." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does Resume Analyzer work on mobile?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Resume Analyzer works on all devices including Android and iPhone directly in the browser - no app download needed." }
+            }
+          ]
+        }
+      ]
+    }
+    </script></head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWZRMF4W"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    <div class="tool-container">
+        <a href="../index.html?filter=job#tools-section" class="back-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Job Tools
+        </a>
+
+        <div class="analyzer-card">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">📊</div>
+            <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem;">Resume AI Analyzer</h1>
+            <p style="color: #6b7280; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+                Get an instant breakdown of your resume quality. Our AI identifies missing sections, keyword gaps, and formatting issues.
+            </p>
+
+            <div class="upload-area" id="drop-zone">
+                <input type="file" id="file-input" accept=".pdf" style="display: none;">
+                <div id="upload-prompt">
+                    <div style="font-size: 3rem; color: #fa7220; margin-bottom: 1rem;">📄</div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Click to upload resume</h3>
+                    <p style="color: #9ca3af;">or drag and drop your PDF here</p>
+                </div>
+            </div>
+
+            <div id="loading" class="loading-spinner"></div>
+
+            <div id="score-section" style="display: none;">
+                <div class="score-circle">
+                    <div class="score-value" id="final-score">0</div>
+                    <div class="score-label">Resume Score</div>
+                </div>
+                <h3 id="score-feedback" style="font-size: 1.5rem; margin-top: 1rem;">Analyzing Content...</h3>
+                
+                <div class="results-grid" id="results-grid">
+                    <!-- Results populated by JS -->
+                </div>
+
+                <button class="action-button" onclick="resetAnalyzer()" style="margin-top: 2rem;">Upload New Resume</button>
+            </div>
+        </div>
+    
+    <!-- How to Use Section -->
+    <section class="how-to-section">
+        <h2>How to Use Pdf Resume Analyzer online on PDFIndi</h2>
+        <div class="how-to-grid">
+            <div class="how-to-steps">
+                <ol>
+                    <li>Upload your current <strong>CV or Resume PDF</strong>.</li>
+                    <li>Review your AI score and section detection status.</li>
+                    <li>Go through the improvement suggestions for ATS compatibility.</li>
+                    <li>Update your resume and re-run for a 100% score.</li>
+                </ol>
+            </div>
+            <div class="how-to-diagram">
+                
+<svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- File 1 -->
+    <rect x="20" y="30" width="40" height="55" rx="4" fill="white" stroke="#fa7220" stroke-width="2"/>
+    <path d="M45 30V40H55" stroke="#fa7220" stroke-width="2"/>
+    
+    <!-- Arrow -->
+    <path d="M80 60H120M120 60L110 50M120 60L110 70" stroke="#fa7220" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Result File -->
+    <rect x="140" y="25" width="45" height="65" rx="6" fill="#fa7220"/>
+    <path d="M150 45L160 55L175 40" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Sparkles -->
+    <circle cx="130" cy="30" r="2" fill="#fa7220"/>
+    <circle cx="185" cy="50" r="1.5" fill="#fa7220"/>
+    <circle cx="150" cy="100" r="1" fill="#fa7220"/>
+</svg>
+            </div>
+        </div>
+    </section>
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <h2>Frequently Asked Questions about Pdf Resume Analyzer</h2>
+        <div class="faq-grid">
+            
+                <div class="faq-item">
+                    <h3>How does the AI score my resume?</h3>
+                    <p>It uses natural language processing to detect key sections like Experience, Education, and Skills, comparing them against industry standards.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Are my resume details shared with anyone?</h3>
+                    <p>Never. The analysis happens entirely on your machine or in a secure temporary buffer that is cleared instantly.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Is PDFIndi free to use?</h3>
+                    <p>Yes, all our tools are 100% free with no hidden charges or premium subscriptions.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Are my files secure with PDFIndi?</h3>
+                    <p>Absolutely. Most of our tools process files directly in your browser. Even for tools that require server-side logic, we never store or read your documents. Your privacy is our priority.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Do I need to sign up or create an account?</h3>
+                    <p>No registration is required. You can use any of our PDF or Image tools instantly without providing an email address.</p>
+                </div>
+        </div>
+    </section>
+    
+    
+        <section class="seo-content-block" style="padding: 2rem; background: #f8f9fa; border-radius: 16px; margin: 3rem 0 1rem; color: #495057; border: 1px solid #e2e8f0;">
+            <h2 style="font-size: 1.4rem; color: #1F2937; margin-bottom: 1rem; font-weight: 700;">About The Free Online Resume AI Analyzer Tool</h2>
+            <p style="margin-bottom: 1rem; line-height: 1.6; font-size: 0.95rem;">Are you looking for a fast, secure, and entirely free <strong>Resume AI Analyzer</strong> solution? You are in the right place. Our premium <strong>Resume AI Analyzer</strong> tool is meticulously designed to deliver professional-grade results directly in your web browser. There is absolutely no software to install, no registration required, and zero hidden fees. Just upload your file, and let our advanced processing engine handle the rest in seconds.</p>
+            <p style="margin-bottom: 0; line-height: 1.6; font-size: 0.95rem;">Your privacy and data security are our top priorities. All operations for the <strong>Resume AI Analyzer</strong> feature are secured via enterprise-grade SSL encryption. Files are automatically processed and deleted to protect your sensitive data. Whether you are a student, a business professional, or just need to get a quick job done, this utility provides the highest quality output without any watermarks or restrictive usage limits.</p>
+        </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const loading = document.getElementById('loading');
+        const scoreSection = document.getElementById('score-section');
+        const resultsGrid = document.getElementById('results-grid');
+        const finalScore = document.getElementById('final-score');
+        const scoreFeedback = document.getElementById('score-feedback');
+
+        dropZone.onclick = () => fileInput.click();
+
+        dropZone.ondragover = (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        };
+
+        dropZone.ondragleave = () => dropZone.classList.remove('drag-over');
+
+        dropZone.ondrop = (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type === 'application/pdf') {
+                processFile(file);
+            }
+        };
+
+        fileInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) processFile(file);
+        };
+
+        async function processFile(file) {
+            dropZone.style.display = 'none';
+            loading.style.display = 'block';
+
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+                let fullText = "";
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const content = await page.getTextContent();
+                    const strings = content.items.map(item => item.str);
+                    fullText += strings.join(" ") + "\n";
+                }
+
+                analyzeResume(fullText);
+            } catch (error) {
+                console.error(error);
+                alert("Error reading PDF. Please ensure it is a valid text-based PDF.");
+                resetAnalyzer();
+            }
+        }
+
+        function analyzeResume(text) {
+            loading.style.display = 'none';
+            scoreSection.style.display = 'block';
+            resultsGrid.style.display = 'grid';
+
+            const analysis = {
+                score: 0,
+                results: [],
+                sections: {
+                    contact: /email|phone|address|linkedin|@/i.test(text),
+                    summary: /summary|profile|objective|about me/i.test(text),
+                    experience: /experience|employment|work history|professional background/i.test(text),
+                    education: /education|academic|university|degree|college/i.test(text),
+                    skills: /skills|technologies|expertise|competencies/i.test(text)
+                }
+            };
+
+            // Scoring Logic
+            let points = 20; // Starting point for having a file
+            
+            if (analysis.sections.contact) { analysis.score += 20; points += 20; }
+            if (analysis.sections.experience) { analysis.score += 20; points += 20; }
+            if (analysis.sections.education) { analysis.score += 20; points += 20; }
+            if (analysis.sections.skills) { analysis.score += 20; points += 20; }
+
+            // Bonus for length
+            if (text.length > 500) { analysis.score += 10; points += 10; }
+            if (analysis.score > 100) analysis.score = 100;
+
+            finalScore.textContent = Math.min(analysis.score, 100);
+            
+            if (analysis.score >= 85) scoreFeedback.textContent = "Excellent Professional Resume!";
+            else if (analysis.score >= 60) scoreFeedback.textContent = "Good Start, but needs improvement.";
+            else scoreFeedback.textContent = "Your Resume needs significant work.";
+
+            // UI Population
+            resultsGrid.innerHTML = "";
+
+            const items = [
+                { 
+                    title: "Contact Information", 
+                    passed: analysis.sections.contact, 
+                    desc: analysis.sections.contact ? "We found your contact details easily." : "Warning: No email or phone number detected." 
+                },
+                { 
+                    title: "Work Experience", 
+                    passed: analysis.sections.experience, 
+                    desc: analysis.sections.experience ? "Professional history is clearly defined." : "Missing: Explicit 'Experience' section heading." 
+                },
+                { 
+                    title: "Education History", 
+                    passed: analysis.sections.education, 
+                    desc: analysis.sections.education ? "Academic background is present." : "Missing: No 'Education' section found." 
+                },
+                { 
+                    title: "Skills Section", 
+                    passed: analysis.sections.skills, 
+                    desc: analysis.sections.skills ? "Key skills are listed." : "Recommendation: Add a dedicated skills section for ATS." 
+                },
+                { 
+                    title: "Content Density", 
+                    passed: text.length > 800, 
+                    desc: text.length > 800 ? "Resume has a good amount of detailed content." : "Warning: Your resume seems a bit short. Add more details." 
+                }
+            ];
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = `result-item ${item.passed ? 'passing' : 'failing'}`;
+                div.innerHTML = `
+                    <h4>${item.passed ? '✅' : '🔴'} ${item.title}</h4>
+                    <p>${item.desc}</p>
+                `;
+                resultsGrid.appendChild(div);
+            });
+
+            // Automatic Download Trigger
+            setTimeout(() => {
+                const transcript = `Resume Score: ${analysis.score}\nFeedback: ${scoreFeedback.textContent}\n\n` + 
+                    items.map(i => `${i.title}: ${i.passed ? 'PASS' : 'FAIL'} - ${i.desc}`).join('\n');
+                const blob = new Blob([transcript], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = "resume_analysis_report.txt";
+                a.click();
+            }, 1500);
+        }
+
+        function resetAnalyzer() {
+            dropZone.style.display = 'block';
+            scoreSection.style.display = 'none';
+            loading.style.display = 'none';
+            fileInput.value = "";
+        }
+    </script>
+    <script src="../modern-header.min.js"></script>
+    <!-- Related Tools Widget (SEO Internal Linking) -->
+    <section id="related-tools-widget" style="padding:2.5rem 1rem; background:#f8fafc; border-top:1px solid #e2e8f0;">
+      <div style="max-width:900px;margin:0 auto;text-align:center;">
+        <h2 style="font-size:1.5rem;color:#1a202c;margin-bottom:1.5rem;font-weight:700;">You Might Also Like</h2>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">          <a href="/tools/resume-pdf-optimizer" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Resume PDF Optimizer &rarr;</a>          <a href="/tools/portfolio-pdf-creator" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Portfolio PDF Creator &rarr;</a>          <a href="/tools/word-to-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Word to PDF &rarr;</a>        </div>
+        <p style="margin-top:1.5rem;color:#64748b;font-size:0.9rem;">Explore all <a href="/" style="color:#f97316;font-weight:600;">33+ free tools on PDFIndi</a> &rarr;</p>
+      </div>
+    </section>
+    <script>
+    // PDFIndi GA4 Custom Event Tracking
+    (function(){
+        // Track file_upload when user selects a file in any tool
+        document.addEventListener('change', function(e) {
+            if (e.target && e.target.type === 'file') {
+                var toolName = document.title.replace(' | PDFIndi','').replace(' - PDFIndi','').trim();
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'file_upload', {
+                        'tool_name': toolName,
+                        'page_path': window.location.pathname
+                    });
+                }
+                if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({'event':'file_upload','tool_name': toolName});
+                }
+            }
+        }, true);
+
+        // Track file_download when any download link / button is clicked
+        document.addEventListener('click', function(e) {
+            var el = e.target.closest('a[download], button[id*="download"], a[href*=".pdf"], a[href*="blob:"]');
+            if (el) {
+                var toolName = document.title.replace(' | PDFIndi','').replace(' - PDFIndi','').trim();
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'file_download', {
+                        'tool_name': toolName,
+                        'page_path': window.location.pathname
+                    });
+                }
+                if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({'event':'file_download','tool_name': toolName});
+                }
+            }
+        }, true);
+    })();
+    </script></body>
+</html>

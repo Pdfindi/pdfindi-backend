@@ -1,15 +1,31 @@
-# Robots.txt for PDFINDI
+# Robots.txt for PDFIndi
 # https://pdfindi.com/robots.txt
+# 100% Made in India – Free PDF & Utility Tools Platform
 
+# ── Allow all crawlers ──
 User-agent: *
 Allow: /
 
-# Sitemap location
+# ── Specifically allow Googlebot ──
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+# ── Allow Bingbot ──
+User-agent: Bingbot
+Allow: /
+
+# ── Block only non-public / junk paths ──
+Disallow: /backend/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /design-preview.html
+Disallow: /coming-soon.html
+Disallow: /*.ps1$
+Disallow: /*.bat$
+Disallow: /*.sh$
+
+# ── Sitemap ──
 Sitemap: https://pdfindi.com/sitemap.xml
-
-# Crawl-delay (optional, uncomment if needed)
-# Crawl-delay: 1
-
-# Disallow admin or sensitive paths if any exist
-# Disallow: /admin/
-# Disallow: /private/

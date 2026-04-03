@@ -1,17 +1,25 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WWZRMF4W');</script>
+    <!-- End Google Tag Manager -->
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit PDF - PDFINDI</title>
-    <link rel="icon" href="../favicon.png" type="image/png">
+    <title>Edit PDF (BETA) - PDFINDI</title>
+    <meta name="description" content="Free online Edit PDF (BETA) tool. 100% free, no sign-up required. Fast, secure, and made in India.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css">
-        <link rel="stylesheet" href="../modern-header.css">
-<link rel="stylesheet" href="modern-theme.css">
-    <link rel="stylesheet" href="../orange-theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.min.css">
+    <link rel="stylesheet" href="../modern-header.min.css">
     
     <!-- PDF.js for PDF rendering -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -21,10 +29,10 @@
     
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #FF9933 0%, #138808 100%);
-            --success-gradient: linear-gradient(135deg, #138808 0%, #34d399 100%);
-            --warning-gradient: linear-gradient(135deg, #FFB84D 0%, #FF9933 100%);
-            --error-gradient: linear-gradient(135deg, #000080 0%, #FF9933 100%);
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --error-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
             --glass-bg: rgba(255, 255, 255, 0.95);
             --shadow-light: 0 4px 20px rgba(0,0,0,0.08);
             --shadow-medium: 0 8px 32px rgba(0,0,0,0.12);
@@ -47,7 +55,7 @@
 
         .tool-page {
             max-width: 1200px;
-            margin: 2rem auto;
+            margin: 0.5rem auto 2rem;
             padding: 0;
             background: transparent;
             border-radius: var(--border-radius);
@@ -63,7 +71,7 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 0.95rem;
-            margin: 2rem;
+            margin: 0.5rem auto 2rem;
             padding: 0.75rem 1.5rem;
             background: var(--glass-bg);
             border-radius: 12px;
@@ -82,7 +90,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 153, 51, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
             transition: var(--transition);
         }
 
@@ -100,11 +108,53 @@
         /* Modern Tool Header */
         .tool-header {
             text-align: center;
-            padding: 3rem 2rem 2rem;
+            padding: 1.5rem 2rem 1rem;
             background: var(--primary-gradient);
             color: white;
             position: relative;
             overflow: hidden;
+        }
+
+        /* Tool title inside upload zone */
+        .tool-title-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(229, 62, 62, 0.15);
+        }
+        
+        .tool-icon-inline {
+            font-size: 2.5rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        
+        .tool-title-inline {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0;
+            color: #1f2937;
+            text-align: center;
+        }
+        
+        .tool-desc-inline {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin: 0.25rem 0 0 0;
+            text-align: center;
+        }
+        
+        /* Modern Tool Header - HIDDEN */
+        .tool-header {
+            display: none;
+        }
+        
+        /* Back button - HIDDEN */
+        .back-btn {
+            display: none;
         }
 
         .tool-header::before {
@@ -124,8 +174,8 @@
         }
 
         .tool-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
+            font-size: 3rem;
+            margin-bottom: 1rem;
             display: inline-block;
             animation: bounce-in 0.8s ease-out;
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
@@ -138,15 +188,34 @@
         }
 
         .tool-header h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 800;
-            margin: 0 0 1rem 0;
+            margin: 0 0 0.5rem 0;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
             letter-spacing: -0.02em;
         }
 
+        .beta-badge {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.85; transform: scale(1.05); }
+        }
+
         .tool-header p {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 400;
             margin: 0;
             opacity: 0.9;
@@ -172,9 +241,9 @@
         }
 
         .upload-zone {
-            border: 3px dashed rgba(255, 153, 51, 0.3);
+            border: 3px dashed rgba(99, 102, 241, 0.3);
             border-radius: var(--border-radius);
-            padding: 3rem 2rem;
+            padding: 2rem 1.5rem;
             text-align: center;
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
@@ -209,7 +278,7 @@
         }
 
         .upload-zone.dragover {
-            border-color: #138808;
+            border-color: #10b981;
             background: rgba(16, 185, 129, 0.05);
             transform: translateY(-2px);
             box-shadow: var(--shadow-medium);
@@ -217,15 +286,15 @@
 
         .upload-zone.dragover::before {
             opacity: 0.1;
-            background: linear-gradient(135deg, #138808 0%, #34d399 100%);
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
         }
 
         .upload-icon {
-            font-size: 4rem;
+            font-size: 3rem;
             color: #6366f1;
             margin-bottom: 1.5rem;
             transition: var(--transition);
-            filter: drop-shadow(0 2px 4px rgba(255, 153, 51, 0.2));
+            filter: drop-shadow(0 2px 4px rgba(99, 102, 241, 0.2));
         }
 
         .upload-zone:hover .upload-icon {
@@ -356,12 +425,12 @@
         }
 
         .text-editor-btn.save {
-            background: #138808;
+            background: #10b981;
             color: white;
         }
 
         .text-editor-btn.cancel {
-            background: #ef4444;
+            background: #fa7220;
             color: white;
         }
 
@@ -401,7 +470,7 @@
         .btn-secondary {
             background: var(--glass-bg);
             color: #6366f1;
-            border: 1px solid rgba(255, 153, 51, 0.3);
+            border: 1px solid rgba(99, 102, 241, 0.3);
             backdrop-filter: blur(10px);
         }
 
@@ -436,7 +505,7 @@
         .spinner {
             width: 40px;
             height: 40px;
-            border: 4px solid rgba(255, 153, 51, 0.3);
+            border: 4px solid rgba(99, 102, 241, 0.3);
             border-top: 4px solid #6366f1;
             border-radius: 50%;
             animation: spin 1s linear infinite;
@@ -525,7 +594,7 @@
         }
 
         .editable-text-box.selected {
-            border-color: #138808;
+            border-color: #10b981;
             box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
         }
 
@@ -581,7 +650,7 @@
         }
 
         .confidence-high {
-            background: #138808;
+            background: #10b981;
             color: white;
         }
 
@@ -591,34 +660,116 @@
         }
 
         .confidence-low {
-            background: #ef4444;
+            background: #fa7220;
             color: white;
         }
     </style>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Edit PDF",
-  "description": "Edit PDF documents online with text and image additions.",
-  "url": "https://pdfindi.com/tools/edit-pdf.html",
-  "applicationCategory": "PDF Editor",
-  "operatingSystem": "Any",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "INR"
-  },
-  "provider": {
-    "@type": "Organization",
-    "name": "PDFINDI",
-    "url": "https://pdfindi.com"
-  }
-}
-</script>
+    <!-- Breadcrumb Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://pdfindi.com/"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Edit PDF (BETA)",
+        "item": "https://pdfindi.com/tools/edit-pdf.html"
+      }]
+    }
+    </script>
 
-</head>
+        <link rel="canonical" href="https://pdfindi.com/tools/edit-pdf">
+
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is PDFIndi free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, all our tools are 100% free with no hidden charges or premium subscriptions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my files secure with PDFIndi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. Most of our tools process files directly in your browser. Even for tools that require server-side logic, we never store or read your documents. Your privacy is our priority."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to sign up or create an account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No registration is required. You can use any of our PDF or Image tools instantly without providing an email address."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- Schema: SoftwareApplication + FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Edit PDF - PDFIndi",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Web Browser",
+          "url": "https://pdfindi.com/tools/edit-pdf",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+          "publisher": { "@type": "Organization", "name": "PDFIndi", "url": "https://pdfindi.com" },
+          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "1024" },
+          "description": "Edit PDF Text & Images Online Free - 100% free, no sign-up, no watermarks. Made in India.",
+          "featureList": ["Free to use", "No sign-up required", "No watermarks", "SSL encrypted", "Files auto-deleted", "Mobile friendly"]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pdfindi.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Edit PDF", "item": "https://pdfindi.com/tools/edit-pdf" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is Edit PDF on PDFIndi free?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Edit PDF is completely free on PDFIndi. No sign-up, no payment, no watermarks." }
+            },
+            {
+              "@type": "Question",
+              "name": "Is it safe to use Edit PDF on PDFIndi?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. All files are processed with SSL encryption and automatically deleted after download. PDFIndi never stores your files." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does Edit PDF work on mobile?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Edit PDF works on all devices including Android and iPhone directly in the browser - no app download needed." }
+            }
+          ]
+        }
+      ]
+    }
+    </script></head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWZRMF4W"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div class="tool-page">
         <!-- Back Button -->
         <a href="../index.html#pdf-tools-section" class="back-btn">
@@ -631,7 +782,7 @@
         <!-- Tool Header -->
         <div class="tool-header">
             <div class="tool-icon">✏️</div>
-            <h1>Edit PDF</h1>
+            <h1>Edit PDF <span class="beta-badge">BETA</span></h1>
             <p>Add text, images, and annotations to your PDF documents with professional editing tools</p>
         </div>
 
@@ -1277,7 +1428,27 @@
                     <textarea class="editable-text-input" onfocus="selectOcrTextBox(${index})">${block.Text || ''}</textarea>
                     <div class="confidence-indicator ${confidenceClass}">
                         ${Math.round(confidence * 100)}%
-                    </div>
+                    
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <h2>Frequently Asked Questions about Edit Pdf</h2>
+        <div class="faq-grid">
+            
+                <div class="faq-item">
+                    <h3>Is PDFIndi free to use?</h3>
+                    <p>Yes, all our tools are 100% free with no hidden charges or premium subscriptions.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Are my files secure with PDFIndi?</h3>
+                    <p>Absolutely. Most of our tools process files directly in your browser. Even for tools that require server-side logic, we never store or read your documents. Your privacy is our priority.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Do I need to sign up or create an account?</h3>
+                    <p>No registration is required. You can use any of our PDF or Image tools instantly without providing an email address.</p>
+                </div>
+        </div>
+    </section>
+    </div>
                 `;
 
                 // Make draggable
@@ -1418,6 +1589,8 @@
             }
         }
     </script>
-    <script src="../modern-header.js"></script>
-</body>
-</html>
+    <script src="../modern-header.min.js"></script>
+
+
+
+

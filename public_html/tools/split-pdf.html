@@ -1,23 +1,51 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WWZRMF4W');</script>
+    <!-- End Google Tag Manager -->
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Split PDF - PDFINDI</title>
-    <link rel="icon" href="../favicon.png" type="image/png">
+    <title>Split PDF Online Free - Divide PDF Pages India | PDFIndi</title>
+    <meta name="description" content="Free online PDF splitter. Extract pages from PDF or split into multiple files. 100% Made in India. No registration required. Fast & secure splitting.">
+    <meta name="keywords" content="split pdf online free india, divide pdf pages, extract pdf pages, pdf splitter tool, separate pdf pages india, pdf ko split kaise kare">
+    <meta name="author" content="PDFIndi">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+        <link rel="canonical" href="https://pdfindi.com/tools/split-pdf">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Split PDF Online Free - Divide PDF Pages | PDFIndi">
+    <meta property="og:description" content="Free online PDF splitter. Extract pages from PDF or split into multiple files. 100% Made in India.">
+    <meta property="og:url" content="https://pdfindi.com/tools/split-pdf.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://pdfindi.com/favicon-pi.svg">
+    <meta property="og:locale" content="en_IN">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Split PDF Online Free - Divide PDF Pages | PDFIndi">
+    <meta name="twitter:description" content="Free online PDF splitter. Extract pages from PDF or split into multiple files. 100% Made in India.">
+    <meta name="twitter:image" content="https://pdfindi.com/favicon-pi.svg">
+    
+    <link rel="icon" href="../favicon-pi.svg" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css">
-        <link rel="stylesheet" href="../modern-header.css">
+    <link rel="stylesheet" href="../style.min.css">
+        <link rel="stylesheet" href="../modern-header.min.css">
 <link rel="stylesheet" href="modern-theme.css">
-    <link rel="stylesheet" href="../orange-theme.css">
+    
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+            --primary-gradient: linear-gradient(135deg, #fa7220 0%, #fa7220 100%);
             --success-gradient: linear-gradient(135deg, #10b981 0%, #34d399 100%);
             --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
-            --error-gradient: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+            --error-gradient: linear-gradient(135deg, #fa7220 0%, #fa7220 100%);
             --glass-bg: rgba(255, 255, 255, 0.95);
             --shadow-light: 0 4px 20px rgba(0,0,0,0.08);
             --shadow-medium: 0 8px 32px rgba(0,0,0,0.12);
@@ -35,16 +63,16 @@
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
             margin: 0;
-            padding: 0;
+            padding: 80px 0 0 0;
         }
 
         .tool-page {
             max-width: 1000px;
-            margin: 2rem auto;
+            margin: 0 auto 2rem;
             padding: 0;
             background: transparent;
             border-radius: var(--border-radius);
-            overflow: hidden;
+            overflow: visible;
         }
 
         /* Enhanced Back Button */
@@ -56,7 +84,7 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 0.95rem;
-            margin: 2rem;
+            margin: 0.75rem 2rem;
             padding: 0.75rem 1.5rem;
             background: var(--glass-bg);
             border-radius: 12px;
@@ -75,7 +103,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 153, 51, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(229, 62, 62, 0.1), transparent);
             transition: var(--transition);
         }
 
@@ -90,15 +118,37 @@
             box-shadow: var(--shadow-medium);
         }
 
-        /* Modern Tool Header */
-        .tool-header {
+        /* Tool title section - above upload zone */
+        .tool-title-section {
             text-align: center;
-            padding: 3rem 2rem 2rem;
-            background: var(--primary-gradient);
-            color: white;
-            position: relative;
-            overflow: hidden;
+            margin: 1.5rem auto 1.5rem;
+            max-width: 900px;
         }
+        
+        .tool-icon-inline {
+            display: none; /* Icon will be in upload zone instead */
+        }
+        
+        .tool-title-inline {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+            color: #1f2937;
+        }
+        
+        .tool-desc-inline {
+            font-size: 1rem;
+            color: #6b7280;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        /* Modern Tool Header - HIDDEN */
+        .tool-header {
+            display: none;
+        }
+        
+        
 
         .tool-header::before {
             content: '';
@@ -117,8 +167,8 @@
         }
 
         .tool-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
+            font-size: 3rem;
+            margin-bottom: 1rem;
             display: inline-block;
             animation: bounce-in 0.8s ease-out;
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
@@ -131,15 +181,15 @@
         }
 
         .tool-header h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 800;
-            margin: 0 0 1rem 0;
+            margin: 0 0 0.5rem 0;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
             letter-spacing: -0.02em;
         }
 
         .tool-header p {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 400;
             margin: 0;
             opacity: 0.9;
@@ -150,10 +200,11 @@
 
         /* Enhanced Upload Zone */
         .upload-zone {
-            margin: 2rem;
-            border: 3px dashed rgba(255, 153, 51, 0.3);
+            margin: 0.5rem auto 1rem;
+            max-width: 900px;
+            border: 3px dashed rgba(229, 62, 62, 0.3);
             border-radius: var(--border-radius);
-            padding: 3rem 2rem;
+            padding: 1.5rem;
             text-align: center;
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
@@ -200,16 +251,18 @@
         }
 
         .upload-icon {
-            font-size: 4rem;
-            color: #6366f1;
+            font-size: 3rem;
+            color: #fa7220;
             margin-bottom: 1.5rem;
             transition: var(--transition);
-            filter: drop-shadow(0 2px 4px rgba(255, 153, 51, 0.2));
+            filter: drop-shadow(0 2px 4px rgba(229, 62, 62, 0.2));
+            display: inline-block;
+            animation: bounce-in 0.8s ease-out;
         }
 
         .upload-zone:hover .upload-icon {
             transform: scale(1.1) rotate(5deg);
-            color: #4f46e5;
+            color: #ff7700;
         }
 
         .upload-zone h3 {
@@ -232,7 +285,7 @@
             backdrop-filter: blur(10px);
             padding: 2rem;
             border-radius: var(--border-radius);
-            margin: 2rem;
+            margin: 0.5rem auto 2rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: var(--shadow-light);
             animation: slide-in 0.5s ease-out;
@@ -263,7 +316,7 @@
         .info-grid p {
             margin: 0;
             padding: 0.75rem 1rem;
-            background: rgba(255, 153, 51, 0.05);
+            background: rgba(229, 62, 62, 0.05);
             border-radius: 8px;
             border-left: 3px solid #6366f1;
             font-weight: 500;
@@ -283,7 +336,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
-            margin: 2rem;
+            margin: 0.5rem auto 2rem;
             animation: slide-in 0.5s ease-out 0.2s both;
         }
 
@@ -325,7 +378,7 @@
 
         .option-card.selected {
             border-color: #6366f1;
-            background: rgba(255, 153, 51, 0.05);
+            background: rgba(229, 62, 62, 0.05);
             box-shadow: var(--shadow-medium);
         }
 
@@ -365,7 +418,7 @@
             backdrop-filter: blur(10px);
             padding: 2rem;
             border-radius: var(--border-radius);
-            margin: 2rem;
+            margin: 0.5rem auto 2rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: var(--shadow-light);
             animation: slide-in 0.5s ease-out 0.4s both;
@@ -375,7 +428,7 @@
         .custom-split-section h4 {
             font-size: 1.2rem;
             font-weight: 700;
-            margin: 0 0 1rem 0;
+            margin: 0 0 0.5rem 0;
             color: #1f2937;
             display: flex;
             align-items: center;
@@ -405,13 +458,13 @@
         }
 
         .page-option:hover {
-            background: rgba(255, 153, 51, 0.05);
+            background: rgba(229, 62, 62, 0.05);
             border-color: #6366f1;
             transform: translateY(-2px);
         }
 
         .page-option.selected {
-            background: rgba(255, 153, 51, 0.1);
+            background: rgba(229, 62, 62, 0.1);
             border-color: #6366f1;
             color: #6366f1;
         }
@@ -436,14 +489,14 @@
         .pages-input:focus {
             outline: none;
             border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(255, 153, 51, 0.1);
+            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
             background: white;
         }
 
         .pages-help {
             margin-top: 1rem;
             padding: 1rem;
-            background: rgba(255, 153, 51, 0.05);
+            background: rgba(229, 62, 62, 0.05);
             border-radius: 8px;
             border-left: 3px solid #6366f1;
         }
@@ -455,7 +508,7 @@
         }
 
         .pages-help code {
-            background: rgba(255, 153, 51, 0.1);
+            background: rgba(229, 62, 62, 0.1);
             padding: 0.25rem 0.5rem;
             border-radius: 4px;
             font-family: 'Inter', monospace;
@@ -476,7 +529,7 @@
             box-shadow: var(--shadow-light);
             position: relative;
             overflow: hidden;
-            margin: 2rem;
+            margin: 0.5rem auto 2rem;
         }
 
         .red-button::before {
@@ -512,8 +565,8 @@
         /* Enhanced Processing */
         .processing {
             text-align: center;
-            padding: 3rem 2rem;
-            margin: 2rem;
+            padding: 2rem 1.5rem;
+            margin: 0.5rem auto 2rem;
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             border-radius: var(--border-radius);
@@ -523,7 +576,7 @@
 
         .spinner {
             border: 4px solid rgba(255, 107, 53, 0.1);
-            border-left: 4px solid #FF6B35;
+            border-left: 4px solid #fa7220;
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -552,7 +605,7 @@
 
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #FF6B35 0%, #FF8C42 100%);
+            background: linear-gradient(90deg, #fa7220 0%, #fa7220 100%);
             border-radius: 10px;
             width: 0%;
             transition: width 0.3s ease;
@@ -591,8 +644,8 @@
         /* Enhanced Results Section */
         .results-section {
             text-align: center;
-            padding: 3rem 2rem;
-            margin: 2rem;
+            padding: 2rem 1.5rem;
+            margin: 0.5rem auto 2rem;
             background: var(--success-gradient);
             color: white;
             border-radius: var(--border-radius);
@@ -604,7 +657,7 @@
         .results-section h3 {
             font-size: 1.8rem;
             font-weight: 700;
-            margin: 0 0 1rem 0;
+            margin: 0 0 0.5rem 0;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
@@ -619,7 +672,7 @@
             gap: 1rem;
             margin: 2rem 0;
             max-width: 600px;
-            margin: 2rem auto;
+            margin: 0.5rem auto 2rem;
         }
 
         .download-item {
@@ -686,7 +739,7 @@
         .error-message {
             background: var(--error-gradient);
             color: white;
-            border-left: 4px solid #ef4444;
+            border-left: 4px solid #fa7220;
         }
 
         .success-message {
@@ -728,7 +781,7 @@
             }
 
             .upload-zone {
-                margin: 1rem;
+            margin: 0.5rem auto 1rem;
                 padding: 2rem 1rem;
             }
 
@@ -811,21 +864,122 @@
 }
 </script>
 
-</head>
+    <!-- Breadcrumb Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://pdfindi.com/"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Split PDF Online Free",
+        "item": "https://pdfindi.com/tools/split-pdf.html"
+      }]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is PDFIndi free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, all our tools are 100% free with no hidden charges or premium subscriptions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my files secure with PDFIndi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. Most of our tools process files directly in your browser. Even for tools that require server-side logic, we never store or read your documents. Your privacy is our priority."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to sign up or create an account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No registration is required. You can use any of our PDF or Image tools instantly without providing an email address."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- Schema: SoftwareApplication + FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Split PDF - PDFIndi",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Web Browser",
+          "url": "https://pdfindi.com/tools/split-pdf",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+          "publisher": { "@type": "Organization", "name": "PDFIndi", "url": "https://pdfindi.com" },
+          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "1024" },
+          "description": "Split PDF into Separate Pages or Sections - 100% free, no sign-up, no watermarks. Made in India.",
+          "featureList": ["Free to use", "No sign-up required", "No watermarks", "SSL encrypted", "Files auto-deleted", "Mobile friendly"]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pdfindi.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Split PDF", "item": "https://pdfindi.com/tools/split-pdf" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is Split PDF on PDFIndi free?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Split PDF is completely free on PDFIndi. No sign-up, no payment, no watermarks." }
+            },
+            {
+              "@type": "Question",
+              "name": "Is it safe to use Split PDF on PDFIndi?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. All files are processed with SSL encryption and automatically deleted after download. PDFIndi never stores your files." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does Split PDF work on mobile?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Split PDF works on all devices including Android and iPhone directly in the browser - no app download needed." }
+            }
+          ]
+        }
+      ]
+    }
+    </script></head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWZRMF4W"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div class="tool-page">
         <a href="../index.html#pdf-tools-section" class="back-btn" id="back-to-tools-btn">
             ← Back to PDF Tools
         </a>
         
-        <div class="tool-header">
-            <div class="tool-icon">✂️</div>
-            <h1>Split PDF</h1>
-            <p>Extract specific pages or split your PDF into multiple files</p>
+        <div class="tool-title-section">
+            <h1 class="tool-title-inline">Split PDF</h1>
+            <p class="tool-desc-inline">Extract specific pages or split your PDF into multiple files</p>
         </div>
-
+        
         <div class="upload-zone" id="upload-zone">
-            <div class="upload-icon">📄</div>
+            <div class="upload-icon">✂️</div>
             <h3>Drop your PDF here or click to browse</h3>
             <p>Maximum file size: 25MB • PDF format only</p>
             <input type="file" id="file-input" accept=".pdf" style="display: none;">
@@ -907,6 +1061,12 @@
                 <button class="red-button" id="split-new-btn">📄 Split Another PDF</button>
             </div>
         </div>
+    
+        <section class="seo-content-block" style="padding: 2rem; background: #f8f9fa; border-radius: 16px; margin: 3rem 0 1rem; color: #495057; border: 1px solid #e2e8f0;">
+            <h2 style="font-size: 1.4rem; color: #1F2937; margin-bottom: 1rem; font-weight: 700;">About The Free Online Split PDF Tool</h2>
+            <p style="margin-bottom: 1rem; line-height: 1.6; font-size: 0.95rem;">Are you looking for a fast, secure, and entirely free <strong>Split PDF</strong> solution? You are in the right place. Our premium <strong>Split PDF</strong> tool is meticulously designed to deliver professional-grade results directly in your web browser. There is absolutely no software to install, no registration required, and zero hidden fees. Just upload your file, and let our advanced processing engine handle the rest in seconds.</p>
+            <p style="margin-bottom: 0; line-height: 1.6; font-size: 0.95rem;">Your privacy and data security are our top priorities. All operations for the <strong>Split PDF</strong> feature are secured via enterprise-grade SSL encryption. Files are automatically processed and deleted to protect your sensitive data. Whether you are a student, a business professional, or just need to get a quick job done, this utility provides the highest quality output without any watermarks or restrictive usage limits.</p>
+        </section>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
@@ -1321,7 +1481,8 @@
                             <h4>${file.name}</h4>
                             <p>${formatFileSize(file.size)}</p>
                         </div>
-                    </div>
+                    
+    
                     <button class="download-btn" onclick="downloadFile(${index})">Download</button>
                 `;
             elements.downloadList.appendChild(item);
@@ -1423,6 +1584,54 @@
         // Make downloadFile function global
         window.downloadFile = downloadFile;
     </script>
-    <script src="../modern-header.js"></script>
-</body>
+    <script src="../modern-header.min.js"></script>
+    <!-- Related Tools Widget (SEO Internal Linking) -->
+    <section id="related-tools-widget" style="padding:2.5rem 1rem; background:#f8fafc; border-top:1px solid #e2e8f0;">
+      <div style="max-width:900px;margin:0 auto;text-align:center;">
+        <h2 style="font-size:1.5rem;color:#1a202c;margin-bottom:1.5rem;font-weight:700;">You Might Also Like</h2>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">          <a href="/tools/merge-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Merge PDF &rarr;</a>          <a href="/tools/organize-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Organize PDF &rarr;</a>          <a href="/tools/compress-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Compress PDF &rarr;</a>        </div>
+        <p style="margin-top:1.5rem;color:#64748b;font-size:0.9rem;">Explore all <a href="/" style="color:#f97316;font-weight:600;">33+ free tools on PDFIndi</a> &rarr;</p>
+      </div>
+    </section>
+    <script>
+    // PDFIndi GA4 Custom Event Tracking
+    (function(){
+        // Track file_upload when user selects a file in any tool
+        document.addEventListener('change', function(e) {
+            if (e.target && e.target.type === 'file') {
+                var toolName = document.title.replace(' | PDFIndi','').replace(' - PDFIndi','').trim();
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'file_upload', {
+                        'tool_name': toolName,
+                        'page_path': window.location.pathname
+                    });
+                }
+                if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({'event':'file_upload','tool_name': toolName});
+                }
+            }
+        }, true);
+
+        // Track file_download when any download link / button is clicked
+        document.addEventListener('click', function(e) {
+            var el = e.target.closest('a[download], button[id*="download"], a[href*=".pdf"], a[href*="blob:"]');
+            if (el) {
+                var toolName = document.title.replace(' | PDFIndi','').replace(' - PDFIndi','').trim();
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'file_download', {
+                        'tool_name': toolName,
+                        'page_path': window.location.pathname
+                    });
+                }
+                if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({'event':'file_download','tool_name': toolName});
+                }
+            }
+        }, true);
+    })();
+    </script></body>
 </html>
+
+
+
+

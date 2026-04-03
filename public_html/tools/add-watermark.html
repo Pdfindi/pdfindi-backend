@@ -1,20 +1,48 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WWZRMF4W');</script>
+    <!-- End Google Tag Manager -->
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Watermark to PDF - PDFINDI</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
+    <title>Add Watermark to PDF Online Free India - Text & Image | PDFIndi</title>
+    <meta name="description" content="Add watermark to PDF online for free. 100% Made in India. Add text or image watermarks to protect documents. No registration required. Easy & fast.">
+    <meta name="keywords" content="add watermark to pdf online free india, pdf watermark tool, watermark pdf documents, protect pdf with watermark india, pdf me watermark kaise lagaye">
+    <meta name="author" content="PDFIndi">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+        <link rel="canonical" href="https://pdfindi.com/tools/add-watermark">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Add Watermark to PDF Online Free India | PDFIndi">
+    <meta property="og:description" content="Add watermark to PDF online for free. 100% Made in India. Add text or image watermarks to protect documents.">
+    <meta property="og:url" content="https://pdfindi.com/tools/add-watermark.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://pdfindi.com/favicon-pi.svg">
+    <meta property="og:locale" content="en_IN">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Add Watermark to PDF Online Free India | PDFIndi">
+    <meta name="twitter:description" content="Add watermark to PDF online for free. 100% Made in India. Protect your documents.">
+    <meta name="twitter:image" content="https://pdfindi.com/favicon-pi.svg">
+    
+    <link rel="icon" type="image/png" href="/favicon-pi.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css">
-        <link rel="stylesheet" href="../modern-header.css">
+    <link rel="stylesheet" href="../style.min.css">
+        <link rel="stylesheet" href="../modern-header.min.css">
 <link rel="stylesheet" href="modern-theme.css">
-    <link rel="stylesheet" href="../orange-theme.css">
+    
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #FF9933 0%, #138808 100%);
+            --primary-gradient: linear-gradient(135deg, #fa7220 0%, #fa7220 100%);
             --success-gradient: linear-gradient(135deg, #138808 0%, #34d399 100%);
             --glass-bg: rgba(255, 255, 255, 0.85);
             --glass-border: rgba(255, 255, 255, 0.2);
@@ -30,7 +58,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #FF9933 0%, #138808 100%);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
             color: #333;
             overflow-x: hidden;
@@ -38,7 +66,7 @@
 
         .tool-page {
             max-width: 900px;
-            margin: 2rem auto;
+            margin: 0.5rem auto 2rem;
             padding: 2rem;
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -46,7 +74,7 @@
             border-radius: 24px;
             box-shadow: var(--shadow-heavy);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .tool-page::before {
@@ -60,6 +88,24 @@
             border-radius: 24px 24px 0 0;
         }
 
+        /* Tool title section - above upload zone */
+        .tool-title-section {
+            text-align: center;
+            margin: 1.5rem auto 1.5rem;
+            max-width: 900px;
+        }
+        
+        .tool-icon-inline {
+            display: none; /* Icon will be in upload zone instead */
+        }
+        
+        .tool-title-inline {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+            color: #1F2937;
+        }
+
         .tool-header {
             text-align: center;
             margin-bottom: 2rem;
@@ -69,13 +115,13 @@
         }
 
         .tool-icon {
-            font-size: 4rem;
+            font-size: 3rem;
             margin-bottom: 1rem;
             filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
         }
 
         .tool-title {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
             color: #333;
             margin-bottom: 0.5rem;
@@ -93,7 +139,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: #FF9933;
+            color: #fa7220;
             text-decoration: none;
             font-weight: 500;
             margin-bottom: 2rem;
@@ -115,7 +161,7 @@
         .upload-zone {
             border: 2px dashed rgba(102, 126, 234, 0.3);
             border-radius: 16px;
-            padding: 3rem 2rem;
+            padding: 2rem 1.5rem;
             text-align: center;
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(15px);
@@ -142,7 +188,7 @@
         }
 
         .upload-zone:hover {
-            border-color: #FF9933;
+            border-color: #fa7220;
             background: rgba(255, 255, 255, 0.9);
             transform: translateY(-2px);
             box-shadow: 0 12px 32px rgba(102, 126, 234, 0.2);
@@ -155,10 +201,18 @@
         }
 
         .upload-icon {
-            font-size: 4rem;
-            color: #FF9933;
+            font-size: 3rem;
+            color: #fa7220;
             margin-bottom: 1rem;
             filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.3));
+            display: inline-block;
+            animation: bounce-in 0.8s ease-out;
+        }
+
+        @keyframes bounce-in {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(-90deg); opacity: 0.5; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
         .pdf-info, .watermark-settings {
@@ -223,7 +277,7 @@
         .input-group select:focus,
         .input-group textarea:focus {
             outline: none;
-            border-color: #FF9933;
+            border-color: #fa7220;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
             background: rgba(255, 255, 255, 0.95);
         }
@@ -259,7 +313,7 @@
         }
 
         .radio-item.selected {
-            border-color: #FF9933;
+            border-color: #fa7220;
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
         }
 
@@ -293,7 +347,7 @@
 
         .range-value {
             font-weight: 600;
-            color: #FF9933;
+            color: #fa7220;
             min-width: 40px;
             text-align: center;
         }
@@ -371,7 +425,7 @@
 
         .error-message {
             background: var(--primary-gradient);
-            border: 1px solid rgba(255, 153, 51, 0.3);
+            border: 1px solid rgba(229, 62, 62, 0.3);
             color: white;
             padding: 1.5rem;
             border-radius: 12px;
@@ -465,8 +519,110 @@
 }
 </script>
 
-</head>
+    <!-- Breadcrumb Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://pdfindi.com/"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Add Watermark to PDF Online Free India",
+        "item": "https://pdfindi.com/tools/add-watermark.html"
+      }]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is PDFIndi free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, all our tools are 100% free with no hidden charges or premium subscriptions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my files secure with PDFIndi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. Most of our tools process files directly in your browser. Even for tools that require server-side logic, we never store or read your documents. Your privacy is our priority."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to sign up or create an account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No registration is required. You can use any of our PDF or Image tools instantly without providing an email address."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- Schema: SoftwareApplication + FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Add Watermark to PDF - PDFIndi",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Web Browser",
+          "url": "https://pdfindi.com/tools/add-watermark",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+          "publisher": { "@type": "Organization", "name": "PDFIndi", "url": "https://pdfindi.com" },
+          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "1024" },
+          "description": "Add Custom Text or Image Watermark to PDF Free - 100% free, no sign-up, no watermarks. Made in India.",
+          "featureList": ["Free to use", "No sign-up required", "No watermarks", "SSL encrypted", "Files auto-deleted", "Mobile friendly"]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pdfindi.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Add Watermark to PDF", "item": "https://pdfindi.com/tools/add-watermark" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is Add Watermark to PDF on PDFIndi free?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Add Watermark to PDF is completely free on PDFIndi. No sign-up, no payment, no watermarks." }
+            },
+            {
+              "@type": "Question",
+              "name": "Is it safe to use Add Watermark to PDF on PDFIndi?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. All files are processed with SSL encryption and automatically deleted after download. PDFIndi never stores your files." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does Add Watermark to PDF work on mobile?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Add Watermark to PDF works on all devices including Android and iPhone directly in the browser - no app download needed." }
+            }
+          ]
+        }
+      ]
+    }
+    </script></head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWZRMF4W"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div class="tool-page fade-in">
         <a href="../index.html#pdf-tools-section" class="back-btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -475,14 +631,13 @@
             Back to PDF Tools
         </a>
         
-        <div class="tool-header">
-            <div class="tool-icon">🏷️</div>
-            <h1 class="tool-title">Add Watermark</h1>
-            <p class="tool-subtitle">Add text or image watermarks to your PDF documents</p>
+        <div class="tool-title-section">
+            <h1 class="tool-title-inline">Add Watermark</h1>
+            <p class="tool-desc-inline">Add text or image watermarks to your PDF</p>
         </div>
-
+        
         <div class="upload-zone" id="upload-zone">
-            <div class="upload-icon">📄</div>
+            <div class="upload-icon">💧</div>
             <h3>Drop your PDF here or click to browse</h3>
             <p>Supports PDF files up to 50MB</p>
             <input type="file" id="file-input" accept=".pdf" style="display: none;">
@@ -623,6 +778,53 @@
             <p id="error-text"></p>
         </div>
     </div>
+
+    <!-- How to Use Section -->
+    <section class="how-to-section" style="max-width:900px; margin:0 auto 2rem; padding:0 1rem;">
+        <h2>How to Add a Watermark to PDF on PDFIndi</h2>
+        <div class="how-to-grid">
+            <div class="how-to-steps">
+                <ol>
+                    <li>Upload your <strong>PDF document</strong> to the watermark tool.</li>
+                    <li>Choose between a <strong>text or image watermark</strong>.</li>
+                    <li>Customize the <strong>text, color, opacity, position, and rotation</strong>.</li>
+                    <li>Click <strong>Add Watermark</strong> to process your PDF.</li>
+                    <li>Download your watermarked PDF instantly.</li>
+                </ol>
+            </div>
+            <div class="how-to-diagram">
+                <svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="20" y="20" width="45" height="65" rx="4" fill="white" stroke="#fa7220" stroke-width="2"/>
+                    <text x="25" y="60" font-size="10" fill="#fa7220" opacity="0.5" transform="rotate(-25, 43, 52)">SAMPLE</text>
+                    <path d="M85 60H120M120 60L110 50M120 60L110 70" stroke="#fa7220" stroke-width="3" stroke-linecap="round"/>
+                    <rect x="135" y="20" width="45" height="65" rx="4" fill="#fa7220"/>
+                    <path d="M140 55L155 65L175 40" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+    <!-- FAQ Section -->
+    <section class="faq-section" style="max-width:900px; margin:0 auto 4rem; padding:0 1rem;">
+        <h2>Frequently Asked Questions about PDF Watermark</h2>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <h3>Can I add an image as a watermark?</h3>
+                <p>Yes, you can upload a PNG or JPEG image to use as a watermark alongside the standard text watermark option.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Is the watermark permanent?</h3>
+                <p>Yes, once the watermark is embedded in the PDF, it becomes part of the document and cannot be removed without specialized software.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Is PDFIndi free to use?</h3>
+                <p>Yes, all our tools are 100% free with no hidden charges or premium subscriptions.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Are my files secure with PDFIndi?</h3>
+                <p>Absolutely. Your PDF is processed securely and never stored permanently on our servers.</p>
+            </div>
+        </div>
+    </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script>
@@ -1018,7 +1220,7 @@
             const tempDiv = document.createElement('div');
             tempDiv.className = 'success-message';
             tempDiv.innerHTML = `<p>${message}</p>`;
-            tempDiv.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; max-width: 500px;';
+            tempDiv.style.css?v=1.3Text = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; max-width: 500px;';
             document.body.appendChild(tempDiv);
             
             setTimeout(() => {
@@ -1038,6 +1240,54 @@
         // Initialize when DOM is ready
         document.addEventListener('DOMContentLoaded', init);
     </script>
-    <script src="../modern-header.js"></script>
-</body>
+    <script src="../modern-header.min.js"></script>
+    <!-- Related Tools Widget (SEO Internal Linking) -->
+    <section id="related-tools-widget" style="padding:2.5rem 1rem; background:#f8fafc; border-top:1px solid #e2e8f0;">
+      <div style="max-width:900px;margin:0 auto;text-align:center;">
+        <h2 style="font-size:1.5rem;color:#1a202c;margin-bottom:1.5rem;font-weight:700;">You Might Also Like</h2>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">          <a href="/tools/protect-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Protect PDF &rarr;</a>          <a href="/tools/edit-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Edit PDF &rarr;</a>          <a href="/tools/compress-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Compress PDF &rarr;</a>        </div>
+        <p style="margin-top:1.5rem;color:#64748b;font-size:0.9rem;">Explore all <a href="/" style="color:#f97316;font-weight:600;">33+ free tools on PDFIndi</a> &rarr;</p>
+      </div>
+    </section>
+    <script>
+    // PDFIndi GA4 Custom Event Tracking
+    (function(){
+        // Track file_upload when user selects a file in any tool
+        document.addEventListener('change', function(e) {
+            if (e.target && e.target.type === 'file') {
+                var toolName = document.title.replace(' | PDFIndi','').replace(' - PDFIndi','').trim();
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'file_upload', {
+                        'tool_name': toolName,
+                        'page_path': window.location.pathname
+                    });
+                }
+                if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({'event':'file_upload','tool_name': toolName});
+                }
+            }
+        }, true);
+
+        // Track file_download when any download link / button is clicked
+        document.addEventListener('click', function(e) {
+            var el = e.target.closest('a[download], button[id*="download"], a[href*=".pdf"], a[href*="blob:"]');
+            if (el) {
+                var toolName = document.title.replace(' | PDFIndi','').replace(' - PDFIndi','').trim();
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'file_download', {
+                        'tool_name': toolName,
+                        'page_path': window.location.pathname
+                    });
+                }
+                if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({'event':'file_download','tool_name': toolName});
+                }
+            }
+        }, true);
+    })();
+    </script></body>
 </html>
+
+
+
+

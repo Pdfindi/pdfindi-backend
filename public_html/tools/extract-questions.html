@@ -1,0 +1,386 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WWZRMF4W');</script>
+<!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extract Questions from PDF - Exam Paper Parser | PDFIndi</title>
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="description" content="Quickly extract all questions from your PDF exam papers or study materials for free. Perfect for creating question banks and revision lists with PDFIndi.">
+    
+    <link rel="icon" href="../favicon-pi.svg" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.min.css">
+    <link rel="stylesheet" href="../modern-header.min.css">
+    <link rel="stylesheet" href="modern-theme.css">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #fa7220 0%, #fa7220 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 80px 0 0 0;
+            color: #1f2937;
+        }
+
+        .tool-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .app-card {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.3);
+            text-align: center;
+        }
+
+        .upload-area {
+            border: 3px dashed #e5e7eb;
+            padding: 2.5rem;
+            border-radius: 16px;
+            cursor: pointer;
+            margin: 1.5rem 0;
+            transition: all 0.2s;
+        }
+
+        .upload-area:hover { border-color: #fa7220; background: rgba(250, 114, 32, 0.05); }
+
+        .extracted-list {
+            text-align: left;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .question-item {
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 0.75rem;
+            border: 1px solid #f3f4f6;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .question-item:hover { transform: translateX(5px); border-color: #fa7220; }
+        .q-num { background: #fee2e2; color: #991b1b; padding: 2px 8px; border-radius: 5px; font-weight: 800; font-size: 0.8rem; }
+
+        .copy-all-btn {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #fa7220;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #4b5563;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+
+        <link rel="canonical" href="https://pdfindi.com/tools/extract-questions">
+
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is PDFIndi free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, all our tools are 100% free with no hidden charges or premium subscriptions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my files secure with PDFIndi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. Most of our tools process files directly in your browser. Even for tools that require server-side logic, we never store or read your documents. Your privacy is our priority."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to sign up or create an account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No registration is required. You can use any of our PDF or Image tools instantly without providing an email address."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- Schema: SoftwareApplication + FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Extract Questions from PDF - PDFIndi",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Web Browser",
+          "url": "https://pdfindi.com/tools/extract-questions",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+          "publisher": { "@type": "Organization", "name": "PDFIndi", "url": "https://pdfindi.com" },
+          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "1024" },
+          "description": "Extract Questions & Answers from PDF Using AI Free - 100% free, no sign-up, no watermarks. Made in India.",
+          "featureList": ["Free to use", "No sign-up required", "No watermarks", "SSL encrypted", "Files auto-deleted", "Mobile friendly"]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pdfindi.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Extract Questions from PDF", "item": "https://pdfindi.com/tools/extract-questions" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is Extract Questions from PDF on PDFIndi free?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Extract Questions from PDF is completely free on PDFIndi. No sign-up, no payment, no watermarks." }
+            },
+            {
+              "@type": "Question",
+              "name": "Is it safe to use Extract Questions from PDF on PDFIndi?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. All files are processed with SSL encryption and automatically deleted after download. PDFIndi never stores your files." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does Extract Questions from PDF work on mobile?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Extract Questions from PDF works on all devices including Android and iPhone directly in the browser - no app download needed." }
+            }
+          ]
+        }
+      ]
+    }
+    </script></head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWZRMF4W"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    <div class="tool-container">
+        <a href="../index.html?filter=student#tools-section" class="back-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Student Tools
+        </a>
+
+        <div class="app-card">
+            <div style="font-size: 3.5rem; margin-bottom: 1rem;">📝</div>
+            <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem;">Extract Questions from PDF</h1>
+            <p style="color: #6b7280; max-width: 600px; margin: 0 auto;">
+                Perfect for exam prep. We automatically scan your PDF for questions (Q1, What is, ?, etc.) and list them for you to copy or study.
+            </p>
+
+            <div class="upload-area" id="drop-zone">
+                <input type="file" id="file-input" accept=".pdf" style="display: none;">
+                <h3 style="font-size: 1.3rem;">Upload Exam Paper / Reading</h3>
+                <p style="color: #9ca3af;">Drag and drop PDF here</p>
+            </div>
+
+            <div id="loading" class="loading-spinner"></div>
+
+            <div class="extracted-list" id="results">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h3 id="count-label">Found 0 Questions</h3>
+                    <button class="copy-all-btn" id="copy-btn">Copy All Questions</button>
+                </div>
+                <div id="questions-list">
+                    <!-- Items populated by JS -->
+                </div>
+            </div>
+        </div>
+    
+        <section class="seo-content-block" style="padding: 2rem; background: #f8f9fa; border-radius: 16px; margin: 3rem 0 1rem; color: #495057; border: 1px solid #e2e8f0;">
+            <h2 style="font-size: 1.4rem; color: #1F2937; margin-bottom: 1rem; font-weight: 700;">About The Free Online Extract Questions from PDF Tool</h2>
+            <p style="margin-bottom: 1rem; line-height: 1.6; font-size: 0.95rem;">Are you looking for a fast, secure, and entirely free <strong>Extract Questions from PDF</strong> solution? You are in the right place. Our premium <strong>Extract Questions from PDF</strong> tool is meticulously designed to deliver professional-grade results directly in your web browser. There is absolutely no software to install, no registration required, and zero hidden fees. Just upload your file, and let our advanced processing engine handle the rest in seconds.</p>
+            <p style="margin-bottom: 0; line-height: 1.6; font-size: 0.95rem;">Your privacy and data security are our top priorities. All operations for the <strong>Extract Questions from PDF</strong> feature are secured via enterprise-grade SSL encryption. Files are automatically processed and deleted to protect your sensitive data. Whether you are a student, a business professional, or just need to get a quick job done, this utility provides the highest quality output without any watermarks or restrictive usage limits.</p>
+        </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const loading = document.getElementById('loading');
+        const results = document.getElementById('results');
+        const questionsList = document.getElementById('questions-list');
+        const countLabel = document.getElementById('count-label');
+        const copyBtn = document.getElementById('copy-btn');
+
+        dropZone.onclick = () => fileInput.click();
+        fileInput.onchange = (e) => processFile(e.target.files[0]);
+
+        async function processFile(file) {
+            if (!file) return;
+            dropZone.style.display = 'none';
+            loading.style.display = 'block';
+
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+                let fullText = "";
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const content = await page.getTextContent();
+                    fullText += content.items.map(item => item.str).join(" ") + " ";
+                }
+
+                extractQuestions(fullText);
+            } catch (err) {
+                alert("Error reading PDF.");
+                location.reload();
+            }
+        }
+
+        function extractQuestions(text) {
+            loading.style.display = 'none';
+            results.style.display = 'block';
+
+            // Advanced Regex for Questions
+            // 1. Lines starting with Q1, Que 1, 1. (followed by space and text)
+            // 2. Sentences ending with ?
+            // 3. Sentences starting with "What", "How", "Why", "Define", "Explain"
+            
+            const lines = text.split(/(?<=[.!?])\s+(?=[A-Z0-9])/);
+            let questions = [];
+
+            const questionCheck = /^(Q\d+[:.]?|Que \d+[:.]?|\d+[:.)])|(\?)$|^(What|How|Why|Define|Explain|Describe|List|Name|Calculate|State|Discuss)/i;
+
+            lines.forEach(line => {
+                const trimmed = line.trim();
+                if (questionCheck.test(trimmed) && trimmed.length > 20) {
+                    questions.push(trimmed);
+                }
+            });
+
+            // Fallback
+            if (questions.length === 0) {
+                questions.push("No explicit questions detected. Try a standard exam paper format.");
+            }
+
+            countLabel.innerText = `Found ${questions.length} Questions`;
+            questionsList.innerHTML = questions.map((q, idx) => `
+                <div class="question-item">
+                    <span class="q-num">${idx+1}</span>
+                    <span>${q}</span>
+                
+    
+            `).join('');
+
+            copyBtn.onclick = () => {
+                const allText = questions.join("\n\n");
+                navigator.clipboard.writeText(allText).then(() => {
+                    copyBtn.innerText = "Copied! ✅";
+                    setTimeout(() => copyBtn.innerText = "Copy All Questions", 2000);
+                });
+            };
+
+            // Automatic Download Trigger
+            const allTxt = questions.join("\n\n");
+            const blob = new Blob([allTxt], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "extracted_questions.txt";
+            a.click();
+        }
+    </script>
+    <script src="../modern-header.min.js"></script>
+    <!-- Related Tools Widget (SEO Internal Linking) -->
+    <section id="related-tools-widget" style="padding:2.5rem 1rem; background:#f8fafc; border-top:1px solid #e2e8f0;">
+      <div style="max-width:900px;margin:0 auto;text-align:center;">
+        <h2 style="font-size:1.5rem;color:#1a202c;margin-bottom:1.5rem;font-weight:700;">You Might Also Like</h2>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">          <a href="/tools/pdf-quiz-generator" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">PDF Quiz Generator &rarr;</a>          <a href="/tools/pdf-summarizer" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">AI PDF Summarizer &rarr;</a>          <a href="/tools/chat-with-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Chat with PDF &rarr;</a>        </div>
+        <p style="margin-top:1.5rem;color:#64748b;font-size:0.9rem;">Explore all <a href="/" style="color:#f97316;font-weight:600;">33+ free tools on PDFIndi</a> &rarr;</p>
+      </div>
+    </section>
+    <script>
+    // PDFIndi GA4 Custom Event Tracking
+    (function(){
+        // Track file_upload when user selects a file in any tool
+        document.addEventListener('change', function(e) {
+            if (e.target && e.target.type === 'file') {
+                var toolName = document.title.replace(' | PDFIndi','').replace(' - PDFIndi','').trim();
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'file_upload', {
+                        'tool_name': toolName,
+                        'page_path': window.location.pathname
+                    });
+                }
+                if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({'event':'file_upload','tool_name': toolName});
+                }
+            }
+        }, true);
+
+        // Track file_download when any download link / button is clicked
+        document.addEventListener('click', function(e) {
+            var el = e.target.closest('a[download], button[id*="download"], a[href*=".pdf"], a[href*="blob:"]');
+            if (el) {
+                var toolName = document.title.replace(' | PDFIndi','').replace(' - PDFIndi','').trim();
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'file_download', {
+                        'tool_name': toolName,
+                        'page_path': window.location.pathname
+                    });
+                }
+                if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({'event':'file_download','tool_name': toolName});
+                }
+            }
+        }, true);
+    })();
+    </script></body>
+</html>

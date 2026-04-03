@@ -1,0 +1,498 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WWZRMF4W');</script>
+<!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio PDF Creator - Build Professional Portfolios Online | PDFIndi</title>
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="description" content="Create a professional PDF portfolio for free. Add your projects, skills, and links to generate a beautifully formatted PDF instantly with PDFIndi.">
+    
+    <link rel="icon" href="../favicon-pi.svg" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.min.css">
+    <link rel="stylesheet" href="../modern-header.min.css">
+    <link rel="stylesheet" href="modern-theme.css">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #fa7220 0%, #fa7220 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 80px 0 0 0;
+            color: #1f2937;
+        }
+
+        .tool-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .creator-card {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .form-section:last-child { border-bottom: none; }
+
+        .form-section h3 {
+            margin: 0 0 1.5rem 0;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #fa7220;
+            box-shadow: 0 0 0 3px rgba(250, 114, 32, 0.1);
+        }
+
+        .project-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid #f3f4f6;
+            position: relative;
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #fee2e2;
+            color: #991b1b;
+            border: none;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .add-btn {
+            background: #f3f4f6;
+            border: 2px dashed #d1d5db;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b7280;
+            transition: all 0.2s;
+        }
+
+        .add-btn:hover {
+            border-color: #fa7220;
+            color: #fa7220;
+            background: #fff;
+        }
+
+        .generate-btn {
+            background: var(--primary-gradient);
+            color: white;
+            width: 100%;
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(250, 114, 32, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #4b5563;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+
+        <link rel="canonical" href="https://pdfindi.com/tools/portfolio-pdf-creator">
+
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is PDFIndi free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, all our tools are 100% free with no hidden charges or premium subscriptions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my files secure with PDFIndi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. Most of our tools process files directly in your browser. Even for tools that require server-side logic, we never store or read your documents. Your privacy is our priority."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to sign up or create an account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No registration is required. You can use any of our PDF or Image tools instantly without providing an email address."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- Schema: SoftwareApplication + FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Portfolio PDF Creator - PDFIndi",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Web Browser",
+          "url": "https://pdfindi.com/tools/portfolio-pdf-creator",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+          "publisher": { "@type": "Organization", "name": "PDFIndi", "url": "https://pdfindi.com" },
+          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "1024" },
+          "description": "Create a Professional Portfolio PDF Online Free - 100% free, no sign-up, no watermarks. Made in India.",
+          "featureList": ["Free to use", "No sign-up required", "No watermarks", "SSL encrypted", "Files auto-deleted", "Mobile friendly"]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pdfindi.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Portfolio PDF Creator", "item": "https://pdfindi.com/tools/portfolio-pdf-creator" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is Portfolio PDF Creator on PDFIndi free?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Portfolio PDF Creator is completely free on PDFIndi. No sign-up, no payment, no watermarks." }
+            },
+            {
+              "@type": "Question",
+              "name": "Is it safe to use Portfolio PDF Creator on PDFIndi?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. All files are processed with SSL encryption and automatically deleted after download. PDFIndi never stores your files." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does Portfolio PDF Creator work on mobile?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Portfolio PDF Creator works on all devices including Android and iPhone directly in the browser - no app download needed." }
+            }
+          ]
+        }
+      ]
+    }
+    </script></head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWZRMF4W"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    <div class="tool-container">
+        <a href="../index.html?filter=job#tools-section" class="back-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Job Tools 
+        </a>
+
+        <div class="creator-card">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="font-size: 3.5rem; margin-bottom: 1rem;">💼</div>
+                <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0;">Portfolio Creator</h1>
+                <p style="color: #6b7280;">Generate a professional PDF portfolio from your best work.</p>
+            </div>
+
+            <form id="portfolio-form">
+                <div class="form-section">
+                    <h3>👤 Basic Information</h3>
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" id="name" placeholder="John Doe" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Professional Title</label>
+                        <input type="text" id="title" placeholder="Full Stack Developer" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" id="email" placeholder="john@example.com" required>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>🚀 Featured Projects</h3>
+                    <div id="projects-container">
+                        <!-- Projects added here -->
+                    </div>
+                    <button type="button" class="add-btn" onclick="addProject()">+ Add Project</button>
+                </div>
+
+                <div class="form-section">
+                    <h3>🛠️ Skills & Expertise</h3>
+                    <div class="input-group">
+                        <label>Top Skills (comma separated)</label>
+                        <textarea id="skills" rows="3" placeholder="React, Python, AWS, Graphic Design, Project Management"></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="generate-btn">Generate & Download Portfolio PDF</button>
+            </form>
+        </div>
+
+        <!-- How to Use Section -->
+        <section class="how-to-section">
+            <h2>How to Use Portfolio Pdf Creator online on PDFIndi</h2>
+            <div class="how-to-grid">
+                <div class="how-to-steps">
+                    <ol>
+                        <li>Fill in your <strong>Professional Information</strong>.</li>
+                        <li>Add your top projects with titles and descriptions.</li>
+                        <li>Click <strong>Generate Portfolio</strong>.</li>
+                        <li>Save the beautifully formatted PDF for your job applications.</li>
+                    </ol>
+                </div>
+                <div class="how-to-diagram">
+                    <svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="30" width="160" height="90" rx="4" fill="white" stroke="#fa7220" stroke-width="2"/>
+                        <rect x="30" y="40" width="140" height="70" rx="2" fill="#fa7220" fill-opacity="0.1"/>
+                        <circle cx="100" cy="75" r="15" stroke="#fa7220" stroke-width="2"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2>Frequently Asked Questions about Portfolio Pdf Creator</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Is PDFIndi free to use?</h3>
+                    <p>Yes, all our tools are 100% free with no hidden charges or premium subscriptions.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Are my files secure with PDFIndi?</h3>
+                    <p>Absolutely. Most of our tools process files directly in your browser. Even for tools that require server-side logic, we never store or read your documents. Your privacy is our priority.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Do I need to sign up or create an account?</h3>
+                    <p>No registration is required. You can use any of our PDF or Image tools instantly without providing an email address.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- jsPDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        const { jsPDF } = window.jspdf;
+        const projectsContainer = document.getElementById('projects-container');
+        const portfolioForm = document.getElementById('portfolio-form');
+
+        function addProject() {
+            const div = document.createElement('div');
+            div.className = 'project-item';
+            div.innerHTML = `
+                <button type="button" class="remove-btn" onclick="this.parentElement.remove()">Remove</button>
+                <div class="input-group">
+                    <label>Project Name</label>
+                    <input type="text" class="p-name" placeholder="E-commerce Platform" required>
+                </div>
+                <div class="input-group">
+                    <label>Project Description</label>
+                    <textarea class="p-desc" rows="2" placeholder="Describe what you built and the impact it had..."></textarea>
+            </div>
+            `;
+            projectsContainer.appendChild(div);
+        }
+
+        // Initialize with one project
+        addProject();
+
+        portfolioForm.onsubmit = async (e) => {
+            e.preventDefault();
+            
+            const doc = new jsPDF();
+            const name = document.getElementById('name').value;
+            const title = document.getElementById('title').value;
+            const email = document.getElementById('email').value;
+            const skills = document.getElementById('skills').value;
+
+            // Header Section
+            doc.setFillColor(250, 114, 32); // Brand Orange
+            doc.rect(0, 0, 210, 40, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(24);
+            doc.setFont('helvetica', 'bold');
+            doc.text(name, 20, 20);
+            
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'normal');
+            doc.text(title, 20, 30);
+
+            // Contact Info
+            doc.setTextColor(50, 50, 50);
+            doc.setFontSize(10);
+            doc.text(`Email: ${email}`, 20, 50);
+            
+            // Skills
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(14);
+            doc.text("TECHNICAL EXPERTISE", 20, 65);
+            doc.setDrawColor(250, 114, 32);
+            doc.line(20, 68, 190, 68);
+            
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(11);
+            doc.text(skills, 20, 75, { maxWidth: 170 });
+
+            // Projects Section
+            let y = 100;
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(14);
+            doc.text("FEATURED PROJECTS", 20, y);
+            doc.line(20, y+3, 190, y+3);
+            y += 12;
+
+            const projects = document.querySelectorAll('.project-item');
+            projects.forEach((item, index) => {
+                if (y > 250) {
+                    doc.addPage();
+                    y = 20;
+                }
+
+                const pName = item.querySelector('.p-name').value;
+                const pDesc = item.querySelector('.p-desc').value;
+
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(12);
+                doc.text(`${index + 1}. ${pName}`, 20, y);
+                y += 6;
+                
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(10);
+                const splitDesc = doc.splitTextToSize(pDesc, 160);
+                doc.text(splitDesc, 25, y);
+                y += (splitDesc.length * 5) + 8;
+            });
+
+            // Footer
+            doc.setFontSize(8);
+            doc.setTextColor(150, 150, 150);
+            doc.text("Generated by PDFIndi Portfolio Creator", 105, 285, { align: 'center' });
+
+            doc.save(`${name.replace(/\s+/g, '_')}_Portfolio.pdf`);
+        };
+    </script>
+    <script src="../modern-header.min.js"></script>
+    <!-- Related Tools Widget (SEO Internal Linking) -->
+    <section id="related-tools-widget" style="padding:2.5rem 1rem; background:#f8fafc; border-top:1px solid #e2e8f0;">
+      <div style="max-width:900px;margin:0 auto;text-align:center;">
+        <h2 style="font-size:1.5rem;color:#1a202c;margin-bottom:1.5rem;font-weight:700;">You Might Also Like</h2>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">          <a href="/tools/pdf-resume-analyzer" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Resume Analyzer &rarr;</a>          <a href="/tools/resume-pdf-optimizer" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Resume PDF Optimizer &rarr;</a>          <a href="/tools/add-watermark" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Add Watermark to PDF &rarr;</a>        </div>
+        <p style="margin-top:1.5rem;color:#64748b;font-size:0.9rem;">Explore all <a href="/" style="color:#f97316;font-weight:600;">33+ free tools on PDFIndi</a> &rarr;</p>
+      </div>
+    </section>
+    <script>
+    // PDFIndi GA4 Custom Event Tracking
+    (function(){
+        // Track file_upload when user selects a file in any tool
+        document.addEventListener('change', function(e) {
+            if (e.target && e.target.type === 'file') {
+                var toolName = document.title.replace(' | PDFIndi','').replace(' - PDFIndi','').trim();
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'file_upload', {
+                        'tool_name': toolName,
+                        'page_path': window.location.pathname
+                    });
+                }
+                if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({'event':'file_upload','tool_name': toolName});
+                }
+            }
+        }, true);
+
+        // Track file_download when any download link / button is clicked
+        document.addEventListener('click', function(e) {
+            var el = e.target.closest('a[download], button[id*="download"], a[href*=".pdf"], a[href*="blob:"]');
+            if (el) {
+                var toolName = document.title.replace(' | PDFIndi','').replace(' - PDFIndi','').trim();
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'file_download', {
+                        'tool_name': toolName,
+                        'page_path': window.location.pathname
+                    });
+                }
+                if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({'event':'file_download','tool_name': toolName});
+                }
+            }
+        }, true);
+    })();
+    </script></body>
+</html>

@@ -7,52 +7,61 @@ const config = {
     
     // Simple tool list for rendering the homepage
     tools: [
-        // 🔵 CLIENT-SIDE PDF TOOLS (Browser-based processing - No server needed)
-        // These tools work entirely in the browser using libraries like PDF-lib
-        { title: "Merge PDF", category: "PDF Tools", description: "Combine multiple PDF files into one.", icon: "🔗" },
-        { title: "Split PDF", category: "PDF Tools", description: "Extract a range of pages from a PDF.", icon: "✂️" },
-        { title: "JPEG to PDF", category: "PDF Tools", description: "Combine JPG/PNG images into a PDF.", icon: "🖼️" },
-        { title: "Reorder PDF Pages", category: "PDF Tools", description: "Rearrange, delete, or duplicate PDF pages.", icon: "🗂️" },
-        { title: "Rotate PDF", category: "PDF Tools", description: "Rotate all pages in 90° increments.", icon: "🔄" },
-        { title: "Add Watermark", category: "PDF Tools", description: "Stamp text or an image on a PDF.", icon: "💧" },
-        { title: "Protect PDF", category: "PDF Tools", description: "Add a password to secure a PDF.", icon: "🔒" },
-        { title: "Unlock PDF", category: "PDF Tools", description: "Remove a password from a PDF.", icon: "🔓" },
+        // 🔵 PREMIUM PDF TOOLS
+        { id: "merge-pdf", title: "Merge PDF", category: "PDF Tools", description: "Combine multiple PDF files into one.", icon: "📂", link: "tools/merge-pdf.html", popular: true },
+        { id: "split-pdf", title: "Split PDF", category: "PDF Tools", description: "Extract a range of pages from a PDF.", icon: "✂️", link: "tools/split-pdf.html" },
+        { id: "jpeg-to-pdf", title: "JPEG to PDF", category: "PDF Tools", description: "Combine JPG/PNG images into a PDF.", icon: "🖼️", link: "tools/jpeg-to-pdf.html" },
+        { id: "organize-pdf", title: "Reorder PDF Pages", category: "PDF Tools", description: "Rearrange, delete, or duplicate PDF pages.", icon: "📑", link: "tools/organize-pdf.html" },
+        { id: "rotate-pdf", title: "Rotate PDF", category: "PDF Tools", description: "Rotate all pages in 90° increments.", icon: "🔄", link: "tools/rotate-pdf.html" },
+        { id: "watermark-pdf", title: "Add Watermark", category: "PDF Tools", description: "Stamp text or an image on a PDF.", icon: "💧", link: "tools/add-watermark.html" },
+        { id: "protect-pdf", title: "Protect PDF", category: "PDF Tools", description: "Add a password to secure a PDF.", icon: "🔒", link: "tools/protect-pdf.html" },
+        { id: "unlock-pdf", title: "Unlock PDF", category: "PDF Tools", description: "Remove a password from a PDF.", icon: "🔓", link: "tools/unlock-pdf.html" },
+        { id: "compress-pdf", title: "Compress PDF", category: "PDF Tools", description: "Reduce the file size of your PDF.", icon: "🗜️", link: "tools/compress-pdf.html", popular: true },
+        { id: "pdf-to-word", title: "PDF to Word", category: "PDF Tools", description: "Convert PDF to editable Word docs.", icon: "📄", link: "tools/pdf-to-word.html" },
+        { id: "word-to-pdf", title: "Word to PDF", category: "PDF Tools", description: "Convert Word docs to PDF.", icon: "📝", link: "tools/word-to-pdf.html" },
+        { id: "pdf-to-jpg", title: "PDF to JPG", category: "PDF Tools", description: "Convert each PDF page to a JPG.", icon: "📷", link: "tools/pdf-to-jpg.html" },
+        { id: "edit-pdf", title: "Edit PDF", category: "PDF Tools", description: "Add text or images to a PDF.", icon: "✏️", link: "tools/edit-pdf.html", beta: true },
+        { id: "pdf-to-ppt", title: "PDF to PowerPoint", category: "PDF Tools", description: "Convert PDFs to PowerPoint.", icon: "📊", disabled: true },
+        { id: "ppt-to-pdf", title: "PowerPoint to PDF", category: "PDF Tools", description: "Convert PowerPoint to PDF.", icon: "📉", disabled: true },
+        { id: "pdf-to-excel", title: "PDF to Excel", category: "PDF Tools", description: "Extract data from PDFs to Excel.", icon: "📈", disabled: true },
+        { id: "excel-to-pdf", title: "Excel to PDF", category: "PDF Tools", description: "Convert Excel sheets to PDF.", icon: "📋", disabled: true },
 
-        // 🟡 BACKEND PDF TOOLS (Render Server + Cloudmersive API)
-        // These require server-side processing for complex operations
-        { title: "Compress PDF", category: "PDF Tools", description: "Reduce the file size of your PDF.", icon: "🗜️", backend: true },
-        { title: "PDF to Word", category: "PDF Tools", description: "Convert PDF to editable Word docs.", icon: "📄", backend: true },
-        { title: "Word to PDF", category: "PDF Tools", description: "Convert Word docs to PDF.", icon: "📝", backend: true },
-        { title: "PDF to JPG", category: "PDF Tools", description: "Convert each PDF page to a JPG.", icon: "📷", backend: true },
-        
-        // 🔵 CLIENT-SIDE UTILITY TOOLS (Browser-based processing)
-        // Pure JavaScript functionality - no server required
-        { title: "Image Compressor", category: "Utility Tools", description: "Compress JPG/PNG images.", icon: "💨" },
-        { title: "Image Converter", category: "Utility Tools", description: "Convert images to JPG, PNG, WEBP.", icon: "🔄" },
-        { title: "QR Code Generator", category: "Utility Tools", description: "Generate & download a QR code.", icon: "📱" },
-        { title: "Password Generator", category: "Utility Tools", description: "Create strong, secure passwords.", icon: "🔑" },
-        { title: "Word Counter", category: "Utility Tools", description: "Count words, chars, sentences.", icon: "🧮" },
-        { title: "Text to Speech", category: "Utility Tools", description: "Convert text to natural speech.", icon: "🗣️" },
-        { title: "JSON Formatter", category: "Utility Tools", description: "Format, validate, & copy JSON.", icon: "{}︎" },
-        { title: "Case Converter", category: "Utility Tools", description: "Convert text to various cases.", icon: "Aa" },
-        { title: "Lorem Ipsum Generator", category: "Utility Tools", description: "Generate placeholder text.", icon: "¶" },
-        { title: "Base64 Encoder/Decoder", category: "Utility Tools", description: "Encode/decode Base64 text.", icon: "🔐" },
-        { title: "Age Calculator", category: "Utility Tools", description: "Calculate your age from birth date.", icon: "🎂" },
-        { title: "BMI Calculator", category: "Utility Tools", description: "Calculate your Body Mass Index.", icon: "💪" },
-        { title: "Speech to Text", category: "Utility Tools", description: "Dictate text using your mic.", icon: "🎤" },
-        { title: "Color Picker", category: "Utility Tools", description: "Pick colors from screen or image.", icon: "🎨" },
-        { title: "Unit Converter", category: "Utility Tools", description: "Convert length, weight, etc.", icon: "📏" },
-        
-        // 🟡 BACKEND UTILITY TOOLS (Render Server + Cloudmersive API)
-        // These require server-side processing for complex operations
-        { title: "Image OCR", category: "Utility Tools", description: "Extract text from images using OCR.", icon: "🔍", backend: true },
-        
-        // Future tools (not implemented yet)
-        { title: "PDF to PowerPoint", category: "PDF Tools", description: "Convert PDFs to PowerPoint.", icon: "📊", disabled: true },
-        { title: "PowerPoint to PDF", category: "PDF Tools", description: "Convert PowerPoint to PDF.", icon: "📈", disabled: true },
-        { title: "PDF to Excel", category: "PDF Tools", description: "Extract data from PDFs to Excel.", icon: "📉", disabled: true },
-        { title: "Excel to PDF", category: "PDF Tools", description: "Convert Excel sheets to PDF.", icon: "🧾", disabled: true },
-        { title: "Edit PDF", category: "PDF Tools", description: "Add text or images to a PDF.", icon: "✏️", disabled: false },
+        // 🤖 AI-BASED PDF TOOLS
+        { id: "ai-pdf-summarizer", title: "AI PDF Summarizer", category: "AI-based PDF Tools", description: "Get instant AI summaries of long PDFs.", icon: "📝", link: "tools/pdf-summarizer.html", popular: true },
+        { id: "chat-with-pdf", title: "Chat with PDF", category: "AI-based PDF Tools", description: "Upload a PDF and ask questions to AI.", icon: "💬", link: "tools/chat-with-pdf.html", popular: true },
+        { id: "pdf-to-notes", title: "PDF to Notes", category: "AI-based PDF Tools", description: "Extract key points automatically.", icon: "📌", link: "tools/pdf-to-study-notes.html" },
+        { id: "pdf-to-presentation", title: "PDF to Presentation", category: "AI-based PDF Tools", description: "Auto-generate slides from PDF.", icon: "📽️", link: "tools/pdf-to-presentation.html" },
+        { id: "pdf-to-podcast", title: "PDF to Podcast", category: "AI-based PDF Tools", description: "Turn documents into engaging audio.", icon: "🎧", link: "tools/pdf-to-podcast.html" },
+
+        // 🎓 STUDENT-FOCUSED TOOLS
+        { id: "pdf-to-handwritten", title: "PDF to Handwritten", category: "Student Tools", description: "Convert PDF text into realistic handwritten notes.", icon: "✍️", link: "tools/pdf-to-handwritten.html" },
+        { id: "pdf-quiz-generator", title: "PDF Quiz Generator", category: "Student Tools", description: "Generate instant quizzes & MCQs from your PDF.", icon: "❓", link: "tools/pdf-quiz-generator.html" },
+        { id: "extract-questions", title: "Extract Questions", category: "Student Tools", description: "Pull all questions from a PDF for quick revision.", icon: "📝", link: "tools/extract-questions.html" },
+        { id: "pdf-to-flashcards", title: "PDF to Flashcards", category: "Student Tools", description: "Convert your notes into interactive flashcards.", icon: "🗂️", link: "tools/pdf-to-flashcards.html" },
+        { id: "auto-highlight-pdf", title: "Auto-Highlight PDF", category: "Student Tools", description: "AI highlights important lines for quick exam prep.", icon: "🖍️", link: "tools/auto-highlight-pdf.html" },
+
+        // 💼 RESUME & JOB TOOLS
+        { id: "resume-pdf-optimizer", title: "Resume PDF Optimizer", category: "Resume & Job", description: "Make your resume PDF fully ATS-friendly.", icon: "📄", link: "tools/resume-pdf-optimizer.html" },
+        { id: "pdf-resume-analyzer", title: "PDF Resume Analyzer", category: "Resume & Job", description: "Get a resume score & AI suggestions instantly.", icon: "📊", link: "tools/pdf-resume-analyzer.html" },
+        { id: "portfolio-pdf-creator", title: "Portfolio PDF Creator", category: "Resume & Job", description: "Build stunning PDF portfolios from your work.", icon: "💼", link: "tools/portfolio-pdf-creator.html" },
+
+        // 🛠️ UTILITY TOOLS
+        { id: "image-compressor", title: "Image Compressor", category: "Utility Tools", description: "Compress JPG/PNG images.", icon: "📸", link: "tools/image-compressor.html" },
+        { id: "image-converter", title: "Image Converter", category: "Utility Tools", description: "Convert images to JPG, PNG, WEBP.", icon: "♻️", link: "tools/image-converter.html" },
+        { id: "qr-code-generator", title: "QR Code Generator", category: "Utility Tools", description: "Generate & download a QR code.", icon: "📱", link: "tools/qr-code-generator.html" },
+        { id: "password-generator", title: "Password Generator", category: "Utility Tools", description: "Create strong, secure passwords.", icon: "🔑", link: "tools/password-generator.html" },
+        { id: "word-counter", title: "Word Counter", category: "Utility Tools", description: "Count words, chars, sentences.", icon: "🧮", link: "tools/word-counter.html" },
+        { id: "text-to-speech", title: "Text to Speech", category: "Utility Tools", description: "Convert text to natural speech.", icon: "🗣️", link: "tools/text-to-speech.html" },
+        { id: "json-formatter", title: "JSON Formatter", category: "Utility Tools", description: "Format, validate, & copy JSON.", icon: "{} ", link: "tools/json-formatter.html" },
+        { id: "case-converter", title: "Case Converter", category: "Utility Tools", description: "Convert text to various cases.", icon: "Aa", link: "tools/case-converter.html" },
+        { id: "lorem-ipsum-generator", title: "Lorem Ipsum Generator", category: "Utility Tools", description: "Generate placeholder text.", icon: "📜", link: "tools/lorem-ipsum-generator.html" },
+        { id: "base64-encoderdecoder", title: "Base64 Encoder/Decoder", category: "Utility Tools", description: "Encode/decode Base64 text.", icon: "🔗", link: "tools/base64-encoderdecoder.html" },
+        { id: "age-calculator", title: "Age Calculator", category: "Utility Tools", description: "Calculate your age from birth date.", icon: "🎂", link: "tools/age-calculator.html" },
+        { id: "bmi-calculator", title: "BMI Calculator", category: "Utility Tools", description: "Calculate your Body Mass Index.", icon: "⚖️", link: "tools/bmi-calculator.html" },
+        { id: "speech-to-text", title: "Speech to Text", category: "Utility Tools", description: "Dictate text using your mic.", icon: "🎤", link: "tools/speech-to-text.html" },
+        { id: "color-picker", title: "Color Picker", category: "Utility Tools", description: "Pick colors from screen or image.", icon: "🎨", link: "tools/color-picker.html" },
+        { id: "unit-converter", title: "Unit Converter", category: "Utility Tools", description: "Convert length, weight, etc.", icon: "📏", link: "tools/unit-converter.html" },
+        { id: "image-ocr", title: "Image OCR", category: "Utility Tools", description: "Extract text from images using OCR.", icon: "👁️", link: "tools/image-ocr.html" }
     ]
 };
 
@@ -62,150 +71,142 @@ function filterTools() {
     if (!input) return;
     
     const searchTerm = input.value.toLowerCase();
-    const toolCards = document.querySelectorAll('.tool-card');
+    const toolCards = document.querySelectorAll('.bento-card'); // Updated to .bento-card
     const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
     
     toolCards.forEach(card => {
         const title = card.querySelector('h3').textContent.toLowerCase();
         const description = card.querySelector('p').textContent.toLowerCase();
-        const category = card.closest('.tools-section')?.id || '';
+        const category = card.dataset.category || ''; // Use dataset.category
         
         const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+        
+        // Match filter based on category string
         const matchesFilter = activeFilter === 'all' || 
-                             (activeFilter === 'pdf' && category === 'pdf-tools-section') ||
-                             (activeFilter === 'utility' && category === 'utility-tools-section');
+                             (activeFilter === 'pdf' && category === 'PDF Tools') ||
+                             (activeFilter === 'ai' && category === 'AI-based PDF Tools') ||
+                             (activeFilter === 'student' && category === 'Student Tools') ||
+                             (activeFilter === 'job' && category === 'Resume & Job') ||
+                             (activeFilter === 'utility' && category === 'Utility Tools');
         
         if (matchesSearch && matchesFilter) {
-            card.style.display = 'block';
+            card.style.display = 'flex';
         } else {
             card.style.display = 'none';
         }
     });
-    
-    // Show/hide section headers
-    updateSectionVisibility();
 }
 
 function updateSectionVisibility() {
     const sections = document.querySelectorAll('.tools-section');
     sections.forEach(section => {
-        const visibleCards = section.querySelectorAll('.tool-card[style*="display: block"], .tool-card:not([style*="display: none"])');
+        const visibleCards = section.querySelectorAll('.tool-card:not([style*="display: none"])');
         if (visibleCards.length === 0) {
             section.style.display = 'none';
         } else {
             section.style.display = 'block';
         }
     });
+    // Note: This function might need adjustment if the entire homepage is a bento grid
+    // and traditional sections are no longer used.
 }
 
 // --- SIMPLE HOMEPAGE RENDERING ---
 function createToolCards() {
+    // Helper function to populate a grid
+    const populateGrid = (gridElement, toolsArray) => {
+        gridElement.innerHTML = toolsArray.map(tool => {
+            const disabledClass = tool.disabled ? 'disabled' : '';
+            const popularBadge = tool.popular ? '<span style="position:absolute;top:10px;right:-35px;background:#fa7220;color:white;padding:3px 40px;font-size:0.6rem;font-weight:900;transform:rotate(45deg);box-shadow:0 2px 4px rgba(0,0,0,0.1);">POPULAR</span>' : '';
+            return `
+                <div class="tool-card ${disabledClass}" data-title="${tool.title}" data-id="${tool.id}">
+                    ${popularBadge}
+                    <div class="card-icon">${tool.icon}</div>
+                    <h3>${tool.title}${tool.beta ? ' <span class="beta-badge-small">BETA</span>' : ''}</h3>
+                    <p>${tool.description}</p>
+                    ${tool.disabled ? '<span class="coming-soon">Coming Soon</span>' : ''}
+                </div>
+            `;
+        }).join('');
+    };
+
+    // Handle Bento Grid specifically if it exists
+    const bentoGrid = document.getElementById('main-tools-bento');
+    if (bentoGrid) {
+        bentoGrid.innerHTML = ''; // Clear hardcoded tools to render ALL symmetrically
+        
+        config.tools.forEach(tool => {
+            const card = document.createElement('div');
+            card.className = `bento-card ${tool.disabled ? 'disabled' : ''}`;
+            card.dataset.id = tool.id;
+            card.dataset.category = tool.category;
+            
+            card.onclick = () => {
+                if (tool.disabled) {
+                    showNotification(`${tool.title} is coming soon!`, 'info');
+                    return;
+                }
+                if (tool.link) {
+                    window.location.href = tool.link;
+                }
+            };
+
+            const popularBadge = tool.popular ? '<span class="popular-badge">POPULAR</span>' : '';
+            const betaBadge = tool.beta ? '<span class="beta-badge-small">BETA</span>' : '';
+
+            card.innerHTML = `
+                ${popularBadge}
+                <div class="icon-placeholder">${tool.icon}</div>
+                <div>
+                    <h3>${tool.title} ${betaBadge}</h3>
+                    <p>${tool.description}</p>
+                </div>
+                ${tool.disabled ? '<span class="coming-soon-tag">Coming Soon</span>' : ''}
+            `;
+            bentoGrid.appendChild(card);
+        });
+    }
+
+    // Standard grids for other pages or fallbacks (if they still exist)
     const pdfGrid = document.getElementById('pdf-tools-grid');
     const utilityGrid = document.getElementById('utility-tools-grid');
-    
-    if (!pdfGrid || !utilityGrid) return;
 
-    // Separate tools by category
-    const pdfTools = config.tools.filter(tool => tool.category === 'PDF Tools');
-    const utilityTools = config.tools.filter(tool => tool.category === 'Utility Tools');
+    // Only render legacy grids if they exist on the page
+    if (pdfGrid) {
+        const pdfTools = config.tools.filter(tool => tool.category === 'PDF Tools');
+        pdfGrid.innerHTML = pdfTools.map(tool => {
+            const disabledClass = tool.disabled ? 'disabled' : '';
+            const popularBadge = tool.popular ? '<span style="position:absolute;top:10px;right:-35px;background:#fa7220;color:white;padding:3px 40px;font-size:0.6rem;font-weight:900;transform:rotate(45deg);box-shadow:0 2px 4px rgba(0,0,0,0.1);">POPULAR</span>' : '';
+            return `
+                <div class="tool-card ${disabledClass}" data-title="${tool.title}">
+                    ${popularBadge}
+                    <div class="card-icon">${tool.icon}</div>
+                    <h3>${tool.title}${tool.beta ? ' <span class="beta-badge-small">BETA</span>' : ''}</h3>
+                    <p>${tool.description}</p>
+                    ${tool.disabled ? '<span class="coming-soon">Coming Soon</span>' : ''}
+                </div>
+            `;
+        }).join('');
+    }
 
-    // Render PDF tools
-    pdfGrid.innerHTML = pdfTools.map(tool => {
-        const disabledClass = tool.disabled ? 'disabled' : '';
-        return `
-            <div class="tool-card ${disabledClass}" data-title="${tool.title}">
-                <div class="card-icon">${tool.icon}</div>
-                <h3>${tool.title}</h3>
-                <p>${tool.description}</p>
-                ${tool.disabled ? '<span class="coming-soon">Coming Soon</span>' : ''}
-            </div>
-        `;
-    }).join('');
+    if (utilityGrid) {
+        const utilityTools = config.tools.filter(tool => tool.category === 'Utility Tools');
+        utilityGrid.innerHTML = utilityTools.map(tool => {
+            const disabledClass = tool.disabled ? 'disabled' : '';
+            const popularBadge = tool.popular ? '<span style="position:absolute;top:10px;right:-35px;background:#fa7220;color:white;padding:3px 40px;font-size:0.6rem;font-weight:900;transform:rotate(45deg);box-shadow:0 2px 4px rgba(0,0,0,0.1);">POPULAR</span>' : '';
+            return `
+                <div class="tool-card ${disabledClass}" data-title="${tool.title}">
+                    ${popularBadge}
+                    <div class="card-icon">${tool.icon}</div>
+                    <h3>${tool.title}</h3>
+                    <p>${tool.description}</p>
+                    ${tool.disabled ? '<span class="coming-soon">Coming Soon</span>' : ''}
+                </div>
+            `;
+        }).join('');
+    }
 
-    // Render Utility tools
-    utilityGrid.innerHTML = utilityTools.map(tool => {
-        const disabledClass = tool.disabled ? 'disabled' : '';
-        return `
-            <div class="tool-card ${disabledClass}" data-title="${tool.title}">
-                <div class="card-icon">${tool.icon}</div>
-                <h3>${tool.title}</h3>
-                <p>${tool.description}</p>
-                ${tool.disabled ? '<span class="coming-soon">Coming Soon</span>' : ''}
-            </div>
-        `;
-    }).join('');
-
-    // Add click handlers for tool cards
-    document.querySelectorAll('.tool-card:not(.disabled)').forEach(card => {
-        card.addEventListener('click', () => {
-            const toolTitle = card.dataset.title;
-            const slug = toolTitle.toLowerCase().replace(/\s+/g, '-');
-            
-            // Check if tool page exists
-            const toolPage = `tools/${slug}.html`;
-            
-            // For now, let's check if the file exists or redirect to a working tool
-            if (toolTitle === "Merge PDF" || toolTitle === "Split PDF" || toolTitle === "JPEG to PDF") {
-                window.location.href = toolPage;
-            } else if (toolTitle === "Compress PDF") {
-                window.location.href = 'tools/compress-pdf.html';
-            } else if (toolTitle === "PDF to Word") {
-                window.location.href = 'tools/pdf-to-word.html';
-            } else if (toolTitle === "Word to PDF") {
-                window.location.href = 'tools/word-to-pdf.html';
-            } else if (toolTitle === "PDF to JPG") {
-                window.location.href = 'tools/pdf-to-jpg.html';
-            } else if (toolTitle === "Image Compressor") {
-                window.location.href = 'tools/image-compressor.html';
-            } else if (toolTitle === "Image Converter") {
-                window.location.href = 'tools/image-converter.html';
-            } else if (toolTitle === "QR Code Generator") {
-                window.location.href = 'tools/qr-code-generator.html';
-            } else if (toolTitle === "Password Generator") {
-                window.location.href = 'tools/password-generator.html';
-            } else if (toolTitle === "Word Counter") {
-                window.location.href = 'tools/word-counter.html';
-            } else if (toolTitle === "Text to Speech") {
-                window.location.href = 'tools/text-to-speech.html';
-            } else if (toolTitle === "Image OCR") {
-                window.location.href = 'tools/image-ocr.html';
-            } else if (toolTitle === "JSON Formatter") {
-                window.location.href = 'tools/json-formatter.html';
-            } else if (toolTitle === "Case Converter") {
-                window.location.href = 'tools/case-converter.html';
-            } else if (toolTitle === "Lorem Ipsum Generator") {
-                window.location.href = 'tools/lorem-ipsum-generator.html';
-            } else if (toolTitle === "Base64 Encoder/Decoder") {
-                window.location.href = 'tools/base64-encoderdecoder.html';
-            } else if (toolTitle === "Age Calculator") {
-                window.location.href = 'tools/age-calculator.html';
-            } else if (toolTitle === "BMI Calculator") {
-                window.location.href = 'tools/bmi-calculator.html';
-            } else if (toolTitle === "Speech to Text") {
-                window.location.href = 'tools/speech-to-text.html';
-            } else if (toolTitle === "Color Picker") {
-                window.location.href = 'tools/color-picker.html';
-            } else if (toolTitle === "Unit Converter") {
-                window.location.href = 'tools/unit-converter.html';
-            } else if (toolTitle === "Add Watermark") {
-                window.location.href = 'tools/add-watermark.html';
-            } else if (toolTitle === "Protect PDF") {
-                window.location.href = 'tools/protect-pdf.html';
-            } else if (toolTitle === "Unlock PDF") {
-                window.location.href = 'tools/unlock-pdf.html';
-            } else if (toolTitle === "Reorder PDF Pages") {
-                window.location.href = 'tools/organize-pdf.html';
-            } else if (toolTitle === "Rotate PDF") {
-                window.location.href = 'tools/rotate-pdf.html';
-            } else if (toolTitle === "Edit PDF") {
-                window.location.href = 'tools/edit-pdf.html';
-            } else {
-                // Fallback for any missing tools
-                console.log(`Tool page not found for: ${toolTitle}`);
-                showNotification(`Tool "${toolTitle}" is coming soon!`, 'info');
-            }
-        });
-    });
+    // Handlers are now part of the dynamic creation in createToolCards
 }
 
 // --- UTILITY FUNCTIONS FOR TOOL PAGES ---
@@ -347,7 +348,14 @@ async function convertWordToPDF(file) {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = result.filename || file.name.replace(/\.(docx?|doc)$/i, '.pdf');
+        
+        // Robust filename logic: Ensure .pdf extension
+        let downloadName = result.filename || file.name.replace(/\.(docx?|doc|rtf|odt)$/i, '.pdf');
+        if (!downloadName.toLowerCase().endsWith('.pdf')) {
+            downloadName += '.pdf';
+        }
+        
+        a.download = downloadName;
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
@@ -509,7 +517,7 @@ async function extractTextFromImage(file) {
 // --- SIMPLE INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', function() {
     // Only run tool card creation on homepage (when grids exist)
-    if (document.getElementById('pdf-tools-grid')) {
+    if (document.getElementById('pdf-tools-grid') || document.getElementById('main-tools-bento')) {
         createToolCards();
     }
     
@@ -763,7 +771,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const pdfSection = document.getElementById('pdf-tools-section');
             const utilitySection = document.getElementById('utility-tools-section');
             
-            if (filter === 'all') {
+            // Note: Since we use filterTools() below, we don't strictly need to hide sections here
+            // but we keep it for visual consistency if sections are still used.
+            if (filter === 'all' || filter === 'ai' || filter === 'student' || filter === 'job') {
                 if (pdfSection) pdfSection.style.display = 'block';
                 if (utilitySection) utilitySection.style.display = 'block';
             } else if (filter === 'pdf') {
@@ -774,19 +784,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (utilitySection) utilitySection.style.display = 'block';
             }
             
-            // Clear search and reapply filters
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput && searchInput.value) {
-                filterTools();
-            }
+            // ALWAYS reapply filters (search + category)
+            filterTools();
             
-            // Smooth scroll to tools
-            const firstVisibleSection = filter === 'pdf' ? pdfSection : 
-                                       filter === 'utility' ? utilitySection : pdfSection;
-            if (firstVisibleSection) {
-                setTimeout(() => {
-                    firstVisibleSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 100);
+            // Smooth scroll to tools if not searching
+            const searchInput = document.getElementById('searchInput');
+            if (!searchInput || !searchInput.value) {
+                const toolsSection = document.getElementById('tools-section');
+                if (toolsSection) {
+                    setTimeout(() => {
+                        const offset = 100;
+                        const bodyRect = document.body.getBoundingClientRect().top;
+                        const elementRect = toolsSection.getBoundingClientRect().top;
+                        const elementPosition = elementRect - bodyRect;
+                        const offsetPosition = elementPosition - offset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }, 100);
+                }
             }
         });
     });
@@ -987,3 +1005,107 @@ window.addEventListener('hashchange', handleHashNavigation);
 
 // Handle initial hash on page load
 document.addEventListener('DOMContentLoaded', handleHashNavigation);
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Render tool cards on the homepage
+    createToolCards();
+    
+    // Enhanced search input focus effect
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('focus', function() {
+            this.style.borderColor = '#fa7220';
+            this.style.boxShadow = '0 4px 20px rgba(229, 62, 62, 0.15)';
+        });
+        searchInput.addEventListener('blur', function() {
+            this.style.borderColor = '#e2e8f0';
+            this.style.boxShadow = '0 4px 6px rgba(0,0,0,0.05)';
+        });
+    }
+    
+        // Filter button interactions
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active from all buttons
+            filterBtns.forEach(b => {
+                b.classList.remove('active');
+                b.style.background = 'white';
+                b.style.color = '#333';
+                b.style.borderColor = '#e0e0e0';
+            });
+            
+            // Add active to clicked button
+            this.classList.add('active');
+            this.style.background = '#FF9933';
+            this.style.color = 'white';
+            this.style.borderColor = '#FF9933';
+            
+            // Trigger filter
+            filterTools();
+        });
+    });
+
+    // Check URL for filter parameter on load
+    const urlParams = new URLSearchParams(window.location.search);
+    const filterParam = urlParams.get('filter');
+    if (filterParam) {
+        setTimeout(() => {
+            const targetBtn = document.querySelector(`.filter-btn[data-filter="${filterParam}"]`);
+            if (targetBtn) {
+                targetBtn.click();
+            }
+        }, 100);
+    }
+});
+
+// ============================================
+// HERO TYPING ANIMATION - USP Phrases
+// ============================================
+(function() {
+    const phrases = ['Simplified.', '100% Free.', 'Made in India. ', 'Fast & Secure.', 'No Sign-up.'];
+    let currentIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 80;
+
+    function typeEffect() {
+        const el = document.getElementById('heroTyped');
+        if (!el) return;
+
+        const currentPhrase = phrases[currentIndex];
+
+        if (!isDeleting) {
+            el.textContent = currentPhrase.substring(0, charIndex + 1);
+            charIndex++;
+            if (charIndex === currentPhrase.length) {
+                // Pause at end, then start deleting
+                setTimeout(() => { isDeleting = true; requestAnimationFrame(tick); }, 2200);
+                return;
+            }
+        } else {
+            el.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex--;
+            if (charIndex === 0) {
+                isDeleting = false;
+                currentIndex = (currentIndex + 1) % phrases.length;
+            }
+        }
+
+        typingSpeed = isDeleting ? 45 : 80;
+        setTimeout(typeEffect, typingSpeed);
+    }
+
+    function tick() { typeEffect(); }
+
+    // Start after a short delay
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(typeEffect, 600);
+    });
+    // If DOM already loaded
+    if (document.readyState !== 'loading') {
+        setTimeout(typeEffect, 600);
+    }
+})();
+
+

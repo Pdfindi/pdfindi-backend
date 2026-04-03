@@ -1,0 +1,16 @@
+{
+  "name": "PDFIndi - Free Online PDF Tools",
+  "short_name": "PDFIndi",
+  "description": "100% Made in India free online PDF tools to merge, compress, edit & convert PDFs.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f97316",
+  "icons": [
+    {
+      "src": "/favicon-pi.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

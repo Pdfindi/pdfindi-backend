@@ -1,1 +1,26 @@
 .vercel
+node_modules/
+.env
+
+# Temporary and test files
+*.pdf
+*.docx
+pdf_base64.txt
+
+# Python Virtual Environments & Temp
+.venv/
+__pycache__/
+*.pyc
+
+# Agent / Tooling Temp Dirs
+.sixth/
+.playwright-mcp/
+
+# One-off scripts not needed in production
+*.ps1
+*.py
+*.bat
+
+# System files
+.DS_Store
+Thumbs.db

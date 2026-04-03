@@ -6,6 +6,7 @@ const multer = require('multer');
 const axios = require('axios');
 const FormData = require('form-data');
 const path = require('path');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 const app = express();
@@ -14,6 +15,9 @@ const PORT = process.env.PORT || 3000;
 // Enable CORS for all origins (configure for your domain in production)
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
+
+// Serve static files from the public_html directory
+app.use(express.static(path.join(__dirname, 'public_html')));
 
 // Configure multer for file uploads
 const storage = multer.memoryStorage();
@@ -251,7 +255,11 @@ app.post('/api/word-to-pdf', upload.single('file'), async (req, res) => {
 
     // Convert to base64 for frontend
     const base64Data = Buffer.from(response.data).toString('base64');
-    const outputFilename = req.file.originalname.replace(/\.(doc|docx)$/i, '.pdf');
+    
+    // Robust filename handling: Parse original name and append .pdf
+    const originalExt = path.extname(req.file.originalname);
+    const originalBase = path.basename(req.file.originalname, originalExt);
+    const outputFilename = `${originalBase}.pdf`;
 
     console.log(`✅ Conversion successful: ${outputFilename}`);
 
@@ -532,6 +540,139 @@ app.post('/api/ocr-text', upload.single('file'), async (req, res) => {
     
     res.status(500).json({ 
       error: 'Internal OCR error',
+      details: error.message 
+    });
+  }
+});
+
+// Extract PDF text with positions for editing
+app.post('/api/extract-pdf-text', checkUsageLimits, upload.single('file'), async (req, res) => {
+  try {
+    console.log(`[${new Date().toISOString()}] PDF text extraction for editing requested`);
+    
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    if (req.file.mimetype !== 'application/pdf') {
+      return res.status(400).json({ error: 'File must be a PDF' });
+    }
+
+    console.log(`Extracting text from: ${req.file.originalname} (${req.file.size} bytes)`);
+
+    // Use Cloudmersive OCR to extract text with positions
+    const formData = new FormData();
+    formData.append('imageFile', req.file.buffer, {
+      filename: req.file.originalname,
+      contentType: 'application/pdf'
+    });
+
+    const response = await axios.post(
+      'https://api.cloudmersive.com/ocr/pdf/toText',
+      formData,
+      {
+        headers: {
+          ...formData.getHeaders(),
+          'Apikey': CLOUDMERSIVE_API_KEY
+        },
+        timeout: 60000
+      }
+    );
+
+    console.log(`✅ Text extracted successfully`);
+
+    // Also store the original PDF for later reconstruction
+    const pdfBase64 = req.file.buffer.toString('base64');
+
+    res.json({
+      success: true,
+      textData: response.data,
+      originalPdf: pdfBase64,
+      filename: req.file.originalname
+    });
+
+  } catch (error) {
+    console.error('❌ PDF text extraction error:', error.message);
+    
+    if (error.response) {
+      console.error('API Error Status:', error.response.status);
+      return res.status(error.response.status).json({ 
+        error: `Text extraction API error: ${error.response.status}`,
+        details: error.response.data
+      });
+    }
+    
+    res.status(500).json({ 
+      error: 'Internal text extraction error',
+      details: error.message 
+    });
+  }
+});
+
+// Rebuild PDF with edited text
+app.post('/api/rebuild-pdf', checkUsageLimits, upload.single('file'), async (req, res) => {
+  try {
+    console.log(`[${new Date().toISOString()}] PDF rebuild with edits requested`);
+    
+    if (!req.file) {
+      return res.status(400).json({ error: 'No original PDF provided' });
+    }
+
+    if (!req.body.edits) {
+      return res.status(400).json({ error: 'No edit data provided' });
+    }
+
+    const edits = JSON.parse(req.body.edits);
+    console.log(`Rebuilding PDF with ${Object.keys(edits).length} edits`);
+
+    // For now, use a simpler approach: convert to DOCX, let user edit, convert back
+    // This is more reliable than trying to manipulate PDF directly
+    
+    // Alternative: Use pdf-lib on backend to overlay new text
+    const PDFDocument = require('pdf-lib').PDFDocument;
+    const pdfDoc = await PDFDocument.load(req.file.buffer);
+    const pages = pdfDoc.getPages();
+
+    // Apply edits to each page
+    for (const [editId, editData] of Object.entries(edits)) {
+      const { page, x, y, text, fontSize } = editData;
+      
+      if (page > 0 && page <= pages.length) {
+        const pdfPage = pages[page - 1];
+        const pageHeight = pdfPage.getHeight();
+        
+        // Cover old text with white rectangle (approximate)
+        pdfPage.drawRectangle({
+          x: x,
+          y: pageHeight - y - fontSize - 5,
+          width: text.length * fontSize * 0.6,
+          height: fontSize + 10,
+          color: { r: 1, g: 1, b: 1 }
+        });
+        
+        // Draw new text
+        pdfPage.drawText(text, {
+          x: x,
+          y: pageHeight - y - fontSize,
+          size: fontSize,
+          color: { r: 0, g: 0, b: 0 }
+        });
+      }
+    }
+
+    const editedPdfBytes = await pdfDoc.save();
+    const base64Pdf = Buffer.from(editedPdfBytes).toString('base64');
+
+    res.json({
+      success: true,
+      editedPdf: base64Pdf,
+      filename: req.file.originalname.replace('.pdf', '_edited.pdf')
+    });
+
+  } catch (error) {
+    console.error('❌ PDF rebuild error:', error.message);
+    res.status(500).json({ 
+      error: 'PDF rebuild failed',
       details: error.message 
     });
   }
@@ -924,6 +1065,258 @@ app.get('/', (req, res) => {
   });
 });
 
+// ==========================================
+// CONTACT FORM EMAIL ENDPOINT
+// ==========================================
+// Email transporter configuration
+const createEmailTransporter = () => {
+  return nodemailer.createTransport({
+    host: process.env.EMAIL_HOST || 'smtp.hostinger.com',
+    port: parseInt(process.env.EMAIL_PORT) || 465,
+    secure: true, // true for 465, false for other ports
+    auth: {
+      user: process.env.EMAIL_USER, // Your email (support@pdfindi.com)
+      pass: process.env.EMAIL_PASSWORD // Hostinger email password
+    }
+  });
+};
+
+app.post('/api/contact-form', express.json(), async (req, res) => {
+  try {
+    const { name, email, subject, message } = req.body;
+
+    // Validation
+    if (!name || !email || !subject || !message) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'All fields are required' 
+      });
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'Invalid email address' 
+      });
+    }
+
+    console.log(`📧 Contact form submission from: ${email}`);
+
+    // Create transporter
+    const transporter = createEmailTransporter();
+
+    // Email content
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: 'support@pdfindi.com',
+      replyTo: email,
+      subject: `PDFIndi Contact Form: ${subject}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f9f9f9;">
+          <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <h2 style="color: #FF9933; margin-bottom: 20px; border-bottom: 3px solid #FF9933; padding-bottom: 10px;">
+              🇮🇳 New Contact Form Submission
+            </h2>
+            
+            <div style="background: #FFF8F0; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+              <p style="margin: 5px 0;"><strong>📋 Subject:</strong> ${subject}</p>
+              <p style="margin: 5px 0;"><strong>👤 Name:</strong> ${name}</p>
+              <p style="margin: 5px 0;"><strong>📧 Email:</strong> <a href="mailto:${email}" style="color: #FF9933;">${email}</a></p>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #FF9933;">
+              <h3 style="color: #333; margin-top: 0;">💬 Message:</h3>
+              <p style="color: #555; line-height: 1.6; white-space: pre-wrap;">${message}</p>
+            </div>
+            
+            <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #666;">
+              <p style="margin: 5px 0;">⏰ Received: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</p>
+              <p style="margin: 5px 0;">🌐 From: PDFIndi Contact Form</p>
+            </div>
+          </div>
+        </div>
+      `
+    };
+
+    // Send email
+    await transporter.sendMail(mailOptions);
+
+    console.log(`✅ Email sent successfully to support@pdfindi.com`);
+
+    res.json({ 
+      success: true,
+      message: 'Thank you for contacting us! We will get back to you soon.'
+    });
+
+  } catch (error) {
+    console.error('❌ Error sending email:', error);
+    res.status(500).json({ 
+      success: false,
+      error: 'Failed to send message. Please try again later.',
+      details: error.message
+    });
+  }
+});
+
+// ==========================================
+// PDF EDITOR ENDPOINT (Like Sejda)
+// ==========================================
+app.post('/api/edit-pdf', upload.single('pdf'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No PDF file uploaded' });
+    }
+
+    const edits = JSON.parse(req.body.edits || '[]');
+    
+    console.log('📝 Processing PDF edits:', {
+      filename: req.file.originalname,
+      size: req.file.size,
+      edits: edits.length
+    });
+
+    // Import pdf-lib
+    const { PDFDocument, rgb, StandardFonts } = require('pdf-lib');
+    
+    // Load the PDF
+    const pdfDoc = await PDFDocument.load(req.file.buffer);
+    const pages = pdfDoc.getPages();
+    
+    // Embed font
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+    // Process each edit
+    for (const edit of edits) {
+      const page = pages[edit.page - 1];
+      if (!page) continue;
+
+      const pageHeight = page.getHeight();
+      const pageWidth = page.getWidth();
+
+      // Calculate scale from viewport to actual PDF
+      const scale = edit.scale || 1;
+
+      switch (edit.type) {
+        case 'existing-text':
+          // Cover original text with white rectangle
+          if (edit.originalX !== undefined && edit.originalY !== undefined) {
+            page.drawRectangle({
+              x: edit.originalX * scale - 2,
+              y: pageHeight - edit.originalY * scale - edit.fontSize * scale - 5,
+              width: Math.max(edit.width * scale, edit.text.length * edit.fontSize * scale * 0.6) + 10,
+              height: edit.fontSize * scale + 10,
+              color: rgb(1, 1, 1)
+            });
+
+            // Draw new text
+            page.drawText(edit.text, {
+              x: edit.originalX * scale,
+              y: pageHeight - edit.originalY * scale - edit.fontSize * scale,
+              size: edit.fontSize * scale,
+              font: font,
+              color: rgb(0, 0, 0)
+            });
+          }
+          break;
+
+        case 'text':
+          // Add new text
+          page.drawText(edit.text, {
+            x: edit.x * scale,
+            y: pageHeight - (edit.y * scale) - edit.fontSize * scale,
+            size: edit.fontSize * scale,
+            font: font,
+            color: rgb(
+              edit.color?.r || 0,
+              edit.color?.g || 0,
+              edit.color?.b || 0
+            )
+          });
+          break;
+
+        case 'whiteout':
+        case 'rectangle':
+          page.drawRectangle({
+            x: edit.x * scale,
+            y: pageHeight - (edit.y * scale) - edit.height * scale,
+            width: edit.width * scale,
+            height: edit.height * scale,
+            color: edit.type === 'whiteout' ? rgb(1, 1, 1) : rgb(1, 1, 1),
+            borderColor: edit.type === 'rectangle' ? rgb(0, 0, 0) : undefined,
+            borderWidth: edit.type === 'rectangle' ? 2 : 0
+          });
+          break;
+
+        case 'circle':
+          const radius = edit.width * scale / 2;
+          page.drawCircle({
+            x: edit.x * scale + radius,
+            y: pageHeight - (edit.y * scale) - radius,
+            size: radius,
+            borderColor: rgb(0, 0, 0),
+            borderWidth: 2
+          });
+          break;
+
+        case 'highlight':
+          page.drawRectangle({
+            x: edit.x * scale,
+            y: pageHeight - (edit.y * scale) - edit.height * scale,
+            width: edit.width * scale,
+            height: edit.height * scale,
+            color: rgb(1, 1, 0),
+            opacity: 0.4
+          });
+          break;
+
+        case 'image':
+        case 'signature':
+          if (edit.imageData) {
+            try {
+              const imageBytes = Buffer.from(edit.imageData.split(',')[1], 'base64');
+              let image;
+              
+              if (edit.imageData.includes('image/png')) {
+                image = await pdfDoc.embedPng(imageBytes);
+              } else {
+                image = await pdfDoc.embedJpg(imageBytes);
+              }
+
+              page.drawImage(image, {
+                x: edit.x * scale,
+                y: pageHeight - (edit.y * scale) - edit.height * scale,
+                width: edit.width * scale,
+                height: edit.height * scale
+              });
+            } catch (imgError) {
+              console.error('Error embedding image:', imgError);
+            }
+          }
+          break;
+      }
+    }
+
+    // Save the modified PDF
+    const pdfBytes = await pdfDoc.save();
+
+    // Send back the edited PDF
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="${req.file.originalname.replace('.pdf', '_edited.pdf')}"`);
+    res.send(Buffer.from(pdfBytes));
+
+    console.log('✅ PDF edited successfully');
+
+  } catch (error) {
+    console.error('❌ PDF editing error:', error);
+    res.status(500).json({ 
+      error: 'Failed to edit PDF',
+      message: error.message 
+    });
+  }
+});
+
 // Error handling middleware
 app.use((error, req, res, next) => {
   if (error instanceof multer.MulterError) {
@@ -965,8 +1358,11 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log('   POST /api/compress-pdf');
   console.log('   POST /api/image-to-pdf');
   console.log('   POST /api/pdf-to-jpg (deprecated - use client-side pdf.js)');
+  console.log('   POST /api/extract-pdf-text');
+  console.log('   POST /api/rebuild-pdf');
   console.log('   POST /api/ocr-text');
   console.log('   POST /api/add-watermark');
+  console.log('   POST /api/contact-form');
   console.log('');
   console.log('📁 Frontend: Static files served from public_html/');
   console.log('=====================================');
