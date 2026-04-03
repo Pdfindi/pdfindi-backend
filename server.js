@@ -1083,13 +1083,14 @@ const createEmailTransporter = () => {
 
 app.post('/api/contact-form', express.json(), async (req, res) => {
   try {
-    const { name, email, subject, message } = req.body;
+    const { name, email, message } = req.body;
+    const subject = req.body.subject || 'PDFIndi User Contact/Feedback';
 
     // Validation
-    if (!name || !email || !subject || !message) {
+    if (!name || !email || !message) {
       return res.status(400).json({ 
         success: false,
-        error: 'All fields are required' 
+        error: 'Name, email, and message are required' 
       });
     }
 
