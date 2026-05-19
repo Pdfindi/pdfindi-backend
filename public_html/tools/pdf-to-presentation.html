@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <!-- Google Tag Manager -->
@@ -13,6 +13,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <title>PDF to Presentation - Convert PDF to Slides Instantly | PDFIndi</title>
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <link rel="canonical" href="https://pdfindi.com/tools/pdf-to-presentation">
+    <link rel="alternate" hreflang="en" href="https://pdfindi.com/tools/pdf-to-presentation">
+    <link rel="alternate" hreflang="x-default" href="https://pdfindi.com/tools/pdf-to-presentation">
+
     <meta name="description" content="Turn your PDF documents into professional presentations for free. Our AI tool automatically creates slides from your PDF content for easy sharing and presentation on PDFIndi.">
     <meta name="keywords" content="pdf to presentation, convert pdf to slides, online pdf converter, free presentation maker, pdfindi ai tools">
     
@@ -22,129 +25,81 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.min.css">
     <link rel="stylesheet" href="../modern-header.min.css">
-    <link rel="stylesheet" href="modern-theme.css">
+    <link rel="stylesheet" href="modern-theme.min.css">
     
-    <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #fa7220 0%, #fa7220 100%);
-            --glass-bg: rgba(255, 255, 255, 0.95);
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            margin: 0;
-            padding: 80px 0 0 0;
-            color: #1f2937;
-        }
-
-        .tool-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .app-card {
-            background: var(--glass-bg);
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,255,255,0.3);
-            text-align: center;
-        }
-
-        .upload-area {
-            border: 3px dashed #e5e7eb;
-            padding: 3rem;
-            border-radius: 16px;
-            cursor: pointer;
-            margin: 2rem 0;
-            transition: all 0.2s;
-        }
-
-        .upload-area:hover { border-color: #fa7220; background: rgba(250, 114, 32, 0.05); }
-
-        .slide-preview {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            justify-content: center;
-            margin-top: 3rem;
-            display: none;
-        }
-
-        .slide-thumb {
-            width: 200px;
-            height: 112px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            font-size: 0.6rem;
-            text-align: center;
-            overflow: hidden;
-            border: 2px solid #e5e7eb;
-        }
-
-        .loading { display: none; margin: 2rem auto; }
-        
-        .back-btn {
-            display: inline-flex;
-            align-items: center; gap: 0.5rem;
-            color: #4b5563; text-decoration: none; font-weight: 600; margin-bottom: 1.5rem;
-        }
-    </style>
+    <link rel="stylesheet" href="tool-styles.min.css">
 
     <!-- Schema: SoftwareApplication + FAQPage -->
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "SoftwareApplication",
+      "name": "PDF to Presentation - PDFIndi",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Web Browser",
+      "url": "https://pdfindi.com/tools/pdf-to-presentation",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "PDFIndi",
+        "url": "https://pdfindi.com"
+      },
+      "description": "Convert PDF into PowerPoint Slides Using AI Free - 100% free, no sign-up, no watermarks. Made in India."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "SoftwareApplication",
-          "name": "PDF to Presentation - PDFIndi",
-          "applicationCategory": "UtilitiesApplication",
-          "operatingSystem": "Web Browser",
-          "url": "https://pdfindi.com/tools/pdf-to-presentation",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-          "publisher": { "@type": "Organization", "name": "PDFIndi", "url": "https://pdfindi.com" },
-          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "1024" },
-          "description": "Convert PDF into PowerPoint Slides Using AI Free - 100% free, no sign-up, no watermarks. Made in India.",
-          "featureList": ["Free to use", "No sign-up required", "No watermarks", "SSL encrypted", "Files auto-deleted", "Mobile friendly"]
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://pdfindi.com/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pdfindi.com/" },
-            { "@type": "ListItem", "position": 2, "name": "PDF to Presentation", "item": "https://pdfindi.com/tools/pdf-to-presentation" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PDF to Presentation",
+          "item": "https://pdfindi.com/tools/pdf-to-presentation"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is PDF to Presentation on PDFIndi free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, PDF to Presentation is completely free on PDFIndi. No sign-up, no payment, no watermarks."
+          }
         },
         {
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "Is PDF to Presentation on PDFIndi free?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Yes, PDF to Presentation is completely free on PDFIndi. No sign-up, no payment, no watermarks." }
-            },
-            {
-              "@type": "Question",
-              "name": "Is it safe to use PDF to Presentation on PDFIndi?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. All files are processed with SSL encryption and automatically deleted after download. PDFIndi never stores your files." }
-            },
-            {
-              "@type": "Question",
-              "name": "Does PDF to Presentation work on mobile?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Yes, PDF to Presentation works on all devices including Android and iPhone directly in the browser - no app download needed." }
-            }
-          ]
+          "@type": "Question",
+          "name": "Is it safe to use PDF to Presentation on PDFIndi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely. All files are processed with SSL encryption and automatically deleted after download. PDFIndi never stores your files."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does PDF to Presentation work on mobile?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, PDF to Presentation works on all devices including Android and iPhone directly in the browser - no app download needed."
+          }
         }
       ]
     }
+  ]
+}
     </script></head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -152,7 +107,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
     <div class="tool-container">
-        <a href="../index.html?filter=ai#tools-section" class="back-btn">
+        <a href="../index?filter=ai#tools-section" class="back-btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
@@ -225,130 +180,111 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
             </div>
         </section>
-    
-        <section class="seo-content-block" style="padding: 2rem; background: #f8f9fa; border-radius: 16px; margin: 3rem 0 1rem; color: #495057; border: 1px solid #e2e8f0;">
-            <h2 style="font-size: 1.4rem; color: #1F2937; margin-bottom: 1rem; font-weight: 700;">About The Free Online PDF to Presentation Tool</h2>
-            <p style="margin-bottom: 1rem; line-height: 1.6; font-size: 0.95rem;">Are you looking for a fast, secure, and entirely free <strong>PDF to Presentation</strong> solution? You are in the right place. Our premium <strong>PDF to Presentation</strong> tool is meticulously designed to deliver professional-grade results directly in your web browser. There is absolutely no software to install, no registration required, and zero hidden fees. Just upload your file, and let our advanced processing engine handle the rest in seconds.</p>
-            <p style="margin-bottom: 0; line-height: 1.6; font-size: 0.95rem;">Your privacy and data security are our top priorities. All operations for the <strong>PDF to Presentation</strong> feature are secured via enterprise-grade SSL encryption. Files are automatically processed and deleted to protect your sensitive data. Whether you are a student, a business professional, or just need to get a quick job done, this utility provides the highest quality output without any watermarks or restrictive usage limits.</p>
+
+        
+        <section class="seo-content-block dynamically-added-seo" style="padding: 2.5rem; background: #ffffff; border-radius: 16px; margin: 3rem 0; color: #374151; border: 1px solid #e5e7eb; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); font-family: 'Inter', system-ui, sans-serif;">
+            
+            <header style="margin-bottom: 2rem; border-bottom: 2px solid #f3f4f6; padding-bottom: 1rem;">
+                <h2 style="font-size: 1.8rem; color: #111827; margin-bottom: 1rem; font-weight: 800; letter-spacing: -0.025em;">The Ultimate Guide to PDF to Presentation</h2>
+                <p style="line-height: 1.8; font-size: 1.05rem; color: #4b5563;">
+                    In an increasingly digitized environment, handling your digital administration smoothly is more crucial than ever before. Whether you are dealing with academic submissions, corporate compliance documents, or personal portfolios, relying on a robust <strong>pdf to presentation</strong> dictates how efficiently you operate. Our completely free platform is precision-engineered to assist you with exactly that. 
+                    Unlike bloated enterprise software that ties up system resources, our application processes your files rapidly directly inside your browser. This establishes a fully optimized, private, and secure workflow. Not only does this guarantee that your sensitive assets never remain on unwanted external servers, but it also means that you achieve instantaneous results without any hidden payment gates. The modern internet demands flexibility—our tools are purposely built utilizing next-generation APIs to deliver uncompromising performance whenever you utilize them for <strong>convert pdf to slides</strong>.
+                </p>
+            </header>
+
+            <article style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.4rem; color: #111827; margin-bottom: 1rem; font-weight: 700;">Top Benefits: Why Rely on PDFIndi?</h3>
+                <p style="margin-bottom: 1.25rem; line-height: 1.8; font-size: 1.05rem;">
+                    We created this specific <strong>PDF to Presentation - Convert PDF to Slides Instantly</strong> specifically to remove all friction from document management. You shouldn't have to download suspicious executable files or subscribe to monthly cloud services simply to accomplish a basic manipulation task. Let's break down the core advantages of adopting our interface:
+                </p>
+                <ul style="list-style-type: none; padding-left: 0; margin-bottom: 1.5rem; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                    <li style="background: #f9fafb; padding: 1rem; border-radius: 8px; border-left: 4px solid #fa7220;">
+                        <strong style="color: #111827;">Military-Grade Data Security:</strong> Every action you perform takes place securely. We enforce end-to-end SSL encryption standards across the entire application. Files are automatically processed in volatile memory and wiped clean instantly, preventing any unauthorized exposure or leaks.
+                    </li>
+                    <li style="background: #f9fafb; padding: 1rem; border-radius: 8px; border-left: 4px solid #fa7220;">
+                        <strong style="color: #111827;">Unrestricted Access Instantly:</strong> Enjoy unparalleled <strong>online pdf converter</strong> capabilities with absolutely zero constraints. We do not enforce irritating sign-up walls, email harvesting, or branded watermarks. The output belongs entirely to you.
+                    </li>
+                    <li style="background: #f9fafb; padding: 1rem; border-radius: 8px; border-left: 4px solid #fa7220;">
+                        <strong style="color: #111827;">Flawless Cross-Platform Output:</strong> Whether you access the interface from an iOS smartphone, a Windows workspace, or a Google Chromebook, our <strong>pdf to presentation</strong> architecture actively detects your viewport and flawlessly scales the computing execution.
+                    </li>
+                    <li style="background: #f9fafb; padding: 1rem; border-radius: 8px; border-left: 4px solid #fa7220;">
+                        <strong style="color: #111827;">Intuitive User Interface:</strong> Built for users spanning all technical skill levels. Clean navigation, drag-and-drop mechanics, and highly actionable dashboards drastically cut down any learning curve.
+                    </li>
+                </ul>
+            </article>
+
+            <article style="margin-bottom: 2rem; background: #fffcf0; padding: 2rem; border-radius: 12px; border: 1px dashed #f59e0b;">
+                <h3 style="font-size: 1.4rem; color: #92400e; margin-bottom: 1rem; font-weight: 700;">Common Real-World Use Cases</h3>
+                <p style="margin-bottom: 1.25rem; line-height: 1.8; font-size: 1.05rem; color: #78350f;">
+                    Wondering how other professionals utilize this exact functionality on a daily basis? This <strong>convert pdf to slides</strong> solves hundreds of operational headaches efficiently:
+                </p>
+                <div style="margin-left: 1rem;">
+                    <p style="margin-bottom: 0.75rem; line-height: 1.7; color: #78350f;"><strong>1. Corporate Archiving & Compliance:</strong> Legal teams and HR departments consistently leverage this utility to format tax forms, standard operating procedures, and employment records. Correctly utilizing <strong>free presentation maker</strong> allows administrators to maintain compliance without disrupting their core tasks.</p>
+                    <p style="margin-bottom: 0.75rem; line-height: 1.7; color: #78350f;"><strong>2. Academia & Student Workloads:</strong> Students rushing to submit theses into rigid university portals must often format items urgently. Our streamlined system guarantees that their digital paperwork conforms strictly to academic server limitations instantly.</p>
+                    <p style="margin-bottom: 0.75rem; line-height: 1.7; color: #78350f;"><strong>3. Freelancers & Agencies:</strong> Dealing with assorted client media forces freelancers to employ adaptable toolsets. Bypassing heavy software enables independent contractors to deliver polished final products—be it invoices, creative briefs, or analytical reports—flawlessly.</p>
+                </div>
+            </article>
+
+            <article style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.4rem; color: #111827; margin-bottom: 1rem; font-weight: 700;">Detailed Step-By-Step Instructions</h3>
+                <p style="margin-bottom: 1.25rem; line-height: 1.8; font-size: 1.05rem;">
+                    To guarantee absolute precision while using our platform, carefully follow these sequential execution instructions. Proper preparation ensures that your resulting file retains maximum quality without crashing or error-halting during the process:
+                </p>
+                <ol style="margin-left: 1.5rem; line-height: 1.8; font-size: 1.05rem;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Prepare Your Document:</strong> Prior to uploading, confirm that your target file is not damaged or aggressively password encrypted (unless utilizing one of our unlocking utilities). Ensure the document strictly complies with our localized 50MB file size ceiling to prevent timeout errors.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Upload Safely:</strong> Drag the target document directly from your desktop folder into the central designated drop zone above. Alternatively, tap the upload sphere to launch your device’s native file selector browser.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Configure Options:</strong> Depending on the specific execution flow on this page, you might be tasked to select output quality variants, compression strength variables, or arrangement configurations. Adjust these parameters closely assessing your final fidelity priorities.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Execute Transformation:</strong> Depress the primary submission button. Maintain an active browser window to ensure the localized Javascript processing stream is not inadvertently throttled or disconnected by a backgrounding operating system.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Download Your Asset:</strong> Following a successful completion dialogue, your browser will immediately pipe the binary stream back into your default downloads directory natively. The source file vanishes forever the second this transfer terminates.</li>
+                </ol>
+            </article>
+
+            <article>
+                <h3 style="font-size: 1.4rem; color: #111827; margin-bottom: 1rem; font-weight: 700;">Frequently Asked Questions (FAQ)</h3>
+                <p style="margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.05rem;">
+                    We receive countless queries regarding our methodology, technical capabilities, and privacy assurances. Here are the most prevalent questions answered transparently:
+                </p>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="font-size: 1.15rem; color: #374151; font-weight: 700; margin-bottom: 0.5rem;">Q. Will utilizing PDF to Presentation degrade my file's resolution?</h4>
+                    <p style="line-height: 1.7; font-size: 1.05rem; color: #4b5563;">Our backend logic utilizes algorithmic mapping designed to retain extremely high fidelity metrics. Unless you specifically trigger an intensive compression sub-routine or downsize an image manually, vector text remains strictly crystalline, and raster images are manipulated without introducing severe artifacting.</p>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="font-size: 1.15rem; color: #374151; font-weight: 700; margin-bottom: 0.5rem;">Q. What happens to my original upload?</h4>
+                    <p style="line-height: 1.7; font-size: 1.05rem; color: #4b5563;">Your initial upload acts simply as a temporary variable contained exclusively within short-term volatile memory. The second the output executes and triggers the browser download stream, those memory blocks are wiped. We maintain zero databases of user assets. It is completely anonymous.</p>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="font-size: 1.15rem; color: #374151; font-weight: 700; margin-bottom: 0.5rem;">Q. Do I incur charges if I use this tool heavily?</h4>
+                    <p style="line-height: 1.7; font-size: 1.05rem; color: #4b5563;">Absolutely not. PDFIndi is proudly driven by an ethos of accessibility, birthed strongly under global digital initiatives. Operating as a 100% free structural alternative is our permanent mission format, irrespective of how many files you compile securely per day.</p>
+                </div>
+                
+                <div style="margin-bottom: 0;">
+                    <h4 style="font-size: 1.15rem; color: #374151; font-weight: 700; margin-bottom: 0.5rem;">Q. What happens if an error occurs mid-process?</h4>
+                    <p style="line-height: 1.7; font-size: 1.05rem; color: #4b5563;">If an unexpected structural fault halts processing—often stemming from heavily corrupted input binaries or extreme encryption formatting—the task simple crashes cleanly. Your device resets internally to the default upload state without writing any corrupted cache. You can just reload the tool and attempt execution again.</p>
+                </div>
+            </article>
+
         </section>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-        const fileInput = document.getElementById('file-input');
-        const loading = document.getElementById('loading');
-        const resultArea = document.getElementById('result-area');
-        const slidePreview = document.getElementById('slide-preview');
-        const dropZone = document.getElementById('drop-zone');
-
-        fileInput.onchange = async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            dropZone.style.display = 'none';
-            loading.style.display = 'block';
-
-            try {
-                const arrayBuffer = await file.arrayBuffer();
-                const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
-                
-                let pages = [];
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    const content = await page.getTextContent();
-                    pages.push(content.items.map(item => item.str).join(" "));
-                }
-
-                generateSlides(pages);
-            } catch (err) {
-                alert("Error generating slides.");
-                location.reload();
-            }
-        };
-
-        function generateSlides(pages) {
-            loading.style.display = 'none';
-            resultArea.style.display = 'block';
-            slidePreview.style.display = 'flex';
-
-            const slides = [];
-            pages.forEach(p => {
-                const sentences = p.split(/(?<=[.!?])\s+/).filter(s => s.trim().length > 40);
-                if (sentences.length > 0) {
-                    slides.push({
-                        title: sentences[0].slice(0, 60) + "...",
-                        content: sentences.slice(1, 3).join("\n\n")
-                    });
-                }
-            });
-
-            // Fallback for very sparse documents
-            if (slides.length === 0) {
-                slides.push({ title: "Document Overview", content: "Main text content extracted professionally." });
-            }
-
-            // Preview logic
-            slides.slice(0, 6).forEach(s => {
-                const div = document.createElement('div');
-                div.className = "slide-thumb";
-                div.innerText = s.title;
-                slidePreview.appendChild(div);
-            });
-
-            // Trigger Automatic Download
-            setTimeout(() => { downloadPresentation(slides); }, 2000);
-            document.getElementById('download-btn').onclick = () => downloadPresentation(slides);
-        }
-
-        function downloadPresentation(slides) {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-            
-            slides.forEach((s, i) => {
-                if (i > 0) doc.addPage();
-                
-                // Background
-                doc.setFillColor(250, 251, 252);
-                doc.rect(0, 0, 297, 210, 'F');
-
-                // Header Bar
-                doc.setFillColor(250, 114, 32);
-                doc.rect(0, 0, 297, 20, 'F');
-                doc.setTextColor(255);
-                doc.setFontSize(12);
-                doc.text("PDFIndi - AI Presentation Generator", 15, 13);
-                
-                // Slide Content
-                doc.setTextColor(30);
-                doc.setFontSize(24);
-                const titleSplit = doc.splitTextToSize(s.title, 260);
-                doc.text(titleSplit, 20, 50);
-
-                doc.setFontSize(14);
-                doc.setTextColor(80);
-                const contentSplit = doc.splitTextToSize(s.content, 260);
-                doc.text(contentSplit, 20, 90);
-
-                // Footer
-                doc.setFontSize(10);
-                doc.setTextColor(150);
-                doc.text(`Slide ${i + 1} of ${slides.length}`, 270, 200, { align: 'right' });
-            });
-
-            doc.save("pdfindi-presentation.pdf");
-        }
-    </script>
+    <script src="js/pdf-to-presentation.min.js" defer></script>
     <script src="../modern-header.min.js"></script>
     <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
-    <!-- Related Tools Widget (SEO Internal Linking) -->
+            <!-- Related Tools Widget (SEO Internal Linking) -->
     <section id="related-tools-widget" style="padding:2.5rem 1rem; background:#f8fafc; border-top:1px solid #e2e8f0;">
-      <div style="max-width:900px;margin:0 auto;text-align:center;">
-        <h2 style="font-size:1.5rem;color:#1a202c;margin-bottom:1.5rem;font-weight:700;">You Might Also Like</h2>
-        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">          <a href="/tools/pdf-summarizer" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">AI PDF Summarizer &rarr;</a>          <a href="/tools/edit-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Edit PDF &rarr;</a>          <a href="/tools/word-to-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Word to PDF &rarr;</a>        </div>
-        <p style="margin-top:1.5rem;color:#64748b;font-size:0.9rem;">Explore all <a href="/" style="color:#f97316;font-weight:600;">33+ free tools on PDFIndi</a> &rarr;</p>
+      <div style="max-width:1000px;margin:0 auto;text-align:center;">
+        <h2 style="font-size:1.5rem;color:#1a202c;margin-bottom:1.5rem;font-weight:700;">Explore Powerful AI Tools</h2>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <a href="/tools/pdf-summarizer" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;">Summarize long PDFs with AI &rarr;</a>
+          <a href="/tools/chat-with-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;">Chat with your PDF document safely &rarr;</a>
+          <a href="/tools/pdf-to-study-notes" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;">Generate study notes from PDF &rarr;</a>
+          <a href="/tools/pdf-to-podcast" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;">Turn PDF documents into podcasts &rarr;</a>
+        </div>
+        <p style="margin-top:1.5rem;color:#64748b;font-size:0.9rem;">Explore all <a href="/" style="color:#f97316;font-weight:600;">Smart AI tools on PDFIndi</a> &rarr;</p>
       </div>
     </section>
     <script>
@@ -389,3 +325,4 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     })();
     </script></body>
 </html>
+

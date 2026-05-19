@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDFINDI Developer Hub & API Playground</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #080C14;
+            --panel-bg: rgba(21, 29, 48, 0.65);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --primary: #FF6B35;
+            --primary-glow: rgba(255, 107, 53, 0.35);
+            --primary-gradient: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+            --accent: #8B5CF6;
+            --accent-gradient: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+            --text-main: #F3F4F6;
+            --text-muted: #9CA3AF;
+            --text-dimmed: #6B7280;
+            --code-bg: #0D1321;
+            
+            --success: #10B981;
+            --info: #3B82F6;
+            --warning: #F59E0B;
+            --error: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 107, 53, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080C14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1F2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        header {
+            background: rgba(8, 12, 20, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--panel-border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #fff;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .logo-text h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .auth-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--panel-border);
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .auth-controls label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .auth-controls input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            width: 100%;
+            outline: none;
+        }
+
+        .auth-controls input::placeholder {
+            color: var(--text-dimmed);
+        }
+
+        .badge-env {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            text-transform: uppercase;
+        }
+
+        /* Layout Container */
+        .workspace {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 320px;
+            background: rgba(8, 12, 20, 0.5);
+            border-right: 1px solid var(--panel-border);
+            padding: 1.5rem 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .sidebar-section h3 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-dimmed);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.75rem;
+            padding-left: 0.5rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .sidebar-link:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .sidebar-link.active {
+            color: #fff;
+            background: rgba(255, 107, 53, 0.12);
+            border-left: 3px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .method-tag {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            min-width: 55px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .method-get { background: rgba(59, 130, 246, 0.15); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .method-post { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .method-put { background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .method-delete { background: rgba(239, 68, 68, 0.15); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+        /* Main Content Container */
+        .content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--panel-border);
+            padding-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 0.25rem;
+        }
+
+        /* API Endpoint Cards */
+        .endpoint-card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .endpoint-card:hover {
+            border-color: rgba(255, 107, 53, 0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Card Header */
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            background: rgba(255, 255, 255, 0.01);
+            border-bottom: 1px solid var(--panel-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .endpoint-route {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .route-path {
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .endpoint-summary {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        /* Card Body */
+        .card-body {
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1100px) {
+            .card-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel-left {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .parameter-section h4, .payload-section h4 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Input Elements */
+        .param-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .param-row {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            align-items: center;
+            background: rgba(0,0,0,0.2);
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            border: 1px solid var(--panel-border);
+        }
+
+        .param-name {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .param-input-wrap input, .param-input-wrap select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #fff;
+            outline: none;
+            font-size: 0.85rem;
+        }
+
+        .param-input-wrap select option {
+            background: var(--bg-color);
+            color: #fff;
+        }
+
+        .payload-textarea {
+            width: 100%;
+            height: 160px;
+            background: var(--code-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            color: #34D399;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            padding: 0.75rem;
+            outline: none;
+            resize: vertical;
+        }
+
+        .payload-file-row {
+            background: rgba(255, 107, 53, 0.05);
+            border: 1px dashed rgba(255, 107, 53, 0.25);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .payload-file-row:hover {
+            background: rgba(255, 107, 53, 0.08);
+            border-color: var(--primary);
+        }
+
+        .payload-file-row input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .file-label svg {
+            width: 32px;
+            height: 32px;
+            color: var(--primary);
+        }
+
+        /* Action Buttons */
+        .btn-test {
+            background: var(--primary-gradient);
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px var(--primary-glow);
+            transition: all 0.3s ease;
+            width: max-content;
+        }
+
+        .btn-test:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5);
+        }
+
+        .btn-test:disabled {
+            background: var(--text-dimmed);
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Response Panel */
+        .panel-right {
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--panel-border);
+            padding-left: 1.5rem;
+            gap: 1rem;
+        }
+
+        @media (max-width: 1100px) {
+            .panel-right {
+                border-left: none;
+                padding-left: 0;
+                border-top: 1px solid var(--panel-border);
+                padding-top: 1.5rem;
+            }
+        }
+
+        .panel-right-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-right-header h4 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .status-badge {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .status-success { background: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.2); }
+        .status-error { background: rgba(239, 68, 68, 0.15); color: var(--error); border: 1px solid rgba(239, 68, 68, 0.2); }
+
+        .time-badge {
+            font-size: 0.75rem;
+            color: var(--text-dimmed);
+            font-family: 'Fira Code', monospace;
+        }
+
+        .response-box {
+            flex: 1;
+            min-height: 200px;
+            background: var(--code-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 12px;
+            padding: 1rem;
+            overflow: auto;
+            position: relative;
+        }
+
+        .response-box pre {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: #A7F3D0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .response-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dimmed);
+            font-size: 0.85rem;
+        }
+
+        /* Spinner Loading */
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Code Snippet Tabs */
+        .snippet-container {
+            margin-top: 1rem;
+            background: #0B0F19;
+            border: 1px solid var(--panel-border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .snippet-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid var(--panel-border);
+        }
+
+        .snippet-tab {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-right: 1px solid var(--panel-border);
+            transition: all 0.2s ease;
+        }
+
+        .snippet-tab:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .snippet-tab.active {
+            color: var(--primary);
+            background: var(--code-bg);
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .snippet-code-box {
+            padding: 0.75rem;
+            background: var(--code-bg);
+            max-height: 150px;
+            overflow: auto;
+        }
+
+        .snippet-code-box pre {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-group">
+            <div class="logo-icon">P</div>
+            <div class="logo-text">
+                <h1>PDFINDI</h1>
+                <span>Developer Hub & Playground</span>
+            </div>
+        </div>
+        <div class="auth-controls">
+            <label for="apiKeyInput">Auth Key:</label>
+            <input type="text" id="apiKeyInput" value="86872984fbebc128e29c097cd6057ce2bc43f688f5e26fee8d00ad84702c4a58" placeholder="Bearer AGENT_API_KEY">
+            <span class="badge-env">Local Dev</span>
+        </div>
+    </header>
+
+    <div class="workspace">
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h3>System Status</h3>
+                <ul class="sidebar-menu">
+                    <li><a class="sidebar-link active" onclick="scrollToSection('status-group')"><span class="method-tag method-get">GET</span>/api/site/status</a></li>
+                    <li><a class="sidebar-link" onclick="scrollToSection('card-pages')"><span class="method-tag method-get">GET</span>/api/site/pages</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Universal Agent CRUD</h3>
+                <ul class="sidebar-menu">
+                    <li><a class="sidebar-link" onclick="scrollToSection('crud-list')"><span class="method-tag method-get">GET</span>/api/data/:type</a></li>
+                    <li><a class="sidebar-link" onclick="scrollToSection('crud-read')"><span class="method-tag method-get">GET</span>/api/data/:type/:id</a></li>
+                    <li><a class="sidebar-link" onclick="scrollToSection('crud-create')"><span class="method-tag method-post">POST</span>/api/data/:type</a></li>
+                    <li><a class="sidebar-link" onclick="scrollToSection('crud-update')"><span class="method-tag method-put">PUT</span>/api/data/:type/:id</a></li>
+                    <li><a class="sidebar-link" onclick="scrollToSection('crud-delete')"><span class="method-tag method-delete">DEL</span>/api/data/:type/:id</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Automation Actions</h3>
+                <ul class="sidebar-menu">
+                    <li><a class="sidebar-link" onclick="scrollToSection('action-sitemap')"><span class="method-tag method-post">POST</span>/action/generate-sitemap</a></li>
+                    <li><a class="sidebar-link" onclick="scrollToSection('action-cache')"><span class="method-tag method-post">POST</span>/action/clear-cache</a></li>
+                    <li><a class="sidebar-link" onclick="scrollToSection('action-blogs')"><span class="method-tag method-post">POST</span>/action/import-blogs</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Core Conversions</h3>
+                <ul class="sidebar-menu">
+                    <li><a class="sidebar-link" onclick="scrollToSection('tool-pdf2word')"><span class="method-tag method-post">POST</span>/pdf-to-word</a></li>
+                    <li><a class="sidebar-link" onclick="scrollToSection('tool-compress')"><span class="method-tag method-post">POST</span>/compress-pdf</a></li>
+                    <li><a class="sidebar-link" onclick="scrollToSection('tool-watermark')"><span class="method-tag method-post">POST</span>/add-watermark</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content" id="content-area">
+            
+            <!-- SECTION: STATUS -->
+            <div class="section-header" id="status-group">
+                <h2>System Inspection</h2>
+                <p>Monitor backend settings, health, and metadata configurations.</p>
+            </div>
+
+            <!-- CARD: Status -->
+            <div class="endpoint-card" id="card-status">
+                <div class="card-header">
+                    <div class="endpoint-route">
+                        <span class="method-tag method-get">GET</span>
+                        <span class="route-path">/api/site/status</span>
+                        <span class="endpoint-summary">Check system liveness & variables</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="panel-left">
+                        <div class="parameter-section">
+                            <h4>Parameters</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-dimmed);">No parameters required.</p>
+                        </div>
+                        <button class="btn-test" onclick="runRequest('status', '/api/site/status', 'GET')">
+                            <span class="spinner"></span>
+                            Send Request
+                        </button>
+                        <div class="snippet-container">
+                            <div class="snippet-tabs">
+                                <div class="snippet-tab active" onclick="switchSnippet(this, 'curl')">cURL</div>
+                                <div class="snippet-tab" onclick="switchSnippet(this, 'js')">JS Fetch</div>
+                            </div>
+                            <div class="snippet-code-box">
+                                <pre class="code-curl">curl http://localhost:3000/api/site/status</pre>
+                                <pre class="code-js" style="display:none;">fetch('http://localhost:3000/api/site/status')
+  .then(res => res.json())
+  .then(console.log);</pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-right">
+                        <div class="panel-right-header">
+                            <h4>Response</h4>
+                            <div>
+                                <span class="status-badge"></span>
+                                <span class="time-badge"></span>
+                            </div>
+                        </div>
+                        <div class="response-box">
+                            <div class="response-placeholder">Response payload will render here...</div>
+                            <pre><code class="response-text"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD: Pages -->
+            <div class="endpoint-card" id="card-pages">
+                <div class="card-header">
+                    <div class="endpoint-route">
+                        <span class="method-tag method-get">GET</span>
+                        <span class="route-path">/api/site/pages</span>
+                        <span class="endpoint-summary">Scan public directory for static pages & tools</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="panel-left">
+                        <div class="parameter-section">
+                            <h4>Parameters</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-dimmed);">No parameters required.</p>
+                        </div>
+                        <button class="btn-test" onclick="runSitePages()">
+                            <span class="spinner"></span>
+                            Send Request
+                        </button>
+                        <div class="snippet-container">
+                            <div class="snippet-tabs">
+                                <div class="snippet-tab active" onclick="switchSnippet(this, 'curl')">cURL</div>
+                                <div class="snippet-tab" onclick="switchSnippet(this, 'js')">JS Fetch</div>
+                            </div>
+                            <div class="snippet-code-box">
+                                <pre class="code-curl">curl -H "Authorization: Bearer 86872984fbebc128e29c097cd6057ce2bc43f688f5e26fee8d00ad84702c4a58" http://localhost:3000/api/site/pages</pre>
+                                <pre class="code-js" style="display:none;">fetch('http://localhost:3000/api/site/pages', {
+  headers: { 'Authorization': 'Bearer 86872984fbebc128e29c097cd6057ce2bc43f688f5e26fee8d00ad84702c4a58' }
+})
+  .then(res => res.json())
+  .then(console.log);</pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-right">
+                        <div class="panel-right-header">
+                            <h4>Response</h4>
+                            <div style="display:flex; align-items:center; gap:0.75rem;">
+                                <div class="view-tabs" style="display:none; gap:0.25rem; background:rgba(255,255,255,0.03); padding:0.2rem; border-radius:8px; border:1px solid var(--panel-border);">
+                                    <button class="view-tab active" onclick="togglePagesView('visual')" style="background:transparent; border:none; color:var(--text-muted); font-size:0.75rem; padding:0.25rem 0.5rem; border-radius:6px; cursor:pointer; font-weight:600; font-family:inherit;">Visual Catalog</button>
+                                    <button class="view-tab" onclick="togglePagesView('json')" style="background:transparent; border:none; color:var(--text-muted); font-size:0.75rem; padding:0.25rem 0.5rem; border-radius:6px; cursor:pointer; font-weight:600; font-family:inherit;">Raw JSON</button>
+                                </div>
+                                <span class="status-badge"></span>
+                                <span class="time-badge"></span>
+                            </div>
+                        </div>
+                        <div class="response-box" style="display:flex; flex-direction:column; min-height:350px;">
+                            <div class="response-placeholder">Response payload will render here...</div>
+                            <pre class="json-view" style="display:none; margin:0; flex:1;"><code class="response-text"></code></pre>
+                            <div class="visual-view" style="display:none; flex-direction:column; gap:0.75rem; width:100%; flex:1;">
+                                <!-- Stats Grid -->
+                                <div class="stats-summary" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:0.75rem; margin-bottom:0.75rem;">
+                                    <div class="stat-box" style="background:rgba(255,255,255,0.02); border:1px solid var(--panel-border); padding:0.5rem; border-radius:10px; text-align:center;">
+                                        <div style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Total Pages</div>
+                                        <div id="stat-total" style="font-size:1.25rem; font-weight:700; color:var(--primary); margin-top:0.15rem;">0</div>
+                                    </div>
+                                    <div class="stat-box" style="background:rgba(255,255,255,0.02); border:1px solid var(--panel-border); padding:0.5rem; border-radius:10px; text-align:center;">
+                                        <div style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Tool Pages</div>
+                                        <div id="stat-tools" style="font-size:1.25rem; font-weight:700; color:#34D399; margin-top:0.15rem;">0</div>
+                                    </div>
+                                    <div class="stat-box" style="background:rgba(255,255,255,0.02); border:1px solid var(--panel-border); padding:0.5rem; border-radius:10px; text-align:center;">
+                                        <div style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Other Pages</div>
+                                        <div id="stat-others" style="font-size:1.25rem; font-weight:700; color:#60A5FA; margin-top:0.15rem;">0</div>
+                                    </div>
+                                </div>
+                                <!-- Scanned visual elements -->
+                                <div id="pages-list-container" style="display:flex; flex-direction:column; gap:0.5rem; max-height:280px; overflow-y:auto; padding-right:0.25rem;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- SECTION: DYNAMIC CMS -->
+            <div class="section-header" id="crud-section">
+                <h2>Universal Agent CMS (CRUD)</h2>
+                <p>Run dynamic queries against file-backed models under `/data/:type/*`.</p>
+            </div>
+
+            <!-- CARD: CRUD LIST -->
+            <div class="endpoint-card" id="crud-list">
+                <div class="card-header">
+                    <div class="endpoint-route">
+                        <span class="method-tag method-get">GET</span>
+                        <span class="route-path">/api/data/:type</span>
+                        <span class="endpoint-summary">List all JSON files of a specific folder type</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="panel-left">
+                        <div class="parameter-section">
+                            <h4>Route Parameters</h4>
+                            <div class="param-grid">
+                                <div class="param-row">
+                                    <span class="param-name">type</span>
+                                    <div class="param-input-wrap">
+                                        <input type="text" id="list-type" value="seo" placeholder="e.g. seo, blog, faq">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-test" onclick="runCrudList()">
+                            <span class="spinner"></span>
+                            Send Request
+                        </button>
+                    </div>
+                    <div class="panel-right">
+                        <div class="panel-right-header">
+                            <h4>Response</h4>
+                            <div>
+                                <span class="status-badge"></span>
+                                <span class="time-badge"></span>
+                            </div>
+                        </div>
+                        <div class="response-box">
+                            <div class="response-placeholder">Response payload will render here...</div>
+                            <pre><code class="response-text"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD: CRUD READ -->
+            <div class="endpoint-card" id="crud-read">
+                <div class="card-header">
+                    <div class="endpoint-route">
+                        <span class="method-tag method-get">GET</span>
+                        <span class="route-path">/api/data/:type/:id</span>
+                        <span class="endpoint-summary">Retrieve a single content JSON file</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="panel-left">
+                        <div class="parameter-section">
+                            <h4>Route Parameters</h4>
+                            <div class="param-grid">
+                                <div class="param-row">
+                                    <span class="param-name">type</span>
+                                    <div class="param-input-wrap">
+                                        <input type="text" id="read-type" value="seo" placeholder="seo">
+                                    </div>
+                                </div>
+                                <div class="param-row">
+                                    <span class="param-name">id</span>
+                                    <div class="param-input-wrap">
+                                        <input type="text" id="read-id" value="index" placeholder="e.g. index, blog-post-1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-test" onclick="runCrudRead()">
+                            <span class="spinner"></span>
+                            Send Request
+                        </button>
+                    </div>
+                    <div class="panel-right">
+                        <div class="panel-right-header">
+                            <h4>Response</h4>
+                            <div>
+                                <span class="status-badge"></span>
+                                <span class="time-badge"></span>
+                            </div>
+                        </div>
+                        <div class="response-box">
+                            <div class="response-placeholder">Response payload will render here...</div>
+                            <pre><code class="response-text"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD: CRUD CREATE -->
+            <div class="endpoint-card" id="crud-create">
+                <div class="card-header">
+                    <div class="endpoint-route">
+                        <span class="method-tag method-post">POST</span>
+                        <span class="route-path">/api/data/:type</span>
+                        <span class="endpoint-summary">Create a new item (timestampped & unique ID)</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="panel-left">
+                        <div class="parameter-section">
+                            <h4>Route Parameters</h4>
+                            <div class="param-grid">
+                                <div class="param-row">
+                                    <span class="param-name">type</span>
+                                    <div class="param-input-wrap">
+                                        <input type="text" id="create-type" value="faq" placeholder="e.g. faq, blog">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payload-section">
+                            <h4>Request Body (JSON)</h4>
+                            <textarea id="create-body" class="payload-textarea">{
+  "question": "Is PDFINDI free?",
+  "answer": "Yes, PDFINDI offers multiple free conversion tools!"
+}</textarea>
+                        </div>
+                        <button class="btn-test" onclick="runCrudCreate()">
+                            <span class="spinner"></span>
+                            Send Request
+                        </button>
+                    </div>
+                    <div class="panel-right">
+                        <div class="panel-right-header">
+                            <h4>Response</h4>
+                            <div>
+                                <span class="status-badge"></span>
+                                <span class="time-badge"></span>
+                            </div>
+                        </div>
+                        <div class="response-box">
+                            <div class="response-placeholder">Response payload will render here...</div>
+                            <pre><code class="response-text"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD: CRUD UPDATE -->
+            <div class="endpoint-card" id="crud-update">
+                <div class="card-header">
+                    <div class="endpoint-route">
+                        <span class="method-tag method-put">PUT</span>
+                        <span class="route-path">/api/data/:type/:id</span>
+                        <span class="endpoint-summary">Partial update / smart merge JSON keys</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="panel-left">
+                        <div class="parameter-section">
+                            <h4>Route Parameters</h4>
+                            <div class="param-grid">
+                                <div class="param-row">
+                                    <span class="param-name">type</span>
+                                    <div class="param-input-wrap">
+                                        <input type="text" id="update-type" value="seo" placeholder="seo">
+                                    </div>
+                                </div>
+                                <div class="param-row">
+                                    <span class="param-name">id</span>
+                                    <div class="param-input-wrap">
+                                        <input type="text" id="update-id" value="index" placeholder="index">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payload-section">
+                            <h4>Request Body (JSON Merge)</h4>
+                            <textarea id="update-body" class="payload-textarea">{
+  "title": "UPDATED VIA SWAGGER - 2026",
+  "description": "This is injected on the fly by node middleware!"
+}</textarea>
+                        </div>
+                        <button class="btn-test" onclick="runCrudUpdate()">
+                            <span class="spinner"></span>
+                            Send Request
+                        </button>
+                    </div>
+                    <div class="panel-right">
+                        <div class="panel-right-header">
+                            <h4>Response</h4>
+                            <div>
+                                <span class="status-badge"></span>
+                                <span class="time-badge"></span>
+                            </div>
+                        </div>
+                        <div class="response-box">
+                            <div class="response-placeholder">Response payload will render here...</div>
+                            <pre><code class="response-text"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD: CRUD DELETE -->
+            <div class="endpoint-card" id="crud-delete">
+                <div class="card-header">
+                    <div class="endpoint-route">
+                        <span class="method-tag method-delete">DELETE</span>
+                        <span class="route-path">/api/data/:type/:id</span>
+                        <span class="endpoint-summary">Remove dynamic JSON record permanently</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="panel-left">
+                        <div class="parameter-section">
+                            <h4>Route Parameters</h4>
+                            <div class="param-grid">
+                                <div class="param-row">
+                                    <span class="param-name">type</span>
+                                    <div class="param-input-wrap">
+                                        <input type="text" id="delete-type" value="faq" placeholder="faq">
+                                    </div>
+                                </div>
+                                <div class="param-row">
+                                    <span class="param-name">id</span>
+                                    <div class="param-input-wrap">
+                                        <input type="text" id="delete-id" value="" placeholder="enter-id-to-delete">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-test" onclick="runCrudDelete()">
+                            <span class="spinner"></span>
+                            Send Request
+                        </button>
+                    </div>
+                    <div class="panel-right">
+                        <div class="panel-right-header">
+                            <h4>Response</h4>
+                            <div>
+                                <span class="status-badge"></span>
+                                <span class="time-badge"></span>
+                            </div>
+                        </div>
+                        <div class="response-box">
+                            <div class="response-placeholder">Response payload will render here...</div>
+                            <pre><code class="response-text"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- SECTION: ACTIONS -->
+            <div class="section-header" id="actions-section">
+                <h2>Automation Actions</h2>
+                <p>Run complex site build commands, updates, and indexing hooks.</p>
+            </div>
+
+            <!-- CARD: generate-sitemap -->
+            <div class="endpoint-card" id="action-sitemap">
+                <div class="card-header">
+                    <div class="endpoint-route">
+                        <span class="method-tag method-post">POST</span>
+                        <span class="route-path">/api/action/generate-sitemap</span>
+                        <span class="endpoint-summary">Re-crawl pages and write sitemap.xml</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="panel-left">
+                        <div class="parameter-section">
+                            <h4>Payload Parameters</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-dimmed);">No parameters required.</p>
+                        </div>
+                        <button class="btn-test" onclick="runRequest('sitemap', '/api/action/generate-sitemap', 'POST', true)">
+                            <span class="spinner"></span>
+                            Execute Action
+                        </button>
+                    </div>
+                    <div class="panel-right">
+                        <div class="panel-right-header">
+                            <h4>Response</h4>
+                            <div>
+                                <span class="status-badge"></span>
+                                <span class="time-badge"></span>
+                            </div>
+                        </div>
+                        <div class="response-box">
+                            <div class="response-placeholder">Response payload will render here...</div>
+                            <pre><code class="response-text"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD: clear-cache -->
+            <div class="endpoint-card" id="action-cache">
+                <div class="card-header">
+                    <div class="endpoint-route">
+                        <span class="method-tag method-post">POST</span>
+                        <span class="route-path">/api/action/clear-cache</span>
+                        <span class="endpoint-summary">Flush RAM cache structures</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="panel-left">
+                        <div class="parameter-section">
+                            <h4>Payload Parameters</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-dimmed);">No parameters required.</p>
+                        </div>
+                        <button class="btn-test" onclick="runRequest('cache', '/api/action/clear-cache', 'POST', true)">
+                            <span class="spinner"></span>
+                            Execute Action
+                        </button>
+                    </div>
+                    <div class="panel-right">
+                        <div class="panel-right-header">
+                            <h4>Response</h4>
+                            <div>
+                                <span class="status-badge"></span>
+                                <span class="time-badge"></span>
+                            </div>
+                        </div>
+                        <div class="response-box">
+                            <div class="response-placeholder">Response payload will render here...</div>
+                            <pre><code class="response-text"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD: import-blogs -->
+            <div class="endpoint-card" id="action-blogs">
+                <div class="card-header">
+                    <div class="endpoint-route">
+                        <span class="method-tag method-post">POST</span>
+                        <span class="route-path">/api/action/import-blogs</span>
+                        <span class="endpoint-summary">Import and index external blogs</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="panel-left">
+                        <div class="parameter-section">
+                            <h4>Payload Parameters</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-dimmed);">No parameters required.</p>
+                        </div>
+                        <button class="btn-test" onclick="runRequest('blogs', '/api/action/import-blogs', 'POST', true)">
+                            <span class="spinner"></span>
+                            Execute Action
+                        </button>
+                    </div>
+                    <div class="panel-right">
+                        <div class="panel-right-header">
+                            <h4>Response</h4>
+                            <div>
+                                <span class="status-badge"></span>
+                                <span class="time-badge"></span>
+                            </div>
+                        </div>
+                        <div class="response-box">
+                            <div class="response-placeholder">Response payload will render here...</div>
+                            <pre><code class="response-text"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- SECTION: CORE CONVERSIONS -->
+            <div class="section-header" id="conversions-section">
+                <h2>Core Conversions & File Tools</h2>
+                <p>Test the high-volume PDF file conversion processors.</p>
+            </div>
+
+            <!-- CARD: pdf-to-word -->
+            <div class="endpoint-card" id="tool-pdf2word">
+                <div class="card-header">
+                    <div class="endpoint-route">
+                        <span class="method-tag method-post">POST</span>
+                        <span class="route-path">/api/pdf-to-word</span>
+                        <span class="endpoint-summary">Convert PDF file to fully editable Word (.docx)</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="panel-left">
+                        <div class="parameter-section">
+                            <h4>Form File Payload</h4>
+                            <div class="payload-file-row">
+                                <input type="file" id="pdf2word-file" accept=".pdf">
+                                <div class="file-label">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                    <span class="file-name-text">Drag & drop or click to upload PDF</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-test" onclick="runFileUpload('pdf2word', '/api/pdf-to-word', 'file')">
+                            <span class="spinner"></span>
+                            Convert PDF
+                        </button>
+                    </div>
+                    <div class="panel-right">
+                        <div class="panel-right-header">
+                            <h4>Response</h4>
+                            <div>
+                                <span class="status-badge"></span>
+                                <span class="time-badge"></span>
+                            </div>
+                        </div>
+                        <div class="response-box">
+                            <div class="response-placeholder">Response payload will render here...</div>
+                            <pre><code class="response-text"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD: compress-pdf -->
+            <div class="endpoint-card" id="tool-compress">
+                <div class="card-header">
+                    <div class="endpoint-route">
+                        <span class="method-tag method-post">POST</span>
+                        <span class="route-path">/api/compress-pdf</span>
+                        <span class="endpoint-summary">Compress and optimize PDF file sizes</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="panel-left">
+                        <div class="parameter-section">
+                            <h4>Form Fields</h4>
+                            <div class="param-grid" style="margin-bottom:1rem;">
+                                <div class="param-row">
+                                    <span class="param-name">level</span>
+                                    <div class="param-input-wrap">
+                                        <select id="compress-level">
+                                            <option value="medium">Medium (Balanced)</option>
+                                            <option value="low">Low (High Quality)</option>
+                                            <option value="high">High (Maximum Compression)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4>Form File Payload</h4>
+                            <div class="payload-file-row">
+                                <input type="file" id="compress-file" accept=".pdf">
+                                <div class="file-label">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                    <span class="file-name-text">Upload PDF file</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-test" onclick="runCompressPdf()">
+                            <span class="spinner"></span>
+                            Compress PDF
+                        </button>
+                    </div>
+                    <div class="panel-right">
+                        <div class="panel-right-header">
+                            <h4>Response</h4>
+                            <div>
+                                <span class="status-badge"></span>
+                                <span class="time-badge"></span>
+                            </div>
+                        </div>
+                        <div class="response-box">
+                            <div class="response-placeholder">Response payload will render here...</div>
+                            <pre><code class="response-text"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD: add-watermark -->
+            <div class="endpoint-card" id="tool-watermark">
+                <div class="card-header">
+                    <div class="endpoint-route">
+                        <span class="method-tag method-post">POST</span>
+                        <span class="route-path">/api/add-watermark</span>
+                        <span class="endpoint-summary">Add dynamic watermark overlay to PDF pages</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="panel-left">
+                        <div class="parameter-section">
+                            <h4>Form Fields</h4>
+                            <div class="param-grid" style="margin-bottom:1rem; gap:0.5rem;">
+                                <div class="param-row">
+                                    <span class="param-name">type</span>
+                                    <div class="param-input-wrap">
+                                        <select id="watermark-type" onchange="toggleWatermarkInputs()">
+                                            <option value="text">Text Overlay</option>
+                                            <option value="image">Image Logo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="param-row" id="row-watermark-text">
+                                    <span class="param-name">text</span>
+                                    <div class="param-input-wrap">
+                                        <input type="text" id="watermark-text" value="CONFIDENTIAL">
+                                    </div>
+                                </div>
+                                <div class="param-row">
+                                    <span class="param-name">fontSize</span>
+                                    <div class="param-input-wrap">
+                                        <input type="number" id="watermark-size" value="36">
+                                    </div>
+                                </div>
+                                <div class="param-row">
+                                    <span class="param-name">fontColor</span>
+                                    <div class="param-input-wrap">
+                                        <input type="text" id="watermark-color" value="#ff0000">
+                                    </div>
+                                </div>
+                                <div class="param-row">
+                                    <span class="param-name">opacity</span>
+                                    <div class="param-input-wrap">
+                                        <input type="number" step="0.1" min="0" max="1" id="watermark-opacity" value="0.5">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h4>PDF Document File</h4>
+                            <div class="payload-file-row" style="margin-bottom:1rem;">
+                                <input type="file" id="watermark-pdf" accept=".pdf">
+                                <div class="file-label">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                    <span class="file-name-text">Upload PDF Document</span>
+                                </div>
+                            </div>
+
+                            <h4 id="label-watermark-image" style="display:none;">Watermark Stamp Image</h4>
+                            <div class="payload-file-row" id="row-watermark-image" style="display:none;">
+                                <input type="file" id="watermark-img-file" accept="image/*">
+                                <div class="file-label">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                    <span class="file-name-text">Upload PNG/JPG Watermark Stamp</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-test" onclick="runWatermarkPdf()">
+                            <span class="spinner"></span>
+                            Apply Watermark
+                        </button>
+                    </div>
+                    <div class="panel-right">
+                        <div class="panel-right-header">
+                            <h4>Response</h4>
+                            <div>
+                                <span class="status-badge"></span>
+                                <span class="time-badge"></span>
+                            </div>
+                        </div>
+                        <div class="response-box">
+                            <div class="response-placeholder">Response payload will render here...</div>
+                            <pre><code class="response-text"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Dynamically resolve relative API paths to the correct backend origin if loaded from file:// or other ports
+        function getApiUrl(url) {
+            if (url.startsWith('http://') || url.startsWith('https://')) return url;
+            if (window.location.port !== '3000') {
+                return `http://localhost:3000${url}`;
+            }
+            return url;
+        }
+
+        // Track visual file uploads
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function(e) {
+                const label = this.nextElementSibling.querySelector('.file-name-text');
+                if (this.files && this.files[0]) {
+                    label.textContent = `Selected: ${this.files[0].name} (${(this.files[0].size/1024).toFixed(1)} KB)`;
+                    label.style.color = '#34D399';
+                } else {
+                    label.textContent = "Upload file";
+                    label.style.color = '';
+                }
+            });
+        });
+
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            
+            // Highlight sidebar item
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            const activeLink = Array.from(document.querySelectorAll('.sidebar-link')).find(link => {
+                return link.getAttribute('onclick').includes(id);
+            });
+            if (activeLink) activeLink.classList.add('active');
+        }
+
+        function switchSnippet(tabEl, lang) {
+            const container = tabEl.closest('.snippet-container');
+            container.querySelectorAll('.snippet-tab').forEach(tab => tab.classList.remove('active'));
+            tabEl.classList.add('active');
+            
+            if (lang === 'curl') {
+                container.querySelector('.code-curl').style.display = 'block';
+                container.querySelector('.code-js').style.display = 'none';
+            } else {
+                container.querySelector('.code-curl').style.display = 'none';
+                container.querySelector('.code-js').style.display = 'block';
+            }
+        }
+
+        function toggleWatermarkInputs() {
+            const type = document.getElementById('watermark-type').value;
+            const textRow = document.getElementById('row-watermark-text');
+            const imgLabel = document.getElementById('label-watermark-image');
+            const imgRow = document.getElementById('row-watermark-image');
+            
+            if (type === 'text') {
+                textRow.style.display = 'grid';
+                imgLabel.style.display = 'none';
+                imgRow.style.display = 'none';
+            } else {
+                textRow.style.display = 'none';
+                imgLabel.style.display = 'block';
+                imgRow.style.display = 'block';
+            }
+        }
+
+        function getAuthHeaders(includeAuth) {
+            const headers = {};
+            if (includeAuth) {
+                const key = document.getElementById('apiKeyInput').value;
+                headers['Authorization'] = `Bearer ${key}`;
+            }
+            return headers;
+        }
+
+        // Generic JSON fetcher
+        async function runRequest(id, url, method, includeAuth = false) {
+            const card = document.getElementById(`card-${id}`) || document.getElementById(id);
+            const btn = card.querySelector('.btn-test');
+            const spinner = btn.querySelector('.spinner');
+            const placeholder = card.querySelector('.response-placeholder');
+            const resText = card.querySelector('.response-text');
+            const statusBadge = card.querySelector('.status-badge');
+            const timeBadge = card.querySelector('.time-badge');
+
+            btn.disabled = true;
+            spinner.style.display = 'inline-block';
+            placeholder.style.display = 'none';
+            resText.textContent = 'Loading response...';
+            statusBadge.style.display = 'none';
+            timeBadge.textContent = '';
+
+            const t0 = performance.now();
+            try {
+                const headers = getAuthHeaders(includeAuth);
+                const res = await fetch(getApiUrl(url), {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...headers
+                    }
+                });
+
+                const t1 = performance.now();
+                const latency = `${Math.round(t1 - t0)}ms`;
+                const data = await res.json();
+                
+                statusBadge.textContent = `${res.status} ${res.statusText}`;
+                statusBadge.style.display = 'inline-block';
+                statusBadge.className = 'status-badge ' + (res.ok ? 'status-success' : 'status-error');
+                timeBadge.textContent = latency;
+
+                resText.textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                statusBadge.textContent = 'Failed';
+                statusBadge.style.display = 'inline-block';
+                statusBadge.className = 'status-badge status-error';
+                resText.textContent = `Error: ${err.message}`;
+            } finally {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+            }
+        }
+
+        // Generic File Uploader
+        async function runFileUpload(id, url, fileParam) {
+            const card = document.getElementById(`tool-${id}`);
+            const btn = card.querySelector('.btn-test');
+            const spinner = btn.querySelector('.spinner');
+            const placeholder = card.querySelector('.response-placeholder');
+            const resText = card.querySelector('.response-text');
+            const statusBadge = card.querySelector('.status-badge');
+            const timeBadge = card.querySelector('.time-badge');
+            const fileInput = card.querySelector('input[type="file"]');
+
+            if (!fileInput.files || !fileInput.files[0]) {
+                alert('Please upload a file first!');
+                return;
+            }
+
+            btn.disabled = true;
+            spinner.style.display = 'inline-block';
+            placeholder.style.display = 'none';
+            resText.textContent = 'Uploading and processing file (please wait, OCR/conversion may take up to 15s)...';
+            statusBadge.style.display = 'none';
+            timeBadge.textContent = '';
+
+            const t0 = performance.now();
+            try {
+                const formData = new FormData();
+                formData.append(fileParam, fileInput.files[0]);
+
+                const res = await fetch(getApiUrl(url), {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const t1 = performance.now();
+                const latency = `${Math.round(t1 - t0)}ms`;
+                const data = await res.json();
+
+                statusBadge.textContent = `${res.status} ${res.statusText}`;
+                statusBadge.style.display = 'inline-block';
+                statusBadge.className = 'status-badge ' + (res.ok ? 'status-success' : 'status-error');
+                timeBadge.textContent = latency;
+
+                // Show partial preview if base64 is huge
+                if (data.base64 && data.base64.length > 500) {
+                    const truncated = { ...data, base64: `${data.base64.substring(0, 100)}... [Truncated for readability, length: ${data.base64.length} chars]` };
+                    resText.textContent = JSON.stringify(truncated, null, 2);
+                } else {
+                    resText.textContent = JSON.stringify(data, null, 2);
+                }
+            } catch (err) {
+                statusBadge.textContent = 'Failed';
+                statusBadge.style.display = 'inline-block';
+                statusBadge.className = 'status-badge status-error';
+                resText.textContent = `Error: ${err.message}`;
+            } finally {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+            }
+        }
+
+        // Specific Handler: CRUD List
+        async function runCrudList() {
+            const type = document.getElementById('list-type').value;
+            if (!type) return alert('Type parameter is required');
+            await runRequest('crud-list', `/api/data/${type}`, 'GET', true);
+        }
+
+        // Specific Handler: CRUD Read
+        async function runCrudRead() {
+            const type = document.getElementById('read-type').value;
+            const id = document.getElementById('read-id').value;
+            if (!type || !id) return alert('Both Type and ID parameters are required');
+            await runRequest('crud-read', `/api/data/${type}/${id}`, 'GET', true);
+        }
+
+        // Specific Handler: CRUD Create
+        async function runCrudCreate() {
+            const type = document.getElementById('create-type').value;
+            const bodyStr = document.getElementById('create-body').value;
+            if (!type) return alert('Type parameter is required');
+            
+            let bodyJson;
+            try {
+                bodyJson = JSON.parse(bodyStr);
+            } catch {
+                return alert('Invalid JSON payload! Please verify formatting.');
+            }
+
+            const card = document.getElementById('crud-create');
+            const btn = card.querySelector('.btn-test');
+            const spinner = btn.querySelector('.spinner');
+            const placeholder = card.querySelector('.response-placeholder');
+            const resText = card.querySelector('.response-text');
+            const statusBadge = card.querySelector('.status-badge');
+            const timeBadge = card.querySelector('.time-badge');
+
+            btn.disabled = true;
+            spinner.style.display = 'inline-block';
+            placeholder.style.display = 'none';
+            resText.textContent = 'Creating dynamic document...';
+            statusBadge.style.display = 'none';
+            timeBadge.textContent = '';
+
+            const t0 = performance.now();
+            try {
+                const res = await fetch(getApiUrl(`/api/data/${type}`), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...getAuthHeaders(true)
+                    },
+                    body: JSON.stringify(bodyJson)
+                });
+
+                const t1 = performance.now();
+                const latency = `${Math.round(t1 - t0)}ms`;
+                const data = await res.json();
+
+                statusBadge.textContent = `${res.status} ${res.statusText}`;
+                statusBadge.style.display = 'inline-block';
+                statusBadge.className = 'status-badge ' + (res.ok ? 'status-success' : 'status-error');
+                timeBadge.textContent = latency;
+
+                resText.textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                statusBadge.textContent = 'Failed';
+                statusBadge.style.display = 'inline-block';
+                statusBadge.className = 'status-badge status-error';
+                resText.textContent = `Error: ${err.message}`;
+            } finally {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+            }
+        }
+
+        // Specific Handler: CRUD Update
+        async function runCrudUpdate() {
+            const type = document.getElementById('update-type').value;
+            const id = document.getElementById('update-id').value;
+            const bodyStr = document.getElementById('update-body').value;
+            if (!type || !id) return alert('Type and ID parameters are required');
+
+            let bodyJson;
+            try {
+                bodyJson = JSON.parse(bodyStr);
+            } catch {
+                return alert('Invalid JSON payload! Please verify formatting.');
+            }
+
+            const card = document.getElementById('crud-update');
+            const btn = card.querySelector('.btn-test');
+            const spinner = btn.querySelector('.spinner');
+            const placeholder = card.querySelector('.response-placeholder');
+            const resText = card.querySelector('.response-text');
+            const statusBadge = card.querySelector('.status-badge');
+            const timeBadge = card.querySelector('.time-badge');
+
+            btn.disabled = true;
+            spinner.style.display = 'inline-block';
+            placeholder.style.display = 'none';
+            resText.textContent = 'Merging dynamic properties...';
+            statusBadge.style.display = 'none';
+            timeBadge.textContent = '';
+
+            const t0 = performance.now();
+            try {
+                const res = await fetch(getApiUrl(`/api/data/${type}/${id}`), {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...getAuthHeaders(true)
+                    },
+                    body: JSON.stringify(bodyJson)
+                });
+
+                const t1 = performance.now();
+                const latency = `${Math.round(t1 - t0)}ms`;
+                const data = await res.json();
+
+                statusBadge.textContent = `${res.status} ${res.statusText}`;
+                statusBadge.style.display = 'inline-block';
+                statusBadge.className = 'status-badge ' + (res.ok ? 'status-success' : 'status-error');
+                timeBadge.textContent = latency;
+
+                resText.textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                statusBadge.textContent = 'Failed';
+                statusBadge.style.display = 'inline-block';
+                statusBadge.className = 'status-badge status-error';
+                resText.textContent = `Error: ${err.message}`;
+            } finally {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+            }
+        }
+
+        // Specific Handler: CRUD Delete
+        async function runCrudDelete() {
+            const type = document.getElementById('delete-type').value;
+            const id = document.getElementById('delete-id').value;
+            if (!type || !id) return alert('Type and ID parameters are required');
+            if (!confirm(`Are you absolutely sure you want to delete ${type}/${id}?`)) return;
+            await runRequest('crud-delete', `/api/data/${type}/${id}`, 'DELETE', true);
+        }
+
+        // Specific Handler: PDF Compress
+        async function runCompressPdf() {
+            const card = document.getElementById('tool-compress');
+            const btn = card.querySelector('.btn-test');
+            const spinner = btn.querySelector('.spinner');
+            const placeholder = card.querySelector('.response-placeholder');
+            const resText = card.querySelector('.response-text');
+            const statusBadge = card.querySelector('.status-badge');
+            const timeBadge = card.querySelector('.time-badge');
+            const fileInput = document.getElementById('compress-file');
+            const level = document.getElementById('compress-level').value;
+
+            if (!fileInput.files || !fileInput.files[0]) {
+                alert('Please upload a PDF file first!');
+                return;
+            }
+
+            btn.disabled = true;
+            spinner.style.display = 'inline-block';
+            placeholder.style.display = 'none';
+            resText.textContent = 'Compressing and optimizing PDF streams (may take a few seconds)...';
+            statusBadge.style.display = 'none';
+            timeBadge.textContent = '';
+
+            const t0 = performance.now();
+            try {
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                formData.append('level', level);
+
+                const res = await fetch(getApiUrl('/api/compress-pdf'), {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const t1 = performance.now();
+                const latency = `${Math.round(t1 - t0)}ms`;
+                const data = await res.json();
+
+                statusBadge.textContent = `${res.status} ${res.statusText}`;
+                statusBadge.style.display = 'inline-block';
+                statusBadge.className = 'status-badge ' + (res.ok ? 'status-success' : 'status-error');
+                timeBadge.textContent = latency;
+
+                if (data.base64) {
+                    const preview = { ...data, base64: `${data.base64.substring(0, 100)}... [PDF Base64 Code Truncated, Size: ${data.base64.length}]` };
+                    resText.textContent = JSON.stringify(preview, null, 2);
+                } else {
+                    resText.textContent = JSON.stringify(data, null, 2);
+                }
+            } catch (err) {
+                statusBadge.textContent = 'Failed';
+                statusBadge.style.display = 'inline-block';
+                statusBadge.className = 'status-badge status-error';
+                resText.textContent = `Error: ${err.message}`;
+            } finally {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+            }
+        }
+
+        // Specific Handler: PDF Watermark
+        async function runWatermarkPdf() {
+            const card = document.getElementById('tool-watermark');
+            const btn = card.querySelector('.btn-test');
+            const spinner = btn.querySelector('.spinner');
+            const placeholder = card.querySelector('.response-placeholder');
+            const resText = card.querySelector('.response-text');
+            const statusBadge = card.querySelector('.status-badge');
+            const timeBadge = card.querySelector('.time-badge');
+            
+            const pdfInput = document.getElementById('watermark-pdf');
+            const type = document.getElementById('watermark-type').value;
+            const text = document.getElementById('watermark-text').value;
+            const fontSize = document.getElementById('watermark-size').value;
+            const color = document.getElementById('watermark-color').value;
+            const opacity = document.getElementById('watermark-opacity').value;
+            const imgInput = document.getElementById('watermark-img-file');
+
+            if (!pdfInput.files || !pdfInput.files[0]) {
+                alert('Please upload a PDF document first!');
+                return;
+            }
+
+            if (type === 'image' && (!imgInput.files || !imgInput.files[0])) {
+                alert('Please upload a Watermark Stamp Image first!');
+                return;
+            }
+
+            btn.disabled = true;
+            spinner.style.display = 'inline-block';
+            placeholder.style.display = 'none';
+            resText.textContent = 'Overlaying watermark and baking layers...';
+            statusBadge.style.display = 'none';
+            timeBadge.textContent = '';
+
+            const t0 = performance.now();
+            try {
+                const formData = new FormData();
+                formData.append('pdf', pdfInput.files[0]);
+                formData.append('type', type);
+                formData.append('text', text);
+                formData.append('fontSize', fontSize);
+                formData.append('fontColor', color);
+                formData.append('opacity', opacity);
+                
+                if (type === 'image') {
+                    formData.append('image', imgInput.files[0]);
+                }
+
+                const res = await fetch(getApiUrl('/api/add-watermark'), {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const t1 = performance.now();
+                const latency = `${Math.round(t1 - t0)}ms`;
+                statusBadge.textContent = `${res.status} ${res.statusText}`;
+                statusBadge.style.display = 'inline-block';
+                statusBadge.className = 'status-badge ' + (res.ok ? 'status-success' : 'status-error');
+                timeBadge.textContent = latency;
+
+                if (res.ok) {
+                    const blob = await res.blob();
+                    const sizeBytes = blob.size;
+                    const previewInfo = {
+                        success: true,
+                        message: "Watermark successfully baked! Your PDF is downloading automatically...",
+                        contentType: "application/pdf",
+                        fileSizeBytes: sizeBytes,
+                        downloadUrl: `watermarked-${pdfInput.files[0].name}`
+                    };
+                    resText.textContent = JSON.stringify(previewInfo, null, 2);
+                    
+                    // Trigger download
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `watermarked-${pdfInput.files[0].name}`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                } else {
+                    const errorData = await res.json();
+                    resText.textContent = JSON.stringify(errorData, null, 2);
+                }
+            } catch (err) {
+                statusBadge.textContent = 'Failed';
+                statusBadge.style.display = 'inline-block';
+                statusBadge.className = 'status-badge status-error';
+                resText.textContent = `Error: ${err.message}`;
+            } finally {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+            }
+        }
+
+        // Custom Visual Handler: Scanned Site Pages API
+        async function runSitePages() {
+            const card = document.getElementById('card-pages');
+            const btn = card.querySelector('.btn-test');
+            const spinner = btn.querySelector('.spinner');
+            const placeholder = card.querySelector('.response-placeholder');
+            const resText = card.querySelector('.response-text');
+            const statusBadge = card.querySelector('.status-badge');
+            const timeBadge = card.querySelector('.time-badge');
+            const viewTabs = card.querySelector('.view-tabs');
+            const jsonView = card.querySelector('.json-view');
+            const visualView = card.querySelector('.visual-view');
+            const listContainer = document.getElementById('pages-list-container');
+
+            btn.disabled = true;
+            spinner.style.display = 'inline-block';
+            placeholder.style.display = 'none';
+            resText.textContent = 'Scanning public directory...';
+            statusBadge.style.display = 'none';
+            timeBadge.textContent = '';
+            viewTabs.style.display = 'none';
+            jsonView.style.display = 'block';
+            visualView.style.display = 'none';
+
+            const t0 = performance.now();
+            try {
+                const headers = getAuthHeaders(true);
+                const res = await fetch(getApiUrl('/api/site/pages'), {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...headers
+                    }
+                });
+
+                const t1 = performance.now();
+                const latency = `${Math.round(t1 - t0)}ms`;
+                const result = await res.json();
+                
+                statusBadge.textContent = `${res.status} ${res.statusText}`;
+                statusBadge.style.display = 'inline-block';
+                statusBadge.className = 'status-badge ' + (res.ok ? 'status-success' : 'status-error');
+                timeBadge.textContent = latency;
+
+                resText.textContent = JSON.stringify(result, null, 2);
+
+                if (res.ok && result.success && result.data) {
+                    // Populate stats
+                    document.getElementById('stat-total').textContent = result.data.totalPages || 0;
+                    document.getElementById('stat-tools').textContent = result.data.toolPages || 0;
+                    document.getElementById('stat-others').textContent = result.data.otherPages || 0;
+
+                    // Build visual list
+                    listContainer.innerHTML = '';
+                    
+                    if (result.data.pages && result.data.pages.length > 0) {
+                        result.data.pages.forEach(page => {
+                            let cleanName = page.url === '/' ? 'index' : page.url.split('/').pop().replace(/-/g, ' ');
+                            let capitalized = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+                            
+                            const item = document.createElement('div');
+                            item.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:rgba(255, 255, 255, 0.02); border:1px solid var(--panel-border); padding:0.6rem 0.85rem; border-radius:10px; transition:all 0.2s ease;";
+                            
+                            item.onmouseover = function() {
+                                this.style.background = 'rgba(255,255,255,0.04)';
+                                this.style.borderColor = 'rgba(255,107,53,0.2)';
+                            };
+                            item.onmouseout = function() {
+                                this.style.background = 'rgba(255,255,255,0.02)';
+                                this.style.borderColor = 'var(--panel-border)';
+                            };
+
+                            const leftSide = document.createElement('div');
+                            leftSide.style.cssText = "display:flex; align-items:center; gap:0.75rem;";
+                            
+                            const iconBox = document.createElement('div');
+                            iconBox.style.cssText = `width:28px; height:28px; border-radius:6px; display:flex; align-items:center; justify-content:center; background:${page.isToolPage ? 'rgba(16, 185, 129, 0.1)' : 'rgba(59, 130, 246, 0.1)'}; color:${page.isToolPage ? '#34D399' : '#60A5FA'}; font-size:0.85rem;`;
+                            iconBox.textContent = page.isToolPage ? '🔧' : '📄';
+                            
+                            const infoBox = document.createElement('div');
+                            infoBox.style.cssText = "display:flex; flex-direction:column;";
+                            
+                            const nameText = document.createElement('span');
+                            nameText.style.cssText = "font-size:0.8rem; font-weight:600; color:#fff;";
+                            nameText.textContent = capitalized;
+                            
+                            const pathText = document.createElement('span');
+                            pathText.style.cssText = "font-size:0.65rem; color:var(--text-dimmed); font-family:'Fira Code', monospace;";
+                            pathText.textContent = page.file;
+
+                            infoBox.appendChild(nameText);
+                            infoBox.appendChild(pathText);
+                            leftSide.appendChild(iconBox);
+                            leftSide.appendChild(infoBox);
+
+                            const rightSide = document.createElement('div');
+                            rightSide.style.cssText = "display:flex; align-items:center; gap:0.5rem;";
+
+                            const typeBadge = document.createElement('span');
+                            typeBadge.style.cssText = `font-size:0.6rem; font-weight:700; padding:0.1rem 0.35rem; border-radius:4px; text-transform:uppercase; ${page.isToolPage ? 'background:rgba(16, 185, 129, 0.08); color:#34D399; border:1px solid rgba(16, 185, 129, 0.15);' : 'background:rgba(59, 130, 246, 0.08); color:#60A5FA; border:1px solid rgba(59, 130, 246, 0.15);'}`;
+                            typeBadge.textContent = page.isToolPage ? 'Tool' : 'Utility';
+
+                            const link = document.createElement('a');
+                            link.href = getApiUrl(page.url === '/' ? '/' : page.url + '.html');
+                            link.target = "_blank";
+                            link.style.cssText = "text-decoration:none; color:var(--primary); font-size:0.75rem; font-weight:600; display:flex; align-items:center; gap:0.25rem; transition:color 0.2s ease;";
+                            link.textContent = "Open ↗";
+                            link.onmouseover = function() { this.style.color = '#fff'; };
+                            link.onmouseout = function() { this.style.color = 'var(--primary)'; };
+
+                            rightSide.appendChild(typeBadge);
+                            rightSide.appendChild(link);
+                            
+                            item.appendChild(leftSide);
+                            item.appendChild(rightSide);
+                            
+                            listContainer.appendChild(item);
+                        });
+                    } else {
+                        listContainer.innerHTML = '<div style="text-align:center; padding:2rem; color:var(--text-dimmed); font-size:0.85rem;">No pages found</div>';
+                    }
+
+                    // Enable tabs and set visual view active
+                    viewTabs.style.display = 'flex';
+                    togglePagesView('visual');
+                }
+            } catch (err) {
+                statusBadge.textContent = 'Failed';
+                statusBadge.style.display = 'inline-block';
+                statusBadge.className = 'status-badge status-error';
+                resText.textContent = `Error: ${err.message}`;
+            } finally {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+            }
+        }
+
+        // Toggle Pages View tabs
+        function togglePagesView(view) {
+            const card = document.getElementById('card-pages');
+            const tabs = card.querySelectorAll('.view-tab');
+            const jsonView = card.querySelector('.json-view');
+            const visualView = card.querySelector('.visual-view');
+
+            tabs.forEach(tab => {
+                const text = tab.textContent.toLowerCase();
+                if (text.includes(view)) {
+                    tab.classList.add('active');
+                    tab.style.background = 'rgba(255, 255, 255, 0.08)';
+                    tab.style.color = '#fff';
+                } else {
+                    tab.classList.remove('active');
+                    tab.style.background = 'transparent';
+                    tab.style.color = 'var(--text-muted)';
+                }
+            });
+
+            if (view === 'json') {
+                jsonView.style.display = 'block';
+                visualView.style.display = 'none';
+            } else {
+                jsonView.style.display = 'none';
+                visualView.style.display = 'flex';
+            }
+        }
+    </script>
+</body>
+</html>

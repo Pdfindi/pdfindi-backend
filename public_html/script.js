@@ -7,61 +7,61 @@ const config = {
     
     // Simple tool list for rendering the homepage
     tools: [
-        // 🔵 PREMIUM PDF TOOLS
-        { id: "merge-pdf", title: "Merge PDF", category: "PDF Tools", description: "Combine multiple PDF files into one.", icon: "📂", link: "tools/merge-pdf.html", popular: true },
-        { id: "split-pdf", title: "Split PDF", category: "PDF Tools", description: "Extract a range of pages from a PDF.", icon: "✂️", link: "tools/split-pdf.html" },
-        { id: "jpeg-to-pdf", title: "JPEG to PDF", category: "PDF Tools", description: "Combine JPG/PNG images into a PDF.", icon: "🖼️", link: "tools/jpeg-to-pdf.html" },
-        { id: "organize-pdf", title: "Reorder PDF Pages", category: "PDF Tools", description: "Rearrange, delete, or duplicate PDF pages.", icon: "📑", link: "tools/organize-pdf.html" },
-        { id: "rotate-pdf", title: "Rotate PDF", category: "PDF Tools", description: "Rotate all pages in 90° increments.", icon: "🔄", link: "tools/rotate-pdf.html" },
-        { id: "watermark-pdf", title: "Add Watermark", category: "PDF Tools", description: "Stamp text or an image on a PDF.", icon: "💧", link: "tools/add-watermark.html" },
-        { id: "protect-pdf", title: "Protect PDF", category: "PDF Tools", description: "Add a password to secure a PDF.", icon: "🔒", link: "tools/protect-pdf.html" },
-        { id: "unlock-pdf", title: "Unlock PDF", category: "PDF Tools", description: "Remove a password from a PDF.", icon: "🔓", link: "tools/unlock-pdf.html" },
-        { id: "compress-pdf", title: "Compress PDF", category: "PDF Tools", description: "Reduce the file size of your PDF.", icon: "🗜️", link: "tools/compress-pdf.html", popular: true },
-        { id: "pdf-to-word", title: "PDF to Word", category: "PDF Tools", description: "Convert PDF to editable Word docs.", icon: "📄", link: "tools/pdf-to-word.html" },
-        { id: "word-to-pdf", title: "Word to PDF", category: "PDF Tools", description: "Convert Word docs to PDF.", icon: "📝", link: "tools/word-to-pdf.html" },
-        { id: "pdf-to-jpg", title: "PDF to JPG", category: "PDF Tools", description: "Convert each PDF page to a JPG.", icon: "📷", link: "tools/pdf-to-jpg.html" },
-        { id: "edit-pdf", title: "Edit PDF", category: "PDF Tools", description: "Add text or images to a PDF.", icon: "✏️", link: "tools/edit-pdf.html", beta: true },
-        { id: "pdf-to-ppt", title: "PDF to PowerPoint", category: "PDF Tools", description: "Convert PDFs to PowerPoint.", icon: "📊", disabled: true },
-        { id: "ppt-to-pdf", title: "PowerPoint to PDF", category: "PDF Tools", description: "Convert PowerPoint to PDF.", icon: "📉", disabled: true },
-        { id: "pdf-to-excel", title: "PDF to Excel", category: "PDF Tools", description: "Extract data from PDFs to Excel.", icon: "📈", disabled: true },
-        { id: "excel-to-pdf", title: "Excel to PDF", category: "PDF Tools", description: "Convert Excel sheets to PDF.", icon: "📋", disabled: true },
+        // PREMIUM PDF TOOLS
+        { id: "merge-pdf", title: "Merge PDF", category: "PDF Tools", description: "Combine multiple PDF files into one.", icon: "\uD83D\uDCC2", link: "tools/merge-pdf", popular: true },
+        { id: "split-pdf", title: "Split PDF", category: "PDF Tools", description: "Extract a range of pages from a PDF.", icon: "\u2702\uFE0F", link: "tools/split-pdf" },
+        { id: "jpeg-to-pdf", title: "JPEG to PDF", category: "PDF Tools", description: "Combine JPG/PNG images into a PDF.", icon: "\uD83D\uDdbc\uFE0F", link: "tools/jpeg-to-pdf" },
+        { id: "organize-pdf", title: "Reorder PDF Pages", category: "PDF Tools", description: "Rearrange, delete, or duplicate PDF pages.", icon: "\uD83D\uDCD1", link: "tools/organize-pdf" },
+        { id: "rotate-pdf", title: "Rotate PDF", category: "PDF Tools", description: "Rotate all pages in 90\u00B0 increments.", icon: "\uD83D\uDD04", link: "tools/rotate-pdf" },
+        { id: "watermark-pdf", title: "Add Watermark", category: "PDF Tools", description: "Stamp text or an image on a PDF.", icon: "\uD83D\uDCA7", link: "tools/add-watermark" },
+        { id: "protect-pdf", title: "Protect PDF", category: "PDF Tools", description: "Add a password to secure a PDF.", icon: "\uD83D\uDD12", link: "tools/protect-pdf" },
+        { id: "unlock-pdf", title: "Unlock PDF", category: "PDF Tools", description: "Remove a password from a PDF.", icon: "\uD83D\uDD13", link: "tools/unlock-pdf" },
+        { id: "compress-pdf", title: "Compress PDF", category: "PDF Tools", description: "Reduce the file size of your PDF.", icon: "\uD83D\uDDAF\uFE0F", link: "tools/compress-pdf", popular: true },
+        { id: "pdf-to-word", title: "PDF to Word", category: "PDF Tools", description: "Convert PDF to editable Word docs.", icon: "\uD83D\uDCC4", link: "tools/pdf-to-word" },
+        { id: "word-to-pdf", title: "Word to PDF", category: "PDF Tools", description: "Convert Word docs to PDF.", icon: "\uD83D\uDCDD", link: "tools/word-to-pdf" },
+        { id: "pdf-to-jpg", title: "PDF to JPG", category: "PDF Tools", description: "Convert each PDF page to a JPG.", icon: "\uD83D\uDCF7", link: "tools/pdf-to-jpg" },
+        { id: "edit-pdf", title: "Edit PDF", category: "PDF Tools", description: "Add text or images to a PDF.", icon: "\u270F\uFE0F", link: "tools/edit-pdf", beta: true },
+        { id: "pdf-to-ppt", title: "PDF to PowerPoint", category: "PDF Tools", description: "Convert PDFs to PowerPoint.", icon: "\uD83D\uDCCA", disabled: true },
+        { id: "ppt-to-pdf", title: "PowerPoint to PDF", category: "PDF Tools", description: "Convert PowerPoint to PDF.", icon: "\uD83D\uDCC9", disabled: true },
+        { id: "pdf-to-excel", title: "PDF to Excel", category: "PDF Tools", description: "Extract data from PDFs to Excel.", icon: "\uD83D\uDCC8", disabled: true },
+        { id: "excel-to-pdf", title: "Excel to PDF", category: "PDF Tools", description: "Convert Excel sheets to PDF.", icon: "\uD83D\uDCCB", disabled: true },
 
-        // 🤖 AI-BASED PDF TOOLS
-        { id: "ai-pdf-summarizer", title: "AI PDF Summarizer", category: "AI-based PDF Tools", description: "Get instant AI summaries of long PDFs.", icon: "📝", link: "tools/pdf-summarizer.html", popular: true },
-        { id: "chat-with-pdf", title: "Chat with PDF", category: "AI-based PDF Tools", description: "Upload a PDF and ask questions to AI.", icon: "💬", link: "tools/chat-with-pdf.html", popular: true },
-        { id: "pdf-to-notes", title: "PDF to Notes", category: "AI-based PDF Tools", description: "Extract key points automatically.", icon: "📌", link: "tools/pdf-to-study-notes.html" },
-        { id: "pdf-to-presentation", title: "PDF to Presentation", category: "AI-based PDF Tools", description: "Auto-generate slides from PDF.", icon: "📽️", link: "tools/pdf-to-presentation.html" },
-        { id: "pdf-to-podcast", title: "PDF to Podcast", category: "AI-based PDF Tools", description: "Turn documents into engaging audio.", icon: "🎧", link: "tools/pdf-to-podcast.html" },
+        // AI-BASED PDF TOOLS
+        { id: "ai-pdf-summarizer", title: "AI PDF Summarizer", category: "AI-based PDF Tools", description: "Get instant AI summaries of long PDFs.", icon: "\uD83D\uDCDD", link: "tools/pdf-summarizer", popular: true },
+        { id: "chat-with-pdf", title: "Chat with PDF", category: "AI-based PDF Tools", description: "Upload a PDF and ask questions to AI.", icon: "\uD83D\uDCAC", link: "tools/chat-with-pdf", popular: true },
+        { id: "pdf-to-notes", title: "PDF to Notes", category: "AI-based PDF Tools", description: "Extract key points automatically.", icon: "\uD83D\uDCCC", link: "tools/pdf-to-study-notes" },
+        { id: "pdf-to-presentation", title: "PDF to Presentation", category: "AI-based PDF Tools", description: "Auto-generate slides from PDF.", icon: "\uD83D\uDCFD\uFE0F", link: "tools/pdf-to-presentation" },
+        { id: "pdf-to-podcast", title: "PDF to Podcast", category: "AI-based PDF Tools", description: "Turn documents into engaging audio.", icon: "\uD83C\uDFA7", link: "tools/pdf-to-podcast" },
 
-        // 🎓 STUDENT-FOCUSED TOOLS
-        { id: "pdf-to-handwritten", title: "PDF to Handwritten", category: "Student Tools", description: "Convert PDF text into realistic handwritten notes.", icon: "✍️", link: "tools/pdf-to-handwritten.html" },
-        { id: "pdf-quiz-generator", title: "PDF Quiz Generator", category: "Student Tools", description: "Generate instant quizzes & MCQs from your PDF.", icon: "❓", link: "tools/pdf-quiz-generator.html" },
-        { id: "extract-questions", title: "Extract Questions", category: "Student Tools", description: "Pull all questions from a PDF for quick revision.", icon: "📝", link: "tools/extract-questions.html" },
-        { id: "pdf-to-flashcards", title: "PDF to Flashcards", category: "Student Tools", description: "Convert your notes into interactive flashcards.", icon: "🗂️", link: "tools/pdf-to-flashcards.html" },
-        { id: "auto-highlight-pdf", title: "Auto-Highlight PDF", category: "Student Tools", description: "AI highlights important lines for quick exam prep.", icon: "🖍️", link: "tools/auto-highlight-pdf.html" },
+        // STUDENT-FOCUSED TOOLS
+        { id: "pdf-to-handwritten", title: "PDF to Handwritten", category: "Student Tools", description: "Convert PDF text into realistic handwritten notes.", icon: "\u270D\uFE0F", link: "tools/pdf-to-handwritten" },
+        { id: "pdf-quiz-generator", title: "PDF Quiz Generator", category: "Student Tools", description: "Generate instant quizzes & MCQs from your PDF.", icon: "\u2753", link: "tools/pdf-quiz-generator" },
+        { id: "extract-questions", title: "Extract Questions", category: "Student Tools", description: "Pull all questions from a PDF for quick revision.", icon: "\uD83D\uDCDD", link: "tools/extract-questions" },
+        { id: "pdf-to-flashcards", title: "PDF to Flashcards", category: "Student Tools", description: "Convert your notes into interactive flashcards.", icon: "\uD83D\uDDC2\uFE0F", link: "tools/pdf-to-flashcards" },
+        { id: "auto-highlight-pdf", title: "Auto-Highlight PDF", category: "Student Tools", description: "AI highlights important lines for quick exam prep.", icon: "\uD83D\uDD8D\uFE0F", link: "tools/auto-highlight-pdf" },
 
-        // 💼 RESUME & JOB TOOLS
-        { id: "resume-pdf-optimizer", title: "Resume PDF Optimizer", category: "Resume & Job", description: "Make your resume PDF fully ATS-friendly.", icon: "📄", link: "tools/resume-pdf-optimizer.html" },
-        { id: "pdf-resume-analyzer", title: "PDF Resume Analyzer", category: "Resume & Job", description: "Get a resume score & AI suggestions instantly.", icon: "📊", link: "tools/pdf-resume-analyzer.html" },
-        { id: "portfolio-pdf-creator", title: "Portfolio PDF Creator", category: "Resume & Job", description: "Build stunning PDF portfolios from your work.", icon: "💼", link: "tools/portfolio-pdf-creator.html" },
+        // RESUME & JOB TOOLS
+        { id: "resume-pdf-optimizer", title: "Resume PDF Optimizer", category: "Resume & Job", description: "Make your resume PDF fully ATS-friendly.", icon: "\uD83D\uDCC4", link: "tools/resume-pdf-optimizer" },
+        { id: "pdf-resume-analyzer", title: "PDF Resume Analyzer", category: "Resume & Job", description: "Get a resume score & AI suggestions instantly.", icon: "\uD83D\uDCCA", link: "tools/pdf-resume-analyzer" },
+        { id: "portfolio-pdf-creator", title: "Portfolio PDF Creator", category: "Resume & Job", description: "Build stunning PDF portfolios from your work.", icon: "\uD83D\uDCBC", link: "tools/portfolio-pdf-creator" },
 
-        // 🛠️ UTILITY TOOLS
-        { id: "image-compressor", title: "Image Compressor", category: "Utility Tools", description: "Compress JPG/PNG images.", icon: "📸", link: "tools/image-compressor.html" },
-        { id: "image-converter", title: "Image Converter", category: "Utility Tools", description: "Convert images to JPG, PNG, WEBP.", icon: "♻️", link: "tools/image-converter.html" },
-        { id: "qr-code-generator", title: "QR Code Generator", category: "Utility Tools", description: "Generate & download a QR code.", icon: "📱", link: "tools/qr-code-generator.html" },
-        { id: "password-generator", title: "Password Generator", category: "Utility Tools", description: "Create strong, secure passwords.", icon: "🔑", link: "tools/password-generator.html" },
-        { id: "word-counter", title: "Word Counter", category: "Utility Tools", description: "Count words, chars, sentences.", icon: "🧮", link: "tools/word-counter.html" },
-        { id: "text-to-speech", title: "Text to Speech", category: "Utility Tools", description: "Convert text to natural speech.", icon: "🗣️", link: "tools/text-to-speech.html" },
-        { id: "json-formatter", title: "JSON Formatter", category: "Utility Tools", description: "Format, validate, & copy JSON.", icon: "{} ", link: "tools/json-formatter.html" },
-        { id: "case-converter", title: "Case Converter", category: "Utility Tools", description: "Convert text to various cases.", icon: "Aa", link: "tools/case-converter.html" },
-        { id: "lorem-ipsum-generator", title: "Lorem Ipsum Generator", category: "Utility Tools", description: "Generate placeholder text.", icon: "📜", link: "tools/lorem-ipsum-generator.html" },
-        { id: "base64-encoderdecoder", title: "Base64 Encoder/Decoder", category: "Utility Tools", description: "Encode/decode Base64 text.", icon: "🔗", link: "tools/base64-encoderdecoder.html" },
-        { id: "age-calculator", title: "Age Calculator", category: "Utility Tools", description: "Calculate your age from birth date.", icon: "🎂", link: "tools/age-calculator.html" },
-        { id: "bmi-calculator", title: "BMI Calculator", category: "Utility Tools", description: "Calculate your Body Mass Index.", icon: "⚖️", link: "tools/bmi-calculator.html" },
-        { id: "speech-to-text", title: "Speech to Text", category: "Utility Tools", description: "Dictate text using your mic.", icon: "🎤", link: "tools/speech-to-text.html" },
-        { id: "color-picker", title: "Color Picker", category: "Utility Tools", description: "Pick colors from screen or image.", icon: "🎨", link: "tools/color-picker.html" },
-        { id: "unit-converter", title: "Unit Converter", category: "Utility Tools", description: "Convert length, weight, etc.", icon: "📏", link: "tools/unit-converter.html" },
-        { id: "image-ocr", title: "Image OCR", category: "Utility Tools", description: "Extract text from images using OCR.", icon: "👁️", link: "tools/image-ocr.html" }
+        // UTILITY TOOLS
+        { id: "image-compressor", title: "Image Compressor", category: "Utility Tools", description: "Compress JPG/PNG images.", icon: "\uD83D\uDCF8", link: "tools/image-compressor" },
+        { id: "image-converter", title: "Image Converter", category: "Utility Tools", description: "Convert images to JPG, PNG, WEBP.", icon: "\u267B\uFE0F", link: "tools/image-converter" },
+        { id: "qr-code-generator", title: "QR Code Generator", category: "Utility Tools", description: "Generate & download a QR code.", icon: "\uD83D\uDCF1", link: "tools/qr-code-generator" },
+        { id: "password-generator", title: "Password Generator", category: "Utility Tools", description: "Create strong, secure passwords.", icon: "\uD83D\uDD11", link: "tools/password-generator" },
+        { id: "word-counter", title: "Word Counter", category: "Utility Tools", description: "Count words, chars, sentences.", icon: "\uD83E\uDDAE", link: "tools/word-counter" },
+        { id: "text-to-speech", title: "Text to Speech", category: "Utility Tools", description: "Convert text to natural speech.", icon: "\uD83D\uDDE3\uFE0F", link: "tools/text-to-speech" },
+        { id: "json-formatter", title: "JSON Formatter", category: "Utility Tools", description: "Format, validate, & copy JSON.", icon: "{} ", link: "tools/json-formatter" },
+        { id: "case-converter", title: "Case Converter", category: "Utility Tools", description: "Convert text to various cases.", icon: "Aa", link: "tools/case-converter" },
+        { id: "lorem-ipsum-generator", title: "Lorem Ipsum Generator", category: "Utility Tools", description: "Generate placeholder text.", icon: "\uD83D\uDCDC", link: "tools/lorem-ipsum-generator" },
+        { id: "base64-encoderdecoder", title: "Base64 Encoder/Decoder", category: "Utility Tools", description: "Encode/decode Base64 text.", icon: "\uD83D\uDD17", link: "tools/base64-encoderdecoder" },
+        { id: "age-calculator", title: "Age Calculator", category: "Utility Tools", description: "Calculate your age from birth date.", icon: "\uD83C\uDF82", link: "tools/age-calculator" },
+        { id: "bmi-calculator", title: "BMI Calculator", category: "Utility Tools", description: "Calculate your Body Mass Index.", icon: "\u2696\uFE0F", link: "tools/bmi-calculator" },
+        { id: "speech-to-text", title: "Speech to Text", category: "Utility Tools", description: "Dictate text using your mic.", icon: "\uD83C\uDFA4", link: "tools/speech-to-text" },
+        { id: "color-picker", title: "Color Picker", category: "Utility Tools", description: "Pick colors from screen or image.", icon: "\uD83C\uDFA8", link: "tools/color-picker" },
+        { id: "unit-converter", title: "Unit Converter", category: "Utility Tools", description: "Convert length, weight, etc.", icon: "\uD83D\uDCCF", link: "tools/unit-converter" },
+        { id: "image-ocr", title: "Image OCR", category: "Utility Tools", description: "Extract text from images using OCR.", icon: "\uD83D\uDC41\uFE0F", link: "tools/image-ocr" }
     ]
 };
 
@@ -118,14 +118,17 @@ function createToolCards() {
         gridElement.innerHTML = toolsArray.map(tool => {
             const disabledClass = tool.disabled ? 'disabled' : '';
             const popularBadge = tool.popular ? '<span style="position:absolute;top:10px;right:-35px;background:#fa7220;color:white;padding:3px 40px;font-size:0.6rem;font-weight:900;transform:rotate(45deg);box-shadow:0 2px 4px rgba(0,0,0,0.1);">POPULAR</span>' : '';
+            const isAnchor = tool.link && !tool.disabled;
+            const tag = isAnchor ? 'a' : 'div';
+            const hrefAttr = isAnchor ? `href="${tool.link}" style="text-decoration: none; color: inherit;"` : '';
             return `
-                <div class="tool-card ${disabledClass}" data-title="${tool.title}" data-id="${tool.id}">
+                <${tag} class="tool-card ${disabledClass}" data-title="${tool.title}" data-id="${tool.id}" ${hrefAttr}>
                     ${popularBadge}
                     <div class="card-icon">${tool.icon}</div>
                     <h3>${tool.title}${tool.beta ? ' <span class="beta-badge-small">BETA</span>' : ''}</h3>
                     <p>${tool.description}</p>
                     ${tool.disabled ? '<span class="coming-soon">Coming Soon</span>' : ''}
-                </div>
+                </${tag}>
             `;
         }).join('');
     };
@@ -136,20 +139,21 @@ function createToolCards() {
         bentoGrid.innerHTML = ''; // Clear hardcoded tools to render ALL symmetrically
         
         config.tools.forEach(tool => {
-            const card = document.createElement('div');
+            const isAnchor = tool.link && !tool.disabled;
+            const card = document.createElement(isAnchor ? 'a' : 'div');
             card.className = `bento-card ${tool.disabled ? 'disabled' : ''}`;
             card.dataset.id = tool.id;
             card.dataset.category = tool.category;
             
-            card.onclick = () => {
-                if (tool.disabled) {
+            if (isAnchor) {
+                card.href = tool.link;
+                card.style.textDecoration = 'none';
+                card.style.color = 'inherit';
+            } else if (tool.disabled) {
+                card.onclick = () => {
                     showNotification(`${tool.title} is coming soon!`, 'info');
-                    return;
-                }
-                if (tool.link) {
-                    window.location.href = tool.link;
-                }
-            };
+                };
+            }
 
             const popularBadge = tool.popular ? '<span class="popular-badge">POPULAR</span>' : '';
             const betaBadge = tool.beta ? '<span class="beta-badge-small">BETA</span>' : '';
@@ -177,14 +181,17 @@ function createToolCards() {
         pdfGrid.innerHTML = pdfTools.map(tool => {
             const disabledClass = tool.disabled ? 'disabled' : '';
             const popularBadge = tool.popular ? '<span style="position:absolute;top:10px;right:-35px;background:#fa7220;color:white;padding:3px 40px;font-size:0.6rem;font-weight:900;transform:rotate(45deg);box-shadow:0 2px 4px rgba(0,0,0,0.1);">POPULAR</span>' : '';
+            const isAnchor = tool.link && !tool.disabled;
+            const tag = isAnchor ? 'a' : 'div';
+            const hrefAttr = isAnchor ? `href="${tool.link}" style="text-decoration: none; color: inherit;"` : '';
             return `
-                <div class="tool-card ${disabledClass}" data-title="${tool.title}">
+                <${tag} class="tool-card ${disabledClass}" data-title="${tool.title}" ${hrefAttr}>
                     ${popularBadge}
                     <div class="card-icon">${tool.icon}</div>
                     <h3>${tool.title}${tool.beta ? ' <span class="beta-badge-small">BETA</span>' : ''}</h3>
                     <p>${tool.description}</p>
                     ${tool.disabled ? '<span class="coming-soon">Coming Soon</span>' : ''}
-                </div>
+                </${tag}>
             `;
         }).join('');
     }
@@ -194,14 +201,17 @@ function createToolCards() {
         utilityGrid.innerHTML = utilityTools.map(tool => {
             const disabledClass = tool.disabled ? 'disabled' : '';
             const popularBadge = tool.popular ? '<span style="position:absolute;top:10px;right:-35px;background:#fa7220;color:white;padding:3px 40px;font-size:0.6rem;font-weight:900;transform:rotate(45deg);box-shadow:0 2px 4px rgba(0,0,0,0.1);">POPULAR</span>' : '';
+            const isAnchor = tool.link && !tool.disabled;
+            const tag = isAnchor ? 'a' : 'div';
+            const hrefAttr = isAnchor ? `href="${tool.link}" style="text-decoration: none; color: inherit;"` : '';
             return `
-                <div class="tool-card ${disabledClass}" data-title="${tool.title}">
+                <${tag} class="tool-card ${disabledClass}" data-title="${tool.title}" ${hrefAttr}>
                     ${popularBadge}
                     <div class="card-icon">${tool.icon}</div>
                     <h3>${tool.title}</h3>
                     <p>${tool.description}</p>
                     ${tool.disabled ? '<span class="coming-soon">Coming Soon</span>' : ''}
-                </div>
+                </${tag}>
             `;
         }).join('');
     }
@@ -873,7 +883,7 @@ async function convertPDFToImage(file, format = 'png') {
                     document.body.removeChild(a);
                 }, 100);
                 
-                console.log(`✅ Downloaded page ${page.pageNumber}`);
+                console.log(`✅Downloaded page ${page.pageNumber}`);
                 
                 // Small delay between downloads
                 await new Promise(resolve => setTimeout(resolve, 500));
@@ -909,7 +919,7 @@ async function convertPDFToImage(file, format = 'png') {
                                 credentials: 'omit'
                             });
                             
-                            console.log(`📡 Response status for page ${page.PageNumber}:`, proxyResponse.status);
+                            console.log(`📂¡ Response status for page ${page.PageNumber}:`, proxyResponse.status);
                             
                             if (proxyResponse.ok) {
                                 const imageBlob = await proxyResponse.blob();
@@ -934,19 +944,19 @@ async function convertPDFToImage(file, format = 'png') {
                                     document.body.removeChild(a);
                                 }, 1000);
                                 
-                                console.log(`✅ Download completed for page ${page.PageNumber}`);
+                                console.log(`✅Download completed for page ${page.PageNumber}`);
                                 
                                 // Small delay between downloads
                                 await new Promise(resolve => setTimeout(resolve, 1000));
                             } else {
-                                console.error(`❌ Failed to download page ${page.PageNumber}:`, proxyResponse.status, proxyResponse.statusText);
+                                console.error(`âŒ Failed to download page ${page.PageNumber}:`, proxyResponse.status, proxyResponse.statusText);
                                 
                                 // Try direct link as fallback
                                 console.log(`🔗 Opening direct link for page ${page.PageNumber}`);
                                 window.open(page.URL, '_blank');
                             }
                         } catch (pageError) {
-                            console.error(`❌ Error downloading page ${page.PageNumber}:`, pageError);
+                            console.error(`âŒ Error downloading page ${page.PageNumber}:`, pageError);
                             
                             // Fallback: open the URL in a new tab
                             console.log(`🔗 Opening fallback link for page ${page.PageNumber}`);
@@ -1107,5 +1117,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(typeEffect, 600);
     }
 })();
+
 
 

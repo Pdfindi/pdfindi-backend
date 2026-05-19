@@ -1,4 +1,4 @@
-﻿// Tool Navigator - Quick Access Navigation System
+// Tool Navigator - Quick Access Navigation System
 const toolsData = {
     pdf: [
         { title: "Merge PDF", icon: "🔗", url: "merge-pdf.html" },
@@ -86,9 +86,9 @@ class ToolNavigator {
                 <div class="tool-nav-quick">
                     <div class="tool-nav-quick-title">Quick Access</div>
                     <div class="tool-nav-quick-btns">
-                        <a href="../index.html" class="tool-nav-quick-btn">🏠 Home</a>
-                        <a href="../about.html" class="tool-nav-quick-btn">ℹ️ About</a>
-                        <a href="../contact.html" class="tool-nav-quick-btn">📧 Contact</a>
+                        <a href="/" class="tool-nav-quick-btn">🏠 Home</a>
+                        <a href="../about" class="tool-nav-quick-btn">ℹ️ About</a>
+                        <a href="../contact" class="tool-nav-quick-btn">📧 Contact</a>
                     </div>
                 </div>
             </div>

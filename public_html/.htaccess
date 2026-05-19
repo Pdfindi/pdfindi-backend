@@ -16,9 +16,12 @@ RewriteRule ^(.*)$ https://pdfindi.com/$1 [R=301,L]
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.html [NC]
 RewriteRule ^ %1 [R=301,L]
 
-# Serve .html files for clean URL requests
+# Force remove trailing slashes for clean URLs (prioritize .html files)
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+# Serve .html files for clean URL requests (even if a directory exists)
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.+)$ $1.html [L,QSA]
 

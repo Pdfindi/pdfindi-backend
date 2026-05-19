@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Google Tag Manager -->
@@ -17,11 +17,13 @@
     <meta name="author" content="PDFIndi">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
         <link rel="canonical" href="https://pdfindi.com/tools/merge-pdf">
-    
-    <!-- Open Graph Meta Tags -->
+    <link rel="alternate" hreflang="en" href="https://pdfindi.com/tools/merge-pdf">
+    <link rel="alternate" hreflang="x-default" href="https://pdfindi.com/tools/merge-pdf">
+
+        <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Merge PDF Online Free - Combine Multiple PDFs | PDFIndi">
     <meta property="og:description" content="Free online tool to merge multiple PDF files into one. 100% Made in India. Combine PDFs securely without registration.">
-    <meta property="og:url" content="https://pdfindi.com/tools/merge-pdf.html">
+    <meta property="og:url" content="https://pdfindi.com/tools/merge-pdf">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://pdfindi.com/favicon-pi.svg">
     <meta property="og:locale" content="en_IN">
@@ -38,608 +40,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.min.css">
         <link rel="stylesheet" href="../modern-header.min.css">
-<link rel="stylesheet" href="modern-theme.css">
+<link rel="stylesheet" href="modern-theme.min.css">
     
-    <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #fa7220 0%, #fa7220 100%);
-            --success-gradient: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-            --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
-            --error-gradient: linear-gradient(135deg, #fa7220 0%, #fa7220 100%);
-            --glass-bg: rgba(255, 255, 255, 0.95);
-            --shadow-light: 0 4px 20px rgba(0,0,0,0.08);
-            --shadow-medium: 0 8px 32px rgba(0,0,0,0.12);
-            --shadow-strong: 0 16px 64px rgba(0,0,0,0.16);
-            --border-radius: 16px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            margin: 0;
-            padding: 80px 0 0 0;
-        }
-
-        .tool-page {
-            max-width: 900px;
-            margin: 0.5rem auto 2rem;
-            padding: 0;
-            background: transparent;
-            border-radius: var(--border-radius);
-            overflow: visible;
-        }
-
-        /* Enhanced Back Button */
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: #6366f1;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin: 0.75rem 2rem;
-            padding: 0.75rem 1.5rem;
-            background: var(--glass-bg);
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: var(--shadow-light);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .back-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(229, 62, 62, 0.1), transparent);
-            transition: var(--transition);
-        }
-
-        .back-btn:hover::before {
-            left: 100%;
-        }
-
-        .back-btn:hover {
-            color: #4f46e5;
-            background: rgba(255, 255, 255, 0.98);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        /* Modern Tool Header */
-        .tool-header {
-            text-align: center;
-            padding: 1.5rem 2rem 1rem;
-            background: var(--primary-gradient);
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Tool title section - above upload zone */
-        .tool-title-section {
-            text-align: center;
-            margin: 1.5rem auto 1.5rem;
-            max-width: 900px;
-        }
-        
-        .tool-icon-inline {
-            display: none; /* Icon will be in upload zone instead */
-        }
-        
-        .tool-title-inline {
-            font-size: 2rem;
-            font-weight: 700;
-            margin: 0 0 0.5rem 0;
-            color: #1f2937;
-        }
-        
-        .tool-desc-inline {
-            font-size: 1rem;
-            color: #6b7280;
-            margin: 0;
-            line-height: 1.6;
-        }
-        
-        /* Modern Tool Header - HIDDEN */
-        .tool-header {
-            display: none;
-        }
-        
-        
-
-        .tool-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
-            50% { transform: translate(-50%, -50%) rotate(180deg); }
-        }
-
-        .tool-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: inline-block;
-            animation: bounce-in 0.8s ease-out;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
-        }
-
-        @keyframes bounce-in {
-            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
-            50% { transform: scale(1.2) rotate(-90deg); opacity: 0.5; }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
-        }
-
-        .tool-header h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin: 0 0 0.5rem 0;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            letter-spacing: -0.02em;
-        }
-
-        .tool-header p {
-            font-size: 1rem;
-            font-weight: 400;
-            margin: 0;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        /* Enhanced Upload Zone */
-        .upload-zone {
-            margin: 0.5rem auto 1rem;
-            border: 3px dashed rgba(229, 62, 62, 0.3);
-            border-radius: var(--border-radius);
-            padding: 2rem 1.5rem;
-            text-align: center;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            transition: var(--transition);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .upload-zone::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--primary-gradient);
-            opacity: 0;
-            transition: var(--transition);
-            z-index: -1;
-        }
-
-        .upload-zone:hover {
-            border-color: #6366f1;
-            background: rgba(255, 255, 255, 0.98);
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .upload-zone:hover::before {
-            opacity: 0.05;
-        }
-
-        .upload-zone.dragover {
-            border-color: #138808;
-            background: rgba(16, 185, 129, 0.05);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .upload-zone.dragover::before {
-            opacity: 0.1;
-            background: linear-gradient(135deg, #138808 0%, #34d399 100%);
-        }
-
-        .upload-icon {
-            font-size: 3rem;
-            color: #fa7220;
-            margin-bottom: 1.5rem;
-            transition: var(--transition);
-            filter: drop-shadow(0 2px 4px rgba(229, 62, 62, 0.2));
-            display: inline-block;
-            animation: bounce-in 0.8s ease-out;
-        }
-
-        .upload-zone:hover .upload-icon {
-            transform: scale(1.1) rotate(5deg);
-            color: #ff7700;
-        }
-
-        .upload-zone h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 0 0 0.5rem 0;
-            color: #1f2937;
-        }
-
-        .upload-zone p {
-            font-size: 1rem;
-            color: #6b7280;
-            margin: 0;
-            font-weight: 500;
-        }
-
-        /* Enhanced File Info */
-        .pdf-files-info {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            margin: 0.5rem auto 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: var(--shadow-light);
-            animation: slide-in 0.5s ease-out;
-            display: none;
-        }
-
-        @keyframes slide-in {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .pdf-files-info h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin: 0 0 1.5rem 0;
-            color: #1f2937;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .files-list {
-            display: grid;
-            gap: 1rem;
-        }
-
-        .file-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: rgba(229, 62, 62, 0.05);
-            border-radius: 8px;
-            border-left: 3px solid #6366f1;
-        }
-
-        .file-icon {
-            font-size: 1.5rem;
-            color: #6366f1;
-        }
-
-        .file-details {
-            flex: 1;
-        }
-
-        .file-name {
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 0.25rem;
-        }
-
-        .file-size {
-            font-size: 0.9rem;
-            color: #6b7280;
-        }
-
-        .file-number {
-            background: #6366f1;
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        /* Enhanced Status Area */
-        .status-area {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 0.5rem auto 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: var(--shadow-light);
-            animation: slide-in 0.5s ease-out;
-            display: none;
-        }
-
-        .status-success {
-            border-left: 4px solid #138808;
-            background: rgba(16, 185, 129, 0.05);
-        }
-
-        .status-error {
-            border-left: 4px solid #fa7220;
-            background: rgba(239, 68, 68, 0.05);
-        }
-
-        .status-processing {
-            border-left: 4px solid #6366f1;
-            background: rgba(229, 62, 62, 0.05);
-        }
-
-        /* Enhanced Buttons */
-        .red-button {
-            background: var(--primary-gradient);
-            color: white;
-            border: 3px solid var(--color-navy, #000080);
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: var(--shadow-light);
-            position: relative;
-            overflow: hidden;
-            margin: 0.5rem auto 2rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .red-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: var(--transition);
-        }
-
-        .red-button:hover::before {
-            left: 100%;
-        }
-
-        .red-button:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .red-button:active {
-            transform: translateY(0);
-        }
-
-        .red-button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Enhanced Processing */
-        .processing {
-            text-align: center;
-            padding: 2rem 1.5rem;
-            margin: 0.5rem auto 2rem;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-radius: var(--border-radius);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: var(--shadow-light);
-        }
-
-        .spinner {
-            border: 4px solid rgba(255, 107, 53, 0.1);
-            border-left: 4px solid #fa7220;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1.5rem;
-        }
-
-        .processing p {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #374151;
-            margin: 0;
-        }
-
-        /* Progress Bar Styles */
-        .progress-container {
-            width: 100%;
-            max-width: 400px;
-            margin: 1.5rem auto 1rem;
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 10px;
-            overflow: hidden;
-            height: 8px;
-            position: relative;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #fa7220 0%, #fa7220 100%);
-            border-radius: 10px;
-            width: 0%;
-            transition: width 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.3),
-                transparent
-            );
-            animation: shimmer 1.5s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .progress-text {
-            font-size: 0.95rem;
-            color: #6B7280;
-            margin-top: 0.5rem;
-            font-weight: 500;
-        }
-
-        /* Enhanced Download Section */
-        .download-section {
-            text-align: center;
-            padding: 2rem 1.5rem;
-            margin: 0.5rem auto 2rem;
-            background: var(--success-gradient);
-            color: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-medium);
-            animation: slide-in 0.5s ease-out;
-            display: none;
-        }
-
-        .download-section h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin: 0 0 0.5rem 0;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .download-section p {
-            font-size: 1.1rem;
-            margin: 0 0 2rem 0;
-            opacity: 0.9;
-        }
-
-        .download-btn {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            margin: 0.5rem;
-        }
-
-        .download-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        /* Animations */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .tool-page {
-                margin: 1rem;
-            }
-
-            .back-btn {
-                margin: 1rem;
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
-            }
-
-            .tool-header {
-                padding: 2rem 1rem;
-            }
-
-            .tool-header h1 {
-                font-size: 2rem;
-            }
-
-            .tool-header p {
-                font-size: 1rem;
-            }
-
-            .upload-zone {
-            margin: 0.5rem auto 1rem;
-                padding: 2rem 1rem;
-            }
-
-            .upload-zone h3 {
-                font-size: 1.3rem;
-            }
-
-            .files-list {
-                gap: 0.75rem;
-            }
-
-            .file-item {
-                padding: 0.75rem;
-            }
-
-            .red-button {
-                width: 100%;
-                margin: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .tool-header h1 {
-                font-size: 1.8rem;
-            }
-
-            .upload-zone h3 {
-                font-size: 1.1rem;
-            }
-
-            .file-item {
-                flex-direction: column;
-                text-align: center;
-                gap: 0.5rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="tool-styles.min.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "Merge PDF",
   "description": "Merge multiple PDF files into one document online. Free, fast, and secure PDF merger tool.",
-  "url": "https://pdfindi.com/tools/merge-pdf.html",
+  "url": "https://pdfindi.com/tools/merge-pdf",
   "applicationCategory": "PDF Tool",
   "operatingSystem": "Any",
   "offers": {
@@ -669,7 +79,7 @@
         "@type": "ListItem",
         "position": 2,
         "name": "Merge PDF Online Free",
-        "item": "https://pdfindi.com/tools/merge-pdf.html"
+        "item": "https://pdfindi.com/tools/merge-pdf"
       }]
     }
     </script>
@@ -725,50 +135,75 @@
 
     <!-- Schema: SoftwareApplication + FAQPage -->
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "SoftwareApplication",
+      "name": "Merge PDF - PDFIndi",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Web Browser",
+      "url": "https://pdfindi.com/tools/merge-pdf",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "PDFIndi",
+        "url": "https://pdfindi.com"
+      },
+      "description": "Merge Multiple PDF Files into One - 100% free, no sign-up, no watermarks. Made in India."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "SoftwareApplication",
-          "name": "Merge PDF - PDFIndi",
-          "applicationCategory": "UtilitiesApplication",
-          "operatingSystem": "Web Browser",
-          "url": "https://pdfindi.com/tools/merge-pdf",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-          "publisher": { "@type": "Organization", "name": "PDFIndi", "url": "https://pdfindi.com" },
-          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "1024" },
-          "description": "Merge Multiple PDF Files into One - 100% free, no sign-up, no watermarks. Made in India.",
-          "featureList": ["Free to use", "No sign-up required", "No watermarks", "SSL encrypted", "Files auto-deleted", "Mobile friendly"]
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://pdfindi.com/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pdfindi.com/" },
-            { "@type": "ListItem", "position": 2, "name": "Merge PDF", "item": "https://pdfindi.com/tools/merge-pdf" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Merge PDF",
+          "item": "https://pdfindi.com/tools/merge-pdf"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is Merge PDF on PDFIndi free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Merge PDF is completely free on PDFIndi. No sign-up, no payment, no watermarks."
+          }
         },
         {
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "Is Merge PDF on PDFIndi free?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Merge PDF is completely free on PDFIndi. No sign-up, no payment, no watermarks." }
-            },
-            {
-              "@type": "Question",
-              "name": "Is it safe to use Merge PDF on PDFIndi?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. All files are processed with SSL encryption and automatically deleted after download. PDFIndi never stores your files." }
-            },
-            {
-              "@type": "Question",
-              "name": "Does Merge PDF work on mobile?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Merge PDF works on all devices including Android and iPhone directly in the browser - no app download needed." }
-            }
-          ]
+          "@type": "Question",
+          "name": "Is it safe to use Merge PDF on PDFIndi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely. All files are processed with SSL encryption and automatically deleted after download. PDFIndi never stores your files."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Merge PDF work on mobile?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Merge PDF works on all devices including Android and iPhone directly in the browser - no app download needed."
+          }
         }
       ]
     }
+  ]
+}
     </script></head>
 <body>
     <!-- Google Tag Manager (noscript) -->
@@ -777,7 +212,7 @@
     <!-- End Google Tag Manager (noscript) -->
     
     <div class="tool-page">
-        <a href="../index.html#pdf-tools-section" class="back-btn" id="back-to-tools-btn">
+        <a href="/#pdf-tools-section" class="back-btn" id="back-to-tools-btn">
             ← Back to PDF Tools
         </a>
         
@@ -817,250 +252,125 @@
         </div>
 
         <div class="download-section" id="download-section" style="display: none;">
-            <h3>✅ PDFs Merged Successfully!</h3>
+            <h3>✅PDFs Merged Successfully!</h3>
             <p id="result-info">Your merged PDF is ready for download</p>
             <button class="download-btn" id="download-btn">📥 Download Merged PDF</button>
             <button class="red-button" id="merge-new-btn">📄 Merge More PDFs</button>
         </div>
-    
-        <section class="seo-content-block" style="padding: 2rem; background: #f8f9fa; border-radius: 16px; margin: 3rem 0 1rem; color: #495057; border: 1px solid #e2e8f0;">
-            <h2 style="font-size: 1.4rem; color: #1F2937; margin-bottom: 1rem; font-weight: 700;">About The Free Online Merge PDF Tool</h2>
-            <p style="margin-bottom: 1rem; line-height: 1.6; font-size: 0.95rem;">Are you looking for a fast, secure, and entirely free <strong>Merge PDF</strong> solution? You are in the right place. Our premium <strong>Merge PDF</strong> tool is meticulously designed to deliver professional-grade results directly in your web browser. There is absolutely no software to install, no registration required, and zero hidden fees. Just upload your file, and let our advanced processing engine handle the rest in seconds.</p>
-            <p style="margin-bottom: 0; line-height: 1.6; font-size: 0.95rem;">Your privacy and data security are our top priorities. All operations for the <strong>Merge PDF</strong> feature are secured via enterprise-grade SSL encryption. Files are automatically processed and deleted to protect your sensitive data. Whether you are a student, a business professional, or just need to get a quick job done, this utility provides the highest quality output without any watermarks or restrictive usage limits.</p>
+
+        
+        <section class="seo-content-block dynamically-added-seo" style="padding: 2.5rem; background: #ffffff; border-radius: 16px; margin: 3rem 0; color: #374151; border: 1px solid #e5e7eb; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); font-family: 'Inter', system-ui, sans-serif;">
+            
+            <header style="margin-bottom: 2rem; border-bottom: 2px solid #f3f4f6; padding-bottom: 1rem;">
+                <h2 style="font-size: 1.8rem; color: #111827; margin-bottom: 1rem; font-weight: 800; letter-spacing: -0.025em;">The Ultimate Guide to Merge PDF</h2>
+                <p style="line-height: 1.8; font-size: 1.05rem; color: #4b5563;">
+                    In an increasingly digitized environment, handling your digital administration smoothly is more crucial than ever before. Whether you are dealing with academic submissions, corporate compliance documents, or personal portfolios, relying on a robust <strong>merge pdf online free india</strong> dictates how efficiently you operate. Our completely free platform is precision-engineered to assist you with exactly that. 
+                    Unlike bloated enterprise software that ties up system resources, our application processes your files rapidly directly inside your browser. This establishes a fully optimized, private, and secure workflow. Not only does this guarantee that your sensitive assets never remain on unwanted external servers, but it also means that you achieve instantaneous results without any hidden payment gates. The modern internet demands flexibility—our tools are purposely built utilizing next-generation APIs to deliver uncompromising performance whenever you utilize them for <strong>combine pdf files</strong>.
+                </p>
+            </header>
+
+            <article style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.4rem; color: #111827; margin-bottom: 1rem; font-weight: 700;">Top Benefits: Why Rely on PDFIndi?</h3>
+                <p style="margin-bottom: 1.25rem; line-height: 1.8; font-size: 1.05rem;">
+                    We created this specific <strong>Merge PDF Online Free</strong> specifically to remove all friction from document management. You shouldn't have to download suspicious executable files or subscribe to monthly cloud services simply to accomplish a basic manipulation task. Let's break down the core advantages of adopting our interface:
+                </p>
+                <ul style="list-style-type: none; padding-left: 0; margin-bottom: 1.5rem; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                    <li style="background: #f9fafb; padding: 1rem; border-radius: 8px; border-left: 4px solid #fa7220;">
+                        <strong style="color: #111827;">Military-Grade Data Security:</strong> Every action you perform takes place securely. We enforce end-to-end SSL encryption standards across the entire application. Files are automatically processed in volatile memory and wiped clean instantly, preventing any unauthorized exposure or leaks.
+                    </li>
+                    <li style="background: #f9fafb; padding: 1rem; border-radius: 8px; border-left: 4px solid #fa7220;">
+                        <strong style="color: #111827;">Unrestricted Access Instantly:</strong> Enjoy unparalleled <strong>join pdf documents</strong> capabilities with absolutely zero constraints. We do not enforce irritating sign-up walls, email harvesting, or branded watermarks. The output belongs entirely to you.
+                    </li>
+                    <li style="background: #f9fafb; padding: 1rem; border-radius: 8px; border-left: 4px solid #fa7220;">
+                        <strong style="color: #111827;">Flawless Cross-Platform Output:</strong> Whether you access the interface from an iOS smartphone, a Windows workspace, or a Google Chromebook, our <strong>merge pdf online free india</strong> architecture actively detects your viewport and flawlessly scales the computing execution.
+                    </li>
+                    <li style="background: #f9fafb; padding: 1rem; border-radius: 8px; border-left: 4px solid #fa7220;">
+                        <strong style="color: #111827;">Intuitive User Interface:</strong> Built for users spanning all technical skill levels. Clean navigation, drag-and-drop mechanics, and highly actionable dashboards drastically cut down any learning curve.
+                    </li>
+                </ul>
+            </article>
+
+            <article style="margin-bottom: 2rem; background: #fffcf0; padding: 2rem; border-radius: 12px; border: 1px dashed #f59e0b;">
+                <h3 style="font-size: 1.4rem; color: #92400e; margin-bottom: 1rem; font-weight: 700;">Common Real-World Use Cases</h3>
+                <p style="margin-bottom: 1.25rem; line-height: 1.8; font-size: 1.05rem; color: #78350f;">
+                    Wondering how other professionals utilize this exact functionality on a daily basis? This <strong>combine pdf files</strong> solves hundreds of operational headaches efficiently:
+                </p>
+                <div style="margin-left: 1rem;">
+                    <p style="margin-bottom: 0.75rem; line-height: 1.7; color: #78350f;"><strong>1. Corporate Archiving & Compliance:</strong> Legal teams and HR departments consistently leverage this utility to format tax forms, standard operating procedures, and employment records. Correctly utilizing <strong>pdf merger tool</strong> allows administrators to maintain compliance without disrupting their core tasks.</p>
+                    <p style="margin-bottom: 0.75rem; line-height: 1.7; color: #78350f;"><strong>2. Academia & Student Workloads:</strong> Students rushing to submit theses into rigid university portals must often format items urgently. Our streamlined system guarantees that their digital paperwork conforms strictly to academic server limitations instantly.</p>
+                    <p style="margin-bottom: 0.75rem; line-height: 1.7; color: #78350f;"><strong>3. Freelancers & Agencies:</strong> Dealing with assorted client media forces freelancers to employ adaptable toolsets. Bypassing heavy software enables independent contractors to deliver polished final products—be it invoices, creative briefs, or analytical reports—flawlessly.</p>
+                </div>
+            </article>
+
+            <article style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.4rem; color: #111827; margin-bottom: 1rem; font-weight: 700;">Detailed Step-By-Step Instructions</h3>
+                <p style="margin-bottom: 1.25rem; line-height: 1.8; font-size: 1.05rem;">
+                    To guarantee absolute precision while using our platform, carefully follow these sequential execution instructions. Proper preparation ensures that your resulting file retains maximum quality without crashing or error-halting during the process:
+                </p>
+                <ol style="margin-left: 1.5rem; line-height: 1.8; font-size: 1.05rem;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Prepare Your Document:</strong> Prior to uploading, confirm that your target file is not damaged or aggressively password encrypted (unless utilizing one of our unlocking utilities). Ensure the document strictly complies with our localized 50MB file size ceiling to prevent timeout errors.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Upload Safely:</strong> Drag the target document directly from your desktop folder into the central designated drop zone above. Alternatively, tap the upload sphere to launch your device’s native file selector browser.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Configure Options:</strong> Depending on the specific execution flow on this page, you might be tasked to select output quality variants, compression strength variables, or arrangement configurations. Adjust these parameters closely assessing your final fidelity priorities.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Execute Transformation:</strong> Depress the primary submission button. Maintain an active browser window to ensure the localized Javascript processing stream is not inadvertently throttled or disconnected by a backgrounding operating system.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Download Your Asset:</strong> Following a successful completion dialogue, your browser will immediately pipe the binary stream back into your default downloads directory natively. The source file vanishes forever the second this transfer terminates.</li>
+                </ol>
+            </article>
+
+            <article>
+                <h3 style="font-size: 1.4rem; color: #111827; margin-bottom: 1rem; font-weight: 700;">Frequently Asked Questions (FAQ)</h3>
+                <p style="margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.05rem;">
+                    We receive countless queries regarding our methodology, technical capabilities, and privacy assurances. Here are the most prevalent questions answered transparently:
+                </p>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="font-size: 1.15rem; color: #374151; font-weight: 700; margin-bottom: 0.5rem;">Q. Will utilizing Merge PDF degrade my file's resolution?</h4>
+                    <p style="line-height: 1.7; font-size: 1.05rem; color: #4b5563;">Our backend logic utilizes algorithmic mapping designed to retain extremely high fidelity metrics. Unless you specifically trigger an intensive compression sub-routine or downsize an image manually, vector text remains strictly crystalline, and raster images are manipulated without introducing severe artifacting.</p>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="font-size: 1.15rem; color: #374151; font-weight: 700; margin-bottom: 0.5rem;">Q. What happens to my original upload?</h4>
+                    <p style="line-height: 1.7; font-size: 1.05rem; color: #4b5563;">Your initial upload acts simply as a temporary variable contained exclusively within short-term volatile memory. The second the output executes and triggers the browser download stream, those memory blocks are wiped. We maintain zero databases of user assets. It is completely anonymous.</p>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="font-size: 1.15rem; color: #374151; font-weight: 700; margin-bottom: 0.5rem;">Q. Do I incur charges if I use this tool heavily?</h4>
+                    <p style="line-height: 1.7; font-size: 1.05rem; color: #4b5563;">Absolutely not. PDFIndi is proudly driven by an ethos of accessibility, birthed strongly under global digital initiatives. Operating as a 100% free structural alternative is our permanent mission format, irrespective of how many files you compile securely per day.</p>
+                </div>
+                
+                <div style="margin-bottom: 0;">
+                    <h4 style="font-size: 1.15rem; color: #374151; font-weight: 700; margin-bottom: 0.5rem;">Q. What happens if an error occurs mid-process?</h4>
+                    <p style="line-height: 1.7; font-size: 1.05rem; color: #4b5563;">If an unexpected structural fault halts processing—often stemming from heavily corrupted input binaries or extreme encryption formatting—the task simple crashes cleanly. Your device resets internally to the default upload state without writing any corrupted cache. You can just reload the tool and attempt execution again.</p>
+                </div>
+            </article>
+
         </section>
     </div>
 
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-    <script>
-        let selectedFiles = [];
-
-        const elements = {
-            uploadZone: document.getElementById('upload-zone'),
-            fileInput: document.getElementById('file-input'),
-            pdfFilesInfo: document.getElementById('pdf-files-info'),
-            filesList: document.getElementById('files-list'),
-            statusArea: document.getElementById('status-area'),
-            processBtn: document.getElementById('process-btn'),
-            processing: document.getElementById('processing'),
-            processingText: document.getElementById('processing-text'),
-            downloadSection: document.getElementById('download-section'),
-            resultInfo: document.getElementById('result-info'),
-            downloadBtn: document.getElementById('download-btn'),
-            mergeNewBtn: document.getElementById('merge-new-btn')
-        };
-
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-
-        function showStatus(message, type = 'info') {
-            elements.statusArea.textContent = message;
-            elements.statusArea.className = `status-area status-${type}`;
-            elements.statusArea.style.display = 'block';
-            
-            setTimeout(() => {
-                elements.statusArea.style.display = 'none';
-            }, 5000);
-        }
-
-        function updateFilesList() {
-            if (selectedFiles.length === 0) {
-                elements.pdfFilesInfo.style.display = 'none';
-                return;
-            }
-
-            elements.pdfFilesInfo.style.display = 'block';
-            elements.filesList.innerHTML = '';
-
-            selectedFiles.forEach((file, index) => {
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
-                fileItem.innerHTML = `
-                    <div class="file-icon">📄</div>
-                    <div class="file-details">
-                        <div class="file-name">${file.name}</div>
-                        <div class="file-size">${formatFileSize(file.size)}</div>
-                    </div>
-                    <div class="file-number">${index + 1}</div>
-                `;
-                elements.filesList.appendChild(fileItem);
-            });
-        }
-
-        function handleFileSelect(files) {
-            selectedFiles = Array.from(files);
-            
-            // Validate files
-            const invalidFiles = selectedFiles.filter(file => file.type !== 'application/pdf');
-            if (invalidFiles.length > 0) {
-                showStatus('Please select only PDF files.', 'error');
-                return;
-            }
-
-            const oversizedFiles = selectedFiles.filter(file => file.size > 50 * 1024 * 1024);
-            if (oversizedFiles.length > 0) {
-                showStatus('Some files are too large. Maximum size is 50MB per file.', 'error');
-                return;
-            }
-
-            if (selectedFiles.length < 2) {
-                showStatus('Please select at least 2 PDF files to merge.', 'error');
-                elements.processBtn.disabled = true;
-                return;
-            }
-
-            elements.processBtn.disabled = false;
-            updateFilesList();
-            showStatus(`Ready to merge ${selectedFiles.length} PDF files.`, 'success');
-        }
-
-        async function mergePDFs() {
-            if (selectedFiles.length < 2) {
-                showStatus('Please select at least 2 PDF files.', 'error');
-                return;
-            }
-
-            const btnText = elements.processBtn.querySelector('.btn-text');
-            const spinner = elements.processBtn.querySelector('.spinner');
-            const progressBar = document.getElementById('progress-bar');
-            const progressText = document.getElementById('progress-text');
-            
-            elements.processBtn.disabled = true;
-            spinner.hidden = false;
-            btnText.textContent = 'Merging...';
-            elements.processing.style.display = 'block';
-            elements.pdfFilesInfo.style.display = 'none';
-
-            try {
-                const { PDFDocument } = PDFLib;
-                const mergedPdf = await PDFDocument.create();
-
-                for (let i = 0; i < selectedFiles.length; i++) {
-                    const file = selectedFiles[i];
-                    const progress = Math.round(((i + 1) / selectedFiles.length) * 100);
-                    
-                    elements.processingText.textContent = `Processing file ${i + 1} of ${selectedFiles.length}: ${file.name}`;
-                    progressBar.style.width = progress + '%';
-                    progressText.textContent = progress + '%';
-                    
-                    const arrayBuffer = await file.arrayBuffer();
-                    const pdf = await PDFDocument.load(arrayBuffer);
-                    const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-                    copiedPages.forEach((page) => mergedPdf.addPage(page));
-                }
-
-                elements.processingText.textContent = 'Finalizing merged PDF...';
-                progressBar.style.width = '100%';
-                progressText.textContent = '100%';
-                
-                const mergedPdfFile = await mergedPdf.save();
-                const mergedBlob = new Blob([mergedPdfFile], { type: 'application/pdf' });
-
-                elements.processing.style.display = 'none';
-                
-                const totalSize = mergedBlob.size;
-                elements.resultInfo.textContent = `Successfully merged ${selectedFiles.length} PDFs • ${formatFileSize(totalSize)}`;
-                elements.downloadSection.style.display = 'block';
-
-                // Create download function
-                elements.downloadBtn.onclick = () => {
-                    const url = URL.createObjectURL(mergedBlob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'pdfindi-merged.pdf';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                };
-
-                showStatus('PDFs merged successfully!', 'success');
-
-            } catch (error) {
-                console.error('Merge error:', error);
-                showStatus('Failed to merge PDFs. Please try again.', 'error');
-                elements.processing.style.display = 'none';
-                elements.pdfFilesInfo.style.display = 'block';
-            } finally {
-                elements.processBtn.disabled = false;
-                spinner.hidden = true;
-                btnText.textContent = '📄 Merge PDFs';
-            }
-        }
-
-        function resetTool() {
-            selectedFiles = [];
-            elements.pdfFilesInfo.style.display = 'none';
-            elements.downloadSection.style.display = 'none';
-            elements.processing.style.display = 'none';
-            elements.statusArea.style.display = 'none';
-            elements.processBtn.disabled = true;
-            elements.fileInput.value = '';
-        }
-
-        // Event listeners
-        elements.uploadZone.addEventListener('click', () => elements.fileInput.click());
-
-        elements.uploadZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            elements.uploadZone.classList.add('dragover');
-        });
-
-        elements.uploadZone.addEventListener('dragleave', () => {
-            elements.uploadZone.classList.remove('dragover');
-        });
-
-        elements.uploadZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            elements.uploadZone.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFileSelect(files);
-            }
-        });
-
-        elements.fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                handleFileSelect(e.target.files);
-            }
-        });
-
-        elements.processBtn.addEventListener('click', mergePDFs);
-        elements.mergeNewBtn.addEventListener('click', resetTool);
-        
-        // Back to Tools button functionality
-        document.getElementById('back-to-tools-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = '../index.html#pdf-tools-section';
-        });
-    </script>
+    <script src="js/merge-pdf.min.js" defer></script>
     
     <!-- Related Tools Section -->
     <div style="max-width: 900px; margin: 3rem auto 2rem; padding: 0 2rem;">
         <h3 style="color: #1F2937; margin-bottom: 1.5rem; font-size: 1.5rem; text-align: center;">🔗 Related PDF Tools</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-            <a href="split-pdf.html" style="text-decoration: none; padding: 1.25rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s ease; border-left: 4px solid #fa7220;">
+            <a href="split-pdf" style="text-decoration: none; padding: 1.25rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s ease; border-left: 4px solid #fa7220;">
                 <div style="font-size: 2rem; margin-bottom: 0.5rem;">✂️</div>
                 <div style="font-weight: 600; color: #1F2937; margin-bottom: 0.25rem;">Split PDF</div>
                 <div style="font-size: 0.875rem; color: #6B7280;">Extract or divide PDF pages</div>
             </a>
-            <a href="compress-pdf.html" style="text-decoration: none; padding: 1.25rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s ease; border-left: 4px solid #138808;">
+            <a href="compress-pdf" style="text-decoration: none; padding: 1.25rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s ease; border-left: 4px solid #138808;">
                 <div style="font-size: 2rem; margin-bottom: 0.5rem;">🗜️</div>
                 <div style="font-weight: 600; color: #1F2937; margin-bottom: 0.25rem;">Compress PDF</div>
                 <div style="font-size: 0.875rem; color: #6B7280;">Reduce PDF file size</div>
             </a>
-            <a href="organize-pdf.html" style="text-decoration: none; padding: 1.25rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s ease; border-left: 4px solid #000080;">
+            <a href="organize-pdf" style="text-decoration: none; padding: 1.25rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s ease; border-left: 4px solid #000080;">
                 <div style="font-size: 2rem; margin-bottom: 0.5rem;">📑</div>
                 <div style="font-weight: 600; color: #1F2937; margin-bottom: 0.25rem;">Organize PDF</div>
                 <div style="font-size: 0.875rem; color: #6B7280;">Reorder and manage pages</div>
             </a>
         </div>
         <div style="text-align: center; margin-top: 1.5rem;">
-            <a href="../index.html#pdf-tools-section" style="display: inline-block; color: #fa7220; font-weight: 600; text-decoration: none; padding: 0.75rem 1.5rem; border: 2px solid #fa7220; border-radius: 8px; transition: all 0.3s ease;">
+            <a href="/#pdf-tools-section" style="display: inline-block; color: #fa7220; font-weight: 600; text-decoration: none; padding: 0.75rem 1.5rem; border: 2px solid #fa7220; border-radius: 8px; transition: all 0.3s ease;">
                 View All PDF Tools →
             </a>
         </div>
@@ -1130,12 +440,17 @@
     </div>
     
     <script src="../modern-header.min.js"></script>
-    <!-- Related Tools Widget (SEO Internal Linking) -->
+            <!-- Related Tools Widget (SEO Internal Linking) -->
     <section id="related-tools-widget" style="padding:2.5rem 1rem; background:#f8fafc; border-top:1px solid #e2e8f0;">
-      <div style="max-width:900px;margin:0 auto;text-align:center;">
-        <h2 style="font-size:1.5rem;color:#1a202c;margin-bottom:1.5rem;font-weight:700;">You Might Also Like</h2>
-        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">          <a href="/tools/split-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Split PDF &rarr;</a>          <a href="/tools/compress-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Compress PDF &rarr;</a>          <a href="/tools/organize-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Organize PDF &rarr;</a>        </div>
-        <p style="margin-top:1.5rem;color:#64748b;font-size:0.9rem;">Explore all <a href="/" style="color:#f97316;font-weight:600;">33+ free tools on PDFIndi</a> &rarr;</p>
+      <div style="max-width:1000px;margin:0 auto;text-align:center;">
+        <h2 style="font-size:1.5rem;color:#1a202c;margin-bottom:1.5rem;font-weight:700;">Explore Related PDF Tools</h2>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <a href="/tools/compress-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;">Compress PDF file size securely &rarr;</a>
+          <a href="/tools/pdf-to-word" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;">Convert PDF to Word for free &rarr;</a>
+          <a href="/tools/protect-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;">Password protect your PDFs &rarr;</a>
+          <a href="/tools/split-pdf" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;">Split large PDF pages easily &rarr;</a>
+        </div>
+        <p style="margin-top:1.5rem;color:#64748b;font-size:0.9rem;">Explore all <a href="/#pdf-tools-section" style="color:#f97316;font-weight:600;">free PDF tools on PDFIndi</a> &rarr;</p>
       </div>
     </section>
     <script>
@@ -1176,7 +491,4 @@
     })();
     </script></body>
 </html>
-
-
-
 

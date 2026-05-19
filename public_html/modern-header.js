@@ -2,79 +2,90 @@
 
 const toolsData = {
     ai: [
-        { title: "AI PDF Summarizer", icon: "📝", url: "tools/pdf-summarizer.html", badge: "NEW" },
-        { title: "Chat with PDF", icon: "💬", url: "tools/chat-with-pdf.html", badge: "NEW" },
-        { title: "PDF to Notes", icon: "📌", url: "tools/pdf-to-study-notes.html", badge: "NEW" },
-        { title: "PDF to Presentation", icon: "📽️", url: "tools/pdf-to-presentation.html", badge: "NEW" },
-        { title: "PDF to Podcast", icon: "🎧", url: "tools/pdf-to-podcast.html", badge: "NEW" }
+        { title: "AI PDF Summarizer", icon: "📝", url: "tools/pdf-summarizer", badge: "NEW" },
+        { title: "Chat with PDF", icon: "💬", url: "tools/chat-with-pdf", badge: "NEW" },
+        { title: "PDF to Notes", icon: "📌", url: "tools/pdf-to-study-notes", badge: "NEW" },
+        { title: "PDF to Presentation", icon: "📽️", url: "tools/pdf-to-presentation", badge: "NEW" },
+        { title: "PDF to Podcast", icon: "🎧", url: "tools/pdf-to-podcast", badge: "NEW" }
     ],
     student: [
-        { title: "PDF to Handwritten", icon: "✍️", url: "tools/pdf-to-handwritten.html" },
-        { title: "PDF Quiz Generator", icon: "❓", url: "tools/pdf-quiz-generator.html" },
-        { title: "Extract Questions", icon: "🎯", url: "tools/extract-questions.html" },
-        { title: "PDF to Flashcards", icon: "🗂️", url: "tools/pdf-to-flashcards.html" },
-        { title: "Auto-Highlight PDF", icon: "🖍️", url: "tools/auto-highlight-pdf.html" }
+        { title: "PDF to Handwritten", icon: "✍️", url: "tools/pdf-to-handwritten" },
+        { title: "PDF Quiz Generator", icon: "❓", url: "tools/pdf-quiz-generator" },
+        { title: "Extract Questions", icon: "🎯", url: "tools/extract-questions" },
+        { title: "PDF to Flashcards", icon: "🗂️", url: "tools/pdf-to-flashcards" },
+        { title: "Auto-Highlight PDF", icon: "🖍️", url: "tools/auto-highlight-pdf" }
     ],
     job: [
-        { title: "Resume PDF Optimizer", icon: "📄", url: "tools/resume-pdf-optimizer.html" },
-        { title: "PDF Resume Analyzer", icon: "📊", url: "tools/pdf-resume-analyzer.html" },
-        { title: "Portfolio PDF Creator", icon: "💼", url: "tools/portfolio-pdf-creator.html" }
+        { title: "Resume PDF Optimizer", icon: "📄", url: "tools/resume-pdf-optimizer" },
+        { title: "PDF Resume Analyzer", icon: "📊", url: "tools/pdf-resume-analyzer" },
+        { title: "Portfolio PDF Creator", icon: "💼", url: "tools/portfolio-pdf-creator" }
     ],
     organize: [
-        { title: "Merge PDF", icon: "📂", url: "tools/merge-pdf.html" },
-        { title: "Split PDF", icon: "✂️", url: "tools/split-pdf.html" },
-        { title: "Reorder PDF Pages", icon: "📑", url: "tools/organize-pdf.html" },
-        { title: "Rotate PDF", icon: "🔄", url: "tools/rotate-pdf.html" }
+        { title: "Merge PDF", icon: "📂", url: "tools/merge-pdf" },
+        { title: "Split PDF", icon: "✂️", url: "tools/split-pdf" },
+        { title: "Reorder PDF Pages", icon: "📑", url: "tools/organize-pdf" },
+        { title: "Rotate PDF", icon: "🔄", url: "tools/rotate-pdf" }
     ],
     optimize: [
-        { title: "Compress PDF", icon: "🗜️", url: "tools/compress-pdf.html", badge: "POPULAR" },
-        { title: "Add Watermark", icon: "💧", url: "tools/add-watermark.html" },
-        { title: "Image OCR", icon: "👁️", url: "tools/image-ocr.html" }
+        { title: "Compress PDF", icon: "🗜️", url: "tools/compress-pdf", badge: "POPULAR" },
+        { title: "Add Watermark", icon: "💧", url: "tools/add-watermark" },
+        { title: "Image OCR", icon: "👁️", url: "tools/image-ocr" }
     ],
     convertFrom: [
-        { title: "PDF to Word", icon: "📄", url: "tools/pdf-to-word.html" },
-        { title: "PDF to JPG", icon: "📷", url: "tools/pdf-to-jpg.html" },
-        { title: "PDF to PowerPoint", icon: "📊", url: "coming-soon.html", badge: "SOON" },
-        { title: "PDF to Excel", icon: "📈", url: "coming-soon.html", badge: "SOON" }
+        { title: "PDF to Word", icon: "📄", url: "tools/pdf-to-word" },
+        { title: "PDF to JPG", icon: "📷", url: "tools/pdf-to-jpg" },
+        { title: "PDF to PowerPoint", icon: "📊", url: "coming-soon", badge: "SOON" },
+        { title: "PDF to Excel", icon: "📈", url: "coming-soon", badge: "SOON" }
     ],
     convertTo: [
-        { title: "Word to PDF", icon: "📝", url: "tools/word-to-pdf.html" },
-        { title: "JPG to PDF", icon: "🖼️", url: "tools/jpeg-to-pdf.html" },
-        { title: "PowerPoint to PDF", icon: "📉", url: "coming-soon.html", badge: "SOON" },
-        { title: "Excel to PDF", icon: "📊", url: "coming-soon.html", badge: "SOON" }
+        { title: "Word to PDF", icon: "📝", url: "tools/word-to-pdf" },
+        { title: "JPG to PDF", icon: "🖼️", url: "tools/jpeg-to-pdf" },
+        { title: "PowerPoint to PDF", icon: "📉", url: "coming-soon", badge: "SOON" },
+        { title: "Excel to PDF", icon: "📊", url: "coming-soon", badge: "SOON" }
     ],
     edit: [
-        { title: "Edit PDF", icon: "✏️", url: "tools/edit-pdf.html", badge: "BETA" }
+        { title: "Edit PDF", icon: "✏️", url: "tools/edit-pdf", badge: "BETA" }
     ],
     security: [
-        { title: "Unlock PDF", icon: "🔓", url: "tools/unlock-pdf.html" },
-        { title: "Protect PDF", icon: "🔒", url: "tools/protect-pdf.html" }
+        { title: "Unlock PDF", icon: "🔓", url: "tools/unlock-pdf" },
+        { title: "Protect PDF", icon: "🔒", url: "tools/protect-pdf" }
     ],
     utility: [
-        { title: "Image Compressor", icon: "📸", url: "tools/image-compressor.html" },
-        { title: "Image Converter", icon: "♻️", url: "tools/image-converter.html" },
-        { title: "QR Code Generator", icon: "📱", url: "tools/qr-code-generator.html" },
-        { title: "Password Generator", icon: "🔑", url: "tools/password-generator.html" },
-        { title: "Word Counter", icon: "🧮", url: "tools/word-counter.html" },
-        { title: "Text to Speech", icon: "🗣️", url: "tools/text-to-speech.html" },
-        { title: "JSON Formatter", icon: "{} ", url: "tools/json-formatter.html" },
-        { title: "Case Converter", icon: "Aa", url: "tools/case-converter.html" },
-        { title: "Lorem Ipsum", icon: "📜", url: "tools/lorem-ipsum-generator.html" },
-        { title: "Base64 Encoder", icon: "🔗", url: "tools/base64-encoderdecoder.html" },
-        { title: "Age Calculator", icon: "🎂", url: "tools/age-calculator.html" },
-        { title: "BMI Calculator", icon: "⚖️", url: "tools/bmi-calculator.html" },
-        { title: "Speech to Text", icon: "🎤", url: "tools/speech-to-text.html" },
-        { title: "Color Picker", icon: "🎨", url: "tools/color-picker.html" },
-        { title: "Unit Converter", icon: "📏", url: "tools/unit-converter.html" }
+        { title: "Image Compressor", icon: "📸", url: "tools/image-compressor" },
+        { title: "Image Converter", icon: "♻️", url: "tools/image-converter" },
+        { title: "QR Code Generator", icon: "📱", url: "tools/qr-code-generator" },
+        { title: "Password Generator", icon: "🔑", url: "tools/password-generator" },
+        { title: "Word Counter", icon: "🧮", url: "tools/word-counter" },
+        { title: "Text to Speech", icon: "🗣️", url: "tools/text-to-speech" },
+        { title: "JSON Formatter", icon: "{} ", url: "tools/json-formatter" },
+        { title: "Case Converter", icon: "Aa", url: "tools/case-converter" },
+        { title: "Lorem Ipsum", icon: "📜", url: "tools/lorem-ipsum-generator" },
+        { title: "Base64 Encoder", icon: "🔗", url: "tools/base64-encoderdecoder" },
+        { title: "Age Calculator", icon: "🎂", url: "tools/age-calculator" },
+        { title: "BMI Calculator", icon: "⚖️", url: "tools/bmi-calculator" },
+        { title: "Speech to Text", icon: "🎤", url: "tools/speech-to-text" },
+        { title: "Color Picker", icon: "🎨", url: "tools/color-picker" },
+        { title: "Unit Converter", icon: "📏", url: "tools/unit-converter" }
     ]
 };
 
 class ModernHeader {
     constructor() {
         this.dropdownOpen = false;
-        // Detect base path once
-        this.isToolPage = window.location.pathname.includes('/tools/');
-        this.basePath = this.isToolPage ? '../' : '';
+        
+        // Handle Local vs Production environments dynamically
+        this.isLocal = window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1') || window.location.protocol === 'file:';
+        this.ext = this.isLocal ? '.html' : '';
+        
+        // Detect paths
+        const currentPath = window.location.pathname;
+        this.isToolPage = currentPath.includes('/tools/');
+        this.isBlogPage = currentPath.includes('/blog/');
+        this.basePath = (this.isToolPage || this.isBlogPage) ? '../' : '';
+        
+        // Home path handling
+        this.homePath = this.isLocal ? `${this.basePath}index.html` : '/';
+
         this.init();
     }
 
@@ -88,16 +99,15 @@ class ModernHeader {
     }
 
     renderHeader() {
-        // Prevent duplicate headers
-        const existingHeader = document.querySelector('header.modern-header');
-        if (existingHeader) existingHeader.remove();
+        const e = document.querySelector('header.modern-header');
+        e && e.remove();
         
         const headerHTML = `
             <div class="header-overlay" id="headerOverlay"></div>
             <header class="modern-header">
                 <div style="display: flex; align-items: center; gap: 2rem;">
-                    <a href="${this.basePath}index.html" class="header-logo">
-                        <img src="${this.basePath}Logo1.png" alt="PDFIndi Logo" class="logo-image" loading="lazy">
+                    <a href="${this.homePath}" class="header-logo">
+                        <img src="${this.basePath}Logo1.png" alt="PDFIndi Logo" class="logo-image">
                         <div class="made-in-india-badge">Made in India</div>
                     </a>
 
@@ -113,21 +123,21 @@ class ModernHeader {
                                 ${this.renderDropdownContent()}
                             </div>
                         </div>
-                        <a href="${this.basePath}index.html?filter=job#tools-section" class="header-nav-link" data-page="job">RESUME & JOB</a>
-                        <a href="${this.basePath}index.html?filter=student#tools-section" class="header-nav-link" data-page="student">STUDENT TOOLS</a>
-                        <a href="${this.basePath}index.html?filter=ai#tools-section" class="header-nav-link" data-page="ai">AI TOOLS</a>
-                        <a href="${this.basePath}tools/organize-pdf.html" class="header-nav-link" data-page="organize">ORGANIZE PDF</a>
+                        <a href="${this.homePath}?filter=job#tools-section" class="header-nav-link" data-page="job">RESUME & JOB</a>
+                        <a href="${this.homePath}?filter=student#tools-section" class="header-nav-link" data-page="student">STUDENT TOOLS</a>
+                        <a href="${this.homePath}?filter=ai#tools-section" class="header-nav-link" data-page="ai">AI TOOLS</a>
+                        <a href="${this.basePath}tools/organize-pdf${this.ext}" class="header-nav-link" data-page="organize">ORGANIZE PDF</a>
+                        <a href="${this.basePath}blog${this.ext}" class="header-nav-link" data-page="blog">BLOG</a>
                     </nav>
                 </div>
 
                 <div class="header-actions">
-                    <a href="${this.basePath}about.html" class="header-btn header-btn-login">ABOUT</a>
-                    <a href="${this.basePath}contact.html" class="header-btn header-btn-primary">CONTACT</a>
+                    <a href="${this.basePath}about${this.ext}" class="header-btn header-btn-login">ABOUT</a>
+                    <a href="${this.basePath}contact${this.ext}" class="header-btn header-btn-primary">CONTACT</a>
                     <button class="header-mobile-menu" id="mobileMenuBtn">☰</button>
                 </div>
             </header>
         `;
-        
         document.body.insertAdjacentHTML('afterbegin', headerHTML);
         this.setActiveLink();
     }
@@ -142,7 +152,7 @@ class ModernHeader {
                 <div style="max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 4rem; margin-bottom: 4rem;">
                     <!-- Brand Section -->
                     <div style="grid-column: span 2;">
-                        <a href="${this.basePath}index.html" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+                        <a href="${this.homePath}" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
                             <img src="${this.basePath}Logo1.png" alt="PDFIndi Logo" style="height: 48px; width: auto;" loading="lazy">
                         </a>
                         <p style="font-size: 1rem; line-height: 1.8; color: #64748b; margin-bottom: 2rem; max-width: 500px;">
@@ -163,11 +173,11 @@ class ModernHeader {
                     <div>
                         <h3 style="color: #0f172a !important; margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em;">PDF SOLUTIONS</h3>
                         <ul style="list-style: none; padding: 0; margin: 0; line-height: 2.5;">
-                            <li><a href="${this.basePath}tools/merge-pdf.html" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">Merge PDF Online</a></li>
-                            <li><a href="${this.basePath}tools/compress-pdf.html" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">Compress PDF Free</a></li>
-                            <li><a href="${this.basePath}tools/pdf-to-word.html" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">PDF to Word Converter</a></li>
-                            <li><a href="${this.basePath}tools/pdf-summarizer.html" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">AI PDF Summarizer</a></li>
-                            <li><a href="${this.basePath}tools/resume-pdf-optimizer.html" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">ATS Resume Optimizer</a></li>
+                            <li><a href="${this.basePath}tools/merge-pdf${this.ext}" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">Merge PDF Online</a></li>
+                            <li><a href="${this.basePath}tools/compress-pdf${this.ext}" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">Compress PDF Free</a></li>
+                            <li><a href="${this.basePath}tools/pdf-to-word${this.ext}" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">PDF to Word Converter</a></li>
+                            <li><a href="${this.basePath}tools/pdf-summarizer${this.ext}" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">AI PDF Summarizer</a></li>
+                            <li><a href="${this.basePath}tools/resume-pdf-optimizer${this.ext}" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">ATS Resume Optimizer</a></li>
                         </ul>
                     </div>
                     
@@ -175,11 +185,12 @@ class ModernHeader {
                     <div>
                         <h3 style="color: #0f172a !important; margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em;">QUICK LINKS</h3>
                         <ul style="list-style: none; padding: 0; margin: 0; line-height: 2.5;">
-                            <li><a href="${this.basePath}about.html" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">About Us</a></li>
-                            <li><a href="${this.basePath}contact.html" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">Contact Support</a></li>
-                            <li><a href="${this.basePath}faq.html" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">Help Center / FAQ</a></li>
-                            <li><a href="${this.basePath}privacy.html" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">Privacy Policy</a></li>
-                            <li><a href="${this.basePath}terms.html" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">Terms of Service</a></li>
+                            <li><a href="${this.basePath}blog${this.ext}" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">Blog & Guides</a></li>
+                            <li><a href="${this.basePath}about${this.ext}" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">About Us</a></li>
+                            <li><a href="${this.basePath}contact${this.ext}" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">Contact Support</a></li>
+                            <li><a href="${this.basePath}faq${this.ext}" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">Help Center / FAQ</a></li>
+                            <li><a href="${this.basePath}privacy${this.ext}" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">Privacy Policy</a></li>
+                            <li><a href="${this.basePath}terms${this.ext}" style="color: #475569; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#475569'">Terms of Service</a></li>
                         </ul>
                     </div>
                 </div>
@@ -284,7 +295,7 @@ class ModernHeader {
                     <div class="header-dropdown-category-title">${cat.title}</div>
                     <div class="header-dropdown-links">
                         ${toolsData[cat.id].map(tool => `
-                            <a href="${this.basePath}${tool.url}" class="header-dropdown-link">
+                            <a href="${this.basePath}${tool.url}${tool.url.includes('coming-soon') ? '' : this.ext}" class="header-dropdown-link">
                                 <span class="header-dropdown-link-icon">${tool.icon}</span>
                                 <span>${tool.title}</span>
                                 ${tool.badge ? `<span class="header-dropdown-link-badge">${tool.badge}</span>` : ''}
@@ -334,16 +345,13 @@ class ModernHeader {
         document.querySelectorAll(".header-nav-link").forEach(link => {
             link.addEventListener('click', (e) => {
                 const url = new URL(link.href, window.location.origin);
-                const isHome = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/');
+                const hasFilters = !!document.querySelector('.filter-btn');
+                const filter = url.searchParams.get('filter');
                 
-                if (isHome) {
-                    const filter = url.searchParams.get('filter');
-                    if (filter) {
-                        e.preventDefault();
-                        window.history.pushState({}, '', link.href);
-                        
-                        this.applyFilterAndScroll(filter);
-                    }
+                if (hasFilters && filter) {
+                    e.preventDefault();
+                    window.history.pushState({}, '', link.href);
+                    this.applyFilterAndScroll(filter);
                 }
             });
         });

@@ -1,0 +1,40 @@
+# PDFIndi
+
+PDFIndi is a fast, free, and secure online platform offering an extensive suite of utilities for processing, converting, compressing, and editing PDF documents and images directly within the web browser. The platform operates on a privacy-first architecture, ensuring user documents are either processed client-side or immediately wiped after execution.
+
+## Core Services
+
+### PDF Utilities
+- **Compress PDF**: Reduce file size rapidly with customizable quality levels.
+- **Merge & Split PDF**: Combine multiple documents or extract individual pages seamlessly.
+- **Organize & Rotate**: Reorder, rotate, or delete specific pages visually.
+- **Protect & Unlock**: Secure documents using AES encryption or remove basic PDF passwords.
+- **Add Watermarks**: Protect copyrights by overlaying text or image watermarks.
+
+### Document & Format Converters
+- **PDF to Word & Word to PDF**: Maintain precise document formatting during binary translations.
+- **PDF to Image & Image to PDF**: High-quality rasterization converting to/from JPG/PNG.
+- **Image Converter & Compressor**: Handle bulk image format translations and algorithmic size reductions.
+- **File Converter**: Universal file handler for common textual formats.
+
+### AI & Student Tools
+- **PDF Summarizer & Chat**: Extract rapid insights from long academic papers.
+- **PDF to Study Notes & Flashcards**: Generate actionable revision material from syllabi automatically.
+- **Quiz Generator & Extract Questions**: Scrape distinct queries for student testing.
+- **PDF to Handwritten**: Transform vector fonts to hyper-realistic handwritten cursive formats.
+- **Resume Analyzer & Optimizer**: Run ATS compatibility scans to optimize candidate resumes.
+
+### Miscellaneous Tech Utilities
+- Image OCR
+- QR Code Generator
+- Unit & Age Calculators
+- JSON Formatter & Base64 Encoder/Decoder
+- Word Counter & Case Converter
+
+## Privacy & Operation Principles
+- **No Cost, No Credit Cards**: Zero hidden gates.
+- **Total Anonymity**: No registration required to utilize the full feature set.
+- **Data Security**: Documents never linger on internal storage infrastructure.
+
+## Support
+Explore more and run the tools safely at https://pdfindi.com/

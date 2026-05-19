@@ -16,8 +16,62 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
-// Serve static files from the public_html directory
-app.use(express.static(path.join(__dirname, 'public_html')));
+// ── Universal Agent API ──────────────────────────────────────────
+const agentApi = require('./api/index');
+app.use('/api', agentApi);
+// ────────────────────────────────────────────────────────────────
+
+// ── Dynamic SEO Injection Middleware ──────────────────────────
+const fs = require('fs');
+app.get(['/', '/*.html', '/tools/*', '/blog/*'], (req, res, next) => {
+  // Only handle HTML requests or clean tool URLs
+  if (req.path.includes('/api/') || req.path.includes('.') && !req.path.endsWith('.html')) return next();
+
+  let relPath = req.path === '/' ? 'index.html' : req.path;
+  if (!relPath.endsWith('.html')) relPath += '.html';
+  
+  const fullPath = path.join(__dirname, 'public_html', relPath);
+  
+  if (fs.existsSync(fullPath)) {
+    // Determine the SEO slug (e.g., 'index', 'tools-merge-pdf', 'faq')
+    const seoSlug = relPath.replace('.html', '').replace(/\//g, '-');
+    const seoDataPath = path.join(__dirname, 'data/seo', `${seoSlug}.json`);
+    
+    let html = fs.readFileSync(fullPath, 'utf8');
+    
+    if (fs.existsSync(seoDataPath)) {
+      try {
+        const seo = JSON.parse(fs.readFileSync(seoDataPath, 'utf8'));
+        
+        // Inject Title
+        if (seo.title) {
+          html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${seo.title}</title>`);
+          html = html.replace(/property=["']og:title["'] content=["'][^"']*["']/i, `property="og:title" content="${seo.title}"`);
+        }
+        
+        // Inject Description
+        if (seo.description) {
+          html = html.replace(/<meta[^>]*name=["']description["'][^>]*content=["'][^"']*["']/i, `<meta name="description" content="${seo.description}">`);
+          html = html.replace(/property=["']og:description["'] content=["'][^"']*["']/i, `property="og:description" content="${seo.description}"`);
+        }
+        
+        // Inject Keywords
+        if (seo.keywords) {
+          html = html.replace(/<meta[^>]*name=["']keywords["'][^>]*content=["'][^"']*["']/i, `<meta name="keywords" content="${seo.keywords}">`);
+        }
+      } catch (err) {
+        console.error('SEO Injection Error:', err);
+      }
+    }
+    
+    return res.send(html);
+  }
+  next();
+});
+// ────────────────────────────────────────────────────────────────
+
+// Serve static files from the public_html directory (with html extension fallback for clean URLs)
+app.use(express.static(path.join(__dirname, 'public_html'), { extensions: ['html'] }));
 
 // Configure multer for file uploads
 const storage = multer.memoryStorage();
@@ -568,7 +622,7 @@ app.post('/api/extract-pdf-text', checkUsageLimits, upload.single('file'), async
     });
 
     const response = await axios.post(
-      'https://api.cloudmersive.com/ocr/pdf/toText',
+      'https://api.cloudmersive.com/ocr/pdf/to/lines-with-location',
       formData,
       {
         headers: {
@@ -625,43 +679,53 @@ app.post('/api/rebuild-pdf', checkUsageLimits, upload.single('file'), async (req
     const edits = JSON.parse(req.body.edits);
     console.log(`Rebuilding PDF with ${Object.keys(edits).length} edits`);
 
-    // For now, use a simpler approach: convert to DOCX, let user edit, convert back
-    // This is more reliable than trying to manipulate PDF directly
-    
-    // Alternative: Use pdf-lib on backend to overlay new text
-    const PDFDocument = require('pdf-lib').PDFDocument;
+    // Use pdf-lib to manipulate the PDF
+    const { PDFDocument, rgb, StandardFonts } = require('pdf-lib');
     const pdfDoc = await PDFDocument.load(req.file.buffer);
     const pages = pdfDoc.getPages();
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
     // Apply edits to each page
     for (const [editId, editData] of Object.entries(edits)) {
       const { page, x, y, text, fontSize } = editData;
+      const targetPageNum = parseInt(page) || 1;
       
-      if (page > 0 && page <= pages.length) {
-        const pdfPage = pages[page - 1];
+      if (targetPageNum > 0 && targetPageNum <= pages.length) {
+        const pdfPage = pages[targetPageNum - 1];
         const pageHeight = pdfPage.getHeight();
+        const fSize = parseFloat(fontSize) || 12;
         
-        // Cover old text with white rectangle (approximate)
+        // Coordinates from frontend are top-left, pdf-lib is bottom-left
+        // We use the coordinates provided by Cloudmersive/Browser
+        const pdfX = parseFloat(x);
+        const pdfY = pageHeight - parseFloat(y) - fSize;
+
+        // 1. Cover old text with white rectangle (Whiteout)
+        // We expand the rectangle slightly to ensure full coverage
+        const textWidth = text.length * fSize * 0.55; // Heuristic width
         pdfPage.drawRectangle({
-          x: x,
-          y: pageHeight - y - fontSize - 5,
-          width: text.length * fontSize * 0.6,
-          height: fontSize + 10,
-          color: { r: 1, g: 1, b: 1 }
+          x: pdfX - 2,
+          y: pdfY - 2,
+          width: textWidth + 10,
+          height: fSize + 5,
+          color: rgb(1, 1, 1), // White
         });
         
-        // Draw new text
+        // 2. Draw new text
         pdfPage.drawText(text, {
-          x: x,
-          y: pageHeight - y - fontSize,
-          size: fontSize,
-          color: { r: 0, g: 0, b: 0 }
+          x: pdfX,
+          y: pdfY,
+          size: fSize,
+          font: font,
+          color: rgb(0, 0, 0), // Black
         });
       }
     }
 
     const editedPdfBytes = await pdfDoc.save();
     const base64Pdf = Buffer.from(editedPdfBytes).toString('base64');
+
+    console.log('✅ PDF successfully rebuilt with edits');
 
     res.json({
       success: true,
@@ -1337,10 +1401,14 @@ app.use('/api/*', (req, res) => {
 
 // 404 handler for any other routes
 app.use('*', (req, res) => {
-  res.status(404).json({ 
-    error: 'Route not found',
-    message: 'This is an API server. Use /api/* endpoints or visit / for API info.'
-  });
+  if (req.accepts('html')) {
+    res.status(404).sendFile(path.join(__dirname, 'public_html', '404.html'));
+  } else {
+    res.status(404).json({ 
+      error: 'Route not found',
+      message: 'This is an API server. Use /api/* endpoints or visit / for API info.'
+    });
+  }
 });
 
 // Start server

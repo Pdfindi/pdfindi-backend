@@ -5,8 +5,9 @@
 # ── Allow all crawlers ──
 User-agent: *
 Allow: /
+Crawl-delay: 1
 
-# ── Specifically allow Googlebot ──
+# ── Specifically allow Googlebot (no crawl-delay) ──
 User-agent: Googlebot
 Allow: /
 
@@ -17,7 +18,7 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-# ── Block only non-public / junk paths ──
+# ── Block non-public / junk paths ──
 Disallow: /backend/
 Disallow: /admin/
 Disallow: /api/
@@ -26,6 +27,9 @@ Disallow: /coming-soon.html
 Disallow: /*.ps1$
 Disallow: /*.bat$
 Disallow: /*.sh$
+Disallow: /fix_encoding_v2.js
+Disallow: /standardize_tools.js
+Disallow: /UTF8
 
 # ── Sitemap ──
 Sitemap: https://pdfindi.com/sitemap.xml

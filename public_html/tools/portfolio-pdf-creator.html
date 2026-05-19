@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <!-- Google Tag Manager -->
@@ -20,154 +20,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.min.css">
     <link rel="stylesheet" href="../modern-header.min.css">
-    <link rel="stylesheet" href="modern-theme.css">
+    <link rel="stylesheet" href="modern-theme.min.css">
     
-    <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #fa7220 0%, #fa7220 100%);
-            --glass-bg: rgba(255, 255, 255, 0.95);
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            margin: 0;
-            padding: 80px 0 0 0;
-            color: #1f2937;
-        }
-
-        .tool-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .creator-card {
-            background: var(--glass-bg);
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .form-section {
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid #f3f4f6;
-        }
-
-        .form-section:last-child { border-bottom: none; }
-
-        .form-section h3 {
-            margin: 0 0 1.5rem 0;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .input-group {
-            margin-bottom: 1.25rem;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: #4b5563;
-            margin-bottom: 0.5rem;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: border-color 0.2s;
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #fa7220;
-            box-shadow: 0 0 0 3px rgba(250, 114, 32, 0.1);
-        }
-
-        .project-item {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            border: 1px solid #f3f4f6;
-            position: relative;
-        }
-
-        .remove-btn {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background: #fee2e2;
-            color: #991b1b;
-            border: none;
-            padding: 0.25rem 0.6rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-
-        .add-btn {
-            background: #f3f4f6;
-            border: 2px dashed #d1d5db;
-            width: 100%;
-            padding: 1rem;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            color: #6b7280;
-            transition: all 0.2s;
-        }
-
-        .add-btn:hover {
-            border-color: #fa7220;
-            color: #fa7220;
-            background: #fff;
-        }
-
-        .generate-btn {
-            background: var(--primary-gradient);
-            color: white;
-            width: 100%;
-            padding: 1.25rem;
-            border-radius: 12px;
-            border: none;
-            font-size: 1.1rem;
-            font-weight: 800;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(250, 114, 32, 0.2);
-            transition: transform 0.2s;
-        }
-
-        .generate-btn:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
-        }
-
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #4b5563;
-            text-decoration: none;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-    </style>
+    <link rel="stylesheet" href="tool-styles.min.css">
 
         <link rel="canonical" href="https://pdfindi.com/tools/portfolio-pdf-creator">
+    <link rel="alternate" hreflang="en" href="https://pdfindi.com/tools/portfolio-pdf-creator">
+    <link rel="alternate" hreflang="x-default" href="https://pdfindi.com/tools/portfolio-pdf-creator">
 
-    <script type="application/ld+json">
+        <script type="application/ld+json">
     {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -202,50 +63,75 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <!-- Schema: SoftwareApplication + FAQPage -->
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "SoftwareApplication",
+      "name": "Portfolio PDF Creator - PDFIndi",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Web Browser",
+      "url": "https://pdfindi.com/tools/portfolio-pdf-creator",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "PDFIndi",
+        "url": "https://pdfindi.com"
+      },
+      "description": "Create a Professional Portfolio PDF Online Free - 100% free, no sign-up, no watermarks. Made in India."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "SoftwareApplication",
-          "name": "Portfolio PDF Creator - PDFIndi",
-          "applicationCategory": "UtilitiesApplication",
-          "operatingSystem": "Web Browser",
-          "url": "https://pdfindi.com/tools/portfolio-pdf-creator",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-          "publisher": { "@type": "Organization", "name": "PDFIndi", "url": "https://pdfindi.com" },
-          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "1024" },
-          "description": "Create a Professional Portfolio PDF Online Free - 100% free, no sign-up, no watermarks. Made in India.",
-          "featureList": ["Free to use", "No sign-up required", "No watermarks", "SSL encrypted", "Files auto-deleted", "Mobile friendly"]
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://pdfindi.com/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pdfindi.com/" },
-            { "@type": "ListItem", "position": 2, "name": "Portfolio PDF Creator", "item": "https://pdfindi.com/tools/portfolio-pdf-creator" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portfolio PDF Creator",
+          "item": "https://pdfindi.com/tools/portfolio-pdf-creator"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is Portfolio PDF Creator on PDFIndi free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Portfolio PDF Creator is completely free on PDFIndi. No sign-up, no payment, no watermarks."
+          }
         },
         {
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "Is Portfolio PDF Creator on PDFIndi free?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Portfolio PDF Creator is completely free on PDFIndi. No sign-up, no payment, no watermarks." }
-            },
-            {
-              "@type": "Question",
-              "name": "Is it safe to use Portfolio PDF Creator on PDFIndi?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. All files are processed with SSL encryption and automatically deleted after download. PDFIndi never stores your files." }
-            },
-            {
-              "@type": "Question",
-              "name": "Does Portfolio PDF Creator work on mobile?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Yes, Portfolio PDF Creator works on all devices including Android and iPhone directly in the browser - no app download needed." }
-            }
-          ]
+          "@type": "Question",
+          "name": "Is it safe to use Portfolio PDF Creator on PDFIndi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely. All files are processed with SSL encryption and automatically deleted after download. PDFIndi never stores your files."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Portfolio PDF Creator work on mobile?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Portfolio PDF Creator works on all devices including Android and iPhone directly in the browser - no app download needed."
+          }
         }
       ]
     }
+  ]
+}
     </script></head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -253,7 +139,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
     <div class="tool-container">
-        <a href="../index.html?filter=job#tools-section" class="back-btn">
+        <a href="../index?filter=job#tools-section" class="back-btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
@@ -304,7 +190,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </form>
         </div>
 
-        <!-- How to Use Section -->
+        
+        <!-- DYNAMIC MEGA BLOCK -->
+        <section class="seo-content-block dynamically-added-seo" style="padding: 2.5rem; background: #ffffff; border-radius: 16px; margin: 3rem auto; max-width: 900px; color: #374151; border: 1px solid #e5e7eb; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); font-family: 'Inter', system-ui, sans-serif;">
+            
+            <header style="margin-bottom: 2rem; border-bottom: 2px solid #f3f4f6; padding-bottom: 1rem;">
+                <h2 style="font-size: 1.8rem; color: #111827; margin-bottom: 1rem; font-weight: 800;">The Ultimate Guide to Portfolio Creator</h2>
+                <p style="line-height: 1.8; font-size: 1.05rem; color: #4b5563;">
+                    In an increasingly digitized environment, handling your digital administration smoothly is more crucial than ever before. Whether you are dealing with academic submissions, corporate compliance documents, or personal portfolios, relying on a robust <strong>PDF tools</strong> dictates how efficiently you operate. Our completely free platform is precision-engineered to assist you with exactly that. 
+                    Unlike bloated enterprise software that ties up system resources, our application processes your files rapidly directly inside your browser. This establishes a fully optimized, private, and secure workflow. Not only does this guarantee that your sensitive assets never remain on unwanted external servers, but it also means that you achieve instantaneous results without any hidden payment gates. The modern internet demands flexibility—our tools are purposely built utilizing next-generation APIs to deliver uncompromising performance whenever you utilize them for <strong>document optimization</strong>.
+                </p>
+            </header>
+
+            <article style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.4rem; color: #111827; margin-bottom: 1rem; font-weight: 700;">Top Benefits: Why Rely on PDFIndi?</h3>
+                <p style="margin-bottom: 1.25rem; line-height: 1.8; font-size: 1.05rem;">
+                    We created this specific <strong>Portfolio PDF Creator - Build Professional Portfolios Online</strong> specifically to remove all friction from document management. You shouldn't have to download suspicious executable files or subscribe to monthly cloud services simply to accomplish a basic manipulation task. Let's break down the core advantages of adopting our interface:
+                </p>
+                <ul style="list-style-type: none; padding-left: 0; margin-bottom: 1.5rem; display: grid; gap: 1rem; grid-template-columns: minmax(300px, 1fr);">
+                    <li style="background: #f9fafb; padding: 1rem; border-radius: 8px; border-left: 4px solid #fa7220;">
+                        <strong style="color: #111827;">Military-Grade Data Security:</strong> Every action you perform takes place securely. We enforce end-to-end SSL encryption standards across the entire application. Files are automatically processed in volatile memory and wiped clean instantly, preventing any unauthorized exposure or leaks.
+                    </li>
+                    <li style="background: #f9fafb; padding: 1rem; border-radius: 8px; border-left: 4px solid #fa7220;">
+                        <strong style="color: #111827;">Unrestricted Access Instantly:</strong> Enjoy unparalleled <strong>free online utility</strong> capabilities with absolutely zero constraints. We do not enforce irritating sign-up walls, email harvesting, or branded watermarks. The output belongs entirely to you.
+                    </li>
+                </ul>
+            </article>
+
+            <article style="margin-bottom: 2rem; background: #fffcf0; padding: 2rem; border-radius: 12px; border: 1px dashed #f59e0b;">
+                <h3 style="font-size: 1.4rem; color: #92400e; margin-bottom: 1rem; font-weight: 700;">Common Real-World Use Cases</h3>
+                <p style="margin-bottom: 1.25rem; line-height: 1.8; font-size: 1.05rem; color: #78350f;">
+                    Wondering how other professionals utilize this functionality on a daily basis? This <strong>document optimization</strong> solves hundreds of operational headaches efficiently:
+                </p>
+                <div style="margin-left: 1rem;">
+                    <p style="margin-bottom: 0.75rem; line-height: 1.7; color: #78350f;"><strong>1. Corporate Archiving & Compliance:</strong> Legal teams and HR departments consistently leverage this utility to format tax forms, standard operating procedures, and employment records. Correctly utilizing <strong>digital workspace</strong> allows administrators to maintain compliance without disrupting their core tasks.</p>
+                    <p style="margin-bottom: 0.75rem; line-height: 1.7; color: #78350f;"><strong>2. Academia & Student Workloads:</strong> Students rushing to submit theses into rigid university portals must often format items urgently. Our streamlined system guarantees that their digital paperwork conforms strictly to academic server limitations instantly.</p>
+                </div>
+            </article>
+        </section>
+<!-- How to Use Section -->
         <section class="how-to-section">
             <h2>How to Use Portfolio Pdf Creator online on PDFIndi</h2>
             <div class="how-to-grid">
@@ -348,114 +272,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- jsPDF Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script>
-        const { jsPDF } = window.jspdf;
-        const projectsContainer = document.getElementById('projects-container');
-        const portfolioForm = document.getElementById('portfolio-form');
-
-        function addProject() {
-            const div = document.createElement('div');
-            div.className = 'project-item';
-            div.innerHTML = `
-                <button type="button" class="remove-btn" onclick="this.parentElement.remove()">Remove</button>
-                <div class="input-group">
-                    <label>Project Name</label>
-                    <input type="text" class="p-name" placeholder="E-commerce Platform" required>
-                </div>
-                <div class="input-group">
-                    <label>Project Description</label>
-                    <textarea class="p-desc" rows="2" placeholder="Describe what you built and the impact it had..."></textarea>
-            </div>
-            `;
-            projectsContainer.appendChild(div);
-        }
-
-        // Initialize with one project
-        addProject();
-
-        portfolioForm.onsubmit = async (e) => {
-            e.preventDefault();
-            
-            const doc = new jsPDF();
-            const name = document.getElementById('name').value;
-            const title = document.getElementById('title').value;
-            const email = document.getElementById('email').value;
-            const skills = document.getElementById('skills').value;
-
-            // Header Section
-            doc.setFillColor(250, 114, 32); // Brand Orange
-            doc.rect(0, 0, 210, 40, 'F');
-            
-            doc.setTextColor(255, 255, 255);
-            doc.setFontSize(24);
-            doc.setFont('helvetica', 'bold');
-            doc.text(name, 20, 20);
-            
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'normal');
-            doc.text(title, 20, 30);
-
-            // Contact Info
-            doc.setTextColor(50, 50, 50);
-            doc.setFontSize(10);
-            doc.text(`Email: ${email}`, 20, 50);
-            
-            // Skills
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(14);
-            doc.text("TECHNICAL EXPERTISE", 20, 65);
-            doc.setDrawColor(250, 114, 32);
-            doc.line(20, 68, 190, 68);
-            
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(11);
-            doc.text(skills, 20, 75, { maxWidth: 170 });
-
-            // Projects Section
-            let y = 100;
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(14);
-            doc.text("FEATURED PROJECTS", 20, y);
-            doc.line(20, y+3, 190, y+3);
-            y += 12;
-
-            const projects = document.querySelectorAll('.project-item');
-            projects.forEach((item, index) => {
-                if (y > 250) {
-                    doc.addPage();
-                    y = 20;
-                }
-
-                const pName = item.querySelector('.p-name').value;
-                const pDesc = item.querySelector('.p-desc').value;
-
-                doc.setFont('helvetica', 'bold');
-                doc.setFontSize(12);
-                doc.text(`${index + 1}. ${pName}`, 20, y);
-                y += 6;
-                
-                doc.setFont('helvetica', 'normal');
-                doc.setFontSize(10);
-                const splitDesc = doc.splitTextToSize(pDesc, 160);
-                doc.text(splitDesc, 25, y);
-                y += (splitDesc.length * 5) + 8;
-            });
-
-            // Footer
-            doc.setFontSize(8);
-            doc.setTextColor(150, 150, 150);
-            doc.text("Generated by PDFIndi Portfolio Creator", 105, 285, { align: 'center' });
-
-            doc.save(`${name.replace(/\s+/g, '_')}_Portfolio.pdf`);
-        };
-    </script>
+    <script src="js/portfolio-pdf-creator.min.js" defer></script>
     <script src="../modern-header.min.js"></script>
-    <!-- Related Tools Widget (SEO Internal Linking) -->
+            <!-- Related Tools Widget (SEO Internal Linking) -->
     <section id="related-tools-widget" style="padding:2.5rem 1rem; background:#f8fafc; border-top:1px solid #e2e8f0;">
-      <div style="max-width:900px;margin:0 auto;text-align:center;">
-        <h2 style="font-size:1.5rem;color:#1a202c;margin-bottom:1.5rem;font-weight:700;">You Might Also Like</h2>
-        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">          <a href="/tools/pdf-resume-analyzer" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Resume Analyzer &rarr;</a>          <a href="/tools/resume-pdf-optimizer" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Resume PDF Optimizer &rarr;</a>          <a href="/tools/add-watermark" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;" onmouseover="this.style.borderColor='#f97316';this.style.background='#fff7ed'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'">Add Watermark to PDF &rarr;</a>        </div>
-        <p style="margin-top:1.5rem;color:#64748b;font-size:0.9rem;">Explore all <a href="/" style="color:#f97316;font-weight:600;">33+ free tools on PDFIndi</a> &rarr;</p>
+      <div style="max-width:1000px;margin:0 auto;text-align:center;">
+        <h2 style="font-size:1.5rem;color:#1a202c;margin-bottom:1.5rem;font-weight:700;">Discover More Student Tools</h2>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <a href="/tools/pdf-quiz-generator" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;">Create AI quizzes from your PDF &rarr;</a>
+          <a href="/tools/pdf-to-handwritten" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;">Convert PDF to realistic handwritten text &rarr;</a>
+          <a href="/tools/resume-pdf-optimizer" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;">Optimize your resume PDF for ATS &rarr;</a>
+          <a href="/tools/extract-questions" style="display:inline-block;padding:0.75rem 1.5rem;background:white;border:2px solid #e2e8f0;border-radius:12px;color:#f97316;font-weight:600;text-decoration:none;transition:all 0.2s;font-size:0.95rem;">Extract questions directly from notes &rarr;</a>
+        </div>
+        <p style="margin-top:1.5rem;color:#64748b;font-size:0.9rem;">Explore all <a href="/" style="color:#f97316;font-weight:600;">Student tools & utilities on PDFIndi</a> &rarr;</p>
       </div>
     </section>
     <script>
@@ -496,3 +325,4 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     })();
     </script></body>
 </html>
+

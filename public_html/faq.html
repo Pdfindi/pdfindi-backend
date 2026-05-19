@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Google Tag Manager -->
@@ -15,7 +15,9 @@
     <meta name="description" content="Frequently Asked Questions about PDFIndi - Your trusted 100% Made in India PDF tools platform. Get answers about our free online PDF tools.">
     <meta name="keywords" content="pdfindi faq, pdf tools questions, free pdf tools help, made in india pdf platform, online pdf tools faq">
     <link rel="canonical" href="https://pdfindi.com/faq">
-    
+    <link rel="alternate" hreflang="en" href="https://pdfindi.com/faq">
+    <link rel="alternate" hreflang="x-default" href="https://pdfindi.com/faq">
+
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://pdfindi.com/faq">
@@ -32,10 +34,7 @@
     <link rel="stylesheet" href="modern-header.min.css">
     
     <style>
-        body {
-            padding-top: 80px;
-        }
-        
+        body { padding-top: 80px; background-color: #f8fafc; }
         .faq-hero {
             background: linear-gradient(135deg, #FFF5F0 0%, #FFE5DC 100%);
             color: #1F2937;
@@ -45,27 +44,9 @@
             margin-bottom: 3rem;
             border: 1px solid #E5E7EB;
         }
-        
-        .faq-hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #1F2937 !important;
-        }
-        
-        .faq-hero p {
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto;
-            opacity: 0.9;
-        }
-        
-        .faq-content {
-            background: white;
-            padding: 3rem;
-            border-radius: 12px;
-            border: 1px solid #dee2e6;
-        }
-        
+        .faq-hero h1 { font-size: 2.5rem; margin-bottom: 1rem; color: #1F2937 !important; }
+        .faq-hero p { font-size: 1.1rem; max-width: 700px; margin: 0 auto; opacity: 0.9; }
+        .faq-content { background: white; padding: 3rem; border-radius: 12px; border: 1px solid #dee2e6; }
         .faq-item {
             margin-bottom: 2rem;
             padding: 2rem;
@@ -74,12 +55,7 @@
             border-left: 4px solid #fa7220;
             transition: all 0.3s ease;
         }
-        
-        .faq-item:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-        
+        .faq-item:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); transform: translateY(-2px); }
         .faq-question {
             font-size: 1.3rem;
             font-weight: 700;
@@ -89,50 +65,8 @@
             align-items: center;
             gap: 0.5rem;
         }
-        
-        .faq-question::before {
-            content: "Q:";
-            color: #fa7220;
-            font-weight: 800;
-        }
-        
-        .faq-answer {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: #555;
-            padding-left: 2rem;
-        }
-        
-        .faq-answer strong {
-            color: #2c3e50;
-        }
-        
-        .faq-answer ul {
-            margin: 1rem 0;
-            padding-left: 1.5rem;
-        }
-        
-        .faq-answer li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #6c757d;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            margin-bottom: 2rem;
-            transition: background-color 0.2s;
-        }
-        
-        .back-button:hover {
-            background: #5a6268;
-        }
-        
+        .faq-question::before { content: "Q:"; color: #fa7220; font-weight: 800; }
+        .faq-answer { font-size: 1rem; line-height: 1.8; color: #555; padding-left: 2rem; }
         .contact-cta {
             background: linear-gradient(135deg, #fa7220 0%, #fa7220 100%);
             color: white;
@@ -141,229 +75,84 @@
             text-align: center;
             margin-top: 3rem;
         }
-        
-        .contact-cta h2 {
-            color: white !important;
-            margin-bottom: 1rem;
-        }
-        
-        .contact-cta p {
-            color: white;
-            margin-bottom: 1.5rem;
-        }
-        
+        .contact-cta h2 { color: white !important; margin-bottom: 1rem; }
+        .contact-cta p { color: white; margin-bottom: 1.5rem; }
         .contact-cta a {
-            display: inline-block;
-            background: white;
-            color: #fa7220;
-            padding: 0.75rem 2rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.2s;
+            display: inline-block; background: white; color: #fa7220; padding: 0.75rem 2rem;
+            border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.2s;
         }
-        
-        .contact-cta a:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        .contact-cta a:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .back-btn-premium {
+            display: inline-flex; align-items: center; gap: 0.5rem; background: #64748b; color: white;
+            padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: 600;
+            margin-bottom: 1.5rem; transition: all 0.2s;
         }
-        
+        .back-btn-premium:hover { background: #475569; transform: translateX(-4px); }
         @media (max-width: 768px) {
-            .faq-hero h1 {
-                font-size: 2rem;
-            }
-            
-            .faq-content {
-                padding: 2rem 1rem;
-            }
-            
-            .faq-question {
-                font-size: 1.1rem;
-            }
+            .faq-hero h1 { font-size: 2rem; }
+            .faq-content { padding: 2rem 1rem; }
+            .faq-question { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWZRMF4W"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWZRMF4W" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem;">
-        <a href="index.html" class="back-btn-premium">
+        <a href="/" class="back-btn-premium">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             Back to Home
         </a>
             
-            <div class="faq-hero">
-                <h1>Frequently Asked Questions </h1>
-                <p>Get answers to common questions about PDFIndi - your trusted 100% Made in India PDF tools platform</p>
+        <div class="faq-hero">
+            <h1>Frequently Asked Questions</h1>
+            <p>Get answers to common questions about PDFIndi - your trusted 100% Made in India PDF tools platform</p>
+        </div>
+        
+        <div class="faq-content" id="faqContent">
+            <!-- Loading State -->
+            <div style="text-align: center; padding: 3rem; color: #64748b;">
+                <p>Loading frequently asked questions...</p>
             </div>
-            
-            <div class="faq-content">
-                <div class="faq-item">
-                    <div class="faq-question">What is PDFIndi?</div>
-                    <div class="faq-answer">
-                        <p><strong>PDFIndi</strong> is a <strong>100% Made in India</strong> platform that offers free online PDF tools. We provide a complete suite of PDF solutions including:</p>
-                        <ul>
-                            <li><strong>PDF Converter Tools:</strong> PDF to Word, PDF to JPG, PDF to Excel, Word to PDF, JPG to PDF, and more</li>
-                            <li><strong>PDF Editing Tools:</strong> Merge PDF, Split PDF, Compress PDF, Rotate PDF, Edit PDF online</li>
-                            <li><strong>PDF Security Tools:</strong> Protect PDF, Unlock PDF, Add Watermark</li>
-                            <li><strong>Utility Tools:</strong> QR Code Generator, Password Generator, Image Compressor, and more</li>
-                        </ul>
-                        <p>Built under the <strong>Make in India</strong> and <strong>Digital India</strong> initiatives, PDFIndi is designed to provide a secure, fast, and completely free alternative to foreign PDF tools. All processing is done securely, and we prioritize user privacy.</p>
-                    </div>
-                </div>
+        </div>
 
-                <div class="faq-item">
-                    <div class="faq-question">Is PDFIndi free to use?</div>
-                    <div class="faq-answer">
-                        <p><strong>Yes, PDFIndi is 100% free!</strong> All our PDF tools and utility tools are completely free to use with:</p>
-                        <ul>
-                            <li>✅ <strong>No registration required</strong> - Use all tools without creating an account</li>
-                            <li>✅ <strong>No hidden charges</strong> - Absolutely free, forever</li>
-                            <li>✅ <strong>No premium features</strong> - Everything is accessible to everyone</li>
-                            <li>✅ <strong>No file limits</strong> - Process as many files as you need</li>
-                            <li>✅ <strong>No watermarks</strong> - Your output files are clean and professional</li>
-                        </ul>
-                        <p>Our mission is to provide accessible, high-quality PDF tools to everyone in India and worldwide, supporting the <strong>Atmanirbhar Bharat</strong> vision of self-reliant technology.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">Are my files safe on PDFIndi?</div>
-                    <div class="faq-answer">
-                        <p><strong>Yes, your files are completely safe!</strong> We take data security and privacy very seriously:</p>
-                        <ul>
-                            <li>🔒 <strong>Secure Processing:</strong> All file uploads and processing use HTTPS encryption</li>
-                            <li>🗑️ <strong>Automatic Deletion:</strong> Files are automatically deleted from our servers within minutes after processing</li>
-                            <li>🚫 <strong>No Permanent Storage:</strong> We do not keep copies of your documents</li>
-                            <li>👁️ <strong>No Access:</strong> Your files are never viewed, accessed, or shared with third parties</li>
-                            <li> <strong>India-Based Servers:</strong> Data processed on Indian servers for better security and compliance</li>
-                            <li>🔐 <strong>Client-Side Processing:</strong> Many tools process files directly in your browser without uploading</li>
-                        </ul>
-                        <p>For more details, please read our <a href="privacy.html" style="color: #fa7220; font-weight: 600;">Privacy Policy</a>.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">Can I use PDFIndi on mobile devices?</div>
-                    <div class="faq-answer">
-                        <p><strong>Yes! PDFIndi is fully mobile-friendly.</strong> Our website is designed to work seamlessly on all devices:</p>
-                        <ul>
-                            <li>📱 <strong>Mobile Phones:</strong> Android and iOS smartphones</li>
-                            <li>📲 <strong>Tablets:</strong> iPad, Android tablets</li>
-                            <li>💻 <strong>Laptops & Desktops:</strong> Windows, Mac, Linux</li>
-                            <li>🌐 <strong>All Browsers:</strong> Chrome, Firefox, Safari, Edge, Opera</li>
-                        </ul>
-                        <p>No app installation needed! Simply open <strong>pdfindi.com</strong> in your mobile browser and access all tools instantly. The interface automatically adapts to your screen size for the best user experience.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">Is PDFIndi a government website?</div>
-                    <div class="faq-answer">
-                        <p><strong>No, PDFIndi is NOT a government website.</strong></p>
-                        <p>PDFIndi is an <strong>independent, privately-owned platform</strong> developed by Indian developers. While we are:</p>
-                        <ul>
-                            <li> <strong>100% Made in India</strong> and proudly Indian</li>
-                            <li>💪 Supporting the <strong>Make in India</strong> initiative through innovation</li>
-                            <li>🚀 Contributing to <strong>Digital India</strong> transformation</li>
-                            <li>🎯 Aligned with <strong>Atmanirbhar Bharat</strong> (self-reliant India) vision</li>
-                        </ul>
-                        <p>We are <strong>NOT officially affiliated</strong> with or endorsed by the Government of India or any government agency. We are an independent technology platform built by Indian developers to serve users worldwide.</p>
-                        <p>For more information, please see our <a href="disclaimer.html" style="color: #fa7220; font-weight: 600;">Disclaimer</a> page.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">Do I need to install any software to use PDFIndi?</div>
-                    <div class="faq-answer">
-                        <p><strong>No installation required!</strong> PDFIndi is a completely online platform:</p>
-                        <ul>
-                            <li>🌐 <strong>Browser-Based:</strong> All tools work directly in your web browser</li>
-                            <li>⚡ <strong>Instant Access:</strong> No downloads, no installations, no setup</li>
-                            <li>💾 <strong>No Storage Space:</strong> Doesn't take up space on your device</li>
-                            <li>🔄 <strong>Always Updated:</strong> You always get the latest version automatically</li>
-                            <li>🌍 <strong>Access Anywhere:</strong> Use from any device with internet connection</li>
-                        </ul>
-                        <p>Simply visit <strong>pdfindi.com</strong>, choose your tool, upload your file, and get instant results!</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="contact-cta">
-                <h2>Still Have Questions?</h2>
-                <p>If you couldn't find the answer you were looking for, feel free to reach out to us!</p>
-                <a href="contact.html">Contact Us →</a>
-            </div>
+        <div class="contact-cta">
+            <h2>Still Have Questions?</h2>
+            <p>If you couldn't find the answer you were looking for, feel free to reach out to us!</p>
+            <a href="contact">Contact Us →</a>
+        </div>
     </div>
     
-    
-    <!-- FAQ Schema Markup (Section 11) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is PDFIndi?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "PDFIndi is a 100% Made in India platform that offers free online PDF tools. We provide a complete suite of PDF solutions including PDF converter tools (PDF to Word, PDF to JPG, Word to PDF), PDF editing tools (Merge PDF, Split PDF, Compress PDF), PDF security tools (Protect PDF, Unlock PDF), and utility tools. Built under the Make in India and Digital India initiatives."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is PDFIndi free to use?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, PDFIndi is 100% free! All our PDF tools and utility tools are completely free to use with no registration required, no hidden charges, no premium features, no file limits, and no watermarks. Our mission is to provide accessible, high-quality PDF tools to everyone."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Are my files safe on PDFIndi?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, your files are completely safe! All file uploads use HTTPS encryption, files are automatically deleted within minutes after processing, we do not keep copies of your documents, files are never viewed or shared with third parties, and data is processed on India-based servers for better security."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I use PDFIndi on mobile devices?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes! PDFIndi is fully mobile-friendly and works seamlessly on all devices including Android and iOS smartphones, tablets, laptops, desktops, and all browsers (Chrome, Firefox, Safari, Edge). No app installation needed - simply open pdfindi.com in your mobile browser."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is PDFIndi a government website?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No, PDFIndi is NOT a government website. PDFIndi is an independent, privately-owned platform developed by Indian developers. While we are 100% Made in India and support the Make in India initiative, Digital India transformation, and Atmanirbhar Bharat vision, we are NOT officially affiliated with or endorsed by the Government of India."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Do I need to install any software to use PDFIndi?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No installation required! PDFIndi is a completely online platform. All tools work directly in your web browser with instant access, no downloads, no installations, no setup, and no storage space needed. Simply visit pdfindi.com and start using the tools immediately."
-          }
+    <script>
+        async function loadFAQs() {
+            const container = document.getElementById('faqContent');
+            try {
+                const response = await fetch('/api/data/faq');
+                const result = await response.json();
+
+                if (result.success && result.data.length > 0) {
+                    container.innerHTML = '';
+                    result.data.forEach(faq => {
+                        const item = document.createElement('div');
+                        item.className = 'faq-item';
+                        item.innerHTML = `
+                            <div class="faq-question">${faq.question}</div>
+                            <div class="faq-answer">${faq.answer}</div>
+                        `;
+                        container.appendChild(item);
+                    });
+                } else {
+                    container.innerHTML = '<div style="text-align: center; padding: 3rem; color: #64748b;"><p>No questions found.</p></div>';
+                }
+            } catch (err) {
+                console.error('Error loading FAQs:', err);
+                container.innerHTML = '<div style="text-align: center; padding: 3rem; color: #ef4444;"><p>Error loading FAQs. Please try again later.</p></div>';
+            }
         }
-      ]
-    }
+        window.addEventListener('DOMContentLoaded', loadFAQs);
     </script>
     
     <script src="modern-header.min.js" defer></script>
     <script src="script.min.js" defer></script>
 </body>
 </html>
-
-
-
-
